@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JToolbox.Core
+namespace JToolbox.Core.Helpers
 {
     public static class AsyncHelper
     {
