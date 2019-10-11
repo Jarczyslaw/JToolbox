@@ -3,9 +3,73 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WinForms", "WinForms", "{808DA760-399E-40AC-A6EA-2229B0EEC6E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{594FEA26-AC2E-4034-B7B6-6235565C8CA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinForms", "XamarinForms", "{2E96F55B-C0E2-415F-ADA4-E2136453541B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPMVC", "ASPMVC", "{C4BCC20D-23EA-4A1D-8979-D3B75BBD08D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Commons", "JToolbox.Commons\JToolbox.Commons.csproj", "{8DBEE967-3286-4CDA-9FCB-9539346E55F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Core", "XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj", "{96B36DCD-DC5C-4FB9-B967-D6748AFE5563}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Dialogs", "XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj", "{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Droid.Core", "XamarinForms\JToolbox.XamarinForms.Droid.Core\JToolbox.XamarinForms.Droid.Core.csproj", "{7367D159-5011-4588-8888-44DDFEE2B890}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Logging", "XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj", "{7314B3A3-2094-449C-A38B-2FD3DB908167}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Permissions", "XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj", "{D4B3F73C-29FD-40A7-9508-34C980DD2E29}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Settings", "XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj", "{547023B9-8E27-479E-B0D3-D4BF87864728}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DBEE967-3286-4CDA-9FCB-9539346E55F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DBEE967-3286-4CDA-9FCB-9539346E55F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DBEE967-3286-4CDA-9FCB-9539346E55F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DBEE967-3286-4CDA-9FCB-9539346E55F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7367D159-5011-4588-8888-44DDFEE2B890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7367D159-5011-4588-8888-44DDFEE2B890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7367D159-5011-4588-8888-44DDFEE2B890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7367D159-5011-4588-8888-44DDFEE2B890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{547023B9-8E27-479E-B0D3-D4BF87864728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547023B9-8E27-479E-B0D3-D4BF87864728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547023B9-8E27-479E-B0D3-D4BF87864728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547023B9-8E27-479E-B0D3-D4BF87864728}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
+		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
+		{7367D159-5011-4588-8888-44DDFEE2B890} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
+		{7314B3A3-2094-449C-A38B-2FD3DB908167} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
+		{D4B3F73C-29FD-40A7-9508-34C980DD2E29} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
+		{547023B9-8E27-479E-B0D3-D4BF87864728} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
