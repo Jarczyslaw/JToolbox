@@ -2,25 +2,25 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JToolbox.XamarinForms.Core.Helpers
+namespace JToolbox.Core
 {
     public static class AsyncHelper
     {
-        private static readonly TaskFactory _taskFactory = new
+        private static readonly TaskFactory taskFactory = new
             TaskFactory(CancellationToken.None,
                         TaskCreationOptions.None,
                         TaskContinuationOptions.None,
                         TaskScheduler.Default);
 
         public static TResult RunSync<TResult>(Func<Task<TResult>> func)
-            => _taskFactory
+            => taskFactory
                 .StartNew(func)
                 .Unwrap()
                 .GetAwaiter()
                 .GetResult();
 
         public static void RunSync(Func<Task> func)
-            => _taskFactory
+            => taskFactory
                 .StartNew(func)
                 .Unwrap()
                 .GetAwaiter()
