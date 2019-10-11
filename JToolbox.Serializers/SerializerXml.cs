@@ -1,11 +1,23 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
 
-namespace JToolbox.Core.Helpers
+namespace JToolbox.Serializers
 {
-    public static class SerializeHelper
+    public class SerializerXml : ISerializer
     {
-        public static string ToXml<T>(T val)
+        public void ToFile<T>(T obj, string filePath)
+        {
+            var serialized = ToString(obj);
+            File.WriteAllText(filePath, serialized);
+        }
+
+        public T FromFile<T>(string filePath)
+        {
+            var serialized = File.ReadAllText(filePath);
+            return FromString<T>(serialized);
+        }
+
+        public string ToString<T>(T val)
         {
             var s = new XmlSerializer(typeof(T));
             using (var writer = new StringWriter())
@@ -15,7 +27,7 @@ namespace JToolbox.Core.Helpers
             }
         }
 
-        public static T FromXml<T>(string input)
+        public T FromString<T>(string input)
         {
             var ser = new XmlSerializer(typeof(T));
 
