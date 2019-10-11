@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.WPF.Windows", "WPF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Desktop.Core", "JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj", "{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.WPF.PrismCore", "WPF\JToolbox.WPF.PrismCore\JToolbox.WPF.PrismCore.csproj", "{236252FE-AA5D-434F-87EA-1342C5B6E3B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,10 @@ Global
 		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236252FE-AA5D-434F-87EA-1342C5B6E3B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236252FE-AA5D-434F-87EA-1342C5B6E3B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236252FE-AA5D-434F-87EA-1342C5B6E3B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236252FE-AA5D-434F-87EA-1342C5B6E3B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{9594D7EE-C5D6-4F07-8F3E-63B7C83E21D0} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
 		{7519097D-59FF-4717-A043-C083A7AA9A5D} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
 		{44CE1158-08AB-452E-ABCD-C6E305E1A01A} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
+		{236252FE-AA5D-434F-87EA-1342C5B6E3B9} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JToolbox.Desktop.Core.Extensions
+namespace JToolbox.Core.Extensions
 {
     public static class IListExtensions
     {
