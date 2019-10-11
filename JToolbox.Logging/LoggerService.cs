@@ -1,27 +1,18 @@
 ﻿using JToolbox.Core.Abstraction;
 using NLog;
-using NLog.Config;
 using System;
 
-namespace JToolbox.XamarinForms.Logging
+namespace JToolbox.Logging
 {
     public class LoggerService : ILoggerService
     {
         private readonly ILogger logger;
+
         private readonly string noMessage = "No message provided";
 
         public LoggerService()
         {
             logger = LogManager.GetCurrentClassLogger();
-        }
-
-        public LoggerService(string logPath) : this(new LoggerConfigBuilder(logPath).GetDefaultConfiguration())
-        {
-        }
-
-        public LoggerService(LoggingConfiguration config) : this()
-        {
-            LogManager.Configuration = config;
         }
 
         public void Debug(string message, params object[] args)
