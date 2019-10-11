@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 
-namespace Barcodes.Core.UI
+namespace JToolbox.WPF.UI
 {
     public class BaseWindow : Window
     {

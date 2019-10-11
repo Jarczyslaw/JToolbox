@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Barcodes.Core.UI
+namespace JToolbox.WPF.UI
 {
     public class BindingProxy : Freezable
     {

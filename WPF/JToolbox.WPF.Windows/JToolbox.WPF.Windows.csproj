@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98}</ProjectGuid>
+    <ProjectGuid>{44CE1158-08AB-452E-ABCD-C6E305E1A01A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JToolbox.WPF.Core</RootNamespace>
-    <AssemblyName>JToolbox.WPF.Core</AssemblyName>
+    <RootNamespace>JToolbox.WPF.Windows</RootNamespace>
+    <AssemblyName>JToolbox.WPF.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,17 +42,22 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Awareness\ICloseSource.cs" />
-    <Compile Include="Awareness\IOnClosingAware.cs" />
-    <Compile Include="Awareness\IOnShowAware.cs" />
-    <Compile Include="GlobalExceptionHandler.cs" />
+    <Compile Include="IWindowsService.cs" />
+    <Compile Include="WindowsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\Barcodes.Core.UI\Barcodes.Core.UI.csproj">
+      <Project>{930f2b1e-8fea-48bc-86cb-d8bcdab039f5}</Project>
+      <Name>Barcodes.Core.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
