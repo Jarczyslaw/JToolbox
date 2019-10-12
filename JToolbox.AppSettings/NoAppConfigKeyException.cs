@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JToolbox.Desktop.Core.Exceptions
+namespace JToolbox.AppSettings
 {
     public class NoAppConfigKeyException : Exception
     {

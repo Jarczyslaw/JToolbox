@@ -1,5 +1,4 @@
-﻿using JToolbox.Desktop.Core.Exceptions;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 
