@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 
-namespace JToolbox.Desktop.Core.Services
+namespace JToolbox.AppSettings
 {
     public class AppConfigService : IAppConfigService
     {

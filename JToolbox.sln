@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{594FEA26-AC2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinForms", "XamarinForms", "{2E96F55B-C0E2-415F-ADA4-E2136453541B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPMVC", "ASPMVC", "{C4BCC20D-23EA-4A1D-8979-D3B75BBD08D5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{C4BCC20D-23EA-4A1D-8979-D3B75BBD08D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Core", "JToolbox.Core\JToolbox.Core.csproj", "{8DBEE967-3286-4CDA-9FCB-9539346E55F7}"
 EndProject
@@ -39,9 +39,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Desktop.Core", "JT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.WPF.PrismCore", "WPF\JToolbox.WPF.PrismCore\JToolbox.WPF.PrismCore.csproj", "{236252FE-AA5D-434F-87EA-1342C5B6E3B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Serializers", "JToolbox.Serializers\JToolbox.Serializers.csproj", "{13B155D2-6DB7-4D91-905A-A1162F8585CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Serializers", "JToolbox.Serializers\JToolbox.Serializers.csproj", "{13B155D2-6DB7-4D91-905A-A1162F8585CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Logging", "JToolbox.Logging\JToolbox.Logging.csproj", "{50535EF8-BCD8-44E9-8284-260A6B6D07AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Logging", "JToolbox.Logging\JToolbox.Logging.csproj", "{50535EF8-BCD8-44E9-8284-260A6B6D07AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.MVC.Core", "MVC\JToolbox.MVC.Core\JToolbox.MVC.Core.csproj", "{CF99A19A-340B-422A-ACDE-7FA570C3FD28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.AppSettings", "JToolbox.AppSettings\JToolbox.AppSettings.csproj", "{7ACE141D-B773-41AB-A8DC-467D98A4C821}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +117,14 @@ Global
 		{50535EF8-BCD8-44E9-8284-260A6B6D07AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50535EF8-BCD8-44E9-8284-260A6B6D07AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50535EF8-BCD8-44E9-8284-260A6B6D07AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF99A19A-340B-422A-ACDE-7FA570C3FD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF99A19A-340B-422A-ACDE-7FA570C3FD28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF99A19A-340B-422A-ACDE-7FA570C3FD28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF99A19A-340B-422A-ACDE-7FA570C3FD28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACE141D-B773-41AB-A8DC-467D98A4C821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +142,7 @@ Global
 		{7519097D-59FF-4717-A043-C083A7AA9A5D} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
 		{44CE1158-08AB-452E-ABCD-C6E305E1A01A} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
 		{236252FE-AA5D-434F-87EA-1342C5B6E3B9} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
+		{CF99A19A-340B-422A-ACDE-7FA570C3FD28} = {C4BCC20D-23EA-4A1D-8979-D3B75BBD08D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
