@@ -1,7 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Collections.Generic;
 
-namespace JToolbox.WPF.Dialogs.Builders
+namespace JToolbox.Desktop.Dialogs.Builders
 {
     public class CommonOpenDialogBuilder : CommonDialogBuilderBase<CommonOpenFileDialog>
     {

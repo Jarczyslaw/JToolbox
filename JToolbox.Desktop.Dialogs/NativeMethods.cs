@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace JToolbox.WPF.Dialogs
+namespace JToolbox.Desktop.Dialogs
 {
     internal static class NativeMethods
     {

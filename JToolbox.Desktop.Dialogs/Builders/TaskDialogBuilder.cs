@@ -1,7 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 
-namespace JToolbox.WPF.Dialogs.Builders
+namespace JToolbox.Desktop.Dialogs.Builders
 {
     public class TaskDialogBuilder
     {

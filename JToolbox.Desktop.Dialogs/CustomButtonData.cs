@@ -1,4 +1,4 @@
-﻿namespace JToolbox.WPF.Dialogs
+﻿namespace JToolbox.Desktop.Dialogs
 {
     public class CustomButtonData<T>
     {

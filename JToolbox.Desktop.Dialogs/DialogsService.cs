@@ -1,10 +1,10 @@
-﻿using JToolbox.WPF.Dialogs.Builders;
+﻿using JToolbox.Desktop.Dialogs.Builders;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JToolbox.WPF.Dialogs
+namespace JToolbox.Desktop.Dialogs
 {
     public class DialogsService : IDialogsService
     {

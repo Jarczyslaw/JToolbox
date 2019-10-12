@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JToolbox.WPF.Dialogs
+namespace JToolbox.Desktop.Dialogs
 {
     public interface IDialogsService
     {

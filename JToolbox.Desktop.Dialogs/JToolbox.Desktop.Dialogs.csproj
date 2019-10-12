@@ -7,8 +7,8 @@
     <ProjectGuid>{7519097D-59FF-4717-A043-C083A7AA9A5D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JToolbox.WPF.Dialogs</RootNamespace>
-    <AssemblyName>JToolbox.WPF.Dialogs</AssemblyName>
+    <RootNamespace>JToolbox.Desktop.Dialogs</RootNamespace>
+    <AssemblyName>JToolbox.Desktop.Dialogs</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
