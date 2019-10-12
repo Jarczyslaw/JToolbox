@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,7 +49,11 @@
     <Compile Include="Awareness\IOnClosingAware.cs" />
     <Compile Include="Awareness\IOnShowAware.cs" />
     <Compile Include="GlobalExceptionHandler.cs" />
+    <Compile Include="Base\NotifyProperty.cs" />
+    <Compile Include="Base\ParameterizedRelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Base\RelayCommand.cs" />
+    <Compile Include="Threading.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
