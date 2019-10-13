@@ -4,30 +4,41 @@ namespace JToolbox.Core.Extensions
 {
     public static class IListExtensions
     {
-        public static void ShiftLeft<T>(this IList<T> list, int index)
+        public static void ShiftLeft<T>(this IList<T> @this, int index)
         {
-            if (list.Count < 2)
+            if (@this.Count < 2)
                 return;
 
             if (index < 1)
                 return;
 
-            var temp = list[index - 1];
-            list.RemoveAt(index - 1);
-            list.Insert(index, temp);
+            var temp = @this[index - 1];
+            @this.RemoveAt(index - 1);
+            @this.Insert(index, temp);
         }
 
-        public static void ShiftRight<T>(this IList<T> list, int index)
+        public static void ShiftRight<T>(this IList<T> @this, int index)
         {
-            if (list.Count < 2)
+            if (@this.Count < 2)
                 return;
 
-            if (index > list.Count - 2)
+            if (index > @this.Count - 2)
                 return;
 
-            var temp = list[index + 1];
-            list.RemoveAt(index + 1);
-            list.Insert(index, temp);
+            var temp = @this[index + 1];
+            @this.RemoveAt(index + 1);
+            @this.Insert(index, temp);
+        }
+
+        public static void Swap<T>(this IList<T> @this, T oldValue, T newValue)
+        {
+            var oldIndex = @this.IndexOf(oldValue);
+            while (oldIndex > 0)
+            {
+                @this.RemoveAt(oldIndex);
+                @this.Insert(oldIndex, newValue);
+                oldIndex = @this.IndexOf(oldValue);
+            }
         }
     }
 }

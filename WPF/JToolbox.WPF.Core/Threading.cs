@@ -9,7 +9,9 @@ namespace JToolbox.WPF.Core
         public static void SafeInvoke(Action action, DispatcherPriority priority = DispatcherPriority.Send)
         {
             if (Application.Current.Dispatcher.CheckAccess())
+            {
                 action.Invoke();
+            }
             else
             {
                 Application.Current.Dispatcher.Invoke(priority, new Action(() => action.Invoke()));
