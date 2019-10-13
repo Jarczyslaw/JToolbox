@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace JToolbox.AppSettings
+namespace JToolbox.AppConfig
 {
     public interface IAppConfigService
     {

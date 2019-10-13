@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JToolbox.AppSettings
+namespace JToolbox.AppConfig
 {
     public class NoAppConfigKeyException : Exception
     {

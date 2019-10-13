@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Runtime.CompilerServices;
 
-namespace JToolbox.AppSettings
+namespace JToolbox.AppConfig
 {
     public class AppConfigService : IAppConfigService
     {

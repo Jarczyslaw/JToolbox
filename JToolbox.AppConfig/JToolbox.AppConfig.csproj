@@ -7,8 +7,8 @@
     <ProjectGuid>{7ACE141D-B773-41AB-A8DC-467D98A4C821}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JToolbox.AppSettings</RootNamespace>
-    <AssemblyName>JToolbox.AppSettings</AssemblyName>
+    <RootNamespace>JToolbox.AppConfig</RootNamespace>
+    <AssemblyName>JToolbox.AppConfig</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
