@@ -57,6 +57,7 @@
     <Compile Include="WindowBase.cs" />
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
