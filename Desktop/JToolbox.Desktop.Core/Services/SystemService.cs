@@ -28,5 +28,25 @@ namespace JToolbox.Desktop.Core.Services
         {
             Process.Start(process, arguments);
         }
+
+        public void StartProcessSilent(string process, string arguments = null)
+        {
+            var processStart = new ProcessStartInfo(process, arguments)
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            Process.Start(processStart);
+        }
+
+        public void Shutdown()
+        {
+            StartProcessSilent("shutdown", "-s -t 0");
+        }
+
+        public void Restart()
+        {
+            StartProcessSilent("shutdown", "-r -t 0");
+        }
     }
 }
