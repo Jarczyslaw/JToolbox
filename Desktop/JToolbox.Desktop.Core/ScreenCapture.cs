@@ -18,7 +18,15 @@ namespace JToolbox.Desktop.Core
         }
 
         [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
         private static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
+
+        public Bitmap CaptureForegroundWindow()
+        {
+            return Capture(GetBoundFromWindow(GetForegroundWindow()));
+        }
 
         public Bitmap CaptureWindow(Rectangle windowBounds)
         {
@@ -27,10 +35,7 @@ namespace JToolbox.Desktop.Core
 
         public Bitmap CaptureProcess(Process process)
         {
-            var rect = new Rect();
-            GetWindowRect(process.MainWindowHandle, ref rect);
-            var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-            return CaptureWindow(bounds);
+            return CaptureWindow(GetBoundFromWindow(process.MainWindowHandle));
         }
 
         public Bitmap Capture(Rectangle bounds)
@@ -41,6 +46,13 @@ namespace JToolbox.Desktop.Core
                 g.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size, CopyPixelOperation.SourceCopy);
             }
             return bitmap;
+        }
+
+        private Rectangle GetBoundFromWindow(IntPtr intPtr)
+        {
+            var rect = new Rect();
+            GetWindowRect(intPtr, ref rect);
+            return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
         }
     }
 }
