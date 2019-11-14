@@ -1,17 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace JToolbox.Desktop.Core
 {
-    public static class ScreenCapture
+    public class ScreenCapture
     {
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        public static extern IntPtr GetDesktopWindow();
-
         [StructLayout(LayoutKind.Sequential)]
         private struct Rect
         {
@@ -24,29 +20,27 @@ namespace JToolbox.Desktop.Core
         [DllImport("user32.dll")]
         private static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
 
-        public static Image CaptureDesktop()
+        public Bitmap CaptureWindow(Rectangle windowBounds)
         {
-            return CaptureWindow(GetDesktopWindow());
+            return Capture(windowBounds);
         }
 
-        public static Bitmap CaptureActiveWindow()
-        {
-            return CaptureWindow(GetForegroundWindow());
-        }
-
-        public static Bitmap CaptureWindow(IntPtr handle)
+        public Bitmap CaptureProcess(Process process)
         {
             var rect = new Rect();
-            GetWindowRect(handle, ref rect);
+            GetWindowRect(process.MainWindowHandle, ref rect);
             var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-            var result = new Bitmap(bounds.Width, bounds.Height);
+            return CaptureWindow(bounds);
+        }
 
-            using (var graphics = Graphics.FromImage(result))
+        public Bitmap Capture(Rectangle bounds)
+        {
+            var bitmap = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
+            using (Graphics g = Graphics.FromImage(bitmap))
             {
-                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+                g.CopyFromScreen(bounds.Location, Point.Empty, bounds.Size, CopyPixelOperation.SourceCopy);
             }
-
-            return result;
+            return bitmap;
         }
     }
 }
