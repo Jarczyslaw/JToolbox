@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -108,7 +109,7 @@ namespace PingScannerApp
                     Id = devices.Count + 1,
                     Status = result.Reply.Status
                 });
-                devices = devices.OrderBy(d => d.Status)
+                devices = devices.OrderBy(d => d.Status == IPStatus.Success ? 0 : 1)
                     .ThenBy(d => Version.Parse(d.Address))
                     .ToList();
                 UpdateGrid();
