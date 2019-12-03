@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>JToolbox.NetworkTools</AssemblyName>
+    <RootNamespace>JToolbox.NetworkTools</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox.Core\JToolbox.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -29,36 +28,37 @@ namespace JToolbox.Core.Helpers
                 .GetAwaiter()
                 .GetResult();
 
-        public static Task ForEach<TItem>(IEnumerable<TItem> input, Func<TItem, Task> handler)
+        public static Task ForEach<TItem>(IEnumerable<TItem> input, Func<TItem, CancellationToken, Task> handler)
         {
             return ForEach(input, handler, CancellationToken.None);
         }
 
-        public static async Task ForEach<TItem>(IEnumerable<TItem> input, Func<TItem, Task> handler, CancellationToken cancellationToken)
+        public static async Task ForEach<TItem>(IEnumerable<TItem> input, Func<TItem, CancellationToken, Task> handler, CancellationToken cancellationToken)
         {
             var tasks = new List<Task>();
             foreach (var item in input)
             {
-                tasks.Add(Task.Run(async () => await handler(item), cancellationToken));
+                tasks.Add(handler(item, cancellationToken));
             }
             await Task.WhenAll(tasks);
         }
 
-        public static Task<IEnumerable<KeyValuePair<TItem, TResult>>> ForEach<TItem, TResult>(IEnumerable<TItem> input, Func<TItem, Task<TResult>> handler)
+        public static Task<IEnumerable<KeyValuePair<TItem, TResult>>> ForEachWithResult<TItem, TResult>
+            (IEnumerable<TItem> input, Func<TItem, CancellationToken, Task<TResult>> handler)
         {
-            return ForEach(input, handler, CancellationToken.None);
+            return ForEachWithResult(input, handler, CancellationToken.None);
         }
 
-        public static async Task<IEnumerable<KeyValuePair<TItem, TResult>>> ForEach<TItem, TResult>(IEnumerable<TItem> input, Func<TItem, Task<TResult>> handler, CancellationToken cancellationToken)
+        public static async Task<IEnumerable<KeyValuePair<TItem, TResult>>> ForEachWithResult<TItem, TResult>
+            (IEnumerable<TItem> input, Func<TItem, CancellationToken, Task<TResult>> handler, CancellationToken cancellationToken)
         {
-            var result = new BlockingCollection<KeyValuePair<TItem, TResult>>();
-            var tasks = new List<Task>();
+            var tasks = new List<KeyValuePair<TItem, Task<TResult>>>();
             foreach (var item in input)
             {
-                tasks.Add(Task.Run(async () => result.Add(new KeyValuePair<TItem, TResult>(item, await handler(item))), cancellationToken));
+                tasks.Add(new KeyValuePair<TItem, Task<TResult>>(item, handler(item, cancellationToken)));
             }
-            await Task.WhenAll(tasks);
-            return result.ToList();
+            await Task.WhenAll(tasks.Select(p => p.Value));
+            return tasks.Select(p => new KeyValuePair<TItem, TResult>(p.Key, p.Value.Result)).ToList();
         }
     }
 }

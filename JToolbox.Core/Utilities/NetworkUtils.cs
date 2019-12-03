@@ -70,6 +70,18 @@ namespace JToolbox.Core.Utilities
             return new IPAddress(BitConverter.GetBytes(networkIpAddress));
         }
 
+        public static void RemoveBroadcastNetworkAddresses(List<IPAddress> addresses, IPAddress mask)
+        {
+            for (int i = addresses.Count - 1; i >= 0; i--)
+            {
+                var address = addresses[i];
+                if (address == GetBroadcastAddress(address, mask) || address == GetNetworkAddress(address, mask))
+                {
+                    addresses.Remove(address);
+                }
+            }
+        }
+
         public static bool IsInSameSubnet(IPAddress address1, IPAddress address2, IPAddress subnetMask)
         {
             IPAddress network1 = GetNetworkAddress(address1, subnetMask);
@@ -152,6 +164,12 @@ namespace JToolbox.Core.Utilities
                 start = start.Add(1);
             }
             return result;
+        }
+
+        public static bool IsInRange(IPAddress address, IPAddress startAddress, IPAddress endAddress)
+        {
+            return address.Compare(startAddress) >= 0
+                && address.Compare(endAddress) <= 0;
         }
     }
 }
