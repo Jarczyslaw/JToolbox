@@ -35,12 +35,12 @@ namespace JToolbox.NetworkTools
                         break;
                     }
 
-                    var reply = await ping.SendPingAsync(address, pingScanInput.Timeout);
-                    var pingResult = new PingScanResult
+                    var pingResult = await Ping(new PingInput
                     {
                         Address = address,
-                        Reply = reply
-                    };
+                        Retries = pingScanInput.Retries,
+                        Timeout = pingScanInput.Timeout
+                    });
                     result.Add(pingResult);
                     OnDeviceScanned(pingResult);
                 }
@@ -50,21 +50,23 @@ namespace JToolbox.NetworkTools
 
         public async Task<PingScanResult> Ping(PingInput pingInput)
         {
-            var ping = new Ping();
-            PingReply pingReply = null;
-            for (int i = 0; i < pingInput.Retries; i++)
+            using (var ping = new Ping())
             {
-                pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
-                if (pingReply.Status == IPStatus.Success)
+                PingReply pingReply = null;
+                for (int i = 0; i < pingInput.Retries; i++)
                 {
-                    break;
+                    pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
+                    if (pingReply.Status == IPStatus.Success)
+                    {
+                        break;
+                    }
                 }
+                return new PingScanResult
+                {
+                    Address = pingInput.Address,
+                    Reply = pingReply
+                };
             }
-            return new PingScanResult
-            {
-                Address = pingInput.Address,
-                Reply = pingReply
-            };
         }
     }
 }
