@@ -4,9 +4,7 @@ using JToolbox.Core.Utilities;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.NetworkInformation;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace JToolbox.NetworkTools
@@ -21,14 +19,15 @@ namespace JToolbox.NetworkTools
 
         public event OnScanComplete OnScanComplete = delegate { };
 
-        public async Task StartScan(IPAddress startAddress, IPAddress endAddress, int workers, int timeout, CancellationToken cancellationToken)
+        public async Task PingScan(PingScanInput pingScanInput)
         {
             var result = new BlockingCollection<PingScanResult>();
-            var addressesRange = NetworkUtils.GetAddressesInRange(startAddress, endAddress);
-            var addressesPacks = addressesRange.ChunkInto(workers);
+            var addressesRange = NetworkUtils.GetAddressesInRange(pingScanInput.StartAddress, pingScanInput.EndAddress);
+            var addressesPacks = addressesRange.ChunkInto(pingScanInput.Workers);
+
+            var ping = new Ping();
             await AsyncHelper.ForEach(addressesPacks, async (addressPack, token) =>
             {
-                var ping = new Ping();
                 foreach (var address in addressPack)
                 {
                     if (token.IsCancellationRequested)
@@ -36,7 +35,7 @@ namespace JToolbox.NetworkTools
                         break;
                     }
 
-                    var reply = await ping.SendPingAsync(address, timeout);
+                    var reply = await ping.SendPingAsync(address, pingScanInput.Timeout);
                     var pingResult = new PingScanResult
                     {
                         Address = address,
@@ -45,8 +44,27 @@ namespace JToolbox.NetworkTools
                     result.Add(pingResult);
                     OnDeviceScanned(pingResult);
                 }
-            }, cancellationToken);
+            }, pingScanInput.CancellationToken);
             OnScanComplete(result.ToList());
+        }
+
+        public async Task<PingScanResult> Ping(PingInput pingInput)
+        {
+            var ping = new Ping();
+            PingReply pingReply = null;
+            for (int i = 0; i < pingInput.Retries; i++)
+            {
+                pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
+                if (pingReply.Status == IPStatus.Success)
+                {
+                    break;
+                }
+            }
+            return new PingScanResult
+            {
+                Address = pingInput.Address,
+                Reply = pingReply
+            };
         }
     }
 }

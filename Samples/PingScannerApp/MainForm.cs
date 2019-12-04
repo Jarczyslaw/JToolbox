@@ -127,7 +127,14 @@ namespace PingScannerApp
                 cancellationTokenSource = new CancellationTokenSource();
                 stopwatch.Restart();
                 Status = ScanStatus.Scanning;
-                await pingScanner.StartScan(StartAddress, EndAddress, Workers, Timeout, cancellationTokenSource.Token);
+                await pingScanner.PingScan(new PingScanInput
+                {
+                    StartAddress = StartAddress,
+                    EndAddress = EndAddress,
+                    Workers = Workers,
+                    Timeout = Timeout,
+                    CancellationToken = cancellationTokenSource.Token
+                });
             }
             catch (Exception exc)
             {
