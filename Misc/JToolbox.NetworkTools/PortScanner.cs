@@ -6,21 +6,31 @@ namespace JToolbox.NetworkTools
 {
     public class PortScanner
     {
-        public async Task<bool> IsPortOpen(IPAddress address, int port, int timeout)
+        public async Task<PortResult> IsPortOpen(PortInput input)
         {
+            var isOpen = false;
+            for (int i = 0; i < input.Retries; i++)
+            {
+
+            }
+            return new PortResult
+            {
+                IsOpen = isOpen,
+                Port = input.Port
+            };
             try
             {
                 using (var client = new TcpClient())
                 {
                     client.SendTimeout =
-                        client.ReceiveTimeout = timeout;
-                    await client.ConnectAsync(address, port);
-                    return client.Connected;
+                        client.ReceiveTimeout = input.Timeout;
+                    await client.ConnectAsync(input.Address, input.Port);
+                    return null;
                 }
             }
             catch
             {
-                return false;
+                return null;
             }
         }
     }

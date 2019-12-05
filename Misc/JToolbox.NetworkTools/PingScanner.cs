@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace JToolbox.NetworkTools
 {
-    public delegate void OnDeviceScanned(PingScanResult result);
+    public delegate void OnDeviceScanned(PingResult result);
 
-    public delegate void OnScanComplete(List<PingScanResult> results);
+    public delegate void OnScanComplete(List<PingResult> results);
 
     public class PingScanner
     {
@@ -21,7 +21,7 @@ namespace JToolbox.NetworkTools
 
         public async Task PingScan(PingScanInput pingScanInput)
         {
-            var result = new BlockingCollection<PingScanResult>();
+            var result = new BlockingCollection<PingResult>();
             var addressesRange = NetworkUtils.GetAddressesInRange(pingScanInput.StartAddress, pingScanInput.EndAddress);
             var addressesPacks = addressesRange.ChunkInto(pingScanInput.Workers);
 
@@ -48,7 +48,7 @@ namespace JToolbox.NetworkTools
             OnScanComplete(result.ToList());
         }
 
-        public async Task<PingScanResult> Ping(PingInput pingInput)
+        public async Task<PingResult> Ping(PingInput pingInput)
         {
             using (var ping = new Ping())
             {
@@ -61,7 +61,7 @@ namespace JToolbox.NetworkTools
                         break;
                     }
                 }
-                return new PingScanResult
+                return new PingResult
                 {
                     Address = pingInput.Address,
                     Reply = pingReply

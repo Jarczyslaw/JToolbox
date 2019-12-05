@@ -90,7 +90,7 @@ namespace PingScannerApp
             tbEndAddress.Text = NetworkUtils.LastAddressInSubnet(address, mask).ToString();
         }
 
-        private void PingScanner_OnScanComplete(List<PingScanResult> results)
+        private void PingScanner_OnScanComplete(List<PingResult> results)
         {
             this.SafeInvoke(() =>
             {
@@ -99,7 +99,7 @@ namespace PingScannerApp
             });
         }
 
-        private void PingScanner_OnDeviceScanned(PingScanResult result)
+        private void PingScanner_OnDeviceScanned(PingResult result)
         {
             this.SafeInvoke(() =>
             {
