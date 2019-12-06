@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BufferedGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\BufferedGridMouseEventArgs.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\ScreenCaptureExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
