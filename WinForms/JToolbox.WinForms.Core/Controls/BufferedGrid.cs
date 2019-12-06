@@ -16,7 +16,7 @@ namespace JToolbox.WinForms.Core.Controls
         public event BufferedGridItemDoubleClick<T> OnItemDoubleClick = delegate { };
         public event BufferedGridItemRightClick<T> OnItemRightClick = delegate { };
 
-        private BufferedGrid()
+        protected BufferedGrid()
         {
             Initialize();
             CellDoubleClick += BufferedGrid_CellDoubleClick;
