@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace JToolbox.WinForms.Core.Controls
@@ -13,7 +12,9 @@ namespace JToolbox.WinForms.Core.Controls
     public abstract class BufferedGrid<T> : DataGridView
     {
         public event BufferedGridItemClick<T> OnItemClick = delegate { };
+
         public event BufferedGridItemDoubleClick<T> OnItemDoubleClick = delegate { };
+
         public event BufferedGridItemRightClick<T> OnItemRightClick = delegate { };
 
         protected BufferedGrid()
@@ -77,9 +78,21 @@ namespace JToolbox.WinForms.Core.Controls
             }
         }
 
+        public List<T> Items
+        {
+            get => DataSource as List<T>;
+            set
+            {
+                DataSource = null;
+                DataSource = value;
+                ClearSelection();
+            }
+        }
+
         private void Initialize()
         {
             DoubleBuffered = true;
+            AutoGenerateColumns = false;
             AllowUserToAddRows =
                 AllowUserToDeleteRows =
                 AllowUserToOrderColumns =
@@ -88,13 +101,6 @@ namespace JToolbox.WinForms.Core.Controls
             SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             RowHeadersVisible = false;
             ReadOnly = true;
-        }
-
-        public void Bind(List<T> gridList)
-        {
-            DataSource = null;
-            DataSource = gridList;
-            ClearSelection();
         }
 
         private void BufferedGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)

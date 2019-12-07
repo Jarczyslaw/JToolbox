@@ -1,6 +1,8 @@
 ﻿using JToolbox.Core.Extensions;
 using JToolbox.Core.Helpers;
 using JToolbox.Core.Utilities;
+using JToolbox.NetworkTools.Inputs;
+using JToolbox.NetworkTools.Results;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +13,20 @@ namespace JToolbox.NetworkTools
 {
     public delegate void OnDeviceScanned(PingResult result);
 
-    public delegate void OnScanComplete(List<PingResult> results);
+    public delegate void OnDevicesScanComplete(List<PingResult> results);
 
     public class PingScanner
     {
         public event OnDeviceScanned OnDeviceScanned = delegate { };
 
-        public event OnScanComplete OnScanComplete = delegate { };
+        public event OnDevicesScanComplete OnDevicesScanComplete = delegate { };
 
-        public async Task PingScan(PingScanInput pingScanInput)
+        public async Task<List<PingResult>> PingScan(PingScanInput pingScanInput)
         {
             var result = new BlockingCollection<PingResult>();
             var addressesRange = NetworkUtils.GetAddressesInRange(pingScanInput.StartAddress, pingScanInput.EndAddress);
             var addressesPacks = addressesRange.ChunkInto(pingScanInput.Workers);
 
-            var ping = new Ping();
             await AsyncHelper.ForEach(addressesPacks, async (addressPack, token) =>
             {
                 foreach (var address in addressPack)
@@ -45,7 +46,9 @@ namespace JToolbox.NetworkTools
                     OnDeviceScanned(pingResult);
                 }
             }, pingScanInput.CancellationToken);
-            OnScanComplete(result.ToList());
+            var finalResult = result.ToList();
+            OnDevicesScanComplete(finalResult);
+            return finalResult;
         }
 
         public async Task<PingResult> Ping(PingInput pingInput)
