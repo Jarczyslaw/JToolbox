@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Core"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Dialogs", "XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj", "{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Droid.Core", "XamarinForms\JToolbox.XamarinForms.Droid.Core\JToolbox.XamarinForms.Droid.Core.csproj", "{7367D159-5011-4588-8888-44DDFEE2B890}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Logging", "XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj", "{7314B3A3-2094-449C-A38B-2FD3DB908167}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Permissions", "XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj", "{D4B3F73C-29FD-40A7-9508-34C980DD2E29}"
@@ -55,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{15AB325A-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.NetworkTools", "Misc\JToolbox.NetworkTools\JToolbox.NetworkTools.csproj", "{6C758E94-49F4-44DF-9EED-CCAEE56422F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Droid.Core", "XamarinForms\JToolbox.XamarinForms.Droid.Core\JToolbox.XamarinForms.Droid.Core.csproj", "{1EEC6070-FF4C-4DF1-B831-C615A95E8484}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,10 +73,6 @@ Global
 		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7367D159-5011-4588-8888-44DDFEE2B890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7367D159-5011-4588-8888-44DDFEE2B890}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7367D159-5011-4588-8888-44DDFEE2B890}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7367D159-5011-4588-8888-44DDFEE2B890}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -141,6 +137,12 @@ Global
 		{6C758E94-49F4-44DF-9EED-CCAEE56422F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C758E94-49F4-44DF-9EED-CCAEE56422F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C758E94-49F4-44DF-9EED-CCAEE56422F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,7 +150,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
-		{7367D159-5011-4588-8888-44DDFEE2B890} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{7314B3A3-2094-449C-A38B-2FD3DB908167} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{D4B3F73C-29FD-40A7-9508-34C980DD2E29} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{547023B9-8E27-479E-B0D3-D4BF87864728} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
@@ -165,6 +166,7 @@ Global
 		{7ACE141D-B773-41AB-A8DC-467D98A4C821} = {15AB325A-A9D7-43D9-910F-457DBB7C44BF}
 		{F49D9D79-F249-4F1B-A421-3958643C24D3} = {15AB325A-A9D7-43D9-910F-457DBB7C44BF}
 		{6C758E94-49F4-44DF-9EED-CCAEE56422F0} = {15AB325A-A9D7-43D9-910F-457DBB7C44BF}
+		{1EEC6070-FF4C-4DF1-B831-C615A95E8484} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
