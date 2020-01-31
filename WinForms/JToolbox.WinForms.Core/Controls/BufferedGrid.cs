@@ -55,7 +55,7 @@ namespace JToolbox.WinForms.Core.Controls
                 var selectedItems = SelectedItems;
                 if (selectedItems.Count == 0)
                 {
-                    return default;
+                    return default(T);
                 }
 
                 return selectedItems[0];

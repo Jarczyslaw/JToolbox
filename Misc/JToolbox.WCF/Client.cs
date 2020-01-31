@@ -18,13 +18,12 @@ namespace JToolbox.WCF
 
         public void Start()
         {
-            Stop();
             Proxy = ChannelFactory.CreateChannel();
         }
 
         public void Stop()
         {
-            if (ChannelFactory != null)
+            if (IsConnected)
             {
                 try
                 {

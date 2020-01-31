@@ -10,7 +10,7 @@ namespace JToolbox.WCF.BindingConfigurations
         }
 
         public string IpAddress { get; set; }
-        public string Port { get; set; }
+        public int Port { get; set; }
 
         public override string MachineAddress { get => $"{IpAddress}:{Port}"; }
         public override string BindingAddress => "net.tcp://";
