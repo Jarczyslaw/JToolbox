@@ -5,7 +5,7 @@ using System.ServiceModel;
 namespace JToolbox.WCF
 {
     public class Client<TProxy> : IDisposable
-            where TProxy : class
+            where TProxy : IProxy
     {
         public Client(BindingConfiguration bindingConfiguration)
         {
