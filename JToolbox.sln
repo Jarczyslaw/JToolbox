@@ -57,7 +57,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Droid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Themes", "XamarinForms\JToolbox.XamarinForms.Themes\JToolbox.XamarinForms.Themes.csproj", "{6E0E9FB7-8FF0-436A-9873-177E6FD1917C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.UI", "XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj", "{2D5C04E5-A948-4D05-969A-B186EAFA9947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.UI", "XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj", "{2D5C04E5-A948-4D05-969A-B186EAFA9947}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A0178720-9333-4457-A2F3-65C5F4E3BB42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCF", "WCF", "{6215D2AB-45BD-49DD-9C3D-0B7C36FB4350}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.Common", "Examples\WCF\WCFExample.Common\WCFExample.Common.csproj", "{CBB3483C-E930-4377-B249-84E58167FA19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.TestServer", "Examples\WCF\WCFExample.TestServer\WCFExample.TestServer.csproj", "{28DB81D4-1F5E-407A-966C-3F3922C9D586}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2812EAC2-7073-4E1E-AA17-CAF66102F459}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.TestClient", "Examples\WCF\WCFExample.TestClient\WCFExample.TestClient.csproj", "{30A70E94-E5C1-43AE-A085-0B162228D1AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -155,6 +170,18 @@ Global
 		{2D5C04E5-A948-4D05-969A-B186EAFA9947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D5C04E5-A948-4D05-969A-B186EAFA9947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D5C04E5-A948-4D05-969A-B186EAFA9947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB3483C-E930-4377-B249-84E58167FA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB3483C-E930-4377-B249-84E58167FA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB3483C-E930-4377-B249-84E58167FA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB3483C-E930-4377-B249-84E58167FA19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28DB81D4-1F5E-407A-966C-3F3922C9D586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28DB81D4-1F5E-407A-966C-3F3922C9D586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28DB81D4-1F5E-407A-966C-3F3922C9D586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28DB81D4-1F5E-407A-966C-3F3922C9D586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A70E94-E5C1-43AE-A085-0B162228D1AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A70E94-E5C1-43AE-A085-0B162228D1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A70E94-E5C1-43AE-A085-0B162228D1AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A70E94-E5C1-43AE-A085-0B162228D1AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +208,10 @@ Global
 		{1EEC6070-FF4C-4DF1-B831-C615A95E8484} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{6E0E9FB7-8FF0-436A-9873-177E6FD1917C} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{2D5C04E5-A948-4D05-969A-B186EAFA9947} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
+		{6215D2AB-45BD-49DD-9C3D-0B7C36FB4350} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
+		{CBB3483C-E930-4377-B249-84E58167FA19} = {6215D2AB-45BD-49DD-9C3D-0B7C36FB4350}
+		{28DB81D4-1F5E-407A-966C-3F3922C9D586} = {6215D2AB-45BD-49DD-9C3D-0B7C36FB4350}
+		{30A70E94-E5C1-43AE-A085-0B162228D1AB} = {6215D2AB-45BD-49DD-9C3D-0B7C36FB4350}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
