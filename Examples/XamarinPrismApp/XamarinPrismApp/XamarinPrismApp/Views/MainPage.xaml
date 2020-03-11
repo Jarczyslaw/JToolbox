@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="XamarinPrismApp.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:JToolbox.XamarinForms.Core.Base;assembly=JToolbox.XamarinForms.Core"
+    Title="{Binding Title}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label HorizontalTextAlignment="Center" Text="Welcome to Xamarin Forms and Prism!" />
+        <StackLayout
+            Grid.Row="1"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand">
+            <Button Command="{Binding NavigationCommand}" Text="Navigation" />
+            <Button Command="{Binding DialogsCommand}" Text="Dialogs" />
+            <Button Command="{Binding SettingsCommand}" Text="Settings" />
+            <Button Command="{Binding PermissionsCommand}" Text="Permissions" />
+            <Button Command="{Binding AccelerometerCommand}" Text="Accelerometer" />
+            <Button Command="{Binding LocalStorageCommand}" Text="Local Storage" />
+            <Button Command="{Binding TestCommand}" Text="Test" />
+            <Button Command="{Binding KillCommand}" Text="Kill application" />
+        </StackLayout>
+        <Label
+            Grid.Row="2"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding DeviceId}" />
+        <Label
+            Grid.Row="3"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding LogPath}" />
+    </Grid>
+
+</base:PageBase>

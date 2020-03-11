@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="XamarinPrismApp.Views.NaviPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:JToolbox.XamarinForms.Core.Base;assembly=JToolbox.XamarinForms.Core"
+    Title="{Binding Title}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Button Command="{Binding NaviSubCommand}" Text="Go to subnavigation" />
+            <Button Command="{Binding IsCurrentPageCommand}" Text="IsCurrentPage" />
+            <Button Command="{Binding IsCurrentViewModelCommand}" Text="IsCurrentViewModelCommand" />
+            <Button Command="{Binding IsViewModelOpenedCommand}" Text="IsViewModelOpenedCommand" />
+            <Entry Text="{Binding InputValue}" WidthRequest="100" />
+            <Button Command="{Binding NavigateWithInputCommand}" Text="Pass parameter" />
+        </StackLayout>
+        <Label
+            Grid.Row="1"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding MessageVisible}"
+            Text="{Binding Message}" />
+    </Grid>
+
+</base:PageBase>

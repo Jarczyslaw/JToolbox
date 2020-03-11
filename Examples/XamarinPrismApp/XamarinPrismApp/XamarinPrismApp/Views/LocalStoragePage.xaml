@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="XamarinPrismApp.Views.LocalStoragePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:JToolbox.XamarinForms.Core.Base;assembly=JToolbox.XamarinForms.Core"
+    x:Name="pbLocalStorage"
+    Title="{Binding Title}">
+
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListView
+            ItemsSource="{Binding Entries}"
+            SelectedItem="{Binding SelectedEntry}"
+            SelectionMode="Single">
+            <ListView.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="VerticalTextAlignment" Value="Center" />
+                    <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                    <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                    <Setter Property="HorizontalTextAlignment" Value="Center" />
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Command="{Binding BindingContext.EditCommand, Source={x:Reference Name=pbLocalStorage}}"
+                                CommandParameter="{Binding .}"
+                                Text="Edit" />
+                            <MenuItem
+                                Command="{Binding BindingContext.DeleteCommand, Source={x:Reference Name=pbLocalStorage}}"
+                                CommandParameter="{Binding .}"
+                                Text="Delete" />
+                        </ViewCell.ContextActions>
+
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Text="{Binding Id}" />
+                            <Label Grid.Column="1" Text="{Binding Name}" />
+                            <Label Grid.Column="2" Text="{Binding Date}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button
+            Grid.Row="1"
+            Command="{Binding AddCommand}"
+            Text="Add new" />
+    </Grid>
+
+</base:PageBase>

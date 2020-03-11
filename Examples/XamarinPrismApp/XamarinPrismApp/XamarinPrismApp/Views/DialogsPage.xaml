@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="XamarinPrismApp.Views.DialogsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:JToolbox.XamarinForms.Core.Base;assembly=JToolbox.XamarinForms.Core"
+    Title="{Binding Title}">
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Picker
+            ItemDisplayBinding="{Binding Title}"
+            ItemsSource="{Binding Entries}"
+            SelectedItem="{Binding SelectedEntry}" />
+        <Button Command="{Binding ShowCommand}" Text="Show" />
+    </StackLayout>
+
+</base:PageBase>
