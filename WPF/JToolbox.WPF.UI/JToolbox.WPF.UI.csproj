@@ -50,6 +50,7 @@
     <Compile Include="Controls\CenterContainer.xaml.cs">
       <DependentUpon>CenterContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExtendedDataGrid.cs" />
     <Compile Include="Converters\BoolNegationConverter.cs" />
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\DictionaryConverter.cs" />
