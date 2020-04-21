@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace JToolbox.WPF.UI
 {
@@ -24,6 +25,7 @@ namespace JToolbox.WPF.UI
             Window.Closing += Window_Closing;
             Window.Closed += Window_Closed;
             Window.Loaded += Window_Loaded;
+            Window.KeyDown += Window_KeyDown;
         }
 
         public void Detach()
@@ -33,6 +35,7 @@ namespace JToolbox.WPF.UI
             Window.Closing -= Window_Closing;
             Window.Closed -= Window_Closed;
             Window.Loaded -= Window_Loaded;
+            Window.KeyDown -= Window_KeyDown;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -74,6 +77,14 @@ namespace JToolbox.WPF.UI
             if (DataContext is IOnLoadedAware loadedAware)
             {
                 loadedAware.OnLoaded();
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (DataContext is IOnKeyDownAware keyDownAware)
+            {
+                keyDownAware.OnKeyDown(e);
             }
         }
     }

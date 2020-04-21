@@ -4,7 +4,7 @@ namespace JToolbox.WPF.UI
 {
     public class WindowBase : Window
     {
-        private WindowEvents windowEvents;
+        private readonly WindowEvents windowEvents;
 
         public WindowBase()
         {
