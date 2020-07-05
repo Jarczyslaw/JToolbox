@@ -53,5 +53,11 @@ namespace JToolbox.Core.Extensions
             }
             return result;
         }
+
+        public static void SortDescending<T>(this List<T> @this)
+        {
+            @this.Sort();
+            @this.Reverse();
+        }
     }
 }
