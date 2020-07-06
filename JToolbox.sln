@@ -59,33 +59,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Theme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.UI", "XamarinForms\JToolbox.XamarinForms.UI\JToolbox.XamarinForms.UI.csproj", "{2D5C04E5-A948-4D05-969A-B186EAFA9947}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{A0178720-9333-4457-A2F3-65C5F4E3BB42}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Examples", "_Examples", "{A0178720-9333-4457-A2F3-65C5F4E3BB42}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCF", "WCF", "{6215D2AB-45BD-49DD-9C3D-0B7C36FB4350}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.Common", "Examples\WCF\WCFExample.Common\WCFExample.Common.csproj", "{CBB3483C-E930-4377-B249-84E58167FA19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.Common", "_Examples\WCF\WCFExample.Common\WCFExample.Common.csproj", "{CBB3483C-E930-4377-B249-84E58167FA19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.TestServer", "Examples\WCF\WCFExample.TestServer\WCFExample.TestServer.csproj", "{28DB81D4-1F5E-407A-966C-3F3922C9D586}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.TestServer", "_Examples\WCF\WCFExample.TestServer\WCFExample.TestServer.csproj", "{28DB81D4-1F5E-407A-966C-3F3922C9D586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.TestClient", "Examples\WCF\WCFExample.TestClient\WCFExample.TestClient.csproj", "{30A70E94-E5C1-43AE-A085-0B162228D1AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFExample.TestClient", "_Examples\WCF\WCFExample.TestClient\WCFExample.TestClient.csproj", "{30A70E94-E5C1-43AE-A085-0B162228D1AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.SysInformation", "Misc\JToolbox.SysInformation\JToolbox.SysInformation.csproj", "{D709E177-61B4-4761-9A5D-0DB55EAFE48D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysInformationExample", "Examples\SysInformationExample\SysInformationExample.csproj", "{01B7AD4E-E207-48A7-8250-6CCEA078569E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysInformationExample", "_Examples\SysInformationExample\SysInformationExample.csproj", "{01B7AD4E-E207-48A7-8250-6CCEA078569E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinPrismApp", "XamarinPrismApp", "{98193876-DFB1-4D75-8E1F-C83765AD2399}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinPrismApp", "Examples\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp.csproj", "{4B96A366-3E73-448E-88F0-DBEFF3B43D6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinPrismApp", "_Examples\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp.csproj", "{4B96A366-3E73-448E-88F0-DBEFF3B43D6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinPrismApp.Android", "Examples\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp.Android\XamarinPrismApp.Android.csproj", "{AFD09C92-7CC5-42A7-A242-5E3FB2EADF08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinPrismApp.Android", "_Examples\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp.Android\XamarinPrismApp.Android.csproj", "{AFD09C92-7CC5-42A7-A242-5E3FB2EADF08}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinPrismApp.DataAccess", "Examples\XamarinPrismApp\XamarinPrismApp.DataAccess\XamarinPrismApp.DataAccess.csproj", "{4679B54A-8929-48A2-AA04-89A17730BA1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinPrismApp.DataAccess", "_Examples\XamarinPrismApp\XamarinPrismApp.DataAccess\XamarinPrismApp.DataAccess.csproj", "{4679B54A-8929-48A2-AA04-89A17730BA1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DbAccess", "Misc\JToolbox.DbAccess\JToolbox.DbAccess.csproj", "{52664123-E8BC-4725-BF5E-A83175C86572}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7F80EB00-0C85-41F3-AB38-AD6DF07F252B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Tests", "_Tests", "{7F80EB00-0C85-41F3-AB38-AD6DF07F252B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Core.Tests", "Tests\JToolbox.Core.Tests\JToolbox.Core.Tests.csproj", "{9FEE9451-06CC-4E32-8048-1FE8AD7DFD2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Core.Tests", "_Tests\JToolbox.Core.Tests\JToolbox.Core.Tests.csproj", "{9FEE9451-06CC-4E32-8048-1FE8AD7DFD2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

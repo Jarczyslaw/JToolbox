@@ -41,7 +41,7 @@ namespace JToolbox.Core.Extensions
         public static void ShiftLeft<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
-            for (int i = 0;i < indexes.Count; i++)
+            for (int i = 0; i < indexes.Count; i++)
             {
                 var index = indexes[i];
                 if (index > 0 && !indexes.Contains(index - 1))
