@@ -77,6 +77,22 @@ namespace JToolbox.Core.Tests
         }
 
         [TestMethod]
+        public void SetAsFirstFast1()
+        {
+            var original = GetList();
+            original.SetAsFirstFast(new List<string> { "1", "3", "5" });
+            CollectionAssert.AreEqual(new List<string> { "1", "3", "5", "2", "4" }, original);
+        }
+
+        [TestMethod]
+        public void SetAsLastFast1()
+        {
+            var original = GetList();
+            original.SetAsLastFast(new List<string> { "1", "3", "5" });
+            CollectionAssert.AreEqual(new List<string> { "2", "4", "1", "3", "5" }, original);
+        }
+
+        [TestMethod]
         public void SetAsFirst1()
         {
             var original = GetList();
