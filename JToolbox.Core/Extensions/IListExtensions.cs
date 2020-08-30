@@ -295,5 +295,23 @@ namespace JToolbox.Core.Extensions
         }
 
         #endregion SetAsLast
+
+        #region Move
+
+        public static void Move<T>(this IList<T> @this, T item, T target)
+        {
+            var sourceIndex = @this.IndexOf(item);
+            var targetIndex = @this.IndexOf(target);
+            @this.Move(sourceIndex, targetIndex);
+        }
+
+        public static void Move<T>(this IList<T> @this, int sourceIndex, int targetIndex)
+        {
+            var item = @this[targetIndex];
+            @this.RemoveAt(targetIndex);
+            @this.Insert(sourceIndex, item);
+        }
+
+        #endregion Move
     }
 }

@@ -60,6 +60,9 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\SingleConverterBase.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="DragAndDrop\DragDropHelper.cs" />
+    <Compile Include="DragAndDrop\DragDropPair.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="WindowBase.cs" />
     <Compile Include="BindingProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
