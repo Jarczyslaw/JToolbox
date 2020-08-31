@@ -37,7 +37,7 @@ namespace JToolbox.Core.Extensions
 
         #region ShiftLeft
 
-        public static void ShiftLeft<T>(this IList<T> @this, int index)
+        public static void ShiftLeftByIndex<T>(this IList<T> @this, int index)
         {
             if (@this.Count < 2)
                 return;
@@ -50,7 +50,7 @@ namespace JToolbox.Core.Extensions
             @this.Insert(index, temp);
         }
 
-        public static void ShiftLeft<T>(this IList<T> @this, List<int> indexes)
+        public static void ShiftLeftByIndexes<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             for (int i = 0; i < indexes.Count; i++)
@@ -58,7 +58,7 @@ namespace JToolbox.Core.Extensions
                 var index = indexes[i];
                 if (index > 0 && !indexes.Contains(index - 1))
                 {
-                    @this.ShiftLeft(index);
+                    @this.ShiftLeftByIndex(index);
                     indexes[i]--;
                 }
             }
@@ -66,19 +66,19 @@ namespace JToolbox.Core.Extensions
 
         public static void ShiftLeft<T>(this IList<T> @this, T entry)
         {
-            ShiftLeft(@this, @this.IndexOf(entry));
+            ShiftLeftByIndex(@this, @this.IndexOf(entry));
         }
 
         public static void ShiftLeft<T>(this IList<T> @this, IList<T> entries)
         {
-            ShiftLeft(@this, @this.IndexesOf(entries));
+            ShiftLeftByIndexes(@this, @this.IndexesOf(entries));
         }
 
         #endregion ShiftLeft
 
         #region ShiftRight
 
-        public static void ShiftRight<T>(this IList<T> @this, int index)
+        public static void ShiftRightByIndex<T>(this IList<T> @this, int index)
         {
             if (@this.Count < 2)
                 return;
@@ -91,7 +91,7 @@ namespace JToolbox.Core.Extensions
             @this.Insert(index, temp);
         }
 
-        public static void ShiftRight<T>(this IList<T> @this, List<int> indexes)
+        public static void ShiftRightByIndexes<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             for (int i = indexes.Count - 1; i >= 0; i--)
@@ -99,7 +99,7 @@ namespace JToolbox.Core.Extensions
                 var index = indexes[i];
                 if (index < @this.Count - 1 && !indexes.Contains(index + 1))
                 {
-                    @this.ShiftRight(index);
+                    @this.ShiftRightByIndex(index);
                     indexes[i]++;
                 }
             }
@@ -107,26 +107,26 @@ namespace JToolbox.Core.Extensions
 
         public static void ShiftRight<T>(this IList<T> @this, T entry)
         {
-            ShiftRight(@this, @this.IndexOf(entry));
+            ShiftRightByIndex(@this, @this.IndexOf(entry));
         }
 
         public static void ShiftRight<T>(this IList<T> @this, IList<T> entries)
         {
-            ShiftRight(@this, @this.IndexesOf(entries));
+            ShiftRightByIndexes(@this, @this.IndexesOf(entries));
         }
 
         #endregion ShiftRight
 
         #region Swap
 
-        public static void Swap<T>(this IList<T> @this, T oldValue, T newValue)
+        public static void Swap<T>(this IList<T> @this, T value1, T value2)
         {
-            var oldIndex = @this.IndexOf(oldValue);
-            var newIndex = @this.IndexOf(newValue);
-            Swap(@this, oldIndex, newIndex);
+            var oldIndex = @this.IndexOf(value1);
+            var newIndex = @this.IndexOf(value2);
+            SwapByIndex(@this, oldIndex, newIndex);
         }
 
-        public static void Swap<T>(this IList<T> @this, int index1, int index2)
+        public static void SwapByIndex<T>(this IList<T> @this, int index1, int index2)
         {
             if (index1 >= 0 && index2 >= 0)
             {
@@ -142,15 +142,15 @@ namespace JToolbox.Core.Extensions
 
         public static bool SetAsFirstFast<T>(this IList<T> @this, T item)
         {
-            return SetAsFirstFast(@this, @this.IndexOf(item));
+            return SetAsFirstFastByIndex(@this, @this.IndexOf(item));
         }
 
         public static void SetAsFirstFast<T>(this IList<T> @this, List<T> items)
         {
-            SetAsFirstFast(@this, IndexesOf(@this, items));
+            SetAsFirstFastByIndexes(@this, IndexesOf(@this, items));
         }
 
-        public static bool SetAsFirstFast<T>(this IList<T> @this, int index)
+        public static bool SetAsFirstFastByIndex<T>(this IList<T> @this, int index)
         {
             if (index > 0)
             {
@@ -162,7 +162,7 @@ namespace JToolbox.Core.Extensions
             return false;
         }
 
-        public static void SetAsFirstFast<T>(this IList<T> @this, List<int> indexes)
+        public static void SetAsFirstFastByIndexes<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             indexes.Reverse();
@@ -185,15 +185,15 @@ namespace JToolbox.Core.Extensions
 
         public static bool SetAsLastFast<T>(this IList<T> @this, T item)
         {
-            return SetAsLastFast(@this, @this.IndexOf(item));
+            return SetAsLastFastByIndex(@this, @this.IndexOf(item));
         }
 
         public static void SetAsLastFast<T>(this IList<T> @this, List<T> items)
         {
-            SetAsLastFast(@this, IndexesOf(@this, items));
+            SetAsLastFastByIndexes(@this, IndexesOf(@this, items));
         }
 
-        public static bool SetAsLastFast<T>(this IList<T> @this, int index)
+        public static bool SetAsLastFastByIndex<T>(this IList<T> @this, int index)
         {
             if (index >= 0 && index < @this.Count - 1)
             {
@@ -205,7 +205,7 @@ namespace JToolbox.Core.Extensions
             return false;
         }
 
-        public static void SetAsLastFast<T>(this IList<T> @this, List<int> indexes)
+        public static void SetAsLastFastByIndexes<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             indexes.Reverse();
@@ -227,22 +227,22 @@ namespace JToolbox.Core.Extensions
 
         #region SetAsFirst
 
-        public static void SetAsFirst<T>(this IList<T> @this, int index)
+        public static void SetAsFirstByIndex<T>(this IList<T> @this, int index)
         {
-            @this.SetAsFirst(new List<int> { index });
+            @this.SetAsFirstByIndexes(new List<int> { index });
         }
 
         public static void SetAsFirst<T>(this IList<T> @this, T item)
         {
-            @this.SetAsFirst(@this.IndexOf(item));
+            @this.SetAsFirstByIndex(@this.IndexOf(item));
         }
 
         public static void SetAsFirst<T>(this IList<T> @this, List<T> items)
         {
-            @this.SetAsFirst(@this.IndexesOf(items));
+            @this.SetAsFirstByIndexes(@this.IndexesOf(items));
         }
 
-        public static void SetAsFirst<T>(this IList<T> @this, List<int> indexes)
+        public static void SetAsFirstByIndexes<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             var targetIndex = 0;
@@ -262,22 +262,22 @@ namespace JToolbox.Core.Extensions
 
         #region SetAsLast
 
-        public static void SetAsLast<T>(this IList<T> @this, int index)
+        public static void SetAsLastByIndex<T>(this IList<T> @this, int index)
         {
-            @this.SetAsLast(new List<int> { index });
+            @this.SetAsLastByIndexes(new List<int> { index });
         }
 
         public static void SetAsLast<T>(this IList<T> @this, T item)
         {
-            @this.SetAsLast(@this.IndexOf(item));
+            @this.SetAsLastByIndex(@this.IndexOf(item));
         }
 
         public static void SetAsLast<T>(this IList<T> @this, List<T> items)
         {
-            @this.SetAsLast(@this.IndexesOf(items));
+            @this.SetAsLastByIndexes(@this.IndexesOf(items));
         }
 
-        public static void SetAsLast<T>(this IList<T> @this, List<int> indexes)
+        public static void SetAsLastByIndexes<T>(this IList<T> @this, List<int> indexes)
         {
             indexes.Sort();
             indexes.Reverse();
@@ -302,10 +302,10 @@ namespace JToolbox.Core.Extensions
         {
             var sourceIndex = @this.IndexOf(item);
             var targetIndex = @this.IndexOf(target);
-            @this.Move(sourceIndex, targetIndex);
+            @this.MoveByIndex(sourceIndex, targetIndex);
         }
 
-        public static void Move<T>(this IList<T> @this, int sourceIndex, int targetIndex)
+        public static void MoveByIndex<T>(this IList<T> @this, int sourceIndex, int targetIndex)
         {
             var item = @this[targetIndex];
             @this.RemoveAt(targetIndex);
