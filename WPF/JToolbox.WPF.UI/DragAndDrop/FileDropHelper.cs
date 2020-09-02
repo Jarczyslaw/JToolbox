@@ -18,6 +18,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         public void PinEvents()
         {
+            UnpinEvents();
             frameworkElement.Drop += Drop;
         }
 
