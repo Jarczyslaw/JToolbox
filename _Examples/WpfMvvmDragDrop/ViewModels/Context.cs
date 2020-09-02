@@ -1,10 +1,12 @@
 ﻿using JToolbox.WPF.Core.Awareness;
 using JToolbox.WPF.Core.Base;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace WpfMvvmDragDrop.ViewModels
 {
-    public class Context : BaseViewModel, IDragAware
+    public class Context : BaseViewModel, IDragDropAware, IFileDropAware
     {
         private ObservableCollection<Tab> tabs;
         private Tab selectedTab;
@@ -86,7 +88,7 @@ namespace WpfMvvmDragDrop.ViewModels
             set => Set(ref tabs, value);
         }
 
-        public void OnDrag(object source, object target)
+        public void OnDragDrop(object source, object target)
         {
             if (source is Tab sourceTab)
             {
@@ -164,6 +166,20 @@ namespace WpfMvvmDragDrop.ViewModels
                 }
             }
             return null;
+        }
+
+        public void OnFileDrop(List<string> filePaths)
+        {
+            if (SelectedTab != null)
+            {
+                foreach (var file in filePaths)
+                {
+                    SelectedTab.Items.Add(new Item
+                    {
+                        Name = Path.GetFileNameWithoutExtension(file)
+                    });
+                }
+            }
         }
     }
 }

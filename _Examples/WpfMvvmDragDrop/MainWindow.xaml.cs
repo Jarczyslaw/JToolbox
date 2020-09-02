@@ -13,6 +13,7 @@ namespace WpfMvvmDragDrop
     public partial class MainWindow : Window
     {
         private readonly DragDropHelper dragDrop;
+        private readonly FileDropHelper fileDrop;
 
         public MainWindow()
         {
@@ -46,6 +47,7 @@ namespace WpfMvvmDragDrop
                     TargetType = typeof(TabPanel)
                 }
             });
+            fileDrop = new FileDropHelper(tabControl);
         }
     }
 }

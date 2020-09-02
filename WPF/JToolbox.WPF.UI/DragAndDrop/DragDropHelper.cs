@@ -7,12 +7,20 @@ using System.Windows.Input;
 
 namespace JToolbox.WPF.UI.DragAndDrop
 {
+    public delegate void OnDrag(FrameworkElement source);
+
+    public delegate void OnDrop(FrameworkElement target, object data);
+
     public class DragDropHelper
     {
         private readonly string key;
         private readonly FrameworkElement element;
         private readonly List<DragDropPair> dragDropPairs;
         private Point? startPosition;
+
+        public event OnDrag OnDrag;
+
+        public event OnDrop OnDrop;
 
         public DragDropHelper(FrameworkElement element, string key,
             List<DragDropPair> dragDropPairs)
@@ -29,6 +37,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
             UnpinEvents();
             element.PreviewMouseLeftButtonDown += PreviewMouseLeftButtonDown;
             element.MouseMove += MouseMove;
+            element.DragEnter += DragEnter;
             element.Drop += Drop;
         }
 
@@ -36,6 +45,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
         {
             element.PreviewMouseLeftButtonDown -= PreviewMouseLeftButtonDown;
             element.MouseMove -= MouseMove;
+            element.DragEnter -= DragEnter;
             element.Drop -= Drop;
         }
 
@@ -51,18 +61,28 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 foreach (var dragDropPair in dragDropPairs)
                 {
                     var source = (DependencyObject)e.OriginalSource;
-                    if (Utils.FindParentOfType(source, dragDropPair.SourceType) is FrameworkElement parent)
+                    if (Utils.FindParentOfType(source, dragDropPair.SourceType) is FrameworkElement sourceParent)
                     {
                         var dragData = new DataObject(key, new DragData
                         {
                             SourceType = dragDropPair.SourceType,
-                            Data = parent.DataContext
+                            Data = sourceParent.DataContext
                         });
                         DragDrop.DoDragDrop(source, dragData, DragDropEffects.Link);
+                        OnDrag?.Invoke(sourceParent);
                         startPosition = null;
                         return;
                     }
                 }
+            }
+        }
+
+        private void DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(key))
+            {
+                e.Effects = DragDropEffects.None;
+                e.Handled = true;
             }
         }
 
@@ -74,11 +94,12 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 foreach (var dragDropPair in dragDropPairs.Where(d => d.SourceType == dragData.SourceType))
                 {
                     var target = (DependencyObject)e.OriginalSource;
-                    if (Utils.FindParentOfType(target, dragDropPair.TargetType) is FrameworkElement parent
-                        && dragData.Data != parent.DataContext
-                        && element.DataContext is IDragAware dragAware)
+                    if (Utils.FindParentOfType(target, dragDropPair.TargetType) is FrameworkElement targetParent
+                        && dragData.Data != targetParent.DataContext
+                        && element.DataContext is IDragDropAware dragAware)
                     {
-                        dragAware.OnDrag(dragData.Data, parent.DataContext);
+                        dragAware.OnDragDrop(dragData.Data, targetParent.DataContext);
+                        OnDrop?.Invoke(targetParent, dragData);
                         return;
                     }
                 }
