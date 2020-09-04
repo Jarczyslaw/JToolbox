@@ -32,7 +32,6 @@
             Header="Drag and drop items and tabs here">
             <TabControl
                 x:Name="tabControl"
-                AllowDrop="True"
                 ItemTemplate="{StaticResource WorkspaceHeader}"
                 ItemsSource="{Binding Tabs}"
                 SelectedItem="{Binding SelectedTab}">
@@ -44,7 +43,6 @@
                             Header="Items">
                             <ListView
                                 x:Name="lvBarcodes"
-                                AllowDrop="True"
                                 Background="Transparent"
                                 BorderThickness="0"
                                 ItemsPanel="{StaticResource TileListViewTemplate}"
