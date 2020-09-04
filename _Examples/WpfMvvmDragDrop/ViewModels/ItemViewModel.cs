@@ -2,7 +2,7 @@
 
 namespace WpfMvvmDragDrop.ViewModels
 {
-    public class Item : BaseViewModel
+    public class ItemViewModel : BaseViewModel
     {
         private string name;
 

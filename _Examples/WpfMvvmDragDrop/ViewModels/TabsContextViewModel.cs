@@ -1,72 +1,70 @@
 ﻿using JToolbox.WPF.Core.Awareness;
 using JToolbox.WPF.Core.Base;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 
 namespace WpfMvvmDragDrop.ViewModels
 {
-    public class Context : BaseViewModel, IDragDropAware, IFileDropAware
+    public class TabsContextViewModel : BaseViewModel, IDragDropAware
     {
-        private ObservableCollection<Tab> tabs;
-        private Tab selectedTab;
+        private ObservableCollection<TabViewModel> tabs;
+        private TabViewModel selectedTab;
 
-        public Context()
+        public TabsContextViewModel()
         {
-            tabs = new ObservableCollection<Tab>
+            tabs = new ObservableCollection<TabViewModel>
             {
-                new Tab
+                new TabViewModel
                 {
                     Name = "Tab1",
-                    Items = new ObservableCollection<Item>
+                    Items = new ObservableCollection<ItemViewModel>
                     {
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item1"
                         },
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item2"
                         },
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item3"
                         }
                     }
                 },
-                new Tab
+                new TabViewModel
                 {
                     Name = "Tab2",
-                    Items = new ObservableCollection<Item>
+                    Items = new ObservableCollection<ItemViewModel>
                     {
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item4"
                         },
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item5"
                         },
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item6"
                         },
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item7"
                         }
                     }
                 },
-                new Tab
+                new TabViewModel
                 {
                     Name = "Tab3",
-                    Items = new ObservableCollection<Item>
+                    Items = new ObservableCollection<ItemViewModel>
                     {
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item8"
                         },
-                        new Item
+                        new ItemViewModel
                         {
                             Name = "Item9"
                         }
@@ -76,13 +74,13 @@ namespace WpfMvvmDragDrop.ViewModels
             SelectedTab = Tabs[0];
         }
 
-        public Tab SelectedTab
+        public TabViewModel SelectedTab
         {
             get => selectedTab;
             set => Set(ref selectedTab, value);
         }
 
-        public ObservableCollection<Tab> Tabs
+        public ObservableCollection<TabViewModel> Tabs
         {
             get => tabs;
             set => Set(ref tabs, value);
@@ -90,25 +88,25 @@ namespace WpfMvvmDragDrop.ViewModels
 
         public void OnDragDrop(object source, object target)
         {
-            if (source is Tab sourceTab)
+            if (source is TabViewModel sourceTab)
             {
-                if (target is Tab targetTab)
+                if (target is TabViewModel targetTab)
                 {
                     MoveTab(sourceTab, targetTab);
                 }
-                else if (target is Context)
+                else if (target is TabsContextViewModel)
                 {
                     SetTabAsLast(sourceTab);
                 }
             }
-            else if (source is Item sourceItem)
+            else if (source is ItemViewModel sourceItem)
             {
-                if (target is Item targetItem)
+                if (target is ItemViewModel targetItem)
                 {
                     var tab = GetTabByItem(sourceItem);
                     MoveItem(tab, sourceItem, targetItem);
                 }
-                else if (target is Tab targetTab)
+                else if (target is TabViewModel targetTab)
                 {
                     var tab = GetTabByItem(sourceItem);
                     if (tab == targetTab)
@@ -123,40 +121,40 @@ namespace WpfMvvmDragDrop.ViewModels
             }
         }
 
-        private void MoveTab(Tab source, Tab target)
+        private void MoveTab(TabViewModel source, TabViewModel target)
         {
             Tabs.Move(Tabs.IndexOf(source), Tabs.IndexOf(target));
             SelectedTab = source;
         }
 
-        private void MoveItem(Tab tab, Item source, Item target)
+        private void MoveItem(TabViewModel tab, ItemViewModel source, ItemViewModel target)
         {
             var items = tab.Items;
             items.Move(items.IndexOf(source), items.IndexOf(target));
         }
 
-        private void SetItemAsLast(Tab tab, Item item)
+        private void SetItemAsLast(TabViewModel tab, ItemViewModel item)
         {
             var items = tab.Items;
             items.Remove(item);
             items.Add(item);
         }
 
-        private void SetTabAsLast(Tab tab)
+        private void SetTabAsLast(TabViewModel tab)
         {
             Tabs.Remove(tab);
             Tabs.Add(tab);
             SelectedTab = tab;
         }
 
-        private void MoveFromTabToTab(Tab sourceTab, Item item, Tab targetTab)
+        private void MoveFromTabToTab(TabViewModel sourceTab, ItemViewModel item, TabViewModel targetTab)
         {
             sourceTab.Items.Remove(item);
             targetTab.Items.Add(item);
             SelectedTab = targetTab;
         }
 
-        private Tab GetTabByItem(Item item)
+        private TabViewModel GetTabByItem(ItemViewModel item)
         {
             foreach (var tab in Tabs)
             {
@@ -166,20 +164,6 @@ namespace WpfMvvmDragDrop.ViewModels
                 }
             }
             return null;
-        }
-
-        public void OnFileDrop(List<string> filePaths)
-        {
-            if (SelectedTab != null)
-            {
-                foreach (var file in filePaths)
-                {
-                    SelectedTab.Items.Add(new Item
-                    {
-                        Name = Path.GetFileNameWithoutExtension(file)
-                    });
-                }
-            }
         }
     }
 }

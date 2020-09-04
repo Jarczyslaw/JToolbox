@@ -3,12 +3,12 @@ using System.Collections.ObjectModel;
 
 namespace WpfMvvmDragDrop.ViewModels
 {
-    public class Tab : BaseViewModel
+    public class TabViewModel : BaseViewModel
     {
         private string name;
-        private ObservableCollection<Item> items;
+        private ObservableCollection<ItemViewModel> items;
 
-        public ObservableCollection<Item> Items
+        public ObservableCollection<ItemViewModel> Items
         {
             get => items;
             set => Set(ref items, value);
@@ -20,13 +20,13 @@ namespace WpfMvvmDragDrop.ViewModels
             set => Set(ref name, value);
         }
 
-        public void SetAsLast(Item item)
+        public void SetAsLast(ItemViewModel item)
         {
             Items.Remove(item);
             Items.Add(item);
         }
 
-        public void ReplaceItem(Item item, Item other)
+        public void ReplaceItem(ItemViewModel item, ItemViewModel other)
         {
             var source = Items.IndexOf(item);
             var target = Items.IndexOf(other);

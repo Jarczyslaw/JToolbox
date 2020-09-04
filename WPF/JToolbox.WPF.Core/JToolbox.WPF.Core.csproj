@@ -49,7 +49,7 @@
     <Compile Include="Awareness\ICloseSource.cs" />
     <Compile Include="Awareness\IDataSource.cs" />
     <Compile Include="Awareness\IDragDropAware.cs" />
-    <Compile Include="Awareness\IFileDropAware.cs" />
+    <Compile Include="Awareness\IFileDragDropAware.cs" />
     <Compile Include="Awareness\IOnClosedAware.cs" />
     <Compile Include="Awareness\IOnClosingAware.cs" />
     <Compile Include="Awareness\IOnInitializedAware.cs" />

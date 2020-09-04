@@ -10,5 +10,10 @@ namespace JToolbox.Core.Extensions
         {
             return enumerable.Any() ? enumerable.Max(selector) : defaultValue;
         }
+
+        public static int SafeMin<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
+        {
+            return enumerable.Any() ? enumerable.Min(selector) : defaultValue;
+        }
     }
 }

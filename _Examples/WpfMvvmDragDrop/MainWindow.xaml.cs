@@ -12,42 +12,20 @@ namespace WpfMvvmDragDrop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly DragDropHelper dragDrop;
-        private readonly FileDropHelper fileDrop;
-
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new Context();
-            dragDrop = new DragDropHelper(tabControl, "test", new List<DragDropPair>
+            DataContext = new MainViewModel();
+            new DragDropHelper(tabControl, new List<DragDropPair>
             {
-                new DragDropPair
-                {
-                    SourceType = typeof(ListViewItem),
-                    TargetType = typeof(ListViewItem)
-                },
-                new DragDropPair
-                {
-                    SourceType = typeof(ListViewItem),
-                    TargetType = typeof(TabItem)
-                },
-                new DragDropPair
-                {
-                    SourceType = typeof(ListViewItem),
-                    TargetType = typeof(ListView)
-                },
-                new DragDropPair
-                {
-                    SourceType = typeof(TabItem),
-                    TargetType = typeof(TabItem)
-                },
-                new DragDropPair
-                {
-                    SourceType = typeof(TabItem),
-                    TargetType = typeof(TabPanel)
-                }
+                new DragDropPair(typeof(ListViewItem)),
+                new DragDropPair(typeof(ListViewItem),typeof(TabItem)),
+                new DragDropPair(typeof(ListViewItem), typeof(ListView)),
+                new DragDropPair(typeof(TabItem)),
+                new DragDropPair(typeof(TabItem), typeof(TabPanel))
             });
-            fileDrop = new FileDropHelper(tabControl);
+
+            new FileDragDropHelper(listView);
         }
     }
 }

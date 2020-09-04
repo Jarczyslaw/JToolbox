@@ -55,9 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModels\Context.cs" />
-    <Compile Include="ViewModels\Item.cs" />
-    <Compile Include="ViewModels\Tab.cs" />
+    <Compile Include="ViewModels\FilesContextViewModel.cs" />
+    <Compile Include="ViewModels\TabsContextViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\TabViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

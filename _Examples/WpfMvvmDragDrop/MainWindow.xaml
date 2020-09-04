@@ -22,40 +22,59 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <TabControl
-            x:Name="tabControl"
-            AllowDrop="True"
-            ItemTemplate="{StaticResource WorkspaceHeader}"
-            ItemsSource="{Binding Tabs}"
-            SelectedItem="{Binding SelectedTab}">
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <GroupBox
-                        Grid.Row="1"
-                        Padding="0"
-                        Header="Items">
-                        <ListView
-                            x:Name="lvBarcodes"
-                            AllowDrop="True"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            ItemsPanel="{StaticResource TileListViewTemplate}"
-                            ItemsSource="{Binding Items}"
-                            SelectionMode="Extended">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock
-                                        Width="100"
-                                        Height="100"
-                                        Margin="5"
-                                        Background="LightGray"
-                                        Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </GroupBox>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <GroupBox
+            Grid.Column="0"
+            DataContext="{Binding TabsContext}"
+            Header="Drag and drop items and tabs here">
+            <TabControl
+                x:Name="tabControl"
+                AllowDrop="True"
+                ItemTemplate="{StaticResource WorkspaceHeader}"
+                ItemsSource="{Binding Tabs}"
+                SelectedItem="{Binding SelectedTab}">
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <GroupBox
+                            Grid.Row="1"
+                            Padding="0"
+                            Header="Items">
+                            <ListView
+                                x:Name="lvBarcodes"
+                                AllowDrop="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemsPanel="{StaticResource TileListViewTemplate}"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="Extended">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Width="100"
+                                            Height="100"
+                                            Margin="5"
+                                            Background="LightGray"
+                                            Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </GroupBox>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+        </GroupBox>
+        <GroupBox
+            Grid.Column="1"
+            DataContext="{Binding FilesContext}"
+            Header="Drag and drop files here">
+            <ListView
+                x:Name="listView"
+                ItemsSource="{Binding Files}"
+                SelectedItem="{Binding SelectedFile}"
+                SelectionMode="Single" />
+        </GroupBox>
     </Grid>
 </Window>
