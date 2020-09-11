@@ -2,6 +2,7 @@
 {
     public interface IDragDropAware
     {
-        void OnDragDrop(object source, object target);
+        void OnDrag(object source);
+        void OnDrop(object source, object target);
     }
 }

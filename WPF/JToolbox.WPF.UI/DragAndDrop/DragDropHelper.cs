@@ -27,6 +27,22 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         protected override string Key => nameof(DragDropHelper);
 
+        private void CallOnDrag(object dataContext, object source)
+        {
+            if (dataContext is IDragDropAware dragDropAware)
+            {
+                dragDropAware.OnDrag(source);
+            }
+        }
+
+        private void CallOnDrop(object dataContext, object source, object target)
+        {
+            if (dataContext is IDragDropAware dragDropAware)
+            {
+                dragDropAware.OnDrop(source, target);
+            }
+        }
+
         protected override void DragStart(object sender, MouseEventArgs e)
         {
             foreach (var dragDropPair in dragDropPairs)
@@ -37,10 +53,14 @@ namespace JToolbox.WPF.UI.DragAndDrop
                     var dragData = new DataObject(Key, new DragData
                     {
                         SourceType = dragDropPair.SourceType,
+                        Element = sourceParent,
                         Data = sourceParent.DataContext
                     });
-                    DragDrop.DoDragDrop(source, dragData, DragDropEffects.Link);
+
                     OnDrag?.Invoke(sourceParent);
+                    CallOnDrag(sourceParent.DataContext, sourceParent.DataContext);
+                    CallOnDrag(frameworkElement.DataContext, sourceParent.DataContext);
+                    DragDrop.DoDragDrop(source, dragData, DragDropEffects.Link);
                     startPosition = null;
                     return;
                 }
@@ -54,11 +74,11 @@ namespace JToolbox.WPF.UI.DragAndDrop
             {
                 var target = (DependencyObject)e.OriginalSource;
                 if (Utils.FindParentOfType(target, dragDropPair.TargetType) is FrameworkElement targetParent
-                    && dragData.Data != targetParent.DataContext
-                    && frameworkElement.DataContext is IDragDropAware dragAware)
+                    && dragData.Element != targetParent)
                 {
-                    dragAware.OnDragDrop(dragData.Data, targetParent.DataContext);
                     OnDrop?.Invoke(targetParent, dragData);
+                    CallOnDrop(targetParent.DataContext, dragData.Data, targetParent.DataContext);
+                    CallOnDrop(frameworkElement.DataContext, dragData.Data, targetParent.DataContext);
                     return;
                 }
             }
@@ -67,6 +87,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
         private class DragData
         {
             public Type SourceType { get; set; }
+            public FrameworkElement Element { get; set; }
             public object Data { get; set; }
         }
     }

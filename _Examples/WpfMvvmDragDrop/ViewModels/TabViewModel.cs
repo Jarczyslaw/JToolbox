@@ -1,9 +1,11 @@
-﻿using JToolbox.WPF.Core.Base;
+﻿using JToolbox.WPF.Core.Awareness;
+using JToolbox.WPF.Core.Base;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace WpfMvvmDragDrop.ViewModels
 {
-    public class TabViewModel : BaseViewModel
+    public class TabViewModel : BaseViewModel, IDragDropAware
     {
         private string name;
         private ObservableCollection<ItemViewModel> items;
@@ -31,6 +33,16 @@ namespace WpfMvvmDragDrop.ViewModels
             var source = Items.IndexOf(item);
             var target = Items.IndexOf(other);
             Items.Move(source, target);
+        }
+
+        public void OnDrag(object source)
+        {
+            Debug.WriteLine("Tab OnDrag");
+        }
+
+        public void OnDrop(object source, object target)
+        {
+            Debug.WriteLine("Tab OnDrop, source: " + source.GetType().Name);
         }
     }
 }

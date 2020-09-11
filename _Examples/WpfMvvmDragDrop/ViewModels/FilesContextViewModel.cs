@@ -3,7 +3,6 @@ using JToolbox.WPF.Core.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace WpfMvvmDragDrop.ViewModels
 {
@@ -28,7 +27,8 @@ namespace WpfMvvmDragDrop.ViewModels
         {
             var newFileName = Path.GetFileNameWithoutExtension(selectedFile) + "_bek" + Path.GetExtension(SelectedFile);
             var newFile = Path.Combine(Path.GetTempPath(), newFileName);
-            using (File.Create(newFile)) ;
+            var stream = File.Create(newFile);
+            stream.Dispose();
             return new List<string> { newFile };
         }
 
