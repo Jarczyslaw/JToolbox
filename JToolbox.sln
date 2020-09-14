@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Core.Tests", "_Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMvvmDragDrop", "_Examples\WpfMvvmDragDrop\WpfMvvmDragDrop.csproj", "{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelHelperTest", "_Examples\ParallelHelperTest\ParallelHelperTest.csproj", "{5811FBF1-212C-474B-8426-82B53F0B148C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_WithoutXamarin|Any CPU = Debug_WithoutXamarin|Any CPU
@@ -285,6 +287,12 @@ Global
 		{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5811FBF1-212C-474B-8426-82B53F0B148C}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
+		{5811FBF1-212C-474B-8426-82B53F0B148C}.Debug_WithoutXamarin|Any CPU.Build.0 = Debug|Any CPU
+		{5811FBF1-212C-474B-8426-82B53F0B148C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5811FBF1-212C-474B-8426-82B53F0B148C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5811FBF1-212C-474B-8426-82B53F0B148C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5811FBF1-212C-474B-8426-82B53F0B148C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -324,6 +332,7 @@ Global
 		{52664123-E8BC-4725-BF5E-A83175C86572} = {15AB325A-A9D7-43D9-910F-457DBB7C44BF}
 		{9FEE9451-06CC-4E32-8048-1FE8AD7DFD2E} = {7F80EB00-0C85-41F3-AB38-AD6DF07F252B}
 		{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
+		{5811FBF1-212C-474B-8426-82B53F0B148C} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
