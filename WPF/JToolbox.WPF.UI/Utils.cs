@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -14,9 +15,14 @@ namespace JToolbox.WPF.UI
 
         public static object FindParentOfType(DependencyObject current, Type parentType)
         {
+            return FindParentOfTypes(current, new List<Type> { parentType });
+        }
+
+        public static object FindParentOfTypes(DependencyObject current, List<Type> parentTypes)
+        {
             do
             {
-                if (current.GetType() == parentType)
+                if (parentTypes.Contains(current.GetType()))
                 {
                     return current;
                 }

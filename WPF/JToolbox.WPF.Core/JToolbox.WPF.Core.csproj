@@ -46,6 +46,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Awareness\Args\DragDropArgs.cs" />
     <Compile Include="Awareness\ICloseSource.cs" />
     <Compile Include="Awareness\IDataSource.cs" />
     <Compile Include="Awareness\IDragDropAware.cs" />
@@ -70,5 +71,6 @@
       <Name>JToolbox.Desktop.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,8 +1,10 @@
-﻿namespace JToolbox.WPF.Core.Awareness
+﻿using JToolbox.WPF.Core.Awareness.Args;
+
+namespace JToolbox.WPF.Core.Awareness
 {
     public interface IDragDropAware
     {
-        void OnDrag(object source);
-        void OnDrop(object source, object target);
+        void OnDrag(DragDropArgs args);
+        void OnDrop(DragDropArgs args);
     }
 }

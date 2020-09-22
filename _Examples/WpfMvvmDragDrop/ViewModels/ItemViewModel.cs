@@ -1,4 +1,5 @@
 ﻿using JToolbox.WPF.Core.Awareness;
+using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
 using System.Diagnostics;
 
@@ -14,14 +15,14 @@ namespace WpfMvvmDragDrop.ViewModels
             set => Set(ref name, value);
         }
 
-        public void OnDrag(object source)
+        public void OnDrag(DragDropArgs args)
         {
             Debug.WriteLine("Item OnDrag");
         }
 
-        public void OnDrop(object source, object target)
+        public void OnDrop(DragDropArgs args)
         {
-            Debug.WriteLine("Item OnDrop, source: " + source.GetType().Name);
+            Debug.WriteLine("Item OnDrop, source: " + args.Source.GetType().Name);
         }
     }
 }

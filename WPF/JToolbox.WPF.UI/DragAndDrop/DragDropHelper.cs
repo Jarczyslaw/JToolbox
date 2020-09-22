@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace JToolbox.WPF.UI.DragAndDrop
 {
-    public delegate void OnDrag(FrameworkElement source);
+    public delegate void OnDrag(UiDragDropArgs args);
 
-    public delegate void OnDrop(FrameworkElement target, object data);
+    public delegate void OnDrop(UiDragDropArgs args);
 
     public class DragDropHelper : BaseDragDropHelper
     {
@@ -27,68 +27,88 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         protected override string Key => nameof(DragDropHelper);
 
-        private void CallOnDrag(object dataContext, object source)
+        public List<Type> DragDropSources => dragDropPairs.Select(s => s.SourceType).ToList();
+
+        public List<Type> DragDropTargets => dragDropPairs.Select(s => s.TargetType).ToList();
+
+        private void CallOnDragChain(UiDragDropArgs args)
         {
-            if (dataContext is IDragDropAware dragDropAware)
+            args.Handled = false;
+            OnDrag?.Invoke(args);
+            if (args.Handled)
             {
-                dragDropAware.OnDrag(source);
+                return;
+            }
+
+            if (args.Source is IDragDropAware sourceAware)
+            {
+                sourceAware.OnDrag(args);
+                if (args.Handled)
+                {
+                    return;
+                }
+            }
+
+            if (frameworkElement.DataContext is IDragDropAware elementAware)
+            {
+                elementAware.OnDrag(args);
             }
         }
 
-        private void CallOnDrop(object dataContext, object source, object target)
+        private void CallOnDropChain(UiDragDropArgs args)
         {
-            if (dataContext is IDragDropAware dragDropAware)
+            args.Handled = false;
+            OnDrop?.Invoke(args);
+            if (args.Handled)
             {
-                dragDropAware.OnDrop(source, target);
+                return;
+            }
+
+            if (args.Target is IDragDropAware targetAware)
+            {
+                targetAware.OnDrop(args);
+                if (args.Handled)
+                {
+                    return;
+                }
+            }
+
+            if (frameworkElement.DataContext is IDragDropAware elementAware)
+            {
+                elementAware.OnDrop(args);
             }
         }
 
         protected override void DragStart(object sender, MouseEventArgs e)
         {
-            foreach (var dragDropPair in dragDropPairs)
+            var source = (DependencyObject)e.OriginalSource;
+            if (Utils.FindParentOfTypes(source, DragDropSources) is FrameworkElement sourceParent)
             {
-                var source = (DependencyObject)e.OriginalSource;
-                if (Utils.FindParentOfType(source, dragDropPair.SourceType) is FrameworkElement sourceParent)
+                var args = new UiDragDropArgs
                 {
-                    var dragData = new DataObject(Key, new DragData
-                    {
-                        SourceType = dragDropPair.SourceType,
-                        Element = sourceParent,
-                        Data = sourceParent.DataContext
-                    });
-
-                    OnDrag?.Invoke(sourceParent);
-                    CallOnDrag(sourceParent.DataContext, sourceParent.DataContext);
-                    CallOnDrag(frameworkElement.DataContext, sourceParent.DataContext);
-                    DragDrop.DoDragDrop(source, dragData, DragDropEffects.Link);
-                    startPosition = null;
-                    return;
-                }
+                    SourceElement = sourceParent,
+                    Source = sourceParent.DataContext
+                };
+                CallOnDragChain(args);
+                DragDrop.DoDragDrop(source, new DataObject(Key, args), DragDropEffects.Link);
+                startPosition = null;
             }
         }
 
         protected override void DropStart(object sender, DragEventArgs e)
         {
-            var dragData = e.Data.GetData(Key) as DragData;
-            foreach (var dragDropPair in dragDropPairs.Where(d => d.SourceType == dragData.SourceType))
+            var args = e.Data.GetData(Key) as UiDragDropArgs;
+            var targetTypes = dragDropPairs.Where(d => d.SourceType == args.SourceElement.GetType())
+                .Select(s => s.TargetType)
+                .ToList();
+            var target = (DependencyObject)e.OriginalSource;
+            if (Utils.FindParentOfTypes(target, targetTypes) is FrameworkElement targetParent
+                && args.SourceElement != targetParent)
             {
-                var target = (DependencyObject)e.OriginalSource;
-                if (Utils.FindParentOfType(target, dragDropPair.TargetType) is FrameworkElement targetParent
-                    && dragData.Element != targetParent)
-                {
-                    OnDrop?.Invoke(targetParent, dragData);
-                    CallOnDrop(targetParent.DataContext, dragData.Data, targetParent.DataContext);
-                    CallOnDrop(frameworkElement.DataContext, dragData.Data, targetParent.DataContext);
-                    return;
-                }
+                args.TargetElement = targetParent;
+                args.Target = targetParent.DataContext;
+                CallOnDropChain(args);
             }
-        }
-
-        private class DragData
-        {
-            public Type SourceType { get; set; }
-            public FrameworkElement Element { get; set; }
-            public object Data { get; set; }
         }
     }
 }

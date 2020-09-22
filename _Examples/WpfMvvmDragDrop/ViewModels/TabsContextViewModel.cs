@@ -1,4 +1,5 @@
 ﻿using JToolbox.WPF.Core.Awareness;
+using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -87,13 +88,15 @@ namespace WpfMvvmDragDrop.ViewModels
             set => Set(ref tabs, value);
         }
 
-        public void OnDrag(object source)
+        public void OnDrag(DragDropArgs args)
         {
             Debug.WriteLine("TabContext OnDrag");
         }
 
-        public void OnDrop(object source, object target)
+        public void OnDrop(DragDropArgs args)
         {
+            var source = args.Source;
+            var target = args.Target;
             Debug.WriteLine($"TabContext OnDrop source: {source.GetType().Name}, target {target.GetType().Name}");
             if (source is TabViewModel sourceTab)
             {

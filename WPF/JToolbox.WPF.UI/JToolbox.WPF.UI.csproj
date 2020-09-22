@@ -64,6 +64,7 @@
     <Compile Include="DragAndDrop\DragDropHelper.cs" />
     <Compile Include="DragAndDrop\DragDropPair.cs" />
     <Compile Include="DragAndDrop\FileDragDropHelper.cs" />
+    <Compile Include="DragAndDrop\UiDragDropArgs.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WindowBase.cs" />
     <Compile Include="BindingProxy.cs" />
