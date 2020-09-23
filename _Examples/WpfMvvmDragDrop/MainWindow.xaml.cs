@@ -1,4 +1,5 @@
 ﻿using JToolbox.WPF.UI.DragAndDrop;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,9 +8,6 @@ using WpfMvvmDragDrop.ViewModels;
 
 namespace WpfMvvmDragDrop
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -25,7 +23,7 @@ namespace WpfMvvmDragDrop
                 new DragDropPair(typeof(TabItem), typeof(TabPanel))
             });
 
-            new FileDragDropHelper(listView);
+            new FileDragDropHelper(listView, new List<Type> { typeof(ListViewItem) }, new List<Type> { typeof(ListView) });
         }
     }
 }

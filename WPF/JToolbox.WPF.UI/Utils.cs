@@ -20,15 +20,18 @@ namespace JToolbox.WPF.UI
 
         public static object FindParentOfTypes(DependencyObject current, List<Type> parentTypes)
         {
-            do
+            if (parentTypes?.Count > 0)
             {
-                if (parentTypes.Contains(current.GetType()))
+                do
                 {
-                    return current;
+                    if (parentTypes.Contains(current.GetType()))
+                    {
+                        return current;
+                    }
+                    current = VisualTreeHelper.GetParent(current);
                 }
-                current = VisualTreeHelper.GetParent(current);
+                while (current != null);
             }
-            while (current != null);
             return null;
         }
     }

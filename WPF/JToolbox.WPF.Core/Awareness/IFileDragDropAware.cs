@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using JToolbox.WPF.Core.Awareness.Args;
 
 namespace JToolbox.WPF.Core.Awareness
 {
     public interface IFileDragDropAware
     {
-        List<string> OnFileDrag();
+        void OnFileDrag(FileDragArgs args);
 
-        void OnFilesDrop(List<string> filesPaths);
+        void OnFilesDrop(FileDropArgs args);
     }
 }

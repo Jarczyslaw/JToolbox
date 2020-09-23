@@ -7,15 +7,18 @@ using System.Windows.Input;
 
 namespace JToolbox.WPF.UI.DragAndDrop
 {
+    public delegate void OnFileDrag(UiFileDragArgs args);
+
+    public delegate void OnFileDrop(UiFileDropArgs args);
+
     public class FileDragDropHelper : BaseDragDropHelper
     {
         private readonly List<Type> fileDragSources;
         private readonly List<Type> fileDropTargets;
 
-        public FileDragDropHelper(FrameworkElement frameworkElement)
-            : this(frameworkElement, null, null)
-        {
-        }
+        public event OnFileDrag OnFileDrag;
+
+        public event OnFileDrop OnFileDrop;
 
         public FileDragDropHelper(FrameworkElement frameworkElement, List<Type> fileDragSources, List<Type> fileDropTargets)
             : base(frameworkElement)
@@ -26,15 +29,66 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         protected override string Key => DataFormats.FileDrop;
 
+        private void CallOnDragChain(UiFileDragArgs args)
+        {
+            OnFileDrag?.Invoke(args);
+            if (args.Files?.Count > 0)
+            {
+                return;
+            }
+
+            if (args.Element.DataContext is IFileDragDropAware parentAware)
+            {
+                parentAware.OnFileDrag(args);
+                if (args.Files?.Count > 0)
+                {
+                    return;
+                }
+            }
+
+            if (frameworkElement.DataContext is IFileDragDropAware elementAware)
+            {
+                elementAware.OnFileDrag(args);
+            }
+        }
+
+        private void CallOnDropChain(UiFileDropArgs args)
+        {
+            args.Handled = false;
+            OnFileDrop?.Invoke(args);
+            if (args.Handled)
+            {
+                return;
+            }
+
+            if (args.Element.DataContext is IFileDragDropAware parentAware)
+            {
+                parentAware.OnFilesDrop(args);
+                if (args.Handled)
+                {
+                    return;
+                }
+            }
+
+            if (frameworkElement.DataContext is IFileDragDropAware elementAware)
+            {
+                elementAware.OnFilesDrop(args);
+            }
+        }
+
         protected override void DragStart(object sender, MouseEventArgs e)
         {
-            var sourceElement = FindElement(e.OriginalSource, fileDragSources);
-            if (sourceElement?.DataContext is IFileDragDropAware fileDragDropAware)
+            var source = e.OriginalSource as DependencyObject;
+            if (Utils.FindParentOfTypes(source, fileDragSources) is FrameworkElement parent)
             {
-                var files = fileDragDropAware.OnFileDrag();
-                if (files?.Count > 0)
+                var args = new UiFileDragArgs
                 {
-                    DragDrop.DoDragDrop(sourceElement, new DataObject(DataFormats.FileDrop, files.ToArray()), DragDropEffects.Move);
+                    Element = parent
+                };
+                CallOnDragChain(args);
+                if (args.Files?.Count > 0)
+                {
+                    DragDrop.DoDragDrop(source, new DataObject(DataFormats.FileDrop, args.Files.ToArray()), DragDropEffects.Move);
                     startPosition = null;
                 }
             }
@@ -42,28 +96,17 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         protected override void DropStart(object sender, DragEventArgs e)
         {
-            var sourceElement = FindElement(e.OriginalSource, fileDropTargets);
+            var target = e.OriginalSource as DependencyObject;
             var files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            if (files?.Length > 0 && sourceElement?.DataContext is IFileDragDropAware fileDragDropAware)
+            if (files?.Length > 0 && Utils.FindParentOfTypes(target, fileDropTargets) is FrameworkElement parent)
             {
-                fileDragDropAware.OnFilesDrop(files.ToList());
-            }
-        }
-
-        private FrameworkElement FindElement(object originalSource, List<Type> relevantTypes)
-        {
-            var source = (DependencyObject)originalSource;
-            if (relevantTypes != null)
-            {
-                foreach (var type in relevantTypes)
+                var args = new UiFileDropArgs
                 {
-                    if (Utils.FindParentOfType(source, type) is FrameworkElement sourceParent)
-                    {
-                        return sourceParent;
-                    }
-                }
+                    Files = files.ToList(),
+                    Element = parent
+                };
+                CallOnDropChain(args);
             }
-            return frameworkElement;
         }
     }
 }

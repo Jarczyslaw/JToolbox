@@ -49,7 +49,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 }
             }
 
-            if (frameworkElement.DataContext is IDragDropAware elementAware)
+            if (args.SourceElement != frameworkElement && frameworkElement.DataContext is IDragDropAware elementAware)
             {
                 elementAware.OnDrag(args);
             }
@@ -73,7 +73,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 }
             }
 
-            if (frameworkElement.DataContext is IDragDropAware elementAware)
+            if (args.TargetElement != frameworkElement && frameworkElement.DataContext is IDragDropAware elementAware)
             {
                 elementAware.OnDrop(args);
             }

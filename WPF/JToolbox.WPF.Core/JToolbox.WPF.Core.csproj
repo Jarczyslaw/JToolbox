@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Awareness\Args\DragDropArgs.cs" />
+    <Compile Include="Awareness\Args\FileDragArgs.cs" />
+    <Compile Include="Awareness\Args\FileDropArgs.cs" />
     <Compile Include="Awareness\ICloseSource.cs" />
     <Compile Include="Awareness\IDataSource.cs" />
     <Compile Include="Awareness\IDragDropAware.cs" />

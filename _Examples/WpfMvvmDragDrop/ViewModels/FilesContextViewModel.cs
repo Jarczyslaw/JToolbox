@@ -1,4 +1,5 @@
 ﻿using JToolbox.WPF.Core.Awareness;
+using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,18 +24,18 @@ namespace WpfMvvmDragDrop.ViewModels
             set => Set(ref selectedFile, value);
         }
 
-        public List<string> OnFileDrag()
+        public void OnFileDrag(FileDragArgs args)
         {
             var newFileName = Path.GetFileNameWithoutExtension(selectedFile) + "_bek" + Path.GetExtension(SelectedFile);
             var newFile = Path.Combine(Path.GetTempPath(), newFileName);
             var stream = File.Create(newFile);
             stream.Dispose();
-            return new List<string> { newFile };
+            args.Files = new List<string> { newFile };
         }
 
-        public void OnFilesDrop(List<string> filesPaths)
+        public void OnFilesDrop(FileDropArgs args)
         {
-            foreach (var filePath in filesPaths)
+            foreach (var filePath in args.Files)
             {
                 Files.Add(filePath);
             }
