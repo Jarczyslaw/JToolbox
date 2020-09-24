@@ -20,8 +20,13 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         public event OnFileDrop OnFileDrop;
 
-        public FileDragDropHelper(FrameworkElement frameworkElement, List<Type> fileDragSources, List<Type> fileDropTargets)
-            : base(frameworkElement)
+        public FileDragDropHelper(FrameworkElement containerElement, Type fileDragSource, Type fileDropTarget)
+            : this(containerElement, new List<Type> { fileDragSource }, new List<Type> { fileDropTarget })
+        {
+        }
+
+        public FileDragDropHelper(FrameworkElement containerElement, List<Type> fileDragSources, List<Type> fileDropTargets)
+            : base(containerElement)
         {
             this.fileDragSources = fileDragSources;
             this.fileDropTargets = fileDropTargets;
@@ -47,7 +52,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 }
             }
 
-            if (args.Element != frameworkElement && frameworkElement.DataContext is IFileDragDropAware elementAware)
+            if (args.Element != containerElement && containerElement.DataContext is IFileDragDropAware elementAware)
             {
                 elementAware.OnFileDrag(args);
             }
@@ -71,7 +76,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 }
             }
 
-            if (args.Element != frameworkElement && frameworkElement.DataContext is IFileDragDropAware elementAware)
+            if (args.Element != containerElement && containerElement.DataContext is IFileDragDropAware elementAware)
             {
                 elementAware.OnFilesDrop(args);
             }
@@ -89,7 +94,9 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 CallOnDragChain(args);
                 if (args.Files?.Count > 0)
                 {
-                    DragDrop.DoDragDrop(source, new DataObject(DataFormats.FileDrop, args.Files.ToArray()), DragDropEffects.Move);
+                    var dataObject = new DataObject(DataFormats.FileDrop, args.Files.ToArray());
+                    dataObject.SetData(AdditionalKey, new object());
+                    DragDrop.DoDragDrop(source, dataObject, DragDropEffects.Move);
                     startPosition = null;
                 }
             }
@@ -99,7 +106,8 @@ namespace JToolbox.WPF.UI.DragAndDrop
         {
             var target = e.OriginalSource as DependencyObject;
             var files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            if (files?.Length > 0 && Utils.FindParentOfTypes(target, fileDropTargets) is FrameworkElement parent)
+            var fromHelper = e.Data.GetData(AdditionalKey) != null;
+            if (files?.Length > 0 && !fromHelper && Utils.FindParentOfTypes(target, fileDropTargets) is FrameworkElement parent)
             {
                 var args = new UiFileDropArgs
                 {

@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:WpfMvvmDragDrop"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
-    Height="600"
+    Width="900"
+    Height="700"
     mc:Ignorable="d">
     <Window.Resources>
         <ItemsPanelTemplate x:Key="TileListViewTemplate">
@@ -82,13 +82,24 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Header="Event logs">
-            <TextBox
-                x:Name="tbLogs"
-                AcceptsReturn="True"
-                HorizontalScrollBarVisibility="Visible"
-                IsReadOnly="True"
-                Text="{Binding Logs}"
-                VerticalScrollBarVisibility="Visible" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBox
+                    x:Name="tbLogs"
+                    AcceptsReturn="True"
+                    HorizontalScrollBarVisibility="Visible"
+                    IsReadOnly="True"
+                    Text="{Binding Logs}"
+                    VerticalScrollBarVisibility="Visible" />
+                <Button
+                    Grid.Row="1"
+                    Margin="3"
+                    Command="{Binding ClearCommand}"
+                    Content="Clear" />
+            </Grid>
         </GroupBox>
     </Grid>
 </Window>

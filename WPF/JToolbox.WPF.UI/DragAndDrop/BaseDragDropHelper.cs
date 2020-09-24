@@ -6,13 +6,13 @@ namespace JToolbox.WPF.UI.DragAndDrop
 {
     public abstract class BaseDragDropHelper
     {
-        protected readonly FrameworkElement frameworkElement;
+        protected readonly FrameworkElement containerElement;
         protected Point? startPosition;
 
-        protected BaseDragDropHelper(FrameworkElement frameworkElement)
+        protected BaseDragDropHelper(FrameworkElement containerElement)
         {
-            this.frameworkElement = frameworkElement;
-            this.frameworkElement.AllowDrop = true;
+            this.containerElement = containerElement;
+            this.containerElement.AllowDrop = true;
             PinEvents();
         }
 
@@ -21,18 +21,18 @@ namespace JToolbox.WPF.UI.DragAndDrop
         public void PinEvents()
         {
             UnpinEvents();
-            frameworkElement.PreviewMouseLeftButtonDown += PreviewMouseLeftButtonDown;
-            frameworkElement.MouseMove += MouseMove;
-            frameworkElement.DragEnter += DragEnter;
-            frameworkElement.Drop += Drop;
+            containerElement.PreviewMouseLeftButtonDown += PreviewMouseLeftButtonDown;
+            containerElement.MouseMove += MouseMove;
+            containerElement.DragEnter += DragEnter;
+            containerElement.Drop += Drop;
         }
 
         public void UnpinEvents()
         {
-            frameworkElement.PreviewMouseLeftButtonDown -= PreviewMouseLeftButtonDown;
-            frameworkElement.MouseMove -= MouseMove;
-            frameworkElement.DragEnter -= DragEnter;
-            frameworkElement.Drop -= Drop;
+            containerElement.PreviewMouseLeftButtonDown -= PreviewMouseLeftButtonDown;
+            containerElement.MouseMove -= MouseMove;
+            containerElement.DragEnter -= DragEnter;
+            containerElement.Drop -= Drop;
         }
 
         private void PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

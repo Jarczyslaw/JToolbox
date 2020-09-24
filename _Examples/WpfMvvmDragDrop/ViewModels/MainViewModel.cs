@@ -15,6 +15,8 @@ namespace WpfMvvmDragDrop.ViewModels
         public TabsContextViewModel TabsContext { get; set; } = new TabsContextViewModel();
         public FilesContextViewModel FilesContext { get; set; } = new FilesContextViewModel();
 
+        public RelayCommand ClearCommand => new RelayCommand(() => Logs = string.Empty);
+
         public string Logs
         {
             get => logs;

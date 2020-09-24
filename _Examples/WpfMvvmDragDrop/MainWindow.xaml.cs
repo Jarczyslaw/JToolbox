@@ -16,7 +16,7 @@ namespace WpfMvvmDragDrop
             tbLogs.TextChanged += TbLogs_TextChanged;
 
             DataContext = new MainViewModel();
-            new DragDropHelper(tabControl, new List<DragDropPair>
+            var dragDropHelper = new DragDropHelper(tabControl, new List<DragDropPair>
             {
                 new DragDropPair(typeof(ListViewItem)),
                 new DragDropPair(typeof(ListViewItem),typeof(TabItem)),
@@ -24,8 +24,32 @@ namespace WpfMvvmDragDrop
                 new DragDropPair(typeof(TabItem)),
                 new DragDropPair(typeof(TabItem), typeof(TabPanel))
             });
+            dragDropHelper.OnDrag += DragDropHelper_OnDrag;
+            dragDropHelper.OnDrop += DragDropHelper_OnDrop;
 
-            new FileDragDropHelper(listView, new List<Type> { typeof(ListViewItem) }, new List<Type> { typeof(ListView) });
+            var fileDragDropHelper = new FileDragDropHelper(listView, new List<Type> { typeof(ListViewItem) }, new List<Type> { typeof(ListView) });
+            fileDragDropHelper.OnFileDrag += FileDragDropHelper_OnFileDrag;
+            fileDragDropHelper.OnFileDrop += FileDragDropHelper_OnFileDrop;
+        }
+
+        private void FileDragDropHelper_OnFileDrop(UiFileDropArgs args)
+        {
+            EventLogs.AddWithClassName("OnFileDrop, element: " + args.Element.GetType().Name);
+        }
+
+        private void FileDragDropHelper_OnFileDrag(UiFileDragArgs args)
+        {
+            EventLogs.AddWithClassName("OnFileDrag, element: " + args.Element.GetType().Name);
+        }
+
+        private void DragDropHelper_OnDrop(UiDragDropArgs args)
+        {
+            EventLogs.AddWithClassName("OnDrop, source: " + args.SourceElement.GetType().Name + ", target: " + args.TargetElement.GetType().Name);
+        }
+
+        private void DragDropHelper_OnDrag(UiDragDropArgs args)
+        {
+            EventLogs.AddWithClassName("OnDrag, source: " + args.SourceElement.GetType().Name);
         }
 
         private void TbLogs_TextChanged(object sender, TextChangedEventArgs e)

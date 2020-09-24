@@ -34,5 +34,19 @@ namespace JToolbox.WPF.UI
             }
             return null;
         }
+
+        public static FrameworkElement FindParentFrameworkElement(DependencyObject current)
+        {
+            do
+            {
+                if (typeof(FrameworkElement).IsAssignableFrom(current.GetType()))
+                {
+                    return (FrameworkElement)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
     }
 }
