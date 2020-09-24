@@ -13,6 +13,8 @@ namespace WpfMvvmDragDrop
         public MainWindow()
         {
             InitializeComponent();
+            tbLogs.TextChanged += TbLogs_TextChanged;
+
             DataContext = new MainViewModel();
             new DragDropHelper(tabControl, new List<DragDropPair>
             {
@@ -24,6 +26,11 @@ namespace WpfMvvmDragDrop
             });
 
             new FileDragDropHelper(listView, new List<Type> { typeof(ListViewItem) }, new List<Type> { typeof(ListView) });
+        }
+
+        private void TbLogs_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            tbLogs.ScrollToEnd();
         }
     }
 }

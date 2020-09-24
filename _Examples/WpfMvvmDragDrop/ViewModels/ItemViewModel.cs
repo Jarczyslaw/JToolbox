@@ -17,12 +17,12 @@ namespace WpfMvvmDragDrop.ViewModels
 
         public void OnDrag(DragDropArgs args)
         {
-            Debug.WriteLine("Item OnDrag");
+            EventLogs.AddWithClassName("OnDrag");
         }
 
         public void OnDrop(DragDropArgs args)
         {
-            Debug.WriteLine("Item OnDrop, source: " + args.Source.GetType().Name);
+            EventLogs.AddWithClassName("OnDrop, source: " + args.Source.GetType().Name);
         }
     }
 }

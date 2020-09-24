@@ -90,14 +90,14 @@ namespace WpfMvvmDragDrop.ViewModels
 
         public void OnDrag(DragDropArgs args)
         {
-            Debug.WriteLine("TabContext OnDrag");
+            EventLogs.AddWithClassName("OnDrag, source: " + args.Source.GetType().Name);
         }
 
         public void OnDrop(DragDropArgs args)
         {
             var source = args.Source;
             var target = args.Target;
-            Debug.WriteLine($"TabContext OnDrop source: {source.GetType().Name}, target {target.GetType().Name}");
+            EventLogs.AddWithClassName($"OnDrop source: {source.GetType().Name}, target {target.GetType().Name}");
             if (source is TabViewModel sourceTab)
             {
                 if (target is TabViewModel targetTab)

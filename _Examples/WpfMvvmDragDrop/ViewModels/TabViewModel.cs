@@ -38,12 +38,12 @@ namespace WpfMvvmDragDrop.ViewModels
 
         public void OnDrag(DragDropArgs args)
         {
-            Debug.WriteLine("Tab OnDrag");
+            EventLogs.AddWithClassName("Tab OnDrag");
         }
 
         public void OnDrop(DragDropArgs args)
         {
-            Debug.WriteLine("Tab OnDrop, source: " + args.Source.GetType().Name);
+            EventLogs.AddWithClassName("Tab OnDrop, source: " + args.Source.GetType().Name);
         }
     }
 }

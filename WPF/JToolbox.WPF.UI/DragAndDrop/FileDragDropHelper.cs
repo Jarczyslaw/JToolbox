@@ -28,6 +28,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
         }
 
         protected override string Key => DataFormats.FileDrop;
+        public string AdditionalKey => nameof(FileDragDropHelper);
 
         private void CallOnDragChain(UiFileDragArgs args)
         {
@@ -46,7 +47,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 }
             }
 
-            if (frameworkElement.DataContext is IFileDragDropAware elementAware)
+            if (args.Element != frameworkElement && frameworkElement.DataContext is IFileDragDropAware elementAware)
             {
                 elementAware.OnFileDrag(args);
             }
@@ -70,7 +71,7 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 }
             }
 
-            if (frameworkElement.DataContext is IFileDragDropAware elementAware)
+            if (args.Element != frameworkElement && frameworkElement.DataContext is IFileDragDropAware elementAware)
             {
                 elementAware.OnFilesDrop(args);
             }

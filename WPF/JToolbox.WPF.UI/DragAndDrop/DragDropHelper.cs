@@ -19,6 +19,11 @@ namespace JToolbox.WPF.UI.DragAndDrop
 
         public event OnDrop OnDrop;
 
+        public DragDropHelper(FrameworkElement frameworkElement)
+            : this(frameworkElement, null)
+        {
+        }
+
         public DragDropHelper(FrameworkElement frameworkElement, List<DragDropPair> dragDropPairs)
             : base(frameworkElement)
         {
@@ -26,10 +31,6 @@ namespace JToolbox.WPF.UI.DragAndDrop
         }
 
         protected override string Key => nameof(DragDropHelper);
-
-        public List<Type> DragDropSources => dragDropPairs.Select(s => s.SourceType).ToList();
-
-        public List<Type> DragDropTargets => dragDropPairs.Select(s => s.TargetType).ToList();
 
         private void CallOnDragChain(UiDragDropArgs args)
         {
@@ -82,7 +83,8 @@ namespace JToolbox.WPF.UI.DragAndDrop
         protected override void DragStart(object sender, MouseEventArgs e)
         {
             var source = (DependencyObject)e.OriginalSource;
-            if (Utils.FindParentOfTypes(source, DragDropSources) is FrameworkElement sourceParent)
+            var sourceParent = GetElement(source, dragDropPairs?.Select(s => s.SourceType).ToList());
+            if (sourceParent != null)
             {
                 var args = new UiDragDropArgs
                 {
@@ -98,17 +100,26 @@ namespace JToolbox.WPF.UI.DragAndDrop
         protected override void DropStart(object sender, DragEventArgs e)
         {
             var args = e.Data.GetData(Key) as UiDragDropArgs;
-            var targetTypes = dragDropPairs.Where(d => d.SourceType == args.SourceElement.GetType())
+            var targetTypes = dragDropPairs?.Where(d => d.SourceType == args.SourceElement.GetType())
                 .Select(s => s.TargetType)
                 .ToList();
             var target = (DependencyObject)e.OriginalSource;
-            if (Utils.FindParentOfTypes(target, targetTypes) is FrameworkElement targetParent
-                && args.SourceElement != targetParent)
+            var targetParent = GetElement(target, targetTypes);
+            if (targetParent != null && args.SourceElement != targetParent)
             {
                 args.TargetElement = targetParent;
                 args.Target = targetParent.DataContext;
                 CallOnDropChain(args);
             }
+        }
+
+        private FrameworkElement GetElement(DependencyObject dependencyObject, List<Type> types)
+        {
+            if (types == null || types.Count == 0)
+            {
+                return Utils.FindParentOfType<FrameworkElement>(dependencyObject);
+            }
+            return Utils.FindParentOfTypes(dependencyObject, types) as FrameworkElement;
         }
     }
 }

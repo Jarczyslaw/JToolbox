@@ -31,6 +31,7 @@ namespace WpfMvvmDragDrop.ViewModels
             var stream = File.Create(newFile);
             stream.Dispose();
             args.Files = new List<string> { newFile };
+            EventLogs.AddWithClassName("File drag: " + newFile);
         }
 
         public void OnFilesDrop(FileDropArgs args)
@@ -39,6 +40,7 @@ namespace WpfMvvmDragDrop.ViewModels
             {
                 Files.Add(filePath);
             }
+            EventLogs.AddWithClassName("Files drop: " + string.Join(", ", args.Files.ToArray()));
         }
     }
 }

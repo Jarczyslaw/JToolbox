@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EventLogs.cs" />
     <Compile Include="ViewModels\FilesContextViewModel.cs" />
     <Compile Include="ViewModels\TabsContextViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
