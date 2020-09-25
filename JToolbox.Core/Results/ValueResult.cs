@@ -1,11 +1,22 @@
-﻿namespace JToolbox.Core.Results
+﻿using System;
+
+namespace JToolbox.Core.Results
 {
     public class ValueResult<T> : Result
     {
-        public T Value { get; set; }
-
         public ValueResult()
         {
+        }
+
+        public ValueResult(Result other)
+            : base(other)
+        {
+        }
+
+        public ValueResult(ValueResult<T> other)
+            : base(other)
+        {
+            Value = other.Value;
         }
 
         public ValueResult(T value)
@@ -13,21 +24,26 @@
             Value = value;
         }
 
-        public ValueResult(Result result)
-            : base(result)
+        public new static ValueResult<T> AsError(string error)
         {
+            var result = new ValueResult<T>();
+            result.Messages.AddError(error);
+            return result;
         }
 
-        public ValueResult(ValueResult<T> valueResult)
-            : base(valueResult)
+        public new static ValueResult<T> AsError(Exception exc)
         {
-            Value = valueResult.Value;
+            var result = new ValueResult<T>();
+            result.Messages.AddError(exc);
+            return result;
         }
+
+        public T Value { get; set; }
 
         public override void Clear()
         {
-            Value = default(T);
             base.Clear();
+            Value = default(T);
         }
     }
 }

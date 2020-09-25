@@ -1,35 +1,53 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JToolbox.Core.Results
 {
     public class Result
     {
-        public bool IsSuccess => !Errors.Any();
-
-        public ResultErrors Errors { get; }
-
-        public ResultInfos Infos { get; }
-
         public Result()
-            : this (new ResultErrors(), new ResultInfos())
         {
         }
 
-        public Result(Result result)
-            : this (result.Errors, result.Infos)
+        public Result(Result other)
         {
+            Messages = other.Messages;
         }
 
-        public Result(ResultErrors errors, ResultInfos infos)
+        public static Result AsError(string error)
         {
-            Errors = errors;
-            Infos = infos;
+            var result = new Result();
+            result.Messages.AddError(error);
+            return result;
         }
+
+        public static Result AsError(Exception exc)
+        {
+            var result = new Result();
+            result.Messages.AddError(exc);
+            return result;
+        }
+
+        public Messages Messages { get; } = new Messages();
+
+        public bool IsSuccess => !Messages.Any(s => s.Type == MessageType.Error);
+
+        public List<Message> Informations => GetMessagesOfType(MessageType.Information);
+
+        public List<Message> Warnings => GetMessagesOfType(MessageType.Warning);
+
+        public List<Message> Errors => GetMessagesOfType(MessageType.Error);
 
         public virtual void Clear()
         {
-            Errors.Clear();
-            Infos.Clear();
+            Messages.Clear();
+        }
+
+        private List<Message> GetMessagesOfType(MessageType messageType)
+        {
+            return Messages.Where(s => s.Type == messageType)
+                .ToList();
         }
     }
 }
