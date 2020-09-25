@@ -35,9 +35,15 @@ namespace JToolbox.Core.Results
 
         public List<Message> Informations => GetMessagesOfType(MessageType.Information);
 
+        public Message Information => Informations.FirstOrDefault();
+
         public List<Message> Warnings => GetMessagesOfType(MessageType.Warning);
 
+        public Message Warning => Warnings.FirstOrDefault();
+
         public List<Message> Errors => GetMessagesOfType(MessageType.Error);
+
+        public Message Error => Errors.FirstOrDefault();
 
         public virtual void Clear()
         {
