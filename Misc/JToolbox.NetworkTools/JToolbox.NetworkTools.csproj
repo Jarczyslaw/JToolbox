@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\JToolbox.Core\JToolbox.Core.csproj" />
+    <ProjectReference Include="..\JToolbox.Threading\JToolbox.Threading.csproj" />
   </ItemGroup>
 
 </Project>

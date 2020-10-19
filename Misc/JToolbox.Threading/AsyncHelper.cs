@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JToolbox.Core.Helpers
+namespace JToolbox.Threading
 {
     public static class AsyncHelper
     {

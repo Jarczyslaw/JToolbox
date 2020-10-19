@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace JToolbox.Core.Helpers
+namespace JToolbox.Threading
 {
     public class ParallelHelper<TInput, TOutput>
     {
