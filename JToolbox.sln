@@ -91,7 +91,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMvvmDragDrop", "_Example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelHelperTest", "_Examples\ParallelHelperTest\ParallelHelperTest.csproj", "{5811FBF1-212C-474B-8426-82B53F0B148C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Threading", "Misc\JToolbox.Threading\JToolbox.Threading.csproj", "{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Threading", "Misc\JToolbox.Threading\JToolbox.Threading.csproj", "{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TasksExecutor", "TasksExecutor", "{6971740F-8CBD-4296-B509-590E20AD8D75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasksExecutorConsoleExample", "_Examples\TasksExecutor\TasksExecutorConsoleExample\TasksExecutorConsoleExample.csproj", "{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -301,6 +305,12 @@ Global
 		{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug_WithoutXamarin|Any CPU.Build.0 = Debug|Any CPU
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -342,6 +352,8 @@ Global
 		{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
 		{5811FBF1-212C-474B-8426-82B53F0B148C} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
 		{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3} = {15AB325A-A9D7-43D9-910F-457DBB7C44BF}
+		{6971740F-8CBD-4296-B509-590E20AD8D75} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
+		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E} = {6971740F-8CBD-4296-B509-590E20AD8D75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
