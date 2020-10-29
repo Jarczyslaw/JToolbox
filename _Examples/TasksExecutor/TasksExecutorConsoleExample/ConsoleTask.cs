@@ -7,6 +7,7 @@ namespace TasksExecutorConsoleExample
     public class ConsoleTask : BaseTask
     {
         private static int taskId;
+        private static readonly Random random = new Random();
 
         public int TaskId { get; set; }
 
@@ -19,7 +20,7 @@ namespace TasksExecutorConsoleExample
         public override void Run()
         {
             Console.WriteLine($"Task {TaskId} started");
-            Thread.Sleep(1000);
+            Thread.Sleep(random.Next(100, 2000));
             Console.WriteLine($"Task {TaskId} stopped");
         }
     }
