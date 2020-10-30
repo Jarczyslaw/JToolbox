@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace TasksExecutorConsoleExample
 {
-    public class ConsoleTask : BaseTask
+    public class ConsoleTask : ITask
     {
         private static int taskId;
         private static readonly Random random = new Random();
@@ -17,11 +17,15 @@ namespace TasksExecutorConsoleExample
             TaskId = taskId;
         }
 
-        public override void Run()
+        public void Run(TasksExecutor tasksExecutor)
         {
             Console.WriteLine($"Task {TaskId} started");
             Thread.Sleep(random.Next(100, 2000));
-            Console.WriteLine($"Task {TaskId} stopped");
+        }
+
+        public void Finish(TasksExecutor tasksExecutor, Exception exception, TimeSpan elapsed)
+        {
+            Console.WriteLine($"Task {TaskId} stopped in {elapsed.TotalMilliseconds}ms");
         }
     }
 }

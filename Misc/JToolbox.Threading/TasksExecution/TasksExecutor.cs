@@ -9,7 +9,7 @@ namespace JToolbox.Threading.TasksExecution
 
     public class TasksExecutor
     {
-        private readonly BlockingCollection<BaseTask> tasks = new BlockingCollection<BaseTask>();
+        private readonly BlockingCollection<ITask> tasks = new BlockingCollection<ITask>();
         private readonly ConcurrentDictionary<int, Thread> threads = new ConcurrentDictionary<int, Thread>();
         private readonly QueuedLock queuedLock = new QueuedLock();
 
@@ -82,7 +82,7 @@ namespace JToolbox.Threading.TasksExecution
             };
         }
 
-        public void Add(BaseTask task)
+        public void Add(ITask task)
         {
             if (tasks.Count + 1 > waitingThreads && threads.Count < maxThreads)
             {
@@ -129,7 +129,7 @@ namespace JToolbox.Threading.TasksExecution
                     }
                     continueWaiting = false;
 
-                    BaseTask task;
+                    ITask task;
                     bool taken;
                     if (ThreadsTimeout == null)
                     {
@@ -172,22 +172,22 @@ namespace JToolbox.Threading.TasksExecution
             }
         }
 
-        private void ExecuteTask(BaseTask task)
+        private void ExecuteTask(ITask task)
         {
             IncrementCounter(ref workingThreads);
             var stopwatch = Stopwatch.StartNew();
+            Exception exception = null;
             try
             {
-                task.Exception = null;
-                task.Run();
+                task.Run(this);
             }
             catch (Exception exc)
             {
-                task.Exception = exc;
+                exception = exc;
             }
             finally
             {
-                task.Elapsed = stopwatch.Elapsed;
+                task.Finish(this, exception, stopwatch.Elapsed);
                 DecrementCounter(ref workingThreads);
             }
         }
