@@ -25,16 +25,16 @@ namespace JToolbox.Desktop.Dialogs
 
         void ShowProgressDialog(string caption, string text, string instruction, IntPtr? owner = null);
 
-        List<string> Open(CommonOpenDialogBuilder builder);
+        List<string> Open(CommonOpenDialogBuilder builder, IntPtr? owner = null);
 
-        string OpenFile(string title, string initialDirectory = null, List<DialogFilterPair> filters = null);
+        string OpenFile(string title, string initialDirectory = null, List<DialogFilterPair> filters = null, IntPtr? owner = null);
 
-        List<string> OpenFiles(string title, string initialDirectory = null, List<DialogFilterPair> filters = null);
+        List<string> OpenFiles(string title, string initialDirectory = null, List<DialogFilterPair> filters = null, IntPtr? owner = null);
 
-        string OpenFolder(string title, string initialDirectory = null);
+        string OpenFolder(string title, string initialDirectory = null, IntPtr? owner = null);
 
-        string Save(CommonSaveDialogBuilder builder);
+        string Save(CommonSaveDialogBuilder builder, IntPtr? owner = null);
 
-        string SaveFile(string title, string initialDirectory = null, string defaultFileName = null, DialogFilterPair filter = null);
+        string SaveFile(string title, string initialDirectory = null, string defaultFileName = null, DialogFilterPair filter = null, IntPtr? owner = null);
     }
 }

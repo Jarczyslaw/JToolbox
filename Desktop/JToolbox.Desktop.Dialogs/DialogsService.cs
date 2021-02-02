@@ -115,12 +115,12 @@ namespace JToolbox.Desktop.Dialogs
             Show(builder);
         }
 
-        public List<string> Open(CommonOpenDialogBuilder builder)
+        public List<string> Open(CommonOpenDialogBuilder builder, IntPtr? owner = null)
         {
             List<string> result = null;
             using (var dialog = builder.Dialog)
             {
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
                 {
                     result = dialog.FileNames.ToList();
                 }
@@ -128,9 +128,9 @@ namespace JToolbox.Desktop.Dialogs
             return result;
         }
 
-        private string OpenSingle(CommonOpenDialogBuilder builder)
+        private string OpenSingle(CommonOpenDialogBuilder builder, IntPtr? owner = null)
         {
-            var files = Open(builder);
+            var files = Open(builder, owner);
             if (files?.Count == 1)
             {
                 return files[0];
@@ -138,41 +138,41 @@ namespace JToolbox.Desktop.Dialogs
             return null;
         }
 
-        public string OpenFile(string title, string initialDirectory = null, List<DialogFilterPair> filters = null)
+        public string OpenFile(string title, string initialDirectory = null, List<DialogFilterPair> filters = null, IntPtr? owner = null)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
                 .SetAsFileDialog(false)
                 .AddFilters(filters);
 
-            return OpenSingle(builder);
+            return OpenSingle(builder, owner);
         }
 
-        public List<string> OpenFiles(string title, string initialDirectory = null, List<DialogFilterPair> filters = null)
+        public List<string> OpenFiles(string title, string initialDirectory = null, List<DialogFilterPair> filters = null, IntPtr? owner = null)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
                 .SetAsFileDialog(true)
                 .AddFilters(filters);
 
-            return Open(builder);
+            return Open(builder, owner);
         }
 
-        public string OpenFolder(string title, string initialDirectory = null)
+        public string OpenFolder(string title, string initialDirectory = null, IntPtr? owner = null)
         {
             var builder = new CommonOpenDialogBuilder()
                 .Initialize(title, initialDirectory)
                 .SetAsFolderDialog();
 
-            return OpenSingle(builder);
+            return OpenSingle(builder, owner);
         }
 
-        public string Save(CommonSaveDialogBuilder builder)
+        public string Save(CommonSaveDialogBuilder builder, IntPtr? owner = null)
         {
             string result = null;
             using (var dialog = builder.Dialog)
             {
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
                 {
                     result = dialog.FileName;
                 }
@@ -180,14 +180,14 @@ namespace JToolbox.Desktop.Dialogs
             return result;
         }
 
-        public string SaveFile(string title, string initialDirectory, string defaultFileName = null, DialogFilterPair filter = null)
+        public string SaveFile(string title, string initialDirectory, string defaultFileName = null, DialogFilterPair filter = null, IntPtr? owner = null)
         {
             var builder = new CommonSaveDialogBuilder()
                 .Initialize(title, initialDirectory)
                 .SetDefaults(defaultFileName, filter.ExtensionsList)
                 .AddFilter(filter);
 
-            return Save(builder);
+            return Save(builder, owner);
         }
 
         private IntPtr GetOwnerHandle(IntPtr? owner)
