@@ -1,17 +1,17 @@
-﻿using Plugin.Permissions.Abstractions;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
+using System;
 
 namespace XamarinPrismApp.ViewModels
 {
     public class PermissionsEntryViewModel : BindableBase
     {
         private string title;
-        private Permission permission;
+        private Type permissionType;
 
-        public PermissionsEntryViewModel(Permission permission)
+        public PermissionsEntryViewModel(Type permissionType)
         {
-            Permission = permission;
-            Title = Permission.ToString();
+            Permission = permissionType;
+            Title = Permission.Name;
         }
 
         public string Title
@@ -20,10 +20,10 @@ namespace XamarinPrismApp.ViewModels
             set => SetProperty(ref title, value);
         }
 
-        public Permission Permission
+        public Type Permission
         {
-            get => permission;
-            set => SetProperty(ref permission, value);
+            get => permissionType;
+            set => SetProperty(ref permissionType, value);
         }
     }
 }

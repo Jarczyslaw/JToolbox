@@ -3,12 +3,13 @@ using JToolbox.XamarinForms.Core.Abstraction;
 using JToolbox.XamarinForms.Core.Awareness;
 using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Dialogs;
-using JToolbox.XamarinForms.Permissions;
-using Plugin.Permissions.Abstractions;
+using JToolbox.XamarinForms.Perms;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using JToolbox.XamarinForms.Core.Navigation;
+using Xamarin.Essentials;
 
 namespace XamarinPrismApp.ViewModels
 {
@@ -16,12 +17,12 @@ namespace XamarinPrismApp.ViewModels
     {
         private readonly IAppCore appCore;
         private readonly IDialogsService dialogsService;
-        private readonly IPermissionsService permissionsService;
+        private readonly IPermsService permissionsService;
         private readonly ILoggerService loggingService;
         private string deviceId;
         private string logPath;
 
-        public MainViewModel(ILoggerService loggingService, IAppCore appCore, IDialogsService dialogsService, IPermissionsService permissionsService, INavigationService navigationService)
+        public MainViewModel(ILoggerService loggingService, IAppCore appCore, IDialogsService dialogsService, IPermsService permissionsService, INavigationService navigationService)
             : base(navigationService)
         {
             Title = "Main Page";
@@ -59,8 +60,17 @@ namespace XamarinPrismApp.ViewModels
 
         public DelegateCommand LocalStorageCommand => new DelegateCommand(async () => await Navigate<LocalStorageViewModel>());
 
-        public DelegateCommand TestCommand => new DelegateCommand(() =>
+        public DelegateCommand TestCommand => new DelegateCommand(async () =>
         {
+            try
+            {
+                var s = new PermsService();
+                var y = await s.Check(typeof(Permissions.StorageRead));
+            }
+            catch (Exception exc)
+            {
+                await dialogsService.Error(exc.Message);
+            }
         });
 
         public DelegateCommand KillCommand => new DelegateCommand(async () => await KillPrompt());
@@ -73,8 +83,13 @@ namespace XamarinPrismApp.ViewModels
 
         public async Task OnShown()
         {
-            var result = await permissionsService.CheckAndRequestPermission(Permission.Storage);
-            if (result != PermissionStatus.Granted)
+            var result = await permissionsService.CheckAndRequest(new List<Type>
+            {
+                typeof(Permissions.StorageRead),
+                typeof(Permissions.StorageWrite)
+            });
+
+            if (!result)
             {
                 await dialogsService.Information("Permissions not granted. App will be closed");
                 appCore.Kill();

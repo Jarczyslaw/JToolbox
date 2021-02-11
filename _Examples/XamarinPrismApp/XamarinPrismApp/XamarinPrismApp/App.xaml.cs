@@ -4,7 +4,7 @@ using JToolbox.XamarinForms.Core.Abstraction;
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
 using JToolbox.XamarinForms.Logging;
-using JToolbox.XamarinForms.Permissions;
+using JToolbox.XamarinForms.Perms;
 using Prism;
 using Prism.Ioc;
 using System;
@@ -62,7 +62,7 @@ namespace XamarinPrismApp
             containerRegistry.RegisterInstance(UserDialogs.Instance);
             containerRegistry.RegisterSingleton<IDialogsService, DialogsService>();
             containerRegistry.RegisterSingleton<IAppSettings, AppSettings>();
-            containerRegistry.RegisterSingleton<IPermissionsService, PermissionsService>();
+            containerRegistry.RegisterSingleton<IPermsService, PermsService>();
             containerRegistry.RegisterSingleton<IDataAccessService, DataAccessService>();
         }
 

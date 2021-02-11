@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Dialo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Logging", "XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj", "{7314B3A3-2094-449C-A38B-2FD3DB908167}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Permissions", "XamarinForms\JToolbox.XamarinForms.Permissions\JToolbox.XamarinForms.Permissions.csproj", "{D4B3F73C-29FD-40A7-9508-34C980DD2E29}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Settings", "XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj", "{547023B9-8E27-479E-B0D3-D4BF87864728}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.WinForms.Core", "WinForms\JToolbox.WinForms.Core\JToolbox.WinForms.Core.csproj", "{DBAD9875-65DC-4A88-B8D5-CAF261BC28DC}"
@@ -99,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasksExecutorConsoleExample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasksExecutorWpfExample", "_Examples\TasksExecutor\TasksExecutorWpfExample\TasksExecutorWpfExample.csproj", "{EF2A4529-7B4A-4629-B7D0-913C09F23C45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Perms", "XamarinForms\JToolbox.XamarinForms.Perms\JToolbox.XamarinForms.Perms.csproj", "{A1C915CB-3526-4946-85DE-A711F1EC4574}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_WithoutXamarin|Any CPU = Debug_WithoutXamarin|Any CPU
@@ -127,11 +127,6 @@ Global
 		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7314B3A3-2094-449C-A38B-2FD3DB908167}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4B3F73C-29FD-40A7-9508-34C980DD2E29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{547023B9-8E27-479E-B0D3-D4BF87864728}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
 		{547023B9-8E27-479E-B0D3-D4BF87864728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{547023B9-8E27-479E-B0D3-D4BF87864728}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -319,6 +314,11 @@ Global
 		{EF2A4529-7B4A-4629-B7D0-913C09F23C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF2A4529-7B4A-4629-B7D0-913C09F23C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF2A4529-7B4A-4629-B7D0-913C09F23C45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C915CB-3526-4946-85DE-A711F1EC4574}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C915CB-3526-4946-85DE-A711F1EC4574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C915CB-3526-4946-85DE-A711F1EC4574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C915CB-3526-4946-85DE-A711F1EC4574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C915CB-3526-4946-85DE-A711F1EC4574}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -327,7 +327,6 @@ Global
 		{96B36DCD-DC5C-4FB9-B967-D6748AFE5563} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{F83D8AD5-9A6C-43B5-ABE6-7F9E1AC53283} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{7314B3A3-2094-449C-A38B-2FD3DB908167} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
-		{D4B3F73C-29FD-40A7-9508-34C980DD2E29} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{547023B9-8E27-479E-B0D3-D4BF87864728} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 		{DBAD9875-65DC-4A88-B8D5-CAF261BC28DC} = {808DA760-399E-40AC-A6EA-2229B0EEC6E6}
 		{56BEE9B3-2FCB-46E7-A837-D07F0BFCBD98} = {594FEA26-AC2E-4034-B7B6-6235565C8CA4}
@@ -363,6 +362,7 @@ Global
 		{6971740F-8CBD-4296-B509-590E20AD8D75} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
 		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E} = {6971740F-8CBD-4296-B509-590E20AD8D75}
 		{EF2A4529-7B4A-4629-B7D0-913C09F23C45} = {6971740F-8CBD-4296-B509-590E20AD8D75}
+		{A1C915CB-3526-4946-85DE-A711F1EC4574} = {2E96F55B-C0E2-415F-ADA4-E2136453541B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
