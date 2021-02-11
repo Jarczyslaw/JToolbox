@@ -66,11 +66,35 @@ namespace JToolbox.XamarinForms.Dialogs
             }
         }
 
+        public async Task Busy(string message, Action busyAction)
+        {
+            using (new BusyIndicator(message))
+            {
+                await Task.Run(busyAction);
+            }
+        }
+
+        public async Task<T> Busy<T>(string message, Func<T> busyAction)
+        {
+            using (new BusyIndicator(message))
+            {
+                return await Task.Run(() => busyAction());
+            }
+        }
+
         public async Task Busy(string message, Func<Task> busyAction)
         {
             using (new BusyIndicator(message))
             {
                 await busyAction();
+            }
+        }
+
+        public async Task<T> Busy<T>(string message, Func<Task<T>> busyAction)
+        {
+            using (new BusyIndicator(message))
+            {
+                return await busyAction();
             }
         }
 
