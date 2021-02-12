@@ -16,19 +16,19 @@ namespace JToolbox.XamarinForms.Logging
             config = new LoggingConfiguration();
         }
 
-        public LoggingConfiguration AddTargetFile(string name)
+        public LoggingConfiguration AddTargetFile(string targetName, string fileName)
         {
             var target = new FileTarget()
             {
-                Name = name,
-                FileName = Path.Combine(logsPath, "log.txt"),
-                ArchiveFileName = Path.Combine(logsPath, "log{#}.txt"),
+                Name = targetName,
+                FileName = Path.Combine(logsPath, $"{fileName}.txt"),
+                ArchiveFileName = Path.Combine(logsPath, fileName + "{#}.txt"),
                 ArchiveAboveSize = 10485760,
                 ArchiveNumbering = ArchiveNumberingMode.Sequence,
                 MaxArchiveFiles = 10,
                 ConcurrentWrites = true,
                 KeepFileOpen = false,
-                Layout = "${date:format=yyyy-MM-dd HH\\:mm\\:ss.fff} - [${level:uppercase=true}]: ${message} ${onexception:${newline}${exception:format=ToString}}"
+                Layout = @"${date:format=yyyy-MM-dd HH\:mm\:ss.fff} - [${level:uppercase=true}]: ${message} ${onexception:${newline}${exception:format=ToString}}"
             };
             config.AddTarget(target);
             return config;
@@ -40,11 +40,24 @@ namespace JToolbox.XamarinForms.Logging
             return config;
         }
 
-        public LoggingConfiguration GetDefaultConfiguration()
+        public LoggingConfiguration GetSingleConfiguration()
         {
-            const string targetName = "DefaultLogger";
-            AddTargetFile(targetName);
+            const string targetName = "CommonLog";
+            AddTargetFile(targetName, "log");
             config.AddRuleForAllLevels(targetName);
+            return config;
+        }
+
+        public LoggingConfiguration GetSplittedConfiguration()
+        {
+            const string infoTargetName = "InfoLog";
+            AddTargetFile(infoTargetName, "info");
+            AddRule(LogLevel.Trace, LogLevel.Info, infoTargetName, "*");
+
+            const string errorTargetName = "ErrorLog";
+            AddTargetFile(errorTargetName, "error");
+            AddRule(LogLevel.Warn, LogLevel.Fatal, errorTargetName, "*");
+
             return config;
         }
     }

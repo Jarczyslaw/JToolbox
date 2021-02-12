@@ -1,5 +1,4 @@
 ﻿using Acr.UserDialogs;
-using JToolbox.Core.Abstraction;
 using JToolbox.XamarinForms.Core.Abstraction;
 using JToolbox.XamarinForms.Core.Navigation;
 using JToolbox.XamarinForms.Dialogs;
@@ -8,6 +7,8 @@ using JToolbox.XamarinForms.Perms;
 using Prism;
 using Prism.Ioc;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -69,7 +70,8 @@ namespace XamarinPrismApp
         private void RegisterLogger(IContainerRegistry containerRegistry)
         {
             var appConfig = Container.Resolve<IAppCore>();
-            containerRegistry.RegisterInstance<ILoggerService>(new LoggerService(appConfig.LogPath));
+            var loggerService = LoggerService.CreateSplittedConfiguration(appConfig.LogPath);
+            containerRegistry.RegisterInstance<ILoggerService>(loggerService);
         }
     }
 }

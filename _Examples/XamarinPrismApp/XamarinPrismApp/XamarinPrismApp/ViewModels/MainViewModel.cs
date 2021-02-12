@@ -1,13 +1,14 @@
-﻿using JToolbox.Core.Abstraction;
-using JToolbox.XamarinForms.Core.Abstraction;
+﻿using JToolbox.XamarinForms.Core.Abstraction;
 using JToolbox.XamarinForms.Core.Awareness;
 using JToolbox.XamarinForms.Core.Base;
 using JToolbox.XamarinForms.Dialogs;
+using JToolbox.XamarinForms.Logging;
 using JToolbox.XamarinForms.Perms;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
@@ -64,8 +65,10 @@ namespace XamarinPrismApp.ViewModels
         {
             try
             {
-                var s = new PermsService();
-                var y = await s.Check(typeof(Permissions.StorageRead));
+                //var s = new PermsService();
+                //var y = await s.Check(typeof(Permissions.StorageRead));
+                loggingService.Debug("DEBUG");
+                loggingService.Error("ERROR");
             }
             catch (Exception exc)
             {

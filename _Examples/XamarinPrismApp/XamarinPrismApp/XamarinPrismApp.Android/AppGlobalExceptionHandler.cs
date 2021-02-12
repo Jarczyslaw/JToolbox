@@ -1,5 +1,5 @@
-﻿using JToolbox.Core.Abstraction;
-using JToolbox.XamarinForms.Core;
+﻿using JToolbox.XamarinForms.Core;
+using JToolbox.XamarinForms.Logging;
 using Prism.Ioc;
 using System;
 

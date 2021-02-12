@@ -1,25 +1,29 @@
-﻿using JToolbox.Core.Abstraction;
-using NLog;
+﻿using NLog;
 using NLog.Config;
+using NLog.Targets;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace JToolbox.XamarinForms.Logging
 {
     public class LoggerService : ILoggerService
     {
-        private readonly ILogger logger;
+        private readonly ILogger logger = LogManager.GetCurrentClassLogger();
         private readonly string noMessage = "No message provided";
 
-        public LoggerService()
+        public static LoggerService CreateSingleConfiguration(string logPath)
         {
-            logger = LogManager.GetCurrentClassLogger();
+            return new LoggerService(new LoggerConfigBuilder(logPath).GetSingleConfiguration());
         }
 
-        public LoggerService(string logPath) : this(new LoggerConfigBuilder(logPath).GetDefaultConfiguration())
+        public static LoggerService CreateSplittedConfiguration(string logPath)
         {
+            return new LoggerService(new LoggerConfigBuilder(logPath).GetSplittedConfiguration());
         }
 
-        public LoggerService(LoggingConfiguration config) : this()
+        public LoggerService(LoggingConfiguration config)
         {
             LogManager.Configuration = config;
         }
@@ -72,6 +76,26 @@ namespace JToolbox.XamarinForms.Logging
         public void Warn(string message, params object[] args)
         {
             logger.Warn(message, args);
+        }
+
+        public List<string> GetAllLogFiles()
+        {
+            var result = new List<string>();
+            foreach (var target in LogManager.Configuration.AllTargets)
+            {
+                if (target is FileTarget fileTarget)
+                {
+                    result.Add(fileTarget.FileName.Render(new LogEventInfo()));
+                }
+            }
+            return result;
+        }
+
+        public List<string> GetAllLogFolders()
+        {
+            return GetAllLogFiles().Select(f => Path.GetDirectoryName(f))
+                .Distinct()
+                .ToList();
         }
     }
 }

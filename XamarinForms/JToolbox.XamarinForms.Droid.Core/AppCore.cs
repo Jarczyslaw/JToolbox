@@ -1,7 +1,9 @@
 ﻿using Android.App;
+using Android.Media;
 using Android.OS;
 using JToolbox.XamarinForms.Core.Abstraction;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Xamarin.Essentials;
 using static Android.Provider.Settings;
@@ -24,26 +26,28 @@ namespace JToolbox.XamarinForms.Droid.Core
             {
                 if (deviceId == null)
                 {
-                    var id = Build.Serial;
-                    if (string.IsNullOrWhiteSpace(id) || id == Build.Unknown || id == "0")
+                    try
                     {
-                        try
-                        {
-                            var context = Application.Context;
-                            id = Secure.GetString(context.ContentResolver, Secure.AndroidId);
-                        }
-                        catch (Exception ex)
-                        {
-                            Android.Util.Log.Warn("DeviceInfo", "Unable to get id: " + ex.ToString());
-                        }
+                        var context = Application.Context;
+                        deviceId = Secure.GetString(context.ContentResolver, Secure.AndroidId);
                     }
-                    deviceId = id;
+                    catch { }
+
+                    if (string.IsNullOrEmpty(deviceId))
+                    {
+                        throw new Exception("Can not get a deviceId");
+                    }
                 }
                 return deviceId;
             }
         }
 
         public string LogPath => Path.Combine(paths.PublicExternalFolder, AppInfo.Name);
+
+        public void FilesScan(List<string> files)
+        {
+            MediaScannerConnection.ScanFile(Application.Context, files.ToArray(), null, null);
+        }
 
         public void Kill()
         {
