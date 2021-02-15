@@ -9,7 +9,7 @@ namespace XamarinPrismApp.Droid
     {
         protected override void HandleException(string exceptionSource, Exception exception)
         {
-            var logger = App.ContainerProvider.Resolve<ILoggerService>();
+            var logger = ContainerLocator.Container.Resolve<ILoggerService>();
             logger.Fatal(exceptionSource, exception);
         }
     }

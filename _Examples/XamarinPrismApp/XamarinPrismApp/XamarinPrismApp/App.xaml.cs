@@ -7,8 +7,6 @@ using JToolbox.XamarinForms.Perms;
 using Prism;
 using Prism.Ioc;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -22,15 +20,9 @@ namespace XamarinPrismApp
 {
     public partial class App
     {
-        public static IContainerProvider ContainerProvider { get; private set; }
-
-        public App() : this(null)
+        public App(IPlatformInitializer initializer)
+            : base(initializer)
         {
-        }
-
-        public App(IPlatformInitializer initializer) : base(initializer)
-        {
-            ContainerProvider = Container;
         }
 
         protected override async void OnInitialized()
