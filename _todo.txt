@@ -1,0 +1,6 @@
+WCF: rozbiæ klienta i serwer na dwa projekty (serwer framework, klient standard) + osobne konfiguracje + projekt common + dorobiæ nowe bindingi i jakieœ dodatkowe opcje jak wsdle
+Sockety: zrobiæ jak¹œ prost¹ bibliotekê do komunikacji po socketach z u¿yciem sockets for pcl
+TasksExecutor: dokoñczyæ bibliotekê + zrobiæ example do porz¹dku
+w resultach dodaæ kod, dorobiæ message w konstruktorach itd
+rozbudowaæ dialogi dla xamarina (prompt) + example
+zaktualizowaæ exampla xamarinowego (paczki)
