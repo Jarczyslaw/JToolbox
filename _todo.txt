@@ -5,4 +5,4 @@ w resultach dodaæ kod, dorobiæ message w konstruktorach itd
 rozbudowaæ dialogi dla xamarina (prompt) + example
 zaktualizowaæ exampla xamarinowego (paczki) + dorobiæ viewModelBase
 zaktualizowaæ dialogservice o to co jest w pó³ sofcie
-xamarin: przerobiæ nawigacjê tak ¿ewby dzia³aja z prisma + mo¿liwoœæ zatrzymywania kodu
+xamarin: przerobiæ nawigacjê tak ¿ewby dzia³aja z prisma + mo¿liwoœæ zatrzymywania kodu, wywaliæ awareness + rozdzieliæ bazowe projekty na prism i nie prism + zrobiæ porz¹dek z AppCore i Paths
