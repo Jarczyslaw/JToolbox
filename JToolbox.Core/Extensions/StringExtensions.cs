@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace JToolbox.Core.Extensions
 {
@@ -35,6 +36,24 @@ namespace JToolbox.Core.Extensions
             }
 
             return @string.Substring(indexFrom, indexTo - indexFrom);
+        }
+
+        public static string OnlyDigits(this string @this)
+        {
+            var result = string.Empty;
+            for (int i = 0; i < @this.Length; i++)
+            {
+                if (char.IsDigit(@this[i]))
+                {
+                    result += @this[i];
+                }
+            }
+            return result;
+        }
+
+        public static string WithoutWhitespaces(this string @this)
+        {
+            return new string(@this.Where(c => !char.IsWhiteSpace(c)).ToArray());
         }
     }
 }

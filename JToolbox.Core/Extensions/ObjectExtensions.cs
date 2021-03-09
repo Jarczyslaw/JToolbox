@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace JToolbox.Core.Extensions
@@ -34,6 +36,17 @@ namespace JToolbox.Core.Extensions
                 }
             }
             return result.ToString();
+        }
+
+        public static T DeepClone<T>(this object obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+                return (T)formatter.Deserialize(ms);
+            }
         }
     }
 }

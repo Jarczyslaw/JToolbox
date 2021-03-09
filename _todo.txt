@@ -1,8 +1,19 @@
-WCF: rozbiæ klienta i serwer na dwa projekty (serwer framework, klient standard) + osobne konfiguracje + projekt common + dorobiæ nowe bindingi i jakieœ dodatkowe opcje jak wsdle
-Sockety: zrobiæ jak¹œ prost¹ bibliotekê do komunikacji po socketach z u¿yciem sockets for pcl
-TasksExecutor: dokoñczyæ bibliotekê + zrobiæ example do porz¹dku
-w resultach dodaæ kod, dorobiæ message w konstruktorach itd
-rozbudowaæ dialogi dla xamarina (prompt) + example
-zaktualizowaæ exampla xamarinowego (paczki) + dorobiæ viewModelBase
-zaktualizowaæ dialogservice o to co jest w pó³ sofcie
-xamarin: przerobiæ nawigacjê tak ¿ewby dzia³aja z prisma + mo¿liwoœæ zatrzymywania kodu, wywaliæ awareness + rozdzieliæ bazowe projekty na prism i nie prism + zrobiæ porz¹dek z AppCore i Paths
+WCF:
+	rozbiæ klienta i serwer na dwa projekty (serwer framework, klient standard)
+	osobne konfiguracje bindigów dla klienta i serwera
+	wywaliæ co siê da do commonów
+	dorobiæ nowe bindingi i jakieœ dodatkowe opcje jak wsdle
+
+Sockety:
+	zrobiæ jak¹œ prost¹ bibliotekê do komunikacji po socketach z u¿yciem sockets for pcl
+
+TasksExecutor:
+	dokoñczyæ bibliotekê + zrobiæ example do porz¹dku
+
+Xamarin:
+	rozbudowaæ dialogi dla xamarina (prompt, busy, login itd.) + example
+	zaktualizowaæ exampla xamarinowego (paczki)
+	zrobiæ projekt z navigacj¹ bez prisma
+	wywaliæ awareness
+	wywaliæ appCore i Paths
+	zrobiæ nawigacjê tak ¿eby dzia³a³a z awaitem + refaktor navmapperów itd.
