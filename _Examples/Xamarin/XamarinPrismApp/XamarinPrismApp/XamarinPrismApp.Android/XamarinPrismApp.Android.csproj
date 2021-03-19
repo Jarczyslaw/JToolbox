@@ -104,19 +104,19 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\JToolbox.Core\JToolbox.Core.csproj">
+    <ProjectReference Include="..\..\..\..\..\JToolbox.Core\JToolbox.Core.csproj">
       <Project>{8DBEE967-3286-4CDA-9FCB-9539346E55F7}</Project>
       <Name>JToolbox.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj">
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj">
       <Project>{96b36dcd-dc5c-4fb9-b967-d6748afe5563}</Project>
       <Name>JToolbox.XamarinForms.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Droid.Core\JToolbox.XamarinForms.Droid.Core.csproj">
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Droid.Core\JToolbox.XamarinForms.Droid.Core.csproj">
       <Project>{1eec6070-ff4c-4df1-b831-c615a95e8484}</Project>
       <Name>JToolbox.XamarinForms.Droid.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj">
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj">
       <Project>{7314b3a3-2094-449c-a38b-2fd3db908167}</Project>
       <Name>JToolbox.XamarinForms.Logging</Name>
     </ProjectReference>

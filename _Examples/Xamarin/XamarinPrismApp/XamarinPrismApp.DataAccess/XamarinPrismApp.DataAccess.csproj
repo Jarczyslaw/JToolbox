@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
   </ItemGroup>
 
 </Project>

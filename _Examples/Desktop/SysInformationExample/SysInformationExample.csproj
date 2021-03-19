@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CBB3483C-E930-4377-B249-84E58167FA19}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WCFExample.Common</RootNamespace>
-    <AssemblyName>WCFExample.Common</AssemblyName>
+    <ProjectGuid>{01B7AD4E-E207-48A7-8250-6CCEA078569E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SysInformationExample</RootNamespace>
+    <AssemblyName>SysInformationExample</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,20 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITestProxy.cs" />
-    <Compile Include="TestProxy.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Misc\JToolbox.WCF\JToolbox.WCF.csproj">
-      <Project>{f49d9d79-f249-4f1b-a421-3958643c24d3}</Project>
-      <Name>JToolbox.WCF</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
+    <ProjectReference Include="..\..\..\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{8dbee967-3286-4cda-9fcb-9539346e55f7}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Misc\JToolbox.SysInformation\JToolbox.SysInformation.csproj">
+      <Project>{d709e177-61b4-4761-9a5d-0db55eafe48d}</Project>
+      <Name>JToolbox.SysInformation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

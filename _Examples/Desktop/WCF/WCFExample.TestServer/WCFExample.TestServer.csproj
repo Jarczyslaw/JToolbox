@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{01B7AD4E-E207-48A7-8250-6CCEA078569E}</ProjectGuid>
+    <ProjectGuid>{28DB81D4-1F5E-407A-966C-3F3922C9D586}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SysInformationExample</RootNamespace>
-    <AssemblyName>SysInformationExample</AssemblyName>
+    <RootNamespace>WCFExample.TestServer</RootNamespace>
+    <AssemblyName>WCFExample.TestServer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,13 +50,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\JToolbox.Core\JToolbox.Core.csproj">
-      <Project>{8dbee967-3286-4cda-9fcb-9539346e55f7}</Project>
-      <Name>JToolbox.Core</Name>
+    <ProjectReference Include="..\..\..\..\Misc\JToolbox.WCF\JToolbox.WCF.csproj">
+      <Project>{f49d9d79-f249-4f1b-a421-3958643c24d3}</Project>
+      <Name>JToolbox.WCF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Misc\JToolbox.SysInformation\JToolbox.SysInformation.csproj">
-      <Project>{d709e177-61b4-4761-9a5d-0db55eafe48d}</Project>
-      <Name>JToolbox.SysInformation</Name>
+    <ProjectReference Include="..\WCFExample.Common\WCFExample.Common.csproj">
+      <Project>{cbb3483c-e930-4377-b249-84e58167fa19}</Project>
+      <Name>WCFExample.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -51,7 +51,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Misc\JToolbox.Threading\JToolbox.Threading.csproj">
+    <ProjectReference Include="..\..\..\..\Misc\JToolbox.Threading\JToolbox.Threading.csproj">
       <Project>{284d3a93-2cd7-4e9a-ad3a-b11b9806a9e3}</Project>
       <Name>JToolbox.Threading</Name>
     </ProjectReference>

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{28DB81D4-1F5E-407A-966C-3F3922C9D586}</ProjectGuid>
+    <ProjectGuid>{5811FBF1-212C-474B-8426-82B53F0B148C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>WCFExample.TestServer</RootNamespace>
-    <AssemblyName>WCFExample.TestServer</AssemblyName>
+    <RootNamespace>ParallelHelperTest</RootNamespace>
+    <AssemblyName>ParallelHelperTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,13 +50,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Misc\JToolbox.WCF\JToolbox.WCF.csproj">
-      <Project>{f49d9d79-f249-4f1b-a421-3958643c24d3}</Project>
-      <Name>JToolbox.WCF</Name>
+    <ProjectReference Include="..\..\..\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{8dbee967-3286-4cda-9fcb-9539346e55f7}</Project>
+      <Name>JToolbox.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WCFExample.Common\WCFExample.Common.csproj">
-      <Project>{cbb3483c-e930-4377-b249-84e58167fa19}</Project>
-      <Name>WCFExample.Common</Name>
+    <ProjectReference Include="..\..\..\Misc\JToolbox.Threading\JToolbox.Threading.csproj">
+      <Project>{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}</Project>
+      <Name>JToolbox.Threading</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

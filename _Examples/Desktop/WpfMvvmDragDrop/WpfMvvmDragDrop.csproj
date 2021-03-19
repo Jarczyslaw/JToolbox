@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EF2A4529-7B4A-4629-B7D0-913C09F23C45}</ProjectGuid>
+    <ProjectGuid>{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>TasksExecutorWpfExample</RootNamespace>
-    <AssemblyName>TasksExecutorWpfExample</AssemblyName>
+    <RootNamespace>WpfMvvmDragDrop</RootNamespace>
+    <AssemblyName>WpfMvvmDragDrop</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,28 +49,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="TaskViewModel.cs" />
+    <Compile Include="EventLogs.cs" />
+    <Compile Include="ViewModels\FilesContextViewModel.cs" />
+    <Compile Include="ViewModels\TabsContextViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\TabViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,7 +69,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -103,7 +92,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,21 +101,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Misc\JToolbox.SysInformation\JToolbox.SysInformation.csproj">
-      <Project>{D709E177-61B4-4761-9A5D-0DB55EAFE48D}</Project>
-      <Name>JToolbox.SysInformation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Misc\JToolbox.Threading\JToolbox.Threading.csproj">
-      <Project>{284d3a93-2cd7-4e9a-ad3a-b11b9806a9e3}</Project>
-      <Name>JToolbox.Threading</Name>
+    <ProjectReference Include="..\..\..\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{8dbee967-3286-4cda-9fcb-9539346e55f7}</Project>
+      <Name>JToolbox.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
       <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>
       <Name>JToolbox.WPF.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SysInformationExample\SysInformationExample.csproj">
-      <Project>{01b7ad4e-e207-48a7-8250-6ccea078569e}</Project>
-      <Name>SysInformationExample</Name>
+    <ProjectReference Include="..\..\..\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
+      <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
+      <Name>JToolbox.WPF.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

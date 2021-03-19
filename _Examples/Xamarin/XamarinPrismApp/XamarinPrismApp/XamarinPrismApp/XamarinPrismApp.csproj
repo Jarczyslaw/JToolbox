@@ -10,11 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Perms\JToolbox.XamarinForms.Perms.csproj" />
-    <ProjectReference Include="..\..\..\..\XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj" />
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Perms\JToolbox.XamarinForms.Perms.csproj" />
+    <ProjectReference Include="..\..\..\..\..\XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj" />
     <ProjectReference Include="..\..\XamarinPrismApp.DataAccess\XamarinPrismApp.DataAccess.csproj" />
   </ItemGroup>
 
