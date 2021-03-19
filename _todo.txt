@@ -10,6 +10,12 @@ Sockety:
 TasksExecutor:
 	dokoñczyæ bibliotekê + zrobiæ example do porz¹dku
 
+Threading:
+	przerobiæ parallelhelpera 
+	dorzuciæ rzeczy z naivessdtest (fileworkers)
+	dorobiæ example
+	poczytaæ o Task Parallel Library
+
 Xamarin:
 	rozbudowaæ dialogi dla xamarina (prompt, busy, login itd.) + example
 	zaktualizowaæ exampla xamarinowego (paczki)
