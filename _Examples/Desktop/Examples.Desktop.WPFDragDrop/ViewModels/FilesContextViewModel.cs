@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace WpfMvvmDragDrop.ViewModels
+namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class FilesContextViewModel : BaseViewModel, IFileDragDropAware
     {

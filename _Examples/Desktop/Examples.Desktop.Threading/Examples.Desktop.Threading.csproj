@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A6B633D5-AE1A-4950-BDBB-0C6C43DAECA8}</ProjectGuid>
+    <ProjectGuid>{3E4AE378-DAAE-4929-968D-B36657026876}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WpfMvvmDragDrop</RootNamespace>
-    <AssemblyName>WpfMvvmDragDrop</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Examples.Desktop.Threading</RootNamespace>
+    <AssemblyName>Examples.Desktop.Threading</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,22 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="EventLogs.cs" />
-    <Compile Include="ViewModels\FilesContextViewModel.cs" />
-    <Compile Include="ViewModels\TabsContextViewModel.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\TabViewModel.cs" />
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -98,20 +85,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\JToolbox.Core\JToolbox.Core.csproj">
       <Project>{8dbee967-3286-4cda-9fcb-9539346e55f7}</Project>
       <Name>JToolbox.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
-      <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>
-      <Name>JToolbox.WPF.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\WPF\JToolbox.WPF.UI\JToolbox.WPF.UI.csproj">
-      <Project>{9594d7ee-c5d6-4f07-8f3e-63b7c83e21d0}</Project>
-      <Name>JToolbox.WPF.UI</Name>
+    <ProjectReference Include="..\Examples.Desktop.Base\Examples.Desktop.Base.csproj">
+      <Project>{68c1f2ee-1a7a-49ae-8f86-9d12b45781b7}</Project>
+      <Name>Examples.Desktop.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

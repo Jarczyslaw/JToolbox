@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using WpfMvvmDragDrop.ViewModels;
+using Examples.Desktop.WPFDragDrop.ViewModels;
 
-namespace WpfMvvmDragDrop
+namespace Examples.Desktop.WPFDragDrop
 {
     public partial class MainWindow : Window
     {

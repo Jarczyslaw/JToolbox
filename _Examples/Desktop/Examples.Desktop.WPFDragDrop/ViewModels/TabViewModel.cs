@@ -4,7 +4,7 @@ using JToolbox.WPF.Core.Base;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace WpfMvvmDragDrop.ViewModels
+namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class TabViewModel : BaseViewModel, IDragDropAware
     {

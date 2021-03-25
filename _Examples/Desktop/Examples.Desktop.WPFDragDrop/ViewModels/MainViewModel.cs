@@ -1,7 +1,7 @@
 ﻿using JToolbox.WPF.Core.Base;
 using System;
 
-namespace WpfMvvmDragDrop.ViewModels
+namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {

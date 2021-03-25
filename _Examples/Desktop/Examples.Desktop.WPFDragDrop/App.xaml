@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="WpfMvvmDragDrop.App"
+    x:Class="Examples.Desktop.WPFDragDrop.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:WpfMvvmDragDrop"
+    xmlns:local="clr-namespace:Examples.Desktop.WPFDragDrop"
     StartupUri="MainWindow.xaml">
     <Application.Resources />
 </Application>

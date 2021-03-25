@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace WpfMvvmDragDrop
+namespace Examples.Desktop.WPFDragDrop
 {
     public static class EventLogs
     {

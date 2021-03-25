@@ -3,7 +3,7 @@ using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
 using System.Diagnostics;
 
-namespace WpfMvvmDragDrop.ViewModels
+namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class ItemViewModel : BaseViewModel, IDragDropAware
     {

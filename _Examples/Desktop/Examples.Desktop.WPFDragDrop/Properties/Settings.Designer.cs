@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfMvvmDragDrop.Properties
+namespace Examples.Desktop.WPFDragDrop.Properties
 {
 
 
