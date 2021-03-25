@@ -1,4 +1,6 @@
-﻿namespace JToolbox.SysInformation
+﻿using System;
+
+namespace JToolbox.SysInformation
 {
     public class OSInfo
     {

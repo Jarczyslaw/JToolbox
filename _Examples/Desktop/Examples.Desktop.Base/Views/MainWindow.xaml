@@ -1,0 +1,70 @@
+﻿<Window
+    x:Class="Examples.Desktop.Base.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    Title="{Binding Title}"
+    Width="1024"
+    Height="768"
+    Closing="Window_Closing">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Content="Select example:" />
+            <ComboBox
+                Grid.Column="1"
+                Width="250"
+                HorizontalAlignment="Left"
+                DisplayMemberPath="Display"
+                ItemsSource="{Binding Examples}"
+                SelectedItem="{Binding SelectedExample, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button
+                Grid.Column="3"
+                Width="150"
+                Command="{Binding RunCommand}"
+                Content="Start" />
+
+            <Button
+                Grid.Column="4"
+                Width="150"
+                Margin="5,0,0,0"
+                Command="{Binding NewWindowCommand}"
+                Content="New window" />
+
+        </Grid>
+
+        <GroupBox Grid.Row="1" Header="Messages">
+            <TextBox
+                HorizontalScrollBarVisibility="Visible"
+                Text="{Binding Messages}"
+                TextChanged="TextBox_TextChanged"
+                TextWrapping="NoWrap"
+                VerticalScrollBarVisibility="Visible" />
+        </GroupBox>
+
+        <ProgressBar
+            Grid.Row="2"
+            Height="20"
+            IsIndeterminate="{Binding Busy}" />
+    </Grid>
+
+</Window>

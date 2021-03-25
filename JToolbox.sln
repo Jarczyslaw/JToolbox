@@ -82,8 +82,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{EA8E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelHelperTest", "_Examples\Desktop\ParallelHelperTest\ParallelHelperTest.csproj", "{5811FBF1-212C-474B-8426-82B53F0B148C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysInformationExample", "_Examples\Desktop\SysInformationExample\SysInformationExample.csproj", "{01B7AD4E-E207-48A7-8250-6CCEA078569E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TasksExecutor", "TasksExecutor", "{868BABE3-B93E-40D2-A0F7-D0878FF6BC03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TasksExecutorConsoleExample", "_Examples\Desktop\TasksExecutor\TasksExecutorConsoleExample\TasksExecutorConsoleExample.csproj", "{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}"
@@ -107,6 +105,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinPrismApp.Android", "_Examples\Xamarin\XamarinPrismApp\XamarinPrismApp\XamarinPrismApp.Android\XamarinPrismApp.Android.csproj", "{AFD09C92-7CC5-42A7-A242-5E3FB2EADF08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinPrismApp.DataAccess", "_Examples\Xamarin\XamarinPrismApp\XamarinPrismApp.DataAccess\XamarinPrismApp.DataAccess.csproj", "{85FEC2FD-D9AF-42CA-A918-0A4B9BAFAA84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.Base", "_Examples\Desktop\Examples.Desktop.Base\Examples.Desktop.Base.csproj", "{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.SysInformation", "_Examples\Desktop\Examples.Desktop.SysInformation\Examples.Desktop.SysInformation.csproj", "{4B87C8C7-507D-41A2-BCD5-A14B6483187F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -270,12 +272,6 @@ Global
 		{5811FBF1-212C-474B-8426-82B53F0B148C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5811FBF1-212C-474B-8426-82B53F0B148C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5811FBF1-212C-474B-8426-82B53F0B148C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E}.Debug_WithoutXamarin|Any CPU.Build.0 = Debug|Any CPU
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
 		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug_WithoutXamarin|Any CPU.Build.0 = Debug|Any CPU
 		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -329,6 +325,18 @@ Global
 		{85FEC2FD-D9AF-42CA-A918-0A4B9BAFAA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85FEC2FD-D9AF-42CA-A918-0A4B9BAFAA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85FEC2FD-D9AF-42CA-A918-0A4B9BAFAA84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}.Debug_WithoutXamarin|Any CPU.Build.0 = Debug|Any CPU
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F}.Debug_WithoutXamarin|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F}.Debug_WithoutXamarin|Any CPU.Build.0 = Debug|Any CPU
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -362,7 +370,6 @@ Global
 		{3A01DAFC-D2CA-466B-83B4-7C597BDC6BBD} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
 		{EA8ECBB7-95BF-43FE-A6BA-8A8096BF2996} = {A0178720-9333-4457-A2F3-65C5F4E3BB42}
 		{5811FBF1-212C-474B-8426-82B53F0B148C} = {3A01DAFC-D2CA-466B-83B4-7C597BDC6BBD}
-		{01B7AD4E-E207-48A7-8250-6CCEA078569E} = {3A01DAFC-D2CA-466B-83B4-7C597BDC6BBD}
 		{868BABE3-B93E-40D2-A0F7-D0878FF6BC03} = {3A01DAFC-D2CA-466B-83B4-7C597BDC6BBD}
 		{7AFAFCE6-99F2-4855-A1A5-1733E08F750E} = {868BABE3-B93E-40D2-A0F7-D0878FF6BC03}
 		{EF2A4529-7B4A-4629-B7D0-913C09F23C45} = {868BABE3-B93E-40D2-A0F7-D0878FF6BC03}
@@ -375,6 +382,8 @@ Global
 		{7AA9F44B-300E-4B9B-A1E9-9B3F8BA99D03} = {1D5C3A8D-038D-4675-8C89-207E8E5EA76A}
 		{AFD09C92-7CC5-42A7-A242-5E3FB2EADF08} = {1D5C3A8D-038D-4675-8C89-207E8E5EA76A}
 		{85FEC2FD-D9AF-42CA-A918-0A4B9BAFAA84} = {1D5C3A8D-038D-4675-8C89-207E8E5EA76A}
+		{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7} = {3A01DAFC-D2CA-466B-83B4-7C597BDC6BBD}
+		{4B87C8C7-507D-41A2-BCD5-A14B6483187F} = {3A01DAFC-D2CA-466B-83B4-7C597BDC6BBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
