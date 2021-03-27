@@ -10,11 +10,6 @@ namespace JToolbox.Core.Utilities
 {
     public static class NetworkUtils
     {
-        public static IPAddress GetLocalIPAddress()
-        {
-            return GetLocalIPAddresses().Find(a => a.AddressFamily == AddressFamily.InterNetwork);
-        }
-
         public static List<IPAddress> GetLocalIPAddresses()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -27,6 +22,20 @@ namespace JToolbox.Core.Utilities
             return NetworkInterface.GetIsNetworkAvailable();
         }
 
+        public static bool ConnectedToInternet()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static List<IPAddress> GetGatewayAddresses()
         {
             return NetworkInterface.GetAllNetworkInterfaces()
@@ -35,11 +44,6 @@ namespace JToolbox.Core.Utilities
                 .Select(g => g?.Address)
                 .Where(a => a?.AddressFamily == AddressFamily.InterNetwork && Array.FindIndex(a.GetAddressBytes(), b => b != 0) >= 0)
                 .ToList();
-        }
-
-        public static IPAddress GetGatewayAddress()
-        {
-            return GetGatewayAddresses().FirstOrDefault();
         }
 
         public static string GetHostName(IPAddress ipAddress)
@@ -177,6 +181,8 @@ namespace JToolbox.Core.Utilities
             var properties = IPGlobalProperties.GetIPGlobalProperties();
             return properties.GetActiveTcpConnections()
                 .Select(c => c.LocalEndPoint.Port)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToList();
         }
 
@@ -185,6 +191,8 @@ namespace JToolbox.Core.Utilities
             var properties = IPGlobalProperties.GetIPGlobalProperties();
             return properties.GetActiveTcpListeners()
                 .Select(c => c.Port)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToList();
         }
 
@@ -193,6 +201,8 @@ namespace JToolbox.Core.Utilities
             var properties = IPGlobalProperties.GetIPGlobalProperties();
             return properties.GetActiveUdpListeners()
                 .Select(c => c.Port)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToList();
         }
     }

@@ -6,6 +6,8 @@
 
         void WriteLine(string message);
 
+        void PutLine();
+
         string Read(string label, string text = null);
 
         void Wait(string message);

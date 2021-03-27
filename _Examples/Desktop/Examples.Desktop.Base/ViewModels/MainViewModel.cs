@@ -107,6 +107,11 @@ namespace Examples.Desktop.Base.ViewModels
             Messages += message + Environment.NewLine;
         }
 
+        public void PutLine()
+        {
+            WriteLine(string.Empty);
+        }
+
         public void Clear()
         {
             Messages = string.Empty;
