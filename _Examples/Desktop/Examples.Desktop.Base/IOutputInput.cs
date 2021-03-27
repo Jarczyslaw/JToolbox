@@ -13,5 +13,8 @@
         void Wait(string message);
 
         void Clear();
+
+        void StartTime();
+        void StopTime();
     }
 }

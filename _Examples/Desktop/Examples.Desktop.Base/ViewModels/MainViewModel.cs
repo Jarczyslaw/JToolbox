@@ -1,5 +1,6 @@
 ﻿using JToolbox.Core.Extensions;
 using JToolbox.Desktop.Dialogs;
+using JToolbox.Threading;
 using JToolbox.WPF.Core;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -15,12 +16,14 @@ namespace Examples.Desktop.Base.ViewModels
 {
     public class MainViewModel : BindableBase, IOutputInput
     {
+        private readonly QueuedLock queuedLock = new QueuedLock();
         private bool busy;
         private string title;
         private string messages;
         private ExampleViewModel selectedExample;
         private DelegateCommand runCommand;
         private IDialogsService dialogsService = new DialogsService();
+        private Stopwatch internalStopwatch;
 
         public MainViewModel()
         {
@@ -99,12 +102,12 @@ namespace Examples.Desktop.Base.ViewModels
 
         public void Write(string message)
         {
-            Messages += message;
+            queuedLock.LockedAction(() => Messages += message);
         }
 
         public void WriteLine(string message)
         {
-            Messages += message + Environment.NewLine;
+            queuedLock.LockedAction(() => Messages += message + Environment.NewLine);
         }
 
         public void PutLine()
@@ -114,7 +117,7 @@ namespace Examples.Desktop.Base.ViewModels
 
         public void Clear()
         {
-            Messages = string.Empty;
+            queuedLock.LockedAction(() => Messages = string.Empty);
         }
 
         public void Wait(string message)
@@ -137,6 +140,17 @@ namespace Examples.Desktop.Base.ViewModels
             {
                 await example.Example.CleanUp();
             }
+        }
+
+        public void StartTime()
+        {
+            internalStopwatch = Stopwatch.StartNew();
+            WriteLine("Stopwatch started");
+        }
+
+        public void StopTime()
+        {
+            WriteLine($"Elapsed time: {Math.Round(internalStopwatch.Elapsed.TotalMilliseconds)}ms");
         }
     }
 }

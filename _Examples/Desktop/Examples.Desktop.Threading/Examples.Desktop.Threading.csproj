@@ -62,6 +62,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProcessingQueueExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,6 +92,10 @@
     <ProjectReference Include="..\..\..\JToolbox.Core\JToolbox.Core.csproj">
       <Project>{8dbee967-3286-4cda-9fcb-9539346e55f7}</Project>
       <Name>JToolbox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Misc\JToolbox.Threading\JToolbox.Threading.csproj">
+      <Project>{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}</Project>
+      <Name>JToolbox.Threading</Name>
     </ProjectReference>
     <ProjectReference Include="..\Examples.Desktop.Base\Examples.Desktop.Base.csproj">
       <Project>{68c1f2ee-1a7a-49ae-8f86-9d12b45781b7}</Project>
