@@ -22,6 +22,18 @@ namespace JToolbox.Threading
             return collection;
         }
 
+        private int GetTasksCount(List<ProcessingQueueItem<TItem, TResult>> item)
+        {
+            if (TasksCount > 0)
+            {
+                return TasksCount;
+            }
+            else
+            {
+                return item.Count;
+            }
+        }
+
         public Task<List<ProcessingQueueItem<TItem, TResult>>> Run(List<TItem> items, CancellationToken cancellationToken = default)
         {
             return Run(items.ConvertAll(s => new ProcessingQueueItem<TItem, TResult>(s)), cancellationToken);
@@ -32,8 +44,9 @@ namespace JToolbox.Threading
             var collection = InitializeCollection(items);
             var internalCancellationTokenSource = new CancellationTokenSource();
             var internalToken = internalCancellationTokenSource.Token;
+            var tasksCount = GetTasksCount(items);
             var tasks = new List<Task>();
-            for (var i = 0; i < TasksCount; i++)
+            for (var i = 0; i < tasksCount; i++)
             {
                 var task = Task.Run(async () =>
                 {
