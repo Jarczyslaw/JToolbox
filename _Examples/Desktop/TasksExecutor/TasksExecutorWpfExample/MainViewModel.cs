@@ -1,5 +1,5 @@
 ﻿using JToolbox.SysInformation;
-using JToolbox.Threading.TasksExecution;
+using JToolbox.Threading;
 using JToolbox.WPF.Core.Base;
 using System;
 using System.Collections.ObjectModel;

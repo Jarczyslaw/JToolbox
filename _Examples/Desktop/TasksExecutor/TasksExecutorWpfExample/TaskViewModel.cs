@@ -1,4 +1,4 @@
-﻿using JToolbox.Threading.TasksExecution;
+﻿using JToolbox.Threading;
 using JToolbox.WPF.Core.Base;
 using System;
 using System.Diagnostics;

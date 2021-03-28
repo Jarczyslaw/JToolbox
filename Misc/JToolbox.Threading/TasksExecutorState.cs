@@ -1,4 +1,4 @@
-﻿namespace JToolbox.Threading.TasksExecution
+﻿namespace JToolbox.Threading
 {
     public class TasksExecutorState
     {

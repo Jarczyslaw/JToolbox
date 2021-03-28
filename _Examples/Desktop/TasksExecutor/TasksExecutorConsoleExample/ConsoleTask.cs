@@ -1,4 +1,4 @@
-﻿using JToolbox.Threading.TasksExecution;
+﻿using JToolbox.Threading;
 using System;
 using System.Threading;
 

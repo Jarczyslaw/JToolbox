@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JToolbox.Threading.TasksExecution
+namespace JToolbox.Threading
 {
     public interface ITask
     {

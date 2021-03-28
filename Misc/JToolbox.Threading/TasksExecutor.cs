@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 
-namespace JToolbox.Threading.TasksExecution
+namespace JToolbox.Threading
 {
     public delegate void TasksExecutorStateChanged(TasksExecutorState state);
 

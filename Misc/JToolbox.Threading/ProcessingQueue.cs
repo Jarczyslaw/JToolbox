@@ -8,7 +8,7 @@ namespace JToolbox.Threading
 {
     public abstract class ProcessingQueue<TItem, TResult>
     {
-        public int TasksCount { get; set; } = 8;
+        public int TasksCount { get; set; }
         public bool StopOnFirstException { get; set; }
 
         private BlockingCollection<ProcessingQueueItem<TItem, TResult>> InitializeCollection(List<ProcessingQueueItem<TItem, TResult>> items)
@@ -69,7 +69,7 @@ namespace JToolbox.Threading
                                 return;
                             }
                         }
-                    });
+                    }, cancellationToken);
                     tasks.Add(task);
                 }
                 await Task.WhenAll(tasks);
