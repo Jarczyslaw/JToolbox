@@ -42,46 +42,71 @@ namespace JToolbox.Threading
         public async Task<List<ProcessingQueueItem<TItem, TResult>>> Run(List<ProcessingQueueItem<TItem, TResult>> items, CancellationToken cancellationToken = default)
         {
             var collection = InitializeCollection(items);
-            var internalCancellationTokenSource = new CancellationTokenSource();
-            var internalToken = internalCancellationTokenSource.Token;
             var tasksCount = GetTasksCount(items);
             var tasks = new List<Task>();
-            for (var i = 0; i < tasksCount; i++)
+            using (var internalCancellationTokenSource = new CancellationTokenSource())
             {
-                var task = Task.Run(async () =>
+                var internalToken = internalCancellationTokenSource.Token;
+                for (var i = 0; i < tasksCount; i++)
                 {
-                    while (!internalToken.IsCancellationRequested
-                        && !cancellationToken.IsCancellationRequested)
+                    var task = Task.Run(async () =>
                     {
-                        collection.TryTake(out ProcessingQueueItem<TItem, TResult> item);
-                        if (item != null)
+                        while (!internalToken.IsCancellationRequested
+                            && !cancellationToken.IsCancellationRequested)
                         {
-                            item.Processed = true;
-                            try
+                            collection.TryTake(out ProcessingQueueItem<TItem, TResult> item);
+                            if (item != null)
                             {
-                                item.Result = await ProcessItem(item.Item);
-                            }
-                            catch (Exception exc)
-                            {
-                                item.Exception = exc;
-                                if (StopOnFirstException)
+                                if (!await RunProcessItem(item, internalCancellationTokenSource))
                                 {
-                                    internalCancellationTokenSource.Cancel();
                                     return;
                                 }
+
+                                await RunReportProgress(item);
                             }
-                            await ReportProgress(item);
+                            else if (item == null && collection.Count == 0)
+                            {
+                                return;
+                            }
                         }
-                        else if (item == null && collection.Count == 0)
-                        {
-                            return;
-                        }
-                    }
-                });
-                tasks.Add(task);
+                    });
+                    tasks.Add(task);
+                }
+                await Task.WhenAll(tasks);
             }
-            await Task.WhenAll(tasks);
             return items;
+        }
+
+        private async Task<bool> RunProcessItem(ProcessingQueueItem<TItem, TResult> item, CancellationTokenSource internalCancellationTokenSource)
+        {
+            item.Processed = true;
+            try
+            {
+                item.Result = await ProcessItem(item.Item);
+                return true;
+            }
+            catch (Exception exc)
+            {
+                item.Exception = exc;
+                if (StopOnFirstException)
+                {
+                    if (!internalCancellationTokenSource.IsCancellationRequested)
+                    {
+                        internalCancellationTokenSource.Cancel();
+                    }
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        private async Task RunReportProgress(ProcessingQueueItem<TItem, TResult> item)
+        {
+            try
+            {
+                await ReportProgress(item);
+            }
+            catch { }
         }
 
         public abstract Task<TResult> ProcessItem(TItem item);
