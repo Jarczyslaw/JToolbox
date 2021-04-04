@@ -39,7 +39,7 @@ namespace Examples.Desktop.Network
             {
                 foreach (var port in portsString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList())
                 {
-                    if (int.TryParse(port, out int p))
+                    if (int.TryParse(port, out int p) && !ports.Contains(p))
                     {
                         ports.Add(p);
                     }
@@ -52,6 +52,7 @@ namespace Examples.Desktop.Network
                 return;
             }
 
+            ports.Sort();
             outputInput.WriteLine("Current IP address: " + address.ToString());
             outputInput.WriteLine("Ports to scan: " + string.Join(", ", ports.Select(s => s.ToString())));
             outputInput.WriteLine("TCP Scan started!");

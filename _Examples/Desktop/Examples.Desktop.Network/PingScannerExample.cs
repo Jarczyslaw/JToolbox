@@ -49,9 +49,7 @@ namespace Examples.Desktop.Network
 
             var address = IPAddress.Parse(addressString);
             var mask = IPAddress.Parse(inputString);
-            var startAddress = NetworkUtils.GetNetworkAddress(address, mask).Add(1);
-            var endAddress = NetworkUtils.GetBroadcastAddress(address, mask).Add(-1);
-            var addresses = NetworkUtils.GetContinousAddressesInRange(startAddress, endAddress);
+            var addresses = NetworkUtils.GetAddressesInNetwork(address, mask);
 
             if (addresses.Count == 0)
             {
@@ -61,9 +59,7 @@ namespace Examples.Desktop.Network
 
             outputInput.WriteLine("Current IP address: " + address.ToString());
             outputInput.WriteLine("Mask: " + mask.ToString());
-            outputInput.WriteLine("Start address: " + startAddress.ToString());
-            outputInput.WriteLine("End address: " + endAddress.ToString());
-            outputInput.WriteLine("Count of addresses to scan: " + addresses.Count);
+            outputInput.WriteLine("Addresses to scan: " + addresses.Count);
             outputInput.WriteLine("Scan started!");
 
             var pingScanner = new PingScanner()

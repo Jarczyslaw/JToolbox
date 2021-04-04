@@ -86,6 +86,13 @@ namespace JToolbox.Core.Utilities
             }
         }
 
+        public static List<IPAddress> GetAddressesInNetwork(IPAddress address, IPAddress mask)
+        {
+            var start = GetNetworkAddress(address, mask).Add(1);
+            var end = GetBroadcastAddress(address, mask).Add(-1);
+            return GetContinousAddressesInRange(start, end);
+        }
+
         public static bool IsInSameSubnet(IPAddress address1, IPAddress address2, IPAddress subnetMask)
         {
             IPAddress network1 = GetNetworkAddress(address1, subnetMask);
