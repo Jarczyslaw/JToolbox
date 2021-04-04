@@ -22,5 +22,17 @@ namespace JToolbox.Threading
         {
             return @this.FirstOrDefault(s => s.Processed && s.Exception != null)?.Exception;
         }
+
+        public static List<Exception> GetAllExceptions<TItem, TResult>(this List<ProcessingQueueItem<TItem, TResult>> @this)
+        {
+            return @this.Where(s => s.Processed && s.Exception != null)
+                .Select(s => s.Exception)
+                .ToList();
+        }
+
+        public static List<ProcessingQueueItem<TItem, TResult>> GetUnprocessedItems<TItem, TResult>(this List<ProcessingQueueItem<TItem, TResult>> @this)
+        {
+            return @this.Where(s => !s.Processed).ToList();
+        }
     }
 }

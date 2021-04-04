@@ -93,10 +93,17 @@ namespace Examples.Desktop.Base.ViewModels
             set => SetProperty(ref messages, value);
         }
 
-        public string Read(string label, string text = null)
+        public string Read(string label, string text = null, Func<string, string> validationRule = null)
         {
             string result = null;
-            Threading.SafeInvoke(() => result = WindowManager.GetInput(label, text));
+            Threading.SafeInvoke(() => result = WindowManager.GetInput(label, text, validationRule));
+            return result;
+        }
+
+        public T SelectValue<T>(string label, List<T> values)
+        {
+            T result = default;
+            Threading.SafeInvoke(() => result = WindowManager.SelectValue(label, values));
             return result;
         }
 
@@ -120,9 +127,9 @@ namespace Examples.Desktop.Base.ViewModels
             queuedLock.LockedAction(() => Messages = string.Empty);
         }
 
-        public void Wait(string message)
+        public void Wait()
         {
-            Threading.SafeInvoke(() => dialogsService.ShowInfo(message));
+            Threading.SafeInvoke(() => dialogsService.ShowInfo("Click OK to continue..."));
         }
 
         private void InitializeExamples(List<IDesktopExample> examples)

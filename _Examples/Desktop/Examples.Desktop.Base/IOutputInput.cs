@@ -1,4 +1,7 @@
-﻿namespace Examples.Desktop.Base
+﻿using System;
+using System.Collections.Generic;
+
+namespace Examples.Desktop.Base
 {
     public interface IOutputInput
     {
@@ -8,13 +11,16 @@
 
         void PutLine();
 
-        string Read(string label, string text = null);
+        string Read(string label, string text = null, Func<string, string> validationRule = null);
 
-        void Wait(string message);
+        T SelectValue<T>(string label, List<T> values);
+
+        void Wait();
 
         void Clear();
 
         void StartTime();
+
         void StopTime();
     }
 }

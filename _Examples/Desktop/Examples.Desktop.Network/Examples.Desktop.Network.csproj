@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NetworkUtilities.cs" />
+    <Compile Include="PingScannerExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -96,6 +97,10 @@
     <ProjectReference Include="..\..\..\Misc\JToolbox.NetworkTools\JToolbox.NetworkTools.csproj">
       <Project>{6c758e94-49f4-44df-9eed-ccaee56422f0}</Project>
       <Name>JToolbox.NetworkTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Misc\JToolbox.Threading\JToolbox.Threading.csproj">
+      <Project>{284D3A93-2CD7-4E9A-AD3A-B11B9806A9E3}</Project>
+      <Name>JToolbox.Threading</Name>
     </ProjectReference>
     <ProjectReference Include="..\Examples.Desktop.Base\Examples.Desktop.Base.csproj">
       <Project>{68c1f2ee-1a7a-49ae-8f86-9d12b45781b7}</Project>

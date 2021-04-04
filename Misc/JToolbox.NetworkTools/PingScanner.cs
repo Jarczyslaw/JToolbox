@@ -1,54 +1,30 @@
-﻿using JToolbox.Core.Extensions;
-using JToolbox.Core.Helpers;
-using JToolbox.NetworkTools.Inputs;
+﻿using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
 using JToolbox.Threading;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace JToolbox.NetworkTools
 {
-    public delegate void OnDeviceScanned(PingResult result);
-
-    public delegate void OnDevicesScanComplete(List<PingResult> results);
-
-    public class PingScanner
+    public class PingScanner : ProcessingQueue<PingInput, PingResult>
     {
-        public event OnDeviceScanned OnDeviceScanned = delegate { };
+        public delegate void ScanProgress(ProcessingQueueItem<PingInput, PingResult> item);
 
-        public event OnDevicesScanComplete OnDevicesScanComplete = delegate { };
+        public event ScanProgress OnScanProgress = delegate { };
 
-        public async Task<List<PingResult>> PingScan(PingScanInput pingScanInput)
+        public Task<List<ProcessingQueueItem<PingInput, PingResult>>> PingScan(PingScanInput pingScanInput, CancellationToken token = default)
         {
-            var result = new BlockingCollection<PingResult>();
-            var addressesPacks = pingScanInput.Addresses.ChunkInto(pingScanInput.Workers);
-
-            await AsyncHelper.ForEach(addressesPacks, async (addressPack, token) =>
+            var input = pingScanInput.Addresses.Select(s => new PingInput
             {
-                foreach (var address in addressPack)
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        break;
-                    }
-
-                    var pingResult = await Ping(new PingInput
-                    {
-                        Address = address,
-                        Retries = pingScanInput.Retries,
-                        Timeout = pingScanInput.Timeout
-                    });
-                    result.Add(pingResult);
-                    OnDeviceScanned(pingResult);
-                }
-            }, pingScanInput.CancellationToken);
-            var finalResult = result.ToList();
-            OnDevicesScanComplete(finalResult);
-            return finalResult;
+                Address = s,
+                Retries = pingScanInput.Retries,
+                Timeout = pingScanInput.Timeout
+            }).ToList();
+            return Run(input, token);
         }
 
         public async Task<PingResult> Ping(PingInput pingInput)
@@ -74,11 +50,21 @@ namespace JToolbox.NetworkTools
                 }
                 return new PingResult
                 {
-                    Address = pingInput.Address,
                     Reply = pingReply,
                     LastException = exception
                 };
             }
+        }
+
+        public override Task<PingResult> ProcessItem(PingInput item)
+        {
+            return Ping(item);
+        }
+
+        public override Task ReportProgress(ProcessingQueueItem<PingInput, PingResult> item)
+        {
+            OnScanProgress(item);
+            return Task.CompletedTask;
         }
     }
 }

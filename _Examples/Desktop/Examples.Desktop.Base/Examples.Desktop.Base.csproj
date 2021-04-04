@@ -89,8 +89,13 @@
     <Compile Include="IOutputInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExampleViewModel.cs" />
+    <Compile Include="ViewModels\SelectItemViewModel.cs" />
+    <Compile Include="ViewModels\SelectViewModel.cs" />
     <Compile Include="ViewModels\InputViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\SelectWindow.xaml.cs">
+      <DependentUpon>SelectWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InputWindow.xaml.cs">
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
@@ -121,6 +126,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\SelectWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\InputWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
