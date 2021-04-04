@@ -1,4 +1,6 @@
 ﻿using Examples.Desktop.Base.ViewModels;
+using JToolbox.WPF.Core;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,6 +11,8 @@ namespace Examples.Desktop.Base.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool cleanedUp;
+
         public MainWindow(MainViewModel mainViewModel)
         {
             DataContext = mainViewModel;
@@ -20,9 +24,19 @@ namespace Examples.Desktop.Base.Views
             (sender as TextBox).ScrollToEnd();
         }
 
-        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            await (DataContext as MainViewModel).CleanUp();
+            if (!cleanedUp)
+            {
+                e.Cancel = true;
+                var viewModel = DataContext as MainViewModel;
+                Task.Run(async () =>
+                {
+                    await viewModel.CleanUp();
+                    cleanedUp = true;
+                    Threading.SafeInvoke(Close);
+                });
+            }
         }
     }
 }

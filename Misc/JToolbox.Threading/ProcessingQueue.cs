@@ -82,7 +82,7 @@ namespace JToolbox.Threading
             item.Processed = true;
             try
             {
-                item.Result = await ProcessItem(item.Item);
+                item.Output = await ProcessItem(item.Input);
                 return true;
             }
             catch (Exception exc)

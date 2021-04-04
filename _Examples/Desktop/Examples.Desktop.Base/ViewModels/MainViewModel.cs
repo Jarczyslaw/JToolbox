@@ -16,7 +16,6 @@ namespace Examples.Desktop.Base.ViewModels
 {
     public class MainViewModel : BindableBase, IOutputInput
     {
-        private readonly QueuedLock queuedLock = new QueuedLock();
         private bool busy;
         private string title;
         private string messages;
@@ -24,6 +23,7 @@ namespace Examples.Desktop.Base.ViewModels
         private DelegateCommand runCommand;
         private IDialogsService dialogsService = new DialogsService();
         private Stopwatch internalStopwatch;
+        private ProducerConsumer<string> messagesProxy = new ProducerConsumer<string>();
 
         public MainViewModel()
         {
@@ -33,22 +33,34 @@ namespace Examples.Desktop.Base.ViewModels
                 .OrderBy(e => e.Title)
                 .ToList();
             InitializeExamples(examples);
+            messagesProxy.Handler += s =>
+            {
+                if (s == null)
+                {
+                    Messages = string.Empty;
+                }
+                else
+                {
+                    Messages += s;
+                }
+                return Task.CompletedTask;
+            };
         }
 
         public DelegateCommand RunCommand => runCommand ?? (runCommand = new DelegateCommand(async () =>
         {
             Busy = true;
             Clear();
-            WriteLine($"{SelectedExample.Display} started...");
+            WriteLine($"[MAIN] {SelectedExample.Display} started...");
             try
             {
                 var stopwatch = Stopwatch.StartNew();
                 await Task.Run(() => SelectedExample.Example.Run(this));
-                WriteLine($"{SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
+                WriteLine($"[MAIN] {SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
             }
             catch (Exception exc)
             {
-                WriteLine($"{SelectedExample.Display} failed with exception:");
+                WriteLine($"[MAIN] {SelectedExample.Display} failed with exception:");
                 WriteLine(exc.ToString());
             }
             finally
@@ -109,12 +121,18 @@ namespace Examples.Desktop.Base.ViewModels
 
         public void Write(string message)
         {
-            queuedLock.LockedAction(() => Messages += message);
+            if (message != null)
+            {
+                messagesProxy.Add(message);
+            }
         }
 
         public void WriteLine(string message)
         {
-            queuedLock.LockedAction(() => Messages += message + Environment.NewLine);
+            if (message != null)
+            {
+                messagesProxy.Add(message + Environment.NewLine);
+            }
         }
 
         public void PutLine()
@@ -124,7 +142,7 @@ namespace Examples.Desktop.Base.ViewModels
 
         public void Clear()
         {
-            queuedLock.LockedAction(() => Messages = string.Empty);
+            messagesProxy.Add(null);
         }
 
         public void Wait()
@@ -143,6 +161,7 @@ namespace Examples.Desktop.Base.ViewModels
 
         public async Task CleanUp()
         {
+            await messagesProxy.Cancel();
             foreach (var example in Examples)
             {
                 await example.Example.CleanUp();
@@ -152,12 +171,12 @@ namespace Examples.Desktop.Base.ViewModels
         public void StartTime()
         {
             internalStopwatch = Stopwatch.StartNew();
-            WriteLine("Stopwatch started");
+            WriteLine("[MAIN] Stopwatch started");
         }
 
         public void StopTime()
         {
-            WriteLine($"Elapsed time: {Math.Round(internalStopwatch.Elapsed.TotalMilliseconds)}ms");
+            WriteLine($"[MAIN] Elapsed time: {Math.Round(internalStopwatch.Elapsed.TotalMilliseconds)}ms");
         }
     }
 }

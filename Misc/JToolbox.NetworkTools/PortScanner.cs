@@ -1,115 +1,78 @@
-﻿using JToolbox.Core.Extensions;
-using JToolbox.NetworkTools.Clients;
+﻿using JToolbox.NetworkTools.Clients;
 using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
 using JToolbox.Threading;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace JToolbox.NetworkTools
 {
-    public delegate void OnPortScanned(IPAddress address, PortResult result);
-
-    public delegate void OnPortsScanComplete(List<PortScanResult> results);
-
-    public class PortScanner
+    public class PortScanner : ProcessingQueue<PortInput, List<PortResult>>
     {
-        public event OnPortScanned OnPortScanned = delegate { };
+        public delegate void ScanProgress(ProcessingQueueItem<PortInput, List<PortResult>> item);
 
-        public event OnPortsScanComplete OnPortsScanComplete = delegate { };
+        public ScanProgress OnScanProgress = delegate { };
 
-        public async Task<List<PortScanResult>> PortScan(PortScanInput portScanInput, IPortClient portClient)
+        private IPortClient portClient;
+
+        public Task<List<ProcessingQueueItem<PortInput, List<PortResult>>>> PortScan(PortScanInput portScanInput, IPortClient portClient, CancellationToken cancellationToken = default)
         {
-            var result = new BlockingCollection<PortScanResult>();
-            var mergedInput = MergePortScanInput(portScanInput);
-            var addressPortPairs = mergedInput.ChunkInto(portScanInput.Workers);
-
-            await AsyncHelper.ForEach(addressPortPairs, async (addressPortPair, token) =>
+            this.portClient = portClient;
+            var input = portScanInput.Addresses.Select(s => new PortInput
             {
-                foreach (var pair in addressPortPair)
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        break;
-                    }
-
-                    var portResultEntry = await IsPortOpen(new PortInput
-                    {
-                        Address = pair.Address,
-                        Retries = portScanInput.Retries,
-                        Timeout = portScanInput.Timeout,
-                        Port = pair.Port
-                    }, portClient);
-
-                    var addressResult = result.FirstOrDefault(r => r.Address == pair.Address);
-                    if (addressResult == null)
-                    {
-                        var portResult = new PortScanResult
-                        {
-                            Address = pair.Address,
-                        };
-                        portResult.Results.Add(portResultEntry);
-                        result.Add(portResult);
-                    }
-                    else
-                    {
-                        addressResult.Results.Add(portResultEntry);
-                    }
-                    OnPortScanned(pair.Address, portResultEntry);
-                }
-            }, portScanInput.CancellationToken);
-            var finalResult = result.ToList();
-            OnPortsScanComplete(finalResult);
-            return finalResult;
+                Address = s,
+                Ports = portScanInput.Ports,
+                Retries = portScanInput.Retries,
+                Timeout = portScanInput.Timeout
+            }).ToList();
+            return Run(input, cancellationToken);
         }
 
-        private List<AddressPortPair> MergePortScanInput(PortScanInput portScanInput)
+        public async Task<List<PortResult>> IsPortOpen(PortInput input, IPortClient portClient)
         {
-            var result = new List<AddressPortPair>();
-            foreach (var address in portScanInput.Addresses)
+            var result = new List<PortResult>();
+            foreach (var port in input.Ports)
             {
-                foreach (var port in portScanInput.Ports)
+                var isOpen = false;
+                Exception exception = null;
+                for (int i = 0; i < input.Retries; i++)
                 {
-                    result.Add(new AddressPortPair
+                    try
                     {
-                        Address = address,
-                        Port = port
-                    });
+                        isOpen = await portClient.Check(input.Address, port, input.Timeout);
+                        if (isOpen)
+                        {
+                            break;
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        exception = exc;
+                    }
                 }
+
+                result.Add(new PortResult
+                {
+                    IsOpen = isOpen,
+                    Port = port,
+                    LastException = exception
+                });
             }
             return result;
         }
 
-        public async Task<PortResult> IsPortOpen(PortInput input, IPortClient portClient)
+        public override Task<List<PortResult>> ProcessItem(PortInput item)
         {
-            var isOpen = false;
-            Exception exception = null;
-            for (int i = 0; i < input.Retries; i++)
-            {
-                try
-                {
-                    isOpen = await portClient.Check(input.Address, input.Port, input.Timeout);
-                    if (isOpen)
-                    {
-                        break;
-                    }
-                }
-                catch (Exception exc)
-                {
-                    exception = exc;
-                }
-            }
+            return IsPortOpen(item, portClient);
+        }
 
-            return new PortResult
-            {
-                IsOpen = isOpen,
-                Port = input.Port,
-                LastException = exception
-            };
+        public override Task ReportProgress(ProcessingQueueItem<PortInput, List<PortResult>> item)
+        {
+            OnScanProgress(item);
+            return Task.CompletedTask;
         }
     }
 }

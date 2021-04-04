@@ -2,15 +2,15 @@
 
 namespace JToolbox.Threading
 {
-    public class ProcessingQueueItem<TItem, TResult>
+    public class ProcessingQueueItem<TInput, TOutput>
     {
-        public ProcessingQueueItem(TItem item)
+        public ProcessingQueueItem(TInput input)
         {
-            Item = item;
+            Input = input;
         }
 
-        public TItem Item { get; }
-        public TResult Result { get; set; }
+        public TInput Input { get; }
+        public TOutput Output { get; set; }
         public Exception Exception { get; set; }
         public bool Processed { get; set; }
 
@@ -18,7 +18,7 @@ namespace JToolbox.Threading
         {
             Processed = false;
             Exception = null;
-            Result = default;
+            Output = default;
         }
     }
 }

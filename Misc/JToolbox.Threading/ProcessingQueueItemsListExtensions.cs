@@ -14,7 +14,7 @@ namespace JToolbox.Threading
         public static List<TResult> GetResults<TItem, TResult>(this List<ProcessingQueueItem<TItem, TResult>> @this)
         {
             return @this.Where(s => s.Processed)
-                .Select(s => s.Result)
+                .Select(s => s.Output)
                 .ToList();
         }
 

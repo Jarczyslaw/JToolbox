@@ -76,7 +76,7 @@ namespace Examples.Desktop.Threading
 
             public override Task ReportProgress(ProcessingQueueItem<int, int> item)
             {
-                outputInput.WriteLine($"Processed item {item.Item} with result {item.Result}");
+                outputInput.WriteLine($"Processed item {item.Input} with result {item.Output}");
                 return Task.CompletedTask;
             }
         }

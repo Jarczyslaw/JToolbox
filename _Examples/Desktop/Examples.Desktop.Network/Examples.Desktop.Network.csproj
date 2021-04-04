@@ -62,8 +62,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="NetworkUtilities.cs" />
     <Compile Include="PingScannerExample.cs" />
+    <Compile Include="PortScannerLocalMachineExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,20 +1,19 @@
 ﻿using Examples.Desktop.Base;
+using JToolbox.Core.Extensions;
 using JToolbox.Core.Utilities;
 using JToolbox.NetworkTools;
 using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
 using JToolbox.Threading;
-using System.Net;
-using JToolbox.Core.Extensions;
-using System.Threading.Tasks;
-using System.Net.NetworkInformation;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace Examples.Desktop.Network
 {
     public class PingScannerExample : IDesktopExample
     {
-
         private IOutputInput outputInput;
 
         public string Title => "Ping scanner";
@@ -27,20 +26,9 @@ namespace Examples.Desktop.Network
         public async Task Run(IOutputInput outputInput)
         {
             this.outputInput = outputInput;
-            IPAddress address = null;
-            var localAddresses = NetworkUtils.GetLocalIPAddresses();
-            if (localAddresses.Count > 1)
+            var addressString = Common.GetLocalAddress(outputInput);
+            if (string.IsNullOrEmpty(addressString))
             {
-                address = outputInput.SelectValue("Select local address:", localAddresses);
-            }
-            else if (localAddresses.Count == 1)
-            {
-                address = localAddresses[0];
-            }
-
-            if (address == null)
-            {
-                outputInput.WriteLine("No IP address selected");
                 return;
             }
 
@@ -59,6 +47,7 @@ namespace Examples.Desktop.Network
                 return;
             }
 
+            var address = IPAddress.Parse(addressString);
             var mask = IPAddress.Parse(inputString);
             var startAddress = NetworkUtils.GetNetworkAddress(address, mask).Add(1);
             var endAddress = NetworkUtils.GetBroadcastAddress(address, mask).Add(-1);
@@ -98,9 +87,9 @@ namespace Examples.Desktop.Network
 
         private void PingScanner_OnScanProgress(ProcessingQueueItem<PingInput, PingResult> item)
         {
-            if (item.Result?.Reply?.Status == IPStatus.Success)
+            if (item.Output?.Reply?.Status == IPStatus.Success)
             {
-                outputInput.WriteLine("Device found on: " + item.Item.Address);
+                outputInput.WriteLine("Device found on: " + item.Input.Address);
             }
         }
     }
