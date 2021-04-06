@@ -64,7 +64,6 @@
     <Compile Include="TcpListenerExample.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.cs" />
     <Compile Include="NetworkUtilities.cs" />
     <Compile Include="PingScannerExample.cs" />
     <Compile Include="PortScannerExample.cs" />

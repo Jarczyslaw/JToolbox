@@ -64,6 +64,8 @@
     <Compile Include="Configurations.cs" />
     <Compile Include="ITestService.cs" />
     <Compile Include="NamedPipeClientExample.cs" />
+    <Compile Include="NetTcpClientExample.cs" />
+    <Compile Include="NetTcpServerExample.cs" />
     <Compile Include="TestService.cs" />
   </ItemGroup>
   <ItemGroup>

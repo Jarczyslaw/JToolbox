@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Examples.Desktop.WCF
 {
-    public class NamedPipeClientExample : IDesktopExample
+    public class NetTcpClientExample : IDesktopExample
     {
-        public string Title => "NamedPipe client";
+        public string Title => "NetTcp client";
 
         public Task CleanUp()
         {
@@ -15,7 +15,19 @@ namespace Examples.Desktop.WCF
 
         public Task Run(IOutputInput outputInput)
         {
-            var configuration = Configurations.GetNamedPipeConfiguration();
+            var address = Common.GetLocalAddress(outputInput);
+            if (address == null)
+            {
+                return Task.CompletedTask;
+            }
+
+            var port = Common.GetPort(outputInput, 9989);
+            if (port == 0)
+            {
+                return Task.CompletedTask;
+            }
+
+            var configuration = Configurations.GetNetTcpConfiguration(address.ToString(), port);
             using (var client = new Client<ITestService>(configuration))
             {
                 client.Start();

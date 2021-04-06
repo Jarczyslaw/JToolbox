@@ -1,8 +1,7 @@
-﻿using Examples.Desktop.Base;
-using JToolbox.Core.Utilities;
+﻿using JToolbox.Core.Utilities;
 using System.Net;
 
-namespace Examples.Desktop.Network
+namespace Examples.Desktop.Base
 {
     public static class Common
     {

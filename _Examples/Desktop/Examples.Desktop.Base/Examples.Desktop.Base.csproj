@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="IDesktopExample.cs" />
     <Compile Include="IOutputInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
