@@ -18,6 +18,7 @@
             Grid.Row="1"
             Width="300"
             Margin="0,5,0,0"
+            DisplayMemberPath="Display"
             ItemsSource="{Binding Items}"
             SelectedItem="{Binding SelectedItem}" />
 

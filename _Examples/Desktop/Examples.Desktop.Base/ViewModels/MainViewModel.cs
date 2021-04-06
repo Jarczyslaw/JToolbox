@@ -185,5 +185,15 @@ namespace Examples.Desktop.Base.ViewModels
         {
             WriteLine($"[MAIN] Elapsed time: {Math.Round(internalStopwatch.Elapsed.TotalMilliseconds)}ms");
         }
+
+        public bool CheckClose()
+        {
+            if (Busy)
+            {
+                var dialogs = new DialogsService();
+                return dialogs.ShowYesNoQuestion("Example is running. Do you want to force close?");
+            }
+            return true;
+        }
     }
 }

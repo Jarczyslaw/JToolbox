@@ -35,7 +35,7 @@ namespace Examples.Desktop.Base.ViewModels
             set => SetProperty(ref selectedItem, value);
         }
 
-        public ObservableCollection<SelectItemViewModel> Items;
+        public ObservableCollection<SelectItemViewModel> Items { get; }
 
         public string Label
         {

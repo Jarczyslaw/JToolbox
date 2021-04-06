@@ -26,10 +26,15 @@ namespace Examples.Desktop.Base.Views
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            var viewModel = DataContext as MainViewModel;
             if (!cleanedUp)
             {
                 e.Cancel = true;
-                var viewModel = DataContext as MainViewModel;
+                if (!viewModel.CheckClose())
+                {
+                    return;
+                }
+
                 Task.Run(async () =>
                 {
                     await viewModel.CleanUp();
