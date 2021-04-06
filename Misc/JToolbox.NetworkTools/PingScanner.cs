@@ -25,6 +25,11 @@ namespace JToolbox.NetworkTools
             return Run(input, token);
         }
 
+        public Task<PingResult> Ping(PingInput item)
+        {
+            return ProcessItem(item);
+        }
+
         public override Task<PingResult> ProcessItem(PingInput item)
         {
             return ScannersCommon.Ping(item);

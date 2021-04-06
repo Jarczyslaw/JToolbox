@@ -30,6 +30,12 @@ namespace JToolbox.NetworkTools
             return Run(input, cancellationToken);
         }
 
+        public Task<List<PortResult>> CheckPort(PortInput item, IPortClient portClient)
+        {
+            this.portClient = portClient;
+            return ProcessItem(item);
+        }
+
         public override Task<List<PortResult>> ProcessItem(PortInput item)
         {
             return ScannersCommon.IsPortOpen(item, portClient);

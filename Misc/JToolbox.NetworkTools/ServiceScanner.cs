@@ -29,6 +29,12 @@ namespace JToolbox.NetworkTools
             return Run(input, cancellationToken);
         }
 
+        public Task<bool> CheckService(ServiceInput item, IPortClient portClient)
+        {
+            this.portClient = portClient;
+            return ProcessItem(item);
+        }
+
         public override async Task<bool> ProcessItem(ServiceInput item)
         {
             var scanResult = await ScannersCommon.IsPortOpen(new PortInput
