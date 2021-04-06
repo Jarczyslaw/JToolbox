@@ -21,6 +21,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -31,7 +32,7 @@
             <Label Content="Select example:" />
             <ComboBox
                 Grid.Column="1"
-                Width="250"
+                Width="350"
                 HorizontalAlignment="Left"
                 DisplayMemberPath="Display"
                 ItemsSource="{Binding Examples}"
@@ -45,6 +46,13 @@
 
             <Button
                 Grid.Column="4"
+                Width="150"
+                Margin="5,0,0,0"
+                Command="{Binding ContinueCommand}"
+                Content="Continue" />
+
+            <Button
+                Grid.Column="5"
                 Width="150"
                 Margin="5,0,0,0"
                 Command="{Binding NewWindowCommand}"

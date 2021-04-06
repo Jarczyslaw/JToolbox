@@ -21,10 +21,12 @@ namespace Examples.Desktop.Base.ViewModels
         private string messages;
         private ExampleViewModel selectedExample;
         private DelegateCommand runCommand;
+        private DelegateCommand continueCommand;
         private IDialogsService dialogsService = new DialogsService();
         private Stopwatch internalStopwatch;
         private ProducerConsumer<string> messagesProxy = new ProducerConsumer<string>();
         private List<IDesktopExample> toCleanup = new List<IDesktopExample>();
+        private TaskCompletionSource<object> continueTaskCompletionSource;
 
         public MainViewModel()
         {
@@ -75,6 +77,11 @@ namespace Examples.Desktop.Base.ViewModels
                 Busy = false;
             }
         }, () => SelectedExample != null && !Busy));
+
+        public DelegateCommand ContinueCommand => continueCommand ?? (continueCommand = new DelegateCommand(() =>
+        {
+            continueTaskCompletionSource.SetResult(null);
+        }, () => continueTaskCompletionSource != null));
 
         public DelegateCommand NewWindowCommand => new DelegateCommand(() => WindowManager.GetMainWindow(Title).Show());
 
@@ -152,9 +159,14 @@ namespace Examples.Desktop.Base.ViewModels
             messagesProxy.Add(null);
         }
 
-        public void Wait()
+        public async Task Wait()
         {
-            Threading.SafeInvoke(() => dialogsService.ShowInfo("Click OK to continue..."));
+            WriteLine("[MAIN] Waiting for continuation...");
+            continueTaskCompletionSource = new TaskCompletionSource<object>();
+            ContinueCommand.RaiseCanExecuteChanged();
+            await continueTaskCompletionSource.Task;
+            continueTaskCompletionSource = null;
+            ContinueCommand.RaiseCanExecuteChanged();
         }
 
         private void InitializeExamples(List<IDesktopExample> examples)

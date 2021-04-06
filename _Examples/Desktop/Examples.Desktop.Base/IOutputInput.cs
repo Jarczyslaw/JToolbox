@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Examples.Desktop.Base
 {
@@ -15,7 +16,7 @@ namespace Examples.Desktop.Base
 
         T SelectValue<T>(string label, List<T> values);
 
-        void Wait();
+        Task Wait();
 
         void Clear();
 
