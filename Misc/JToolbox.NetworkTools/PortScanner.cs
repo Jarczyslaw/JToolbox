@@ -2,7 +2,6 @@
 using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
 using JToolbox.Threading;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -31,42 +30,9 @@ namespace JToolbox.NetworkTools
             return Run(input, cancellationToken);
         }
 
-        public async Task<List<PortResult>> IsPortOpen(PortInput input, IPortClient portClient)
-        {
-            var result = new List<PortResult>();
-            foreach (var port in input.Ports)
-            {
-                var isOpen = false;
-                Exception exception = null;
-                for (int i = 0; i < input.Retries; i++)
-                {
-                    try
-                    {
-                        isOpen = await portClient.Check(input.Address, port, input.Timeout);
-                        if (isOpen)
-                        {
-                            break;
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        exception = exc;
-                    }
-                }
-
-                result.Add(new PortResult
-                {
-                    IsOpen = isOpen,
-                    Port = port,
-                    LastException = exception
-                });
-            }
-            return result;
-        }
-
         public override Task<List<PortResult>> ProcessItem(PortInput item)
         {
-            return IsPortOpen(item, portClient);
+            return ScannersCommon.IsPortOpen(item, portClient);
         }
 
         public override Task ReportProgress(ProcessingQueueItem<PortInput, List<PortResult>> item)

@@ -1,10 +1,8 @@
 ﻿using JToolbox.NetworkTools.Inputs;
 using JToolbox.NetworkTools.Results;
 using JToolbox.Threading;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,38 +25,9 @@ namespace JToolbox.NetworkTools
             return Run(input, token);
         }
 
-        public async Task<PingResult> Ping(PingInput pingInput)
-        {
-            using (var ping = new Ping())
-            {
-                PingReply pingReply = null;
-                Exception exception = null;
-                for (int i = 0; i < pingInput.Retries; i++)
-                {
-                    try
-                    {
-                        pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
-                        if (pingReply.Status == IPStatus.Success)
-                        {
-                            break;
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        exception = exc;
-                    }
-                }
-                return new PingResult
-                {
-                    Reply = pingReply,
-                    LastException = exception
-                };
-            }
-        }
-
         public override Task<PingResult> ProcessItem(PingInput item)
         {
-            return Ping(item);
+            return ScannersCommon.Ping(item);
         }
 
         public override Task ReportProgress(ProcessingQueueItem<PingInput, PingResult> item)

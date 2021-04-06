@@ -1,22 +1,19 @@
 ﻿using Examples.Desktop.Base;
-using JToolbox.Core.Extensions;
 using JToolbox.Core.Utilities;
 using JToolbox.NetworkTools;
+using JToolbox.NetworkTools.Clients;
 using JToolbox.NetworkTools.Inputs;
-using JToolbox.NetworkTools.Results;
 using JToolbox.Threading;
 using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace Examples.Desktop.Network
 {
-    public class PingScannerExample : IDesktopExample
+    public class ServiceScannerExample : IDesktopExample
     {
-        private IOutputInput outputInput;
+        public string Title => "Service scanner - find machines with port";
 
-        public string Title => "Ping scanner";
+        private IOutputInput outputInput;
 
         public Task CleanUp()
         {
@@ -26,6 +23,7 @@ namespace Examples.Desktop.Network
         public async Task Run(IOutputInput outputInput)
         {
             this.outputInput = outputInput;
+
             var address = Common.GetLocalAddress(outputInput);
             if (address == null)
             {
@@ -34,6 +32,12 @@ namespace Examples.Desktop.Network
 
             var mask = Common.GetMask(outputInput);
             if (mask == null)
+            {
+                return;
+            }
+
+            var port = Common.GetPort(outputInput, 9989);
+            if (port == 0)
             {
                 return;
             }
@@ -48,32 +52,35 @@ namespace Examples.Desktop.Network
             outputInput.WriteLine("Current IP address: " + address.ToString());
             outputInput.WriteLine("Mask: " + mask.ToString());
             outputInput.WriteLine("Addresses to scan: " + addresses.Count);
+            outputInput.WriteLine("Port to scan: " + port);
             outputInput.WriteLine("Scan started!");
 
-            var pingScanner = new PingScanner()
+            var scanner = new ServiceScanner()
             {
                 StopOnFirstException = false,
                 TasksCount = 0
             };
-            pingScanner.OnScanProgress += PingScanner_OnScanProgress;
+            scanner.OnScanProgress += ServiceScanner_OnScanProgress;
             outputInput.StartTime();
-            var result = await pingScanner.PingScan(new PingScanInput
+            var result = await scanner.ServiceScan(new ServiceScanInput
             {
                 Addresses = addresses,
+                Port = port,
                 Retries = 1,
                 Timeout = 1000
-            });
+            }, new TCPPortClient());
             outputInput.StopTime();
             var processed = result.GetResults();
-            var found = processed.Where(s => s.Reply?.Status == IPStatus.Success);
-            outputInput.WriteLine($"Scan completed. Scanned addresses: {processed.Count}, found {found.Count()} devices");
+            outputInput.WriteLine($"Scan completed. Scanned addresses: {processed.Count}, found services: {result.Count(r => r.Output)}");
+
+            return;
         }
 
-        private void PingScanner_OnScanProgress(ProcessingQueueItem<PingInput, PingResult> item)
+        private void ServiceScanner_OnScanProgress(ProcessingQueueItem<ServiceInput, bool> item)
         {
-            if (item.Output?.Reply?.Status == IPStatus.Success)
+            if (item.Output)
             {
-                outputInput.WriteLine("Device found on: " + item.Input.Address);
+                outputInput.WriteLine("Found service on: " + item.Input.Address.ToString());
             }
         }
     }

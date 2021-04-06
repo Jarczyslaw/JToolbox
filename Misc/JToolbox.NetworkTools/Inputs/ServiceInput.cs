@@ -2,8 +2,9 @@
 
 namespace JToolbox.NetworkTools.Inputs
 {
-    public class PingInput : InputBase
+    public class ServiceInput : InputBase
     {
         public IPAddress Address { get; set; }
+        public int Port { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace Examples.Desktop.Base.ViewModels
         private IDialogsService dialogsService = new DialogsService();
         private Stopwatch internalStopwatch;
         private ProducerConsumer<string> messagesProxy = new ProducerConsumer<string>();
+        private List<IDesktopExample> toCleanup = new List<IDesktopExample>();
 
         public MainViewModel()
         {
@@ -54,8 +55,14 @@ namespace Examples.Desktop.Base.ViewModels
             WriteLine($"[MAIN] {SelectedExample.Display} started...");
             try
             {
+                var example = SelectedExample.Example;
+                if (!toCleanup.Contains(example))
+                {
+                    toCleanup.Add(example);
+                }
+
                 var stopwatch = Stopwatch.StartNew();
-                await Task.Run(() => SelectedExample.Example.Run(this));
+                await Task.Run(() => example.Run(this));
                 WriteLine($"[MAIN] {SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
             }
             catch (Exception exc)

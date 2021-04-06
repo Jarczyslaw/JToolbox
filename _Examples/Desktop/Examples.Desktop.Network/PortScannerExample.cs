@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Examples.Desktop.Network
 {
-    public class PortScannerLocalMachineExample : IDesktopExample
+    public class PortScannerExample : IDesktopExample
     {
         private IOutputInput outputInput;
 
@@ -26,14 +26,13 @@ namespace Examples.Desktop.Network
         public async Task Run(IOutputInput outputInput)
         {
             this.outputInput = outputInput;
-            var addressString = Common.GetLocalAddress(outputInput);
-            if (string.IsNullOrEmpty(addressString))
+            var address = Common.GetLocalAddress(outputInput);
+            if (address == null)
             {
                 return;
             }
 
-            var address = IPAddress.Parse(addressString);
-            var portsString = outputInput.Read("Insert ports (comma separated):", "80, 135");
+            var portsString = outputInput.Read("Insert ports (comma separated):", "80, 135, 9989");
             var ports = new List<int>();
             if (!string.IsNullOrEmpty(portsString))
             {

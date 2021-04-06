@@ -1,17 +1,12 @@
 ﻿using Examples.Desktop.Base;
 using JToolbox.Core.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Examples.Desktop.Network
 {
     public static class Common
     {
-        public static string GetLocalAddress(IOutputInput outputInput)
+        public static IPAddress GetLocalAddress(IOutputInput outputInput)
         {
             IPAddress address = null;
             var localAddresses = NetworkUtils.GetLocalIPAddresses();
@@ -29,7 +24,45 @@ namespace Examples.Desktop.Network
                 outputInput.WriteLine("No IP address selected");
                 return null;
             }
-            return address.ToString();
+            return address;
+        }
+
+        public static IPAddress GetMask(IOutputInput outputInput)
+        {
+            var inputString = outputInput.Read("Insert mask:", "255.255.255.0", s =>
+            {
+                if (!IPAddress.TryParse(s, out IPAddress _))
+                {
+                    return "Invalid mask format";
+                }
+                return null;
+            });
+
+            if (string.IsNullOrEmpty(inputString))
+            {
+                outputInput.WriteLine("No mask provided");
+                return null;
+            }
+            return IPAddress.Parse(inputString);
+        }
+
+        public static int GetPort(IOutputInput outputInput, int port)
+        {
+            var portString = outputInput.Read("Insert port:", port.ToString(), s =>
+            {
+                if (!int.TryParse(s, out int _))
+                {
+                    return "Invalid port value";
+                }
+                return null;
+            });
+
+            if (string.IsNullOrEmpty(portString))
+            {
+                outputInput.WriteLine("Invalid port value");
+                return 0;
+            }
+            return int.Parse(portString);
         }
     }
 }
