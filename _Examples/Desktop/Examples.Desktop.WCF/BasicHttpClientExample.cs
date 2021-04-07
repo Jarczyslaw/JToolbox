@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Examples.Desktop.WCF
 {
-    public class NetTcpClientExample : ExampleBase, IDesktopExample
+    public class BasicHttpClientExample : ExampleBase, IDesktopExample
     {
-        public string Title => "NetTcp client";
+        public string Title => "BasicHttp client";
 
         public Task CleanUp()
         {
@@ -20,13 +20,13 @@ namespace Examples.Desktop.WCF
                 return Task.CompletedTask;
             }
 
-            var port = Common.GetPort(outputInput, 9989);
+            var port = Common.GetPort(outputInput, 9988);
             if (port == 0)
             {
                 return Task.CompletedTask;
             }
 
-            var configuration = Configurations.GetNetTcpConfiguration(address.ToString(), port);
+            var configuration = Configurations.GetBasicHttpConfiguration(address.ToString(), port);
             StartClient(outputInput, configuration);
             return Task.CompletedTask;
         }

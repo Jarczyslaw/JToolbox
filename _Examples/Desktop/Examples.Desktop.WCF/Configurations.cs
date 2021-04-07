@@ -27,5 +27,16 @@ namespace Examples.Desktop.WCF
                 ServiceName = serviceName
             };
         }
+
+        public static BasicHttpConfiguration GetBasicHttpConfiguration(string ipAddress, int port)
+        {
+            return new BasicHttpConfiguration
+            {
+                IpAddress = ipAddress,
+                Port = port,
+                ApplicationName = appName,
+                ServiceName = serviceName
+            };
+        }
     }
 }

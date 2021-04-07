@@ -1,10 +1,9 @@
 ﻿using Examples.Desktop.Base;
-using JToolbox.WCF.ServerSide;
 using System.Threading.Tasks;
 
 namespace Examples.Desktop.WCF
 {
-    public class NetTcpServerExample : IDesktopExample
+    public class NetTcpServerExample : ExampleBase, IDesktopExample
     {
         public string Title => "NetTcp server";
 
@@ -27,13 +26,8 @@ namespace Examples.Desktop.WCF
                 return;
             }
 
-            var service = new TestService(outputInput);
             var configuration = Configurations.GetNetTcpConfiguration(address.ToString(), port);
-            var server = Server.CreateSingle<ITestService>(configuration, service);
-            server.Start();
-            outputInput.WriteLine("Server started at: " + configuration.ServiceAddress);
-            await outputInput.Wait();
-            server.Dispose();
+            await StartServer(outputInput, configuration, null);
         }
     }
 }

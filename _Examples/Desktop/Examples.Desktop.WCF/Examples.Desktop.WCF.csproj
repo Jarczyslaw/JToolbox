@@ -61,11 +61,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BasicHttpClientExample.cs" />
     <Compile Include="Configurations.cs" />
     <Compile Include="ITestService.cs" />
     <Compile Include="NamedPipeClientExample.cs" />
     <Compile Include="NetTcpClientExample.cs" />
+    <Compile Include="BasicHttpServerExample.cs" />
     <Compile Include="NetTcpServerExample.cs" />
+    <Compile Include="ExampleBase.cs" />
     <Compile Include="TestService.cs" />
   </ItemGroup>
   <ItemGroup>
