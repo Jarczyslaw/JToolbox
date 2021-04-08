@@ -32,11 +32,7 @@ namespace Examples.Desktop.Network
                 return;
             }
 
-            var mask = Common.GetMask(outputInput);
-            if (mask == null)
-            {
-                return;
-            }
+            var mask = NetworkUtils.GetSubnetMask(address);
 
             var addresses = NetworkUtils.GetAddressesInNetwork(address, mask);
             if (addresses.Count == 0)

@@ -30,11 +30,7 @@ namespace Examples.Desktop.Network
                 return;
             }
 
-            var mask = Common.GetMask(outputInput);
-            if (mask == null)
-            {
-                return;
-            }
+            var mask = NetworkUtils.GetSubnetMask(address);
 
             var port = Common.GetPort(outputInput, 9989);
             if (port == 0)

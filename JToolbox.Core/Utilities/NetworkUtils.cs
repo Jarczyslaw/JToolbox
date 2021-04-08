@@ -17,6 +17,21 @@ namespace JToolbox.Core.Utilities
                 .ToList();
         }
 
+        public static IPAddress GetSubnetMask(IPAddress address)
+        {
+            foreach (var adapter in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                foreach (var unicastAddresses in adapter.GetIPProperties().UnicastAddresses)
+                {
+                    if (unicastAddresses.Address.AddressFamily == AddressFamily.InterNetwork && unicastAddresses.Address.ToString() == address.ToString())
+                    {
+                        return unicastAddresses.IPv4Mask;
+                    }
+                }
+            }
+            return null;
+        }
+
         public static bool ConnectedToLocalNetwork()
         {
             return NetworkInterface.GetIsNetworkAvailable();
