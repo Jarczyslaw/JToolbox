@@ -6,9 +6,11 @@ namespace JToolbox.WCF.ClientSide
 {
     public class Client<TProxy> : IDisposable
     {
+        private ChannelFactoryProvider<TProxy> channelFactoryProvider = new ChannelFactoryProvider<TProxy>();
+
         public Client(BindingConfigurationBase bindingConfiguration)
         {
-            ChannelFactory = new ChannelFactory<TProxy>(bindingConfiguration.Binding, new EndpointAddress(bindingConfiguration.ServiceAddress));
+            ChannelFactory = channelFactoryProvider.GetChannelFactory(bindingConfiguration);
         }
 
         public TProxy Proxy { get; private set; }
