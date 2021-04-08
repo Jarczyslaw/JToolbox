@@ -22,7 +22,6 @@ namespace Examples.Desktop.Base.ViewModels
         private ExampleViewModel selectedExample;
         private DelegateCommand runCommand;
         private DelegateCommand continueCommand;
-        private IDialogsService dialogsService = new DialogsService();
         private Stopwatch internalStopwatch;
         private ProducerConsumer<string> messagesProxy = new ProducerConsumer<string>();
         private List<IDesktopExample> toCleanup = new List<IDesktopExample>();

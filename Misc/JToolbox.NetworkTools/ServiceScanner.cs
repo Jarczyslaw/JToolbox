@@ -3,6 +3,7 @@ using JToolbox.NetworkTools.Inputs;
 using JToolbox.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,6 +38,18 @@ namespace JToolbox.NetworkTools
 
         public override async Task<bool> ProcessItem(ServiceInput item)
         {
+            var pingResult = await ScannersCommon.Ping(new PingInput
+            {
+                Address = item.Address,
+                Retries = item.Retries,
+                Timeout = item.Timeout
+            });
+
+            if (pingResult.Reply == null || pingResult.Reply.Status != IPStatus.Success)
+            {
+                return false;
+            }
+
             var scanResult = await ScannersCommon.IsPortOpen(new PortInput
             {
                 Address = item.Address,
