@@ -1,6 +1,8 @@
 ﻿using JToolbox.WCF.Common;
 using System;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
 
 namespace JToolbox.WCF.ServerSide
 {
@@ -10,7 +12,7 @@ namespace JToolbox.WCF.ServerSide
         {
             var server = new Server
             {
-                Host = new ServiceHost(proxyImplType, new Uri(bindingConfiguration.ApplicationAddress))
+                Host = new ServiceHost(proxyImplType, new Uri(bindingConfiguration.ServiceAddress))
             };
             server.Initialize(bindingConfiguration, typeof(TProxy), proxyImplType, serverConfiguration);
             return server;
@@ -25,7 +27,7 @@ namespace JToolbox.WCF.ServerSide
         {
             var server = new Server
             {
-                Host = new ServiceHost(proxyInstance, new Uri(bindingConfiguration.ApplicationAddress))
+                Host = new ServiceHost(proxyInstance, new Uri(bindingConfiguration.ServiceAddress))
             };
             server.Initialize(bindingConfiguration, typeof(TProxy), proxyInstance.GetType(), serverConfiguration);
             return server;
@@ -63,7 +65,7 @@ namespace JToolbox.WCF.ServerSide
 
         private void Initialize(BindingConfigurationBase bindingConfiguration, Type proxyType, Type proxyImplType, ServerConfiguration serverConfiguration)
         {
-            Host.AddServiceEndpoint(proxyType, bindingConfiguration.Binding, bindingConfiguration.ServiceName);
+            Host.AddServiceEndpoint(proxyType, bindingConfiguration.Binding, string.Empty);
             ProxyType = proxyType;
             ProxyImplType = proxyImplType;
 
@@ -73,10 +75,38 @@ namespace JToolbox.WCF.ServerSide
                 {
                     ((ServiceBehaviorAttribute)Host.Description.Behaviors[typeof(ServiceBehaviorAttribute)]).IncludeExceptionDetailInFaults = true;
                 }
-                foreach (var behavior in serverConfiguration.ServiceBehaviors)
+
+                if (serverConfiguration.CreateMexBinding)
                 {
-                    Host.Description.Behaviors.Add(behavior);
+                    SetMexBinding(bindingConfiguration.Binding);
                 }
+            }
+        }
+
+        private void SetMexBinding(Binding binding)
+        {
+            var smb = new ServiceMetadataBehavior();
+            smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
+
+            Binding mexBinding = null;
+            if (binding.GetType() == typeof(NetNamedPipeBinding))
+            {
+                mexBinding = MetadataExchangeBindings.CreateMexNamedPipeBinding();
+            }
+            else if (binding.GetType() == typeof(NetTcpBinding))
+            {
+                mexBinding = MetadataExchangeBindings.CreateMexTcpBinding();
+            }
+            else if (binding.GetType() == typeof(BasicHttpBinding))
+            {
+                mexBinding = MetadataExchangeBindings.CreateMexHttpBinding();
+                smb.HttpGetEnabled = true;
+            }
+
+            if (mexBinding != null)
+            {
+                Host.Description.Behaviors.Add(smb);
+                Host.AddServiceEndpoint(ServiceMetadataBehavior.MexContractName, mexBinding, "mex");
             }
         }
     }

@@ -1,10 +1,5 @@
 ﻿using Examples.Desktop.Base;
-using JToolbox.WCF.Common;
 using JToolbox.WCF.ServerSide;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Examples.Desktop.WCF
@@ -21,7 +16,12 @@ namespace Examples.Desktop.WCF
         public async Task Run(IOutputInput outputInput)
         {
             var configuration = Configurations.GetNamedPipeConfiguration();
-            await StartServer(outputInput, configuration, null);
+            var serverConfiguration = new ServerConfiguration
+            {
+                IncludeExceptionDetailInFaults = true,
+                CreateMexBinding = true,
+            };
+            await StartServer(outputInput, configuration, serverConfiguration);
         }
     }
 }

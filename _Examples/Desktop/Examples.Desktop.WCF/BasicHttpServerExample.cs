@@ -31,8 +31,8 @@ namespace Examples.Desktop.WCF
             var serverConfiguration = new ServerConfiguration
             {
                 IncludeExceptionDetailInFaults = true,
+                CreateMexBinding = true
             };
-            serverConfiguration.AddMetadataBehaviour(configuration.ServiceAddress);
             await StartServer(outputInput, configuration, serverConfiguration);
         }
     }
