@@ -4,7 +4,6 @@ namespace JToolbox.NetworkTools.Inputs
 {
     public class ServiceInput : InputBase
     {
-        public IPAddress Address { get; set; }
-        public int Port { get; set; }
+        public IPEndPoint Endpoint { get; set; }
     }
 }

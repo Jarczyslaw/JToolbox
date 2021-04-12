@@ -76,7 +76,7 @@ namespace Examples.Desktop.Network
         {
             if (item.Output)
             {
-                outputInput.WriteLine("Found service on: " + item.Input.Address.ToString());
+                outputInput.WriteLine("Found service on: " + item.Input.Endpoint.ToString());
             }
         }
     }

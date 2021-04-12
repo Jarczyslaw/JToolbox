@@ -3,6 +3,7 @@ using JToolbox.NetworkTools.Inputs;
 using JToolbox.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,8 +23,7 @@ namespace JToolbox.NetworkTools
             this.portClient = portClient;
             var input = serviceScanInput.Addresses.Select(s => new ServiceInput
             {
-                Address = s,
-                Port = serviceScanInput.Port,
+                Endpoint = new IPEndPoint(s, serviceScanInput.Port),
                 Retries = serviceScanInput.Retries,
                 Timeout = serviceScanInput.Timeout
             }).ToList();
@@ -40,7 +40,7 @@ namespace JToolbox.NetworkTools
         {
             var pingResult = await ScannersCommon.Ping(new PingInput
             {
-                Address = item.Address,
+                Address = item.Endpoint.Address,
                 Retries = item.Retries,
                 Timeout = item.Timeout
             });
@@ -52,8 +52,8 @@ namespace JToolbox.NetworkTools
 
             var scanResult = await ScannersCommon.IsPortOpen(new PortInput
             {
-                Address = item.Address,
-                Ports = new List<int> { item.Port },
+                Address = item.Endpoint.Address,
+                Ports = new List<int> { item.Endpoint.Port },
                 Retries = item.Retries,
                 Timeout = item.Timeout
             }, portClient);
