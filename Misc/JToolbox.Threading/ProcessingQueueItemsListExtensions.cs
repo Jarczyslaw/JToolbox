@@ -34,5 +34,10 @@ namespace JToolbox.Threading
         {
             return @this.Where(s => !s.Processed).ToList();
         }
+
+        public static List<ProcessingQueueItem<TItem, TResult>> GetProcessedItems<TItem, TResult>(this List<ProcessingQueueItem<TItem, TResult>> @this)
+        {
+            return @this.Where(s => s.Processed).ToList();
+        }
     }
 }
