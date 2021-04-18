@@ -62,7 +62,7 @@ namespace JToolbox.Threading
                                     return;
                                 }
 
-                                await RunReportProgress(item);
+                                await RunReportProgress(item, internalCancellationTokenSource);
                             }
                             else if (item == null && collection.Count == 0)
                             {
@@ -100,11 +100,14 @@ namespace JToolbox.Threading
             }
         }
 
-        private async Task RunReportProgress(ProcessingQueueItem<TItem, TResult> item)
+        private async Task RunReportProgress(ProcessingQueueItem<TItem, TResult> item, CancellationTokenSource internalCancellationTokenSource)
         {
             try
             {
-                await ReportProgress(item);
+                if (!internalCancellationTokenSource.IsCancellationRequested)
+                {
+                    await ReportProgress(item);
+                }
             }
             catch { }
         }
