@@ -3,11 +3,19 @@ using Examples.Desktop.Base.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace Examples.Desktop.Base
 {
     public static class WindowManager
     {
+        private static Window FindWindow(object dataContext)
+        {
+            return Application.Current.Windows
+                .OfType<Window>()
+                .First(w => w.DataContext == dataContext);
+        }
+
         public static MainWindow GetMainWindow(string title)
         {
             var viewModel = new MainViewModel
@@ -17,7 +25,7 @@ namespace Examples.Desktop.Base
             return new MainWindow(viewModel);
         }
 
-        public static string GetInput(string label, string text = null, Func<string, string> validationRule = null)
+        public static string GetInput(MainViewModel parentViewModel, string label, string text = null, Func<string, string> validationRule = null)
         {
             var viewModel = new InputViewModel
             {
@@ -25,18 +33,24 @@ namespace Examples.Desktop.Base
                 Label = label,
                 ValidationRule = validationRule
             };
-            var window = new InputWindow(viewModel);
+            var window = new InputWindow(viewModel)
+            {
+                Owner = FindWindow(parentViewModel)
+            };
             window.ShowDialog();
             return viewModel.Result;
         }
 
-        public static T SelectValue<T>(string label, List<T> values)
+        public static T SelectValue<T>(MainViewModel parentViewModel, string label, List<T> values)
         {
             var viewModel = new SelectViewModel(values.Cast<object>().ToList())
             {
                 Label = label
             };
-            var window = new SelectWindow(viewModel);
+            var window = new SelectWindow(viewModel)
+            {
+                Owner = FindWindow(parentViewModel)
+            };
             window.ShowDialog();
             return (T)viewModel.Result;
         }

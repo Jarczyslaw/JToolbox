@@ -88,6 +88,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="IDesktopExample.cs" />
     <Compile Include="IOutputInput.cs" />
+    <Compile Include="MessagesProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExampleViewModel.cs" />
     <Compile Include="ViewModels\SelectItemViewModel.cs" />

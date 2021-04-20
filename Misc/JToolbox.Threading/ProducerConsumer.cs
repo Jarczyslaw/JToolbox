@@ -5,28 +5,22 @@ using System.Threading.Tasks;
 
 namespace JToolbox.Threading
 {
-    public class ProducerConsumer<T>
+    public abstract class ProducerConsumer<T>
     {
-        public delegate void ItemHandled(T item);
-
-        public delegate void ExceptionOccured(Exception exc);
-
-        public event ItemHandled OnItemHandled = delegate { };
-
-        public event ExceptionOccured OnExceptionOccured = delegate { };
-
         private readonly BlockingCollection<T> items = new BlockingCollection<T>();
         private Task task;
-        private CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
 
-        public ProducerConsumer()
+        protected ProducerConsumer()
         {
             Start();
         }
 
-        public Func<T, Task> Handler { get; set; }
-
         public int PendingTasks => items.Count;
+
+        public abstract Task HandleItem(T item);
+
+        public abstract Task ExceptionOccured(T item, Exception exc);
 
         private void Start()
         {
@@ -35,21 +29,18 @@ namespace JToolbox.Threading
             {
                 while (!token.IsCancellationRequested)
                 {
+                    T item = default;
                     try
                     {
-                        var item = items.Take(token);
-                        if (Handler != null)
-                        {
-                            await Handler(item);
-                            OnItemHandled(item);
-                        }
+                        item = items.Take(token);
+                        await HandleItem(item);
                     }
                     catch (OperationCanceledException)
                     {
                     }
                     catch (Exception exc)
                     {
-                        OnExceptionOccured(exc);
+                        await ExceptionOccured(item, exc);
                     }
                 }
             }, token);

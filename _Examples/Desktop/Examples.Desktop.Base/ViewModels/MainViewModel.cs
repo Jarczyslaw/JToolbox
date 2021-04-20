@@ -1,6 +1,5 @@
 ﻿using JToolbox.Core.Extensions;
 using JToolbox.Desktop.Dialogs;
-using JToolbox.Threading;
 using JToolbox.WPF.Core;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -23,7 +22,7 @@ namespace Examples.Desktop.Base.ViewModels
         private DelegateCommand runCommand;
         private DelegateCommand continueCommand;
         private Stopwatch internalStopwatch;
-        private ProducerConsumer<string> messagesProxy = new ProducerConsumer<string>();
+        private MessagesProxy messagesProxy;
         private List<IDesktopExample> toCleanup = new List<IDesktopExample>();
         private TaskCompletionSource<object> continueTaskCompletionSource;
 
@@ -35,18 +34,7 @@ namespace Examples.Desktop.Base.ViewModels
                 .OrderBy(e => e.Title)
                 .ToList();
             InitializeExamples(examples);
-            messagesProxy.Handler += s =>
-            {
-                if (s == null)
-                {
-                    Messages = string.Empty;
-                }
-                else
-                {
-                    Messages += s;
-                }
-                return Task.CompletedTask;
-            };
+            messagesProxy = new MessagesProxy(this);
         }
 
         public DelegateCommand RunCommand => runCommand ?? (runCommand = new DelegateCommand(async () =>
@@ -121,14 +109,14 @@ namespace Examples.Desktop.Base.ViewModels
         public string Read(string label, string text = null, Func<string, string> validationRule = null)
         {
             string result = null;
-            Threading.SafeInvoke(() => result = WindowManager.GetInput(label, text, validationRule));
+            Threading.SafeInvoke(() => result = WindowManager.GetInput(this, label, text, validationRule));
             return result;
         }
 
         public T SelectValue<T>(string label, List<T> values)
         {
             T result = default;
-            Threading.SafeInvoke(() => result = WindowManager.SelectValue(label, values));
+            Threading.SafeInvoke(() => result = WindowManager.SelectValue(this, label, values));
             return result;
         }
 

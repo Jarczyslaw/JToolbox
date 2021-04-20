@@ -1,9 +1,3 @@
-WCF:
-	rozbiæ klienta i serwer na dwa projekty (serwer framework, klient standard)
-	osobne konfiguracje bindigów dla klienta i serwera
-	wywaliæ co siê da do commonów
-	dorobiæ nowe bindingi i jakieœ dodatkowe opcje jak wsdle
-
 Sockety:
 	zrobiæ jak¹œ prost¹ bibliotekê do komunikacji po socketach z u¿yciem sockets for pcl
 
