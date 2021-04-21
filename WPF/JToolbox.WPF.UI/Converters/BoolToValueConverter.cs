@@ -24,12 +24,17 @@ namespace JToolbox.WPF.UI.Converters
             if (value == null)
                 return FalseValue;
             else
-                return (bool)value ? TrueValue : FalseValue;
+                return Convert((bool)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value != null ? value.Equals(TrueValue) : false;
+        }
+
+        public T Convert(bool value)
+        {
+            return value ? TrueValue : FalseValue;
         }
     }
 }
