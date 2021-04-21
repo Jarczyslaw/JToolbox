@@ -2,9 +2,9 @@
 
 namespace JToolbox.WPF.UI.Converters
 {
-    public class BoolToVisibilityConverter : BoolToValueConverter<Visibility>
+    public class BoolToCollapsedConverter : BoolToValueConverter<Visibility>
     {
-        public BoolToVisibilityConverter()
+        public BoolToCollapsedConverter()
             : base(Visibility.Visible, Visibility.Collapsed)
         {
         }
