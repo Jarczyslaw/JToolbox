@@ -1,5 +1,6 @@
 ﻿using JToolbox.Core.Abstraction;
 using NLog;
+using NLog.Targets;
 using System;
 
 namespace JToolbox.Logging
@@ -9,6 +10,8 @@ namespace JToolbox.Logging
         private readonly ILogger logger;
 
         private readonly string noMessage = "No message provided";
+
+        public string LogFilePath => ((FileTarget)LogManager.Configuration.FindTargetByName("errorsTarget")).FileName.Render(new LogEventInfo());
 
         public LoggerService()
         {
