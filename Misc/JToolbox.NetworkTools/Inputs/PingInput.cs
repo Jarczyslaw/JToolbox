@@ -1,9 +1,0 @@
-﻿using System.Net;
-
-namespace JToolbox.NetworkTools.Inputs
-{
-    public class PingInput : InputBase
-    {
-        public IPAddress Address { get; set; }
-    }
-}

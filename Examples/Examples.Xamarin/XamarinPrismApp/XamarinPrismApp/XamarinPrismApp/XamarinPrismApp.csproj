@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Perms\JToolbox.XamarinForms.Perms.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj" />
+    <ProjectReference Include="..\..\XamarinPrismApp.DataAccess\XamarinPrismApp.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NaviInputPage.xaml.cs">
+      <DependentUpon>NaviInputPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DialogsPage.xaml.cs">
+      <DependentUpon>DialogsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PermissionsPage.xaml.cs">
+      <DependentUpon>PermissionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AccelerometerPage.xaml.cs">
+      <DependentUpon>AccelerometerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LocalStoragePage.xaml.cs">
+      <DependentUpon>LocalStoragePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SubnaviPage.xaml.cs">
+      <DependentUpon>SubnaviPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NaviPage.xaml.cs">
+      <DependentUpon>NaviPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
