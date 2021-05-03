@@ -90,7 +90,8 @@ namespace JToolbox.WPF.UI.DragAndDrop
             {
                 var args = new UiFileDragArgs
                 {
-                    Element = parent
+                    Element = parent,
+                    Source = parent.DataContext
                 };
                 CallOnDragChain(args);
                 if (args.Files?.Count > 0)
@@ -120,7 +121,8 @@ namespace JToolbox.WPF.UI.DragAndDrop
                 var args = new UiFileDropArgs
                 {
                     Files = files.ToList(),
-                    Element = parent
+                    Element = parent,
+                    Target = parent.DataContext
                 };
                 CallOnDropChain(args);
             }
