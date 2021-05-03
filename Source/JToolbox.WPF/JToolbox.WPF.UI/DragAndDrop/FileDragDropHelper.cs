@@ -1,6 +1,7 @@
 ﻿using JToolbox.WPF.Core.Awareness;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -97,6 +98,13 @@ namespace JToolbox.WPF.UI.DragAndDrop
                     var dataObject = new DataObject(DataFormats.FileDrop, args.Files.ToArray());
                     dataObject.SetData(AdditionalKey, new object());
                     DragDrop.DoDragDrop(source, dataObject, DragDropEffects.Move);
+                    foreach (var file in args.Files)
+                    {
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
                     startPosition = null;
                 }
             }

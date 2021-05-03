@@ -26,10 +26,9 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
 
         public void OnFileDrag(FileDragArgs args)
         {
-            var newFileName = Path.GetFileNameWithoutExtension(selectedFile) + "_bek" + Path.GetExtension(SelectedFile);
+            var newFileName = Path.GetFileNameWithoutExtension(selectedFile) + "_bek.txt";
             var newFile = Path.Combine(Path.GetTempPath(), newFileName);
-            var stream = File.Create(newFile);
-            stream.Dispose();
+            File.WriteAllText(newFile, "TEST FILE");
             args.Files = new List<string> { newFile };
             EventLogs.AddWithClassName("File drag: " + newFile);
         }
