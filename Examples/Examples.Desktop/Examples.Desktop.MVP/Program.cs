@@ -20,7 +20,9 @@ namespace Examples.Desktop.MVP
 
             var container = new UnityContainer();
             var factory = new AppPresenterFactory(container);
-            await new AppBootstrapper().Start<MainPresenter, IMainView>(container, factory);
+            var bootstrapper = new AppBootstrapper();
+            bootstrapper.RegisterDependencies(container);
+            await bootstrapper.Start<MainPresenter, IMainView>(container, factory);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Examples.Desktop.MVP
 {
     public class AppBootstrapper : UnityBootstrapper
     {
-        protected override void RegisterDependencies(IUnityContainer container)
+        public override void RegisterDependencies(IUnityContainer container)
         {
             container.RegisterSingleton<IDialogsService, DialogsService>();
         }
