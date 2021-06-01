@@ -1,14 +1,12 @@
-﻿using System.Threading.Tasks;
-
-namespace JToolbox.WinForms.MVP
+﻿namespace JToolbox.WinForms.MVP
 {
-    public delegate Task ViewShown();
+    public delegate void ViewShown();
 
-    public delegate Task ViewLoaded();
+    public delegate void ViewLoaded();
 
-    public delegate Task<bool> ViewClosing();
+    public delegate bool ViewClosing();
 
-    public delegate Task ViewClosed();
+    public delegate void ViewClosed();
 
     public interface IView
     {

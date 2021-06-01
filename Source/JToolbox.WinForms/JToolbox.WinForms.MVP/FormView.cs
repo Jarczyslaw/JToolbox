@@ -1,14 +1,10 @@
-﻿using JToolbox.WinForms.Core.Extensions;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace JToolbox.WinForms.MVP
 {
     public class FormView : Form, IView
     {
-        private bool skipClosing;
-
         public event ViewShown OnViewShown;
 
         public event ViewLoaded OnViewLoaded;
@@ -31,49 +27,35 @@ namespace JToolbox.WinForms.MVP
             set => Enabled = value;
         }
 
-        protected override async void OnFormClosed(FormClosedEventArgs e)
+        protected override void OnFormClosed(FormClosedEventArgs e)
         {
             if (OnViewClosed != null)
             {
-                await OnViewClosed();
+                OnViewClosed();
             }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (!skipClosing && OnViewClosing != null)
+            if (OnViewClosing != null)
             {
-                Enabled = false;
-                e.Cancel = true;
-                Task.Run(async () =>
-                {
-                    var cancel = await OnViewClosing();
-                    if (!cancel)
-                    {
-                        skipClosing = true;
-                        this.SafeInvoke(Close);
-                    }
-                    else
-                    {
-                        this.SafeInvoke(() => Enabled = true);
-                    }
-                });
+                e.Cancel = OnViewClosing();
             }
         }
 
-        protected override async void OnShown(EventArgs e)
+        protected override void OnShown(EventArgs e)
         {
             if (OnViewShown != null)
             {
-                await OnViewShown();
+                OnViewShown();
             }
         }
 
-        protected override async void OnLoad(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             if (OnViewLoaded != null)
             {
-                await OnViewLoaded();
+                OnViewLoaded();
             }
         }
 

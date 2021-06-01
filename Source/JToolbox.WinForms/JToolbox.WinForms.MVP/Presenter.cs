@@ -93,7 +93,7 @@ namespace JToolbox.WinForms.MVP
             View.CloseView();
         }
 
-        private async Task View_OnClosed()
+        private async void View_OnClosed()
         {
             await Detach();
             CompletionSource.SetResult(Output);

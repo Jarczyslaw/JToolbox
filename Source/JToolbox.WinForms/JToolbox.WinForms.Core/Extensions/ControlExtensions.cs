@@ -41,5 +41,20 @@ namespace JToolbox.WinForms.Core.Extensions
             }
             return result;
         }
+
+        public static void IterateOverControls(this Control parent, Func<Control, bool> action, bool callActionForParent = false)
+        {
+            if (callActionForParent && !action(parent))
+            {
+                return;
+            }
+            foreach (Control control in parent.Controls)
+            {
+                if (action(control))
+                {
+                    IterateOverControls(control, action);
+                }
+            }
+        }
     }
 }
