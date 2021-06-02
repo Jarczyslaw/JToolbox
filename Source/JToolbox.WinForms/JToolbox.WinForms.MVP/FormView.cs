@@ -41,6 +41,7 @@ namespace JToolbox.WinForms.MVP
             {
                 e.Cancel = OnViewClosing();
             }
+            base.OnClosing(e);
         }
 
         protected override void OnShown(EventArgs e)
@@ -57,6 +58,7 @@ namespace JToolbox.WinForms.MVP
             {
                 OnViewLoaded();
             }
+            base.OnLoad(e);
         }
 
         public virtual void ShowView()
