@@ -60,12 +60,6 @@ namespace JToolbox.Desktop.Dialogs.Builders
             return this;
         }
 
-        public TaskDialogBuilder SetDefaultButton(TaskDialogDefaultButton defaultButton)
-        {
-            Dialog.DefaultButton = defaultButton;
-            return this;
-        }
-
         public TaskDialogBuilder AddCustomButton(string name, string text, EventHandler handler, bool setAsDefault = false)
         {
             var customButton = new TaskDialogButton(name, text);
@@ -95,14 +89,6 @@ namespace JToolbox.Desktop.Dialogs.Builders
                 State = state
             };
             return this;
-        }
-
-        private void CheckDialogInstance()
-        {
-            if (Dialog == null)
-            {
-                throw new Exception(Resources.Resources.InitializeException);
-            }
         }
     }
 }
