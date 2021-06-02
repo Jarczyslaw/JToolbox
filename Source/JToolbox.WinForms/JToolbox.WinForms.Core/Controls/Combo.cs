@@ -26,7 +26,10 @@ namespace JToolbox.WinForms.Core.Controls
             {
                 DataSource = null;
                 DataSource = value;
-                SelectedValue = value.FirstOrDefault();
+                if (value != null)
+                {
+                    SelectedValue = value.FirstOrDefault();
+                }
             }
         }
 
@@ -38,7 +41,7 @@ namespace JToolbox.WinForms.Core.Controls
 
         private void Combo_SelectedValueChanged(object sender, EventArgs e)
         {
-            OnComboItemChanged(SelectedComboItem);
+            OnComboItemChanged?.Invoke(SelectedComboItem);
         }
     }
 }
