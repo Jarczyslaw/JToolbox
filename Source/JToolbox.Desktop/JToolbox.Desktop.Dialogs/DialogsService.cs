@@ -205,6 +205,7 @@ namespace JToolbox.Desktop.Dialogs
             dialog.Title = title;
             dialog.InitialDirectory = initialDirectory;
             dialog.Multiselect = false;
+            dialog.AddExtension = true;
             dialog.CheckFileExists = checkFileExists;
             dialog.CheckPathExists = checkFileExists;
             dialog.Filter = CreateFilter(filters);
