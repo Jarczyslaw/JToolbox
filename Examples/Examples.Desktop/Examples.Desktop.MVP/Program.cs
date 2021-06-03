@@ -13,11 +13,16 @@ namespace Examples.Desktop.MVP
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static async Task Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            MainAsync().GetAwaiter().GetResult();
+        }
+
+        private static async Task MainAsync()
+        {
             var container = new UnityContainer();
             var factory = new AppPresenterFactory(container);
             var bootstrapper = new AppBootstrapper();
