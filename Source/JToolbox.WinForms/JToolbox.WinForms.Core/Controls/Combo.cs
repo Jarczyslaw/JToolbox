@@ -5,18 +5,18 @@ using System.Windows.Forms;
 
 namespace JToolbox.WinForms.Core.Controls
 {
-    public delegate void OnComboItemChanged<T>(T value);
+    public delegate void ComboValueChanged<T>(T value);
 
     public class Combo<T> : ComboBox
     {
-        public event OnComboItemChanged<T> OnComboItemChanged = delegate { };
+        public event ComboValueChanged<T> OnComboValueChanged = delegate { };
 
         public Combo()
         {
             DropDownStyle = ComboBoxStyle.DropDownList;
             DisplayMember = nameof(ComboItem<T>.Header);
             ValueMember = nameof(ComboItem<T>.Value);
-            SelectedValueChanged += Combo_SelectedValueChanged;
+            SelectionChangeCommitted += Combo_SelectionChangeCommitted;
         }
 
         public List<ComboItem<T>> ComboItems
@@ -26,22 +26,56 @@ namespace JToolbox.WinForms.Core.Controls
             {
                 DataSource = null;
                 DataSource = value;
-                if (value != null)
+                if (value == null)
                 {
-                    SelectedValue = value.FirstOrDefault();
+                    SelectedComboItem = null;
+                }
+                else
+                {
+                    SelectedComboItem = value.FirstOrDefault();
                 }
             }
         }
 
-        public T SelectedComboItem
+        public ComboItem<T> SelectedComboItem
         {
-            get => (T)SelectedValue;
-            set => SelectedValue = value;
+            get
+            {
+                if (SelectedItem != null)
+                {
+                    return SelectedItem as ComboItem<T>;
+                }
+                return null;
+            }
+            set => SelectedItem = value;
         }
 
-        private void Combo_SelectedValueChanged(object sender, EventArgs e)
+        public T SelectedComboValue
         {
-            OnComboItemChanged?.Invoke(SelectedComboItem);
+            get
+            {
+                if (SelectedComboItem != null)
+                {
+                    return SelectedComboItem.Value;
+                }
+                return default;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    SelectedComboItem = ComboItems.Find(i => EqualityComparer<T>.Default.Equals(i.Value, value));
+                }
+                else
+                {
+                    SelectedComboItem = null;
+                }
+            }
+        }
+
+        private void Combo_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            OnComboValueChanged?.Invoke(SelectedComboValue);
         }
     }
 }
