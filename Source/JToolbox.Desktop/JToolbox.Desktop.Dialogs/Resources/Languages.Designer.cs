@@ -22,14 +22,14 @@ namespace JToolbox.Desktop.Dialogs.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class Languages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Languages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace JToolbox.Desktop.Dialogs.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("JToolbox.Desktop.Dialogs.Resources.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("JToolbox.Desktop.Dialogs.Resources.Languages", typeof(Languages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -88,24 +88,6 @@ namespace JToolbox.Desktop.Dialogs.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An unexpected application exception occurred.
-        /// </summary>
-        internal static string ExceptionOccured {
-            get {
-                return ResourceManager.GetString("ExceptionOccured", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hide details.
-        /// </summary>
-        internal static string HideDetails {
-            get {
-                return ResourceManager.GetString("HideDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         internal static string Information {
@@ -115,29 +97,11 @@ namespace JToolbox.Desktop.Dialogs.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before setting the dialog call Initialize method first.
-        /// </summary>
-        internal static string InitializeException {
-            get {
-                return ResourceManager.GetString("InitializeException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Question.
         /// </summary>
         internal static string Question {
             get {
                 return ResourceManager.GetString("Question", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show details.
-        /// </summary>
-        internal static string ShowDetails {
-            get {
-                return ResourceManager.GetString("ShowDetails", resourceCulture);
             }
         }
         

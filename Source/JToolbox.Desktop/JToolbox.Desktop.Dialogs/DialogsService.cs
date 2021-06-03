@@ -1,5 +1,5 @@
-﻿using JToolbox.Desktop.Dialogs.Builders;
-using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using JToolbox.Desktop.Dialogs.Resources;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,186 +8,152 @@ namespace JToolbox.Desktop.Dialogs
 {
     public class DialogsService : IDialogsService
     {
-        public TaskDialogResult Show(TaskDialogBuilder builder)
+        public string OpenFile(string title, bool checkFileExists = false, string initialDirectory = null, List<FilterPair> filters = null, IntPtr? owner = null)
         {
-            using (var dialog = builder.Dialog)
+            var dialog = GetOpenFileDialog();
+            SetOpenFileDialogOptions(title, checkFileExists, initialDirectory, filters, dialog);
+
+            if (dialog.ShowDialog(GetOwnerHandle(owner)) == true)
             {
-                return dialog.Show();
-            }
-        }
-
-        public void ShowInfo(string message, string details = null, IntPtr? owner = null)
-        {
-            var builder = new TaskDialogBuilder()
-                .Initialize(Resources.Resources.Information, message, TaskDialogStandardIcon.Information, Resources.Resources.Information)
-                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, details)
-                .SetOwner(GetOwnerHandle(owner));
-
-            Show(builder);
-        }
-
-        public void ShowWarning(string message, string details = null, IntPtr? owner = null)
-        {
-            var builder = new TaskDialogBuilder()
-                .Initialize(Resources.Resources.Warning, message, TaskDialogStandardIcon.Warning, Resources.Resources.Warning)
-                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, details)
-                .SetOwner(GetOwnerHandle(owner));
-
-            Show(builder);
-        }
-
-        public void ShowError(string error, string details = null, IntPtr? owner = null)
-        {
-            var builder = new TaskDialogBuilder()
-                .Initialize(Resources.Resources.Error, error, TaskDialogStandardIcon.Error, Resources.Resources.Error)
-                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, details)
-                .SetOwner(GetOwnerHandle(owner));
-
-            Show(builder);
-        }
-
-        public void ShowException(Exception exception, string message = null, IntPtr? owner = null)
-        {
-            ShowExceptionDialog(Resources.Resources.Exception, exception, message, owner);
-        }
-
-        public void ShowCriticalException(Exception exception, string message = null, IntPtr? owner = null)
-        {
-            ShowExceptionDialog(Resources.Resources.CriticalException, exception, message, owner);
-        }
-
-        private void ShowExceptionDialog(string caption, Exception exception, string message, IntPtr? owner)
-        {
-            var text = exception.Message;
-            if (!string.IsNullOrEmpty(message))
-            {
-                text = message + Environment.NewLine + text;
-            }
-            var builder = new TaskDialogBuilder()
-                .Initialize(caption, text, TaskDialogStandardIcon.Error, Resources.Resources.ExceptionOccured)
-                .AddDetails(Resources.Resources.ShowDetails, Resources.Resources.HideDetails, exception.StackTrace)
-                .SetOwner(GetOwnerHandle(owner));
-
-            Show(builder);
-        }
-
-        public bool ShowYesNoQuestion(string question, IntPtr? owner = null)
-        {
-            var builder = new TaskDialogBuilder()
-                .Initialize(Resources.Resources.Question, question, TaskDialogStandardIcon.Information, Resources.Resources.Question)
-                .SetButtons(TaskDialogStandardButtons.Yes, TaskDialogStandardButtons.No)
-                .SetOwner(GetOwnerHandle(owner));
-
-            return Show(builder) == TaskDialogResult.Yes;
-        }
-
-        public T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButtonData<T>> customButtons, IntPtr? owner = null)
-        {
-            var builder = new TaskDialogBuilder()
-                .Initialize(Resources.Resources.Question, question, TaskDialogStandardIcon.Information, Resources.Resources.Question)
-                .SetOwner(GetOwnerHandle(owner));
-
-            var result = default(T);
-            using (var dialog = builder.Dialog)
-            {
-                foreach (var customButton in customButtons)
-                {
-                    builder.AddCustomButton(customButton.Name, customButton.Caption, (s, e) =>
-                    {
-                        result = customButton.Value;
-                        dialog.Close();
-                    }, customButton.Default);
-                }
-                dialog.Show();
-            }
-
-            return result;
-        }
-
-        public void ShowProgressDialog(string caption, string text, string instruction, IntPtr? owner = null)
-        {
-            var builder = new TaskDialogBuilder()
-                .Initialize(caption, text, TaskDialogStandardIcon.Information, instruction)
-                .SetButtons(TaskDialogStandardButtons.Cancel)
-                .AddProgressbar(0, 100, TaskDialogProgressBarState.Marquee)
-                .SetOwner(GetOwnerHandle(owner));
-
-            Show(builder);
-        }
-
-        public List<string> Open(CommonOpenDialogBuilder builder, IntPtr? owner = null)
-        {
-            List<string> result = null;
-            using (var dialog = builder.Dialog)
-            {
-                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
-                {
-                    result = dialog.FileNames.ToList();
-                }
-            }
-            return result;
-        }
-
-        private string OpenSingle(CommonOpenDialogBuilder builder, IntPtr? owner = null)
-        {
-            var files = Open(builder, owner);
-            if (files?.Count == 1)
-            {
-                return files[0];
+                return dialog.FileName;
             }
             return null;
         }
 
-        public string OpenFile(string title, string initialDirectory = null, List<DialogFilterPair> filters = null, IntPtr? owner = null)
+        public List<string> OpenFiles(string title, bool checkFileExists = false, string initialDirectory = null, List<FilterPair> filters = null, IntPtr? owner = null)
         {
-            var builder = new CommonOpenDialogBuilder()
-                .Initialize(title, initialDirectory)
-                .SetAsFileDialog(false)
-                .AddFilters(filters);
+            var dialog = GetOpenFileDialog();
+            SetOpenFileDialogOptions(title, checkFileExists, initialDirectory, filters, dialog);
 
-            return OpenSingle(builder, owner);
-        }
-
-        public List<string> OpenFiles(string title, string initialDirectory = null, List<DialogFilterPair> filters = null, IntPtr? owner = null)
-        {
-            var builder = new CommonOpenDialogBuilder()
-                .Initialize(title, initialDirectory)
-                .SetAsFileDialog(true)
-                .AddFilters(filters);
-
-            return Open(builder, owner);
+            if (dialog.ShowDialog(GetOwnerHandle(owner)) == true)
+            {
+                return dialog.FileNames
+                    .ToList();
+            }
+            return null;
         }
 
         public string OpenFolder(string title, string initialDirectory = null, IntPtr? owner = null)
         {
-            var builder = new CommonOpenDialogBuilder()
-                .Initialize(title, initialDirectory)
-                .SetAsFolderDialog();
-
-            return OpenSingle(builder, owner);
-        }
-
-        public string Save(CommonSaveDialogBuilder builder, IntPtr? owner = null)
-        {
-            string result = null;
-            using (var dialog = builder.Dialog)
+            var dialog = new VistaFolderBrowserDialog
             {
-                if (dialog.ShowDialog(GetOwnerHandle(owner)) == CommonFileDialogResult.Ok)
-                {
-                    result = dialog.FileName;
-                }
+                ShowNewFolderButton = true,
+                SelectedPath = initialDirectory,
+                Description = title,
+                UseDescriptionForTitle = true,
+            };
+
+            if (dialog.ShowDialog(GetOwnerHandle(owner)) == true)
+            {
+                return dialog.SelectedPath;
             }
-            return result;
+            return null;
         }
 
-        public string SaveFile(string title, string initialDirectory, string defaultFileName = null, DialogFilterPair filter = null, IntPtr? owner = null)
+        public string SaveFile(string title, string initialDirectory = null, string defaultFileName = null, FilterPair filter = null, IntPtr? owner = null)
         {
-            var builder = new CommonSaveDialogBuilder()
-                .Initialize(title, initialDirectory)
-                .SetDefaults(defaultFileName, filter.ExtensionsList)
-                .AddFilter(filter);
+            var dialog = new VistaSaveFileDialog
+            {
+                FileName = defaultFileName,
+                Filter = CreateFilter(new List<FilterPair> { filter }),
+                DefaultExt = filter.Extensions,
+                AddExtension = true,
+                InitialDirectory = initialDirectory,
+                OverwritePrompt = true,
+                RestoreDirectory = true,
+                Title = title
+            };
 
-            return Save(builder, owner);
+            if (dialog.ShowDialog(GetOwnerHandle(owner)) == true)
+            {
+                return dialog.FileName;
+            }
+            return null;
+        }
+
+        public void ShowCriticalException(Exception exception, string message = null, IntPtr? owner = null)
+        {
+            var targetMessage = GetMessageFromException(exception, message);
+            ShowMessageTaskDialog(TaskDialogIcon.Error, Languages.CriticalException, targetMessage, exception.StackTrace, owner);
+        }
+
+        public T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButton<T>> customButtons, IntPtr? owner = null)
+        {
+            using (var dialog = GetTaskDialog())
+            {
+                dialog.WindowTitle = Languages.Question;
+                dialog.MainIcon = TaskDialogIcon.Information;
+                dialog.Content = question;
+                foreach (var button in customButtons)
+                {
+                    var btn = new TaskDialogButton(button.Text)
+                    {
+                        Default = button.Default
+                    };
+                    dialog.Buttons.Add(btn);
+                }
+                var clickedButton = dialog.ShowDialog(GetOwnerHandle(owner));
+                if (customButtons.Any(s => s.Text == clickedButton.Text))
+                {
+                    return customButtons.First(s => s.Text == clickedButton.Text).Value;
+                }
+                return customButtons.First(s => s.Default).Value;
+            }
+        }
+
+        public void ShowError(string error, string details = null, IntPtr? owner = null)
+        {
+            ShowMessageTaskDialog(TaskDialogIcon.Error, Languages.Error, error, details, owner);
+        }
+
+        public void ShowException(Exception exception, string message = null, IntPtr? owner = null)
+        {
+            var targetMessage = GetMessageFromException(exception, message);
+            ShowMessageTaskDialog(TaskDialogIcon.Error, Languages.Exception, targetMessage, exception.StackTrace, owner);
+        }
+
+        public void ShowInfo(string message, string details = null, IntPtr? owner = null)
+        {
+            ShowMessageTaskDialog(TaskDialogIcon.Information, Languages.Information, message, details, owner);
+        }
+
+        public void ShowWarning(string message, string details = null, IntPtr? owner = null)
+        {
+            ShowMessageTaskDialog(TaskDialogIcon.Warning, Languages.Warning, message, details, owner);
+        }
+
+        public bool ShowYesNoQuestion(string question, IntPtr? owner = null)
+        {
+            using (var dialog = GetTaskDialog())
+            {
+                dialog.WindowTitle = Languages.Question;
+                dialog.MainIcon = TaskDialogIcon.Information;
+                dialog.Content = question;
+                var yesButton = new TaskDialogButton(ButtonType.Yes);
+                dialog.Buttons.Add(yesButton);
+                dialog.Buttons.Add(new TaskDialogButton(ButtonType.No));
+                return dialog.ShowDialog(GetOwnerHandle(owner)) == yesButton;
+            }
+        }
+
+        private string GetMessageFromException(Exception exception, string message)
+        {
+            var targetMessage = exception.Message;
+            if (!string.IsNullOrEmpty(message))
+            {
+                targetMessage = message + ": " + targetMessage;
+            }
+            return targetMessage;
+        }
+
+        private TaskDialog GetTaskDialog()
+        {
+            return new TaskDialog
+            {
+                EnableHyperlinks = true,
+                CenterParent = true,
+                ExpandFooterArea = true,
+            };
         }
 
         private IntPtr GetOwnerHandle(IntPtr? owner)
@@ -204,6 +170,44 @@ namespace JToolbox.Desktop.Dialogs
             {
                 return owner.Value;
             }
+        }
+
+        private void ShowMessageTaskDialog(TaskDialogIcon icon, string title, string message, string details, IntPtr? owner)
+        {
+            using (var dialog = GetTaskDialog())
+            {
+                dialog.WindowTitle = title;
+                dialog.MainIcon = icon;
+                dialog.Content = message;
+                dialog.ExpandedInformation = details;
+                dialog.ExpandFooterArea = true;
+                dialog.Buttons.Add(new TaskDialogButton(ButtonType.Ok));
+                dialog.ShowDialog(GetOwnerHandle(owner));
+            }
+        }
+
+        private VistaOpenFileDialog GetOpenFileDialog()
+        {
+            return new VistaOpenFileDialog
+            {
+                AddExtension = true,
+                RestoreDirectory = true,
+            };
+        }
+
+        private string CreateFilter(List<FilterPair> filters)
+        {
+            return string.Join("|", filters.Select(s => s.ToString()));
+        }
+
+        private void SetOpenFileDialogOptions(string title, bool checkFileExists, string initialDirectory, List<FilterPair> filters, VistaOpenFileDialog dialog)
+        {
+            dialog.Title = title;
+            dialog.InitialDirectory = initialDirectory;
+            dialog.Multiselect = false;
+            dialog.CheckFileExists = checkFileExists;
+            dialog.CheckPathExists = checkFileExists;
+            dialog.Filter = CreateFilter(filters);
         }
     }
 }

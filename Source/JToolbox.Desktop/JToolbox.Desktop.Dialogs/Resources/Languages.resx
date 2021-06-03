@@ -126,23 +126,11 @@
   <data name="Exception" xml:space="preserve">
     <value>Exception</value>
   </data>
-  <data name="ExceptionOccured" xml:space="preserve">
-    <value>An unexpected application exception occurred</value>
-  </data>
-  <data name="HideDetails" xml:space="preserve">
-    <value>Hide details</value>
-  </data>
   <data name="Information" xml:space="preserve">
     <value>Information</value>
   </data>
-  <data name="InitializeException" xml:space="preserve">
-    <value>Before setting the dialog call Initialize method first</value>
-  </data>
   <data name="Question" xml:space="preserve">
     <value>Question</value>
-  </data>
-  <data name="ShowDetails" xml:space="preserve">
-    <value>Show details</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
