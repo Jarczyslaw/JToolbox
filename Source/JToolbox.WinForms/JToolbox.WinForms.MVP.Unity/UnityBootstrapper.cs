@@ -5,13 +5,17 @@ namespace JToolbox.WinForms.MVP.Unity
 {
     public abstract class UnityBootstrapper
     {
-        public async Task Start<TMainPresenter, TMainView>(IUnityContainer container, PresenterFactory presenterFactory)
+        public async Task<object> Start<TMainPresenter, TMainView>(IUnityContainer container, PresenterFactory presenterFactory)
             where TMainPresenter : Presenter<TMainView>
             where TMainView : class, IView
         {
-            container.RegisterInstance(presenterFactory);
+            if (!container.IsRegistered(presenterFactory.GetType()))
+            {
+                container.RegisterInstance(presenterFactory);
+            }
+
             var presenter = await presenterFactory.Create<TMainPresenter, TMainView>();
-            await presenter.Show();
+            return presenter.Show();
         }
 
         public abstract void RegisterDependencies(IUnityContainer container);

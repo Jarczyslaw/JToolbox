@@ -4,13 +4,14 @@ namespace JToolbox.WinForms.MVP
 {
     public abstract class PresenterFactory
     {
-        public async Task<TPresenter> Create<TPresenter, TView>()
+        public async Task<TPresenter> Create<TPresenter, TView>(object input = null)
             where TPresenter : Presenter<TView>
             where TView : class, IView
         {
             var view = ResolveView<TPresenter, TView>();
             var presenter = ResolvePresenter<TPresenter, TView>();
             await presenter.Attach(view);
+            await presenter.Initialize(input);
             return presenter;
         }
 

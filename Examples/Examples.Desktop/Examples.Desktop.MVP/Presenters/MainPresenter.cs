@@ -35,7 +35,7 @@ namespace Examples.Desktop.MVP.Presenters
                 return;
             }
 
-            var presenter = await CreatePresenter<ResultPresenter, IResultView>(value);
+            var presenter = await presenterFactory.Create<ResultPresenter, IResultView>(value);
             string result;
             if (modal)
             {

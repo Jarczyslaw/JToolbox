@@ -6,7 +6,7 @@ namespace JToolbox.WinForms.MVP
     public abstract class Presenter<TView>
         where TView : class, IView
     {
-        private readonly PresenterFactory presenterFactory;
+        protected readonly PresenterFactory presenterFactory;
 
         protected Presenter(PresenterFactory presenterFactory)
         {
@@ -41,10 +41,10 @@ namespace JToolbox.WinForms.MVP
         public async Task Initialize(object input)
         {
             Input = input;
-            await OnInitialize();
+            await OnInitialize(Input);
         }
 
-        protected virtual Task OnInitialize()
+        protected virtual Task OnInitialize(object input)
         {
             return Task.CompletedTask;
         }
@@ -76,15 +76,6 @@ namespace JToolbox.WinForms.MVP
         {
             View.ShowViewAsModal();
             return CompletionSource.Task;
-        }
-
-        protected async Task<TPresenter> CreatePresenter<TPresenter, TPresenterView>(object input = null)
-            where TPresenter : Presenter<TPresenterView>
-            where TPresenterView : class, IView
-        {
-            var presenter = await presenterFactory.Create<TPresenter, TPresenterView>();
-            await presenter.Initialize(input);
-            return presenter;
         }
 
         public void Close(object output = null)
