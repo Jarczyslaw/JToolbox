@@ -209,6 +209,7 @@ namespace JToolbox.Desktop.Dialogs
             dialog.CheckFileExists = checkFileExists;
             dialog.CheckPathExists = checkFileExists;
             dialog.Filter = CreateFilter(filters);
+            dialog.DefaultExt = filters.First().Extensions;
         }
     }
 }
