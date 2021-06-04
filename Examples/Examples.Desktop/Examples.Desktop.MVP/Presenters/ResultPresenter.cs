@@ -20,11 +20,11 @@ namespace Examples.Desktop.MVP.Presenters
             return base.OnAttach();
         }
 
-        protected override Task OnInitialize()
+        protected override Task OnInitialize(object input)
         {
-            inputString = (string)Input;
+            inputString = (string)input;
             View.Value = inputString;
-            return base.OnInitialize();
+            return base.OnInitialize(input);
         }
 
         protected override Task OnDetach()
