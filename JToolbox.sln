@@ -124,6 +124,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.WinForms.MVP.Unity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.Dialogs", "Examples\Examples.Desktop\Examples.Desktop.Dialogs\Examples.Desktop.Dialogs.csproj", "{73FED8DC-AD8D-4221-A233-D17BDB8D2005}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{44211265-F290-4EC9-A6CE-BDA2D4E44D70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolboxInstaller", "Installer\ToolboxInstaller\ToolboxInstaller.csproj", "{FCD7E528-FCB5-40F2-98D6-5779F167FF32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -306,6 +310,10 @@ Global
 		{73FED8DC-AD8D-4221-A233-D17BDB8D2005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73FED8DC-AD8D-4221-A233-D17BDB8D2005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73FED8DC-AD8D-4221-A233-D17BDB8D2005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -366,6 +374,7 @@ Global
 		{9720102A-383C-42C2-91D8-916DCB8AE36D} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{E3D3BD64-B8A7-40FF-BF42-B51CDEC8231B} = {5F8BF0A8-BB33-44F9-BD15-19A4D0A68DE6}
 		{73FED8DC-AD8D-4221-A233-D17BDB8D2005} = {907A859F-6219-4D41-9B8C-1EF003286419}
+		{FCD7E528-FCB5-40F2-98D6-5779F167FF32} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
