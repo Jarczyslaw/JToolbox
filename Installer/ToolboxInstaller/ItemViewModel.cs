@@ -1,6 +1,7 @@
 ﻿using JToolbox.WPF.Core.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -73,12 +74,12 @@ namespace ToolboxInstaller
 
         public bool HasCheckedChildren => children.Any(s => s.IsChecked);
 
-        private void UpdateParent(bool value, ItemViewModel parent)
+        private void UpdateParents(ItemViewModel parent)
         {
             if (parent != null)
             {
                 parent.SetChecked(parent.HasCheckedChildren, false);
-                UpdateParent(value, parent.Parent);
+                UpdateParents(parent.Parent);
             }
         }
 
@@ -96,9 +97,21 @@ namespace ToolboxInstaller
             Set(ref isChecked, value, nameof(IsChecked));
             if (update)
             {
-                UpdateParent(value, parent);
                 UpdateChildren(value, children);
+                UpdateParents(parent);
             }
+        }
+
+        public string GetPath()
+        {
+            var result = string.Empty;
+            var currentParent = parent;
+            while (currentParent != null)
+            {
+                result = Path.Combine(currentParent.Title, result);
+                currentParent = currentParent.Parent;
+            }
+            return result;
         }
     }
 }

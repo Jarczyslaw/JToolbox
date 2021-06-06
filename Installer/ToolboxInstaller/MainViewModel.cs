@@ -1,4 +1,7 @@
-﻿using JToolbox.WPF.Core.Base;
+﻿using JToolbox.Core.Helpers;
+using JToolbox.Desktop.Dialogs;
+using JToolbox.WPF.Core.Base;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -10,7 +13,9 @@ namespace ToolboxInstaller
 {
     public class MainViewModel : BaseViewModel
     {
+        private readonly IDialogsService dialogs = new DialogsService();
         private ObservableCollection<ItemViewModel> items = new ObservableCollection<ItemViewModel>();
+        private ObservableCollection<ItemViewModel> flatItems = new ObservableCollection<ItemViewModel>();
         private bool windowEnabled = true;
         private string title;
         private bool busy;
@@ -42,58 +47,124 @@ namespace ToolboxInstaller
             set => Set(ref windowEnabled, value);
         }
 
+        public string ToolboxPath => Path.Combine(SelectedPath, "JToolbox");
+
         public ObservableCollection<ItemViewModel> Items
         {
             get => items;
             set => Set(ref items, value);
         }
 
-        public RelayCommand SelectPathCommand => new RelayCommand(() =>
+        public RelayCommand SelectPathCommand => new RelayCommand(async () =>
         {
+            var solutionPath = dialogs.OpenFolder("Select solution location");
+            if (!string.IsNullOrEmpty(solutionPath))
+            {
+                SelectedPath = solutionPath;
+                await FindProjects();
+            }
         });
 
         public RelayCommand UpdateCommand => new RelayCommand(async () =>
         {
+            if (string.IsNullOrEmpty(SelectedPath))
+            {
+                dialogs.ShowError("No target path selected");
+                return;
+            }
+
+            if (!flatItems.Any(i => i.IsProject && i.IsChecked))
+            {
+                dialogs.ShowError("No projects selected");
+                return;
+            }
+
+            await UpdateStructure();
+        });
+
+        public RelayCommand CloseCommand => new RelayCommand(() => Application.Current.Shutdown());
+
+        private async Task UpdateStructure()
+        {
             try
             {
-                SetBusy(true);
-                await Task.Delay(2000);
+                SetBusy(true, "Updating");
+                var toolboxPath = Path.Combine(SelectedPath, "JToolbox");
+                if (Directory.Exists(toolboxPath))
+                {
+                    Directory.Delete(toolboxPath, true);
+                }
+                await RebuildStructure();
+                dialogs.ShowInfo("Updated!");
+            }
+            catch (Exception exc)
+            {
+                SetBusy(false);
+                dialogs.ShowException(exc);
             }
             finally
             {
                 SetBusy(false);
             }
-        });
-
-        private bool UpdateCanExecute()
-        {
-            var checkedItems = new List<ItemViewModel>();
-            GetCheckedItems(checkedItems);
-            return busy && checkedItems.Any(s => s.IsChecked);
         }
 
-        private void GetCheckedItems(List<ItemViewModel> checkedItems)
+        private Task RebuildStructure()
         {
-            foreach (var item in Items)
+            return Task.Run(() =>
             {
-                if (item.IsChecked)
+                var projects = flatItems.Where(f => f.IsProject && f.IsChecked);
+                foreach (var project in projects)
                 {
-                    checkedItems.Add(item);
-                }
+                    var directoryPath = Path.Combine(ToolboxPath, project.GetPath());
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
 
-                GetCheckedItems(checkedItems);
+                    var source = new DirectoryInfo(project.SourcePath);
+                    var target = new DirectoryInfo(Path.Combine(directoryPath, project.Title));
+                    FileHelper.CopyAll(source, target);
+                }
+            });
+        }
+
+        private async Task FindProjects()
+        {
+            try
+            {
+                SetBusy(true, "Reading structure");
+                await Task.Run(() =>
+                {
+                    var projects = Directory.GetFiles(ToolboxPath, "*.csproj", SearchOption.AllDirectories)
+                        .Select(s => Path.GetFileNameWithoutExtension(s));
+                    foreach (var item in flatItems)
+                    {
+                        item.SetChecked(false, true);
+                        if (item.IsProject && projects.Contains(item.Title))
+                        {
+                            item.SetChecked(true, true);
+                        }
+                    }
+                });
+            }
+            catch (Exception exc)
+            {
+                SetBusy(false);
+                dialogs.ShowException(exc);
+            }
+            finally
+            {
+                SetBusy(false);
             }
         }
 
-        public RelayCommand CloseCommand => new RelayCommand(() => Application.Current.Shutdown());
-
-        private void SetBusy(bool busy)
+        private void SetBusy(bool busy, string msg = null)
         {
             this.busy = busy;
             var tempTitle = "Toolbox Installer";
             if (busy)
             {
-                tempTitle += " - INSTALLING";
+                tempTitle += " - " + (string.IsNullOrEmpty(msg) ? "BUSY" : msg.ToUpper());
             }
             Title = tempTitle;
             WindowEnabled = !busy;
@@ -113,6 +184,7 @@ namespace ToolboxInstaller
                 };
                 item.IsProject = Directory.GetFiles(folder, "*.csproj")?.Length > 0;
 
+                flatItems.Add(item);
                 if (parent == null)
                 {
                     Items.Add(item);
