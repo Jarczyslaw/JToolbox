@@ -14,8 +14,6 @@ namespace JToolbox.WinForms.Core.Controls
         public Combo()
         {
             DropDownStyle = ComboBoxStyle.DropDownList;
-            DisplayMember = nameof(ComboItem<T>.Header);
-            ValueMember = nameof(ComboItem<T>.Value);
             SelectionChangeCommitted += Combo_SelectionChangeCommitted;
         }
 
@@ -26,6 +24,8 @@ namespace JToolbox.WinForms.Core.Controls
             {
                 DataSource = null;
                 DataSource = value;
+                DisplayMember = nameof(ComboItem<T>.Header);
+                ValueMember = nameof(ComboItem<T>.Value);
                 if (value == null)
                 {
                     SelectedComboItem = null;
