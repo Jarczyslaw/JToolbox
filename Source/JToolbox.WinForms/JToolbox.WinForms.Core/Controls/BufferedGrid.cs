@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace JToolbox.WinForms.Core.Controls
@@ -91,6 +92,7 @@ namespace JToolbox.WinForms.Core.Controls
 
         private void Initialize()
         {
+            Columns.Clear();
             DoubleBuffered = true;
             AutoGenerateColumns = false;
             AllowUserToAddRows =
@@ -98,9 +100,19 @@ namespace JToolbox.WinForms.Core.Controls
                 AllowUserToOrderColumns =
                 AllowUserToResizeColumns =
                 AllowUserToResizeRows = false;
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            AlternatingRowsDefaultCellStyle.BackColor = Color.Gainsboro;
             SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            CellBorderStyle = DataGridViewCellBorderStyle.Single;
             RowHeadersVisible = false;
-            ReadOnly = true;
+            BorderStyle = BorderStyle.None;
+            AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            EditMode = DataGridViewEditMode.EditProgrammatically;
+            EnableHeadersVisualStyles = false;
+            ShowCellToolTips = true;
+            TabStop = false;
         }
 
         private void BufferedGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
