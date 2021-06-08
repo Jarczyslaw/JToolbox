@@ -15,7 +15,7 @@ namespace JToolbox.WinForms.MVP.Unity
             }
 
             var presenter = await presenterFactory.Create<TMainPresenter, TMainView>();
-            return presenter.Show();
+            return await presenter.Show();
         }
 
         public abstract void RegisterDependencies(IUnityContainer container);
