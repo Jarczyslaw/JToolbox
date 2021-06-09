@@ -92,7 +92,6 @@ namespace JToolbox.WinForms.Core.Controls
 
         private void Initialize()
         {
-            Columns.Clear();
             DoubleBuffered = true;
             AutoGenerateColumns = false;
             AllowUserToAddRows =
@@ -113,6 +112,36 @@ namespace JToolbox.WinForms.Core.Controls
             EnableHeadersVisualStyles = false;
             ShowCellToolTips = true;
             TabStop = false;
+            MultiSelect = false;
+            ColumnHeadersDefaultCellStyle.SelectionBackColor = ColumnHeadersDefaultCellStyle.BackColor;
+        }
+
+        private DataGridViewTextBoxColumn GetTextColumn(string header, string mapping, int width)
+        {
+            var dgvc = new DataGridViewTextBoxColumn
+            {
+                SortMode = DataGridViewColumnSortMode.NotSortable,
+                DataPropertyName = mapping,
+                HeaderText = header,
+                ReadOnly = true
+            };
+
+            if (width != 0)
+            {
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dgvc.Width = width;
+            }
+            else
+            {
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            return dgvc;
+        }
+
+        public void AddTextColumn(string header, string mapping, int width = 0)
+        {
+            var column = GetTextColumn(header, mapping, width);
+            Columns.Add(column);
         }
 
         private void BufferedGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
