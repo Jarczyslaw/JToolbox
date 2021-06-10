@@ -20,7 +20,6 @@ namespace JToolbox.WinForms.Core.Controls
 
         protected BufferedGrid()
         {
-            Initialize();
             CellDoubleClick += BufferedGrid_CellDoubleClick;
             MouseClick += BufferedGrid_MouseClick;
             CellContentClick += BufferedGrid_CellContentClick;
@@ -90,8 +89,9 @@ namespace JToolbox.WinForms.Core.Controls
             }
         }
 
-        private void Initialize()
+        public virtual void Initialize()
         {
+            Columns.Clear();
             DoubleBuffered = true;
             AutoGenerateColumns = false;
             AllowUserToAddRows =
