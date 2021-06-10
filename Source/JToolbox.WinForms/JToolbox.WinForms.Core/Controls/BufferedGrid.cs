@@ -11,6 +11,7 @@ namespace JToolbox.WinForms.Core.Controls
     public delegate void BufferedGridItemRightClick<T>(object sender, BufferedGridMouseEventArgs args, T item);
 
     public abstract class BufferedGrid<T> : DataGridView
+        where T : class
     {
         public event BufferedGridItemClick<T> OnItemClick = delegate { };
 
@@ -18,32 +19,37 @@ namespace JToolbox.WinForms.Core.Controls
 
         public event BufferedGridItemRightClick<T> OnItemRightClick = delegate { };
 
+        private readonly BindingSource bindingSource = new BindingSource();
+
         protected BufferedGrid()
         {
+            DataSource = bindingSource;
             CellDoubleClick += BufferedGrid_CellDoubleClick;
             MouseClick += BufferedGrid_MouseClick;
             CellContentClick += BufferedGrid_CellContentClick;
         }
 
+        public bool ItemsSelected => SelectedRows.Count > 0;
+
         public int? SelectedIndex
         {
             get
             {
-                if (SelectedRows.Count > 0)
+                if (ItemsSelected)
                 {
-                    return SelectedRows[0].Index;
+                    return bindingSource.Position;
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
             set
             {
-                ClearSelection();
-                if (SelectedIndex.HasValue)
+                if (value.HasValue)
                 {
-                    Rows[SelectedIndex.Value].Selected = true;
+                    bindingSource.Position = value.Value;
+                }
+                else
+                {
+                    ClearSelection();
                 }
             }
         }
@@ -52,13 +58,11 @@ namespace JToolbox.WinForms.Core.Controls
         {
             get
             {
-                var selectedItems = SelectedItems;
-                if (selectedItems.Count == 0)
+                if (ItemsSelected)
                 {
-                    return default(T);
+                    return bindingSource.Current as T;
                 }
-
-                return selectedItems[0];
+                return null;
             }
         }
 
@@ -67,11 +71,11 @@ namespace JToolbox.WinForms.Core.Controls
             get
             {
                 var result = new List<T>();
-                if (SelectedRows.Count > 0)
+                if (ItemsSelected)
                 {
-                    foreach (DataGridViewRow selectedRow in SelectedRows)
+                    foreach (DataGridViewRow row in SelectedRows)
                     {
-                        result.Add((T)selectedRow.DataBoundItem);
+                        result.Add(row.DataBoundItem as T);
                     }
                 }
                 return result;
@@ -80,13 +84,18 @@ namespace JToolbox.WinForms.Core.Controls
 
         public List<T> Items
         {
-            get => DataSource as List<T>;
+            get => bindingSource.DataSource as List<T>;
             set
             {
-                DataSource = null;
-                DataSource = value;
+                bindingSource.DataSource = null;
+                bindingSource.DataSource = value;
                 ClearSelection();
             }
+        }
+
+        public void UpdateBinding()
+        {
+            bindingSource.ResetBindings(false);
         }
 
         public virtual void Initialize()

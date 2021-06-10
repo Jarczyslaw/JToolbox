@@ -7,21 +7,38 @@ namespace JToolbox.Core.Extensions
     {
         public static string Truncate(this string value, int length)
         {
+            if (value == null)
+            {
+                return null;
+            }
             return value.Substring(0, Math.Min(value.Length, length));
         }
 
         public static bool IgnoreCaseContains(this string val1, string val2)
         {
+            if (val1 == null || val2 == null)
+            {
+                return false;
+            }
             return val1.IndexOf(val2, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public static bool IgnoreCaseEquals(this string val1, string val2)
         {
+            if (val1 == null || val2 == null)
+            {
+                return false;
+            }
             return val1.Equals(val2, StringComparison.OrdinalIgnoreCase);
         }
 
         public static string ExtractBetween(this string @string, string from, string to)
         {
+            if (@string == null)
+            {
+                return null;
+            }
+
             var indexFrom = @string.IndexOf(from);
             if (indexFrom < 0)
             {
@@ -40,6 +57,11 @@ namespace JToolbox.Core.Extensions
 
         public static string OnlyDigits(this string @this)
         {
+            if (@this == null)
+            {
+                return null;
+            }
+
             var result = string.Empty;
             for (int i = 0; i < @this.Length; i++)
             {
@@ -53,6 +75,10 @@ namespace JToolbox.Core.Extensions
 
         public static string WithoutWhitespaces(this string @this)
         {
+            if (@this == null)
+            {
+                return null;
+            }
             return new string(@this.Where(c => !char.IsWhiteSpace(c)).ToArray());
         }
     }

@@ -6,6 +6,15 @@ namespace JToolbox.Core.Extensions
 {
     public static class ListExtensions
     {
+        public static void Replace<T>(this List<T> list, T item, Predicate<T> predicate)
+        {
+            var index = list.FindIndex(predicate);
+            if (index != -1)
+            {
+                list[index] = item;
+            }
+        }
+
         public static List<List<T>> ChunkBy<T>(this List<T> list, int chunkSize)
         {
             var result = new List<List<T>>();
