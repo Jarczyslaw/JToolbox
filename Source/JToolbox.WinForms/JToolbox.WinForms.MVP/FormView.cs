@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JToolbox.WinForms.Core.Extensions;
+using System;
 using System.Windows.Forms;
 
 namespace JToolbox.WinForms.MVP
@@ -15,24 +16,18 @@ namespace JToolbox.WinForms.MVP
 
         public string ViewTitle
         {
-            set
-            {
-                Text = value;
-            }
+            set => this.SafeInvoke(() => Text = value);
         }
 
         public bool ViewEnabled
         {
             get => Enabled;
-            set => Enabled = value;
+            set => this.SafeInvoke(() => Enabled = value);
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            if (OnViewClosed != null)
-            {
-                OnViewClosed();
-            }
+            OnViewClosed?.Invoke();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -46,34 +41,28 @@ namespace JToolbox.WinForms.MVP
 
         protected override void OnShown(EventArgs e)
         {
-            if (OnViewShown != null)
-            {
-                OnViewShown();
-            }
+            OnViewShown?.Invoke();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            if (OnViewLoaded != null)
-            {
-                OnViewLoaded();
-            }
+            OnViewLoaded?.Invoke();
             base.OnLoad(e);
         }
 
         public virtual void ShowView()
         {
-            Show();
+            this.SafeInvoke(() => Show());
         }
 
         public virtual void ShowViewAsModal()
         {
-            ShowDialog();
+            this.SafeInvoke(() => ShowDialog());
         }
 
         public virtual void CloseView()
         {
-            Close();
+            this.SafeInvoke(() => Close());
         }
     }
 }
