@@ -81,5 +81,14 @@ namespace JToolbox.Core.Extensions
             }
             return new string(@this.Where(c => !char.IsWhiteSpace(c)).ToArray());
         }
+
+        public static string SafeTrim(this string @this)
+        {
+            if (@this == null)
+            {
+                return null;
+            }
+            return @this.Trim();
+        }
     }
 }
