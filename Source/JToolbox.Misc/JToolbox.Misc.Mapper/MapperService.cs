@@ -1,6 +1,5 @@
 ﻿using Nelibur.ObjectMapper;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace JToolbox.Misc.Mapper
 {
@@ -17,10 +16,10 @@ namespace JToolbox.Misc.Mapper
             return TinyMapper.Map<TOut>(@in);
         }
 
-        public List<TOut> MapMany<TIn, TOut>(IEnumerable<TIn> @in)
+        public List<TOut> MapMany<TIn, TOut>(List<TIn> @in)
         {
-            TryCreateBinding<TIn, TOut>();
-            return @in.Select(s => Map<TIn, TOut>(s)).ToList();
+            TryCreateBinding<List<TIn>, List<TOut>>();
+            return TinyMapper.Map<List<TOut>>(@in);
         }
 
         public TOut Map<TIn, TOut>(TIn @in, TOut @out)

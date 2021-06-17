@@ -10,6 +10,6 @@ namespace JToolbox.Misc.Mapper
 
         TOut Map<TIn, TOut>(TIn @in, TOut @out);
 
-        List<TOut> MapMany<TIn, TOut>(IEnumerable<TIn> @in);
+        List<TOut> MapMany<TIn, TOut>(List<TIn> @in);
     }
 }
