@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using JToolbox.Core.Extensions;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -90,6 +92,15 @@ namespace JToolbox.WinForms.Core.Controls
                 bindingSource.DataSource = null;
                 bindingSource.DataSource = value;
                 ClearSelection();
+            }
+        }
+
+        public void UpdateItem(T item, Predicate<T> predicate)
+        {
+            if (Items != null)
+            {
+                Items.Replace(item, predicate);
+                UpdateBinding();
             }
         }
 

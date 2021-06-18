@@ -58,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{29495d19-7102-48ab-b3f2-653f93a9779d}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox.Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
       <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
       <Name>JToolbox.Desktop.Core</Name>
