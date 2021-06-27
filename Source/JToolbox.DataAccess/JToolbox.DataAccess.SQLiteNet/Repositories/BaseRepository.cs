@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
-    public abstract class BaseRepository<TEntity>
+    public abstract class BaseRepository<TEntity> : CommonRepository
         where TEntity : BaseEntity, new()
     {
         public virtual int Create(SQLiteConnection db, TEntity entity)
