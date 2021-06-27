@@ -2,6 +2,7 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
@@ -16,6 +17,18 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         public virtual bool SafeDelete(SQLiteConnection db, TEntity entity)
         {
             return SafeDelete(db, entity.Id);
+        }
+
+        public virtual void SafeDelete(SQLiteConnection db, List<int> ids)
+        {
+            InternalGetUpdate(db, ids, x => x.Deleted = true);
+        }
+
+        public virtual void SafeDelete(SQLiteConnection db, List<TEntity> entities)
+        {
+            var ids = entities.Select(x => x.Id)
+                .ToList();
+            InternalGetUpdate(db, ids, x => x.Deleted = true);
         }
 
         public virtual bool SetLock(SQLiteConnection db, int id, bool lockState)
@@ -59,6 +72,22 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
                 return db.Update(entity) > 0;
             }
             return false;
+        }
+
+        private void InternalGetUpdate(SQLiteConnection db, List<int> ids, Action<TEntity> action)
+        {
+            var entities = db.Table<TEntity>().Where(t => ids.Contains(t.Id))
+                .ToList();
+            if (entities?.Count > 0)
+            {
+                foreach (var entity in entities)
+                {
+                    PrepareEntity(entity);
+                    action(entity);
+                }
+
+                db.UpdateAll(entities, true);
+            }
         }
 
         protected override void PrepareEntity(TEntity entity)

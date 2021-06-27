@@ -2,6 +2,7 @@
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace JToolbox.DataAccess.SQLiteNet.Repositories
@@ -72,6 +73,21 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         public virtual bool DeleteById(SQLiteConnection db, int id)
         {
             return db.Delete<TEntity>(id) > 0;
+        }
+
+        public virtual void DeleteMany(SQLiteConnection db, List<TEntity> entities)
+        {
+            var ids = entities.Select(x => x.Id)
+                .ToList();
+            db.Delete<TEntity>(ids);
+        }
+
+        public virtual void DeleteMany(SQLiteConnection db, List<int> ids)
+        {
+            foreach (var id in ids)
+            {
+                db.Delete<TEntity>(id);
+            }
         }
 
         public virtual bool EntityExists(SQLiteConnection db, TEntity entity, Expression<Func<TEntity, bool>> expression)
