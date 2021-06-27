@@ -128,6 +128,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolboxInstaller", "Installer\ToolboxInstaller\ToolboxInstaller.csproj", "{FCD7E528-FCB5-40F2-98D6-5779F167FF32}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JToolbox.DataAccess", "JToolbox.DataAccess", "{3C16F248-C60F-474E-BB5B-E6F7A730376A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.SQLiteNet", "Source\JToolbox.DataAccess\JToolbox.DataAccess.SQLiteNet\JToolbox.DataAccess.SQLiteNet.csproj", "{096F17AD-87D2-487C-951E-4AFACEEEB5CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -314,6 +318,10 @@ Global
 		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCD7E528-FCB5-40F2-98D6-5779F167FF32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{096F17AD-87D2-487C-951E-4AFACEEEB5CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{096F17AD-87D2-487C-951E-4AFACEEEB5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{096F17AD-87D2-487C-951E-4AFACEEEB5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{096F17AD-87D2-487C-951E-4AFACEEEB5CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -375,6 +383,8 @@ Global
 		{E3D3BD64-B8A7-40FF-BF42-B51CDEC8231B} = {5F8BF0A8-BB33-44F9-BD15-19A4D0A68DE6}
 		{73FED8DC-AD8D-4221-A233-D17BDB8D2005} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{FCD7E528-FCB5-40F2-98D6-5779F167FF32} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
+		{3C16F248-C60F-474E-BB5B-E6F7A730376A} = {E9C7357C-3F1A-4069-8491-06883F7782BB}
+		{096F17AD-87D2-487C-951E-4AFACEEEB5CE} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
