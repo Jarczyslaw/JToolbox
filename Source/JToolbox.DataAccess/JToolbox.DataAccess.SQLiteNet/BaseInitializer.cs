@@ -52,6 +52,8 @@ namespace JToolbox.DataAccess.SQLiteNet
 
         public virtual void InitializeTables(SQLiteConnection db)
         {
+            db.CreateTable<MigrationEntity>();
+
             var entityTypes = EntitiesAssembly
                .GetTypes()
                .Where(t => typeof(BaseEntity).IsAssignableFrom(t) && !t.IsAbstract);
