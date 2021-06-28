@@ -2,7 +2,7 @@
 
 namespace JToolbox.DataAccess.SQLiteNet.Initializers
 {
-    public class DataInitializer
+    public abstract class BaseDataInitializer
     {
         public virtual void Run(SQLiteConnection db)
         {

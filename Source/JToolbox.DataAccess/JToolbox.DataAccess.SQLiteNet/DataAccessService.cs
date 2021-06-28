@@ -9,11 +9,11 @@ namespace JToolbox.DataAccess.SQLiteNet
     {
         private SQLiteConnection connection;
 
-        private readonly MigrationInitializer migrationInitializer;
-        private readonly TableInitializer tableInitializer;
-        private readonly DataInitializer dataInitializer;
+        private readonly BaseMigrationInitializer migrationInitializer;
+        private readonly BaseTableInitializer tableInitializer;
+        private readonly BaseDataInitializer dataInitializer;
 
-        public DataAccessService(MigrationInitializer migrationInitializer, TableInitializer tableInitializer, DataInitializer dataInitializer)
+        public DataAccessService(BaseMigrationInitializer migrationInitializer, BaseTableInitializer tableInitializer, BaseDataInitializer dataInitializer)
         {
             this.migrationInitializer = migrationInitializer;
             this.tableInitializer = tableInitializer;

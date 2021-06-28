@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace JToolbox.DataAccess.SQLiteNet.Initializers
 {
-    public class MigrationInitializer
+    public abstract class BaseMigrationInitializer
     {
-        protected virtual List<BaseMigration> Migrations { get; }
+        protected abstract List<BaseMigration> Migrations { get; }
 
         public void Run(SQLiteConnection db)
         {
