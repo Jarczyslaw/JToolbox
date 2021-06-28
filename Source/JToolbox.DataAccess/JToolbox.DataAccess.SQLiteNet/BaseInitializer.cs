@@ -4,14 +4,22 @@ using JToolbox.DataAccess.SQLiteNet.Repositories;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
-namespace JToolbox.DataAccess.SQLiteNet.Initializers
+namespace JToolbox.DataAccess.SQLiteNet
 {
-    public abstract class BaseMigrationInitializer
+    public abstract class BaseInitializer
     {
+        protected virtual Assembly EntitiesAssembly { get; }
+
         protected abstract List<BaseMigration> Migrations { get; }
 
-        public void Run(SQLiteConnection db)
+        public virtual void InitializeData(SQLiteConnection db)
+        {
+        }
+
+        public void InitializeMigrations(SQLiteConnection db)
         {
             if (Migrations == null || Migrations.Count == 0)
             {
@@ -39,6 +47,17 @@ namespace JToolbox.DataAccess.SQLiteNet.Initializers
                         ExecutionDate = DateTime.Now
                     });
                 }
+            }
+        }
+
+        public virtual void InitializeTables(SQLiteConnection db)
+        {
+            var entityTypes = EntitiesAssembly
+               .GetTypes()
+               .Where(t => typeof(BaseEntity).IsAssignableFrom(t) && !t.IsAbstract);
+            foreach (var entityType in entityTypes)
+            {
+                db.CreateTable(entityType);
             }
         }
     }

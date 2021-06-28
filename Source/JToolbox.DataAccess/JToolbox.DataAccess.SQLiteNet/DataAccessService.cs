@@ -1,5 +1,4 @@
-﻿using JToolbox.DataAccess.SQLiteNet.Initializers;
-using SQLite;
+﻿using SQLite;
 using System;
 using System.Threading.Tasks;
 
@@ -9,15 +8,11 @@ namespace JToolbox.DataAccess.SQLiteNet
     {
         private SQLiteConnection connection;
 
-        private readonly BaseMigrationInitializer migrationInitializer;
-        private readonly BaseTableInitializer tableInitializer;
-        private readonly BaseDataInitializer dataInitializer;
+        private readonly BaseInitializer initializer;
 
-        public DataAccessService(BaseMigrationInitializer migrationInitializer, BaseTableInitializer tableInitializer, BaseDataInitializer dataInitializer)
+        public DataAccessService(BaseInitializer initializer)
         {
-            this.migrationInitializer = migrationInitializer;
-            this.tableInitializer = tableInitializer;
-            this.dataInitializer = dataInitializer;
+            this.initializer = initializer;
         }
 
         private SQLiteConnectionString ConnectionString => new SQLiteConnectionString(DataSource, false, key: Password);
@@ -69,9 +64,9 @@ namespace JToolbox.DataAccess.SQLiteNet
                 {
                     ExecuteTransaction(db =>
                     {
-                        tableInitializer.Run(db);
-                        migrationInitializer.Run(db);
-                        dataInitializer.Run(db);
+                        initializer.InitializeTables(db);
+                        initializer.InitializeMigrations(db);
+                        initializer.InitializeData(db);
                         return true;
                     });
                 });
