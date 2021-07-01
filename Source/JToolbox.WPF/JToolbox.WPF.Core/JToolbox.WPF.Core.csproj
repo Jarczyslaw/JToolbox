@@ -69,6 +69,10 @@
     <Compile Include="Threading.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{29495D19-7102-48AB-B3F2-653F93A9779D}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\JToolbox.Desktop\JToolbox.Desktop.Core\JToolbox.Desktop.Core.csproj">
       <Project>{F91C51E8-EEE9-405D-8D53-1BD1A8B462A9}</Project>
       <Name>JToolbox.Desktop.Core</Name>
