@@ -27,7 +27,7 @@ namespace Examples.Desktop.MVP
             var factory = new AppPresenterFactory(container);
             var bootstrapper = new AppBootstrapper();
             bootstrapper.RegisterDependencies(container);
-            await bootstrapper.Start<MainPresenter, IMainView>(container, factory);
+            await bootstrapper.Start<MainPresenter, IMainView>(container, factory, ViewKeys.Main);
         }
     }
 }

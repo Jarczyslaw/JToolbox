@@ -8,21 +8,21 @@ namespace JToolbox.WinForms.MVP.Unity
     {
         private readonly IUnityContainer container;
 
-        public UnityPresenterFactory(IUnityContainer container)
+        protected UnityPresenterFactory(IUnityContainer container)
         {
             this.container = container;
         }
 
-        protected virtual Dictionary<Type, Type> ViewPresenterPairs { get; }
+        protected virtual Dictionary<string, Type> Views { get; }
 
         protected override TPresenter ResolvePresenter<TPresenter, TView>()
         {
             return container.Resolve<TPresenter>();
         }
 
-        protected override TView ResolveView<TPresenter, TView>()
+        protected override IView ResolveView(string viewKey)
         {
-            return (TView)container.Resolve(ViewPresenterPairs[typeof(TPresenter)]);
+            return container.Resolve(Views[viewKey]) as IView;
         }
     }
 }

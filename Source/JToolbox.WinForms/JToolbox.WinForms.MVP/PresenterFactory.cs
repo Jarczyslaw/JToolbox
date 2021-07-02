@@ -1,23 +1,34 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace JToolbox.WinForms.MVP
 {
     public abstract class PresenterFactory
     {
-        public async Task<TPresenter> Create<TPresenter, TView>(object input = null)
+        public async Task<TPresenter> Create<TPresenter, TView>(string viewKey, object input = null)
             where TPresenter : Presenter<TView>
             where TView : class, IView
         {
-            var view = ResolveView<TPresenter, TView>();
-            var presenter = ResolvePresenter<TPresenter, TView>();
-            await presenter.Attach(view);
-            await presenter.Initialize(input);
-            return presenter;
+            var view = ResolveView(viewKey);
+            if (view == null)
+            {
+                throw new ArgumentException($"No view found for {viewKey} key");
+            }
+
+            if (view is TView presenterView)
+            {
+                var presenter = ResolvePresenter<TPresenter, TView>();
+                await presenter.Attach(presenterView);
+                await presenter.Initialize(input);
+                return presenter;
+            }
+            else
+            {
+                throw new ArgumentException("Found view does not match requested presenter");
+            }
         }
 
-        protected abstract TView ResolveView<TPresenter, TView>()
-            where TPresenter : Presenter<TView>
-            where TView : class, IView;
+        protected abstract IView ResolveView(string viewKey);
 
         protected abstract TPresenter ResolvePresenter<TPresenter, TView>()
             where TPresenter : Presenter<TView>
