@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace JToolbox.Core
 {
-    public class NotifyPropertyChanged
+    public class NotifyPropertyChanged : INotifyPropertyChanged
     {
-        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string property = null)
         {
