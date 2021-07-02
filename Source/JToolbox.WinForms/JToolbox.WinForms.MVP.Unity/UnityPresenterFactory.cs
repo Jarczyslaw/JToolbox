@@ -22,7 +22,11 @@ namespace JToolbox.WinForms.MVP.Unity
 
         protected override IView ResolveView(string viewKey)
         {
-            return container.Resolve(Views[viewKey]) as IView;
+            if (Views.TryGetValue(viewKey, out Type viewType))
+            {
+                return container.Resolve(viewType) as IView;
+            }
+            return null;
         }
     }
 }
