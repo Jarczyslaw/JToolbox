@@ -19,8 +19,12 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual int CreateMany(SQLiteConnection db, List<TEntity> entities)
         {
-            entities.ForEach(e => PrepareEntity(e));
-            return db.InsertAll(entities, true);
+            if (entities?.Count > 0)
+            {
+                entities.ForEach(e => PrepareEntity(e));
+                return db.InsertAll(entities, true);
+            }
+            return 0;
         }
 
         public virtual TEntity GetById(SQLiteConnection db, int id)
@@ -61,32 +65,42 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual int UpdateMany(SQLiteConnection db, List<TEntity> entities)
         {
-            entities.ForEach(e => PrepareEntity(e));
-            return db.UpdateAll(entities);
+            if (entities?.Count > 0)
+            {
+                entities.ForEach(e => PrepareEntity(e));
+                return db.UpdateAll(entities);
+            }
+            return 0;
         }
 
         public virtual bool Delete(SQLiteConnection db, TEntity entity)
         {
-            return DeleteById(db, entity.Id);
+            return Delete(db, entity.Id);
         }
 
-        public virtual bool DeleteById(SQLiteConnection db, int id)
+        public virtual bool Delete(SQLiteConnection db, int id)
         {
             return db.Delete<TEntity>(id) > 0;
         }
 
         public virtual void DeleteMany(SQLiteConnection db, List<TEntity> entities)
         {
-            var ids = entities.Select(x => x.Id)
+            if (entities?.Count > 0)
+            {
+                var ids = entities.Select(x => x.Id)
                 .ToList();
-            db.Delete<TEntity>(ids);
+                db.Delete<TEntity>(ids);
+            }
         }
 
         public virtual void DeleteMany(SQLiteConnection db, List<int> ids)
         {
-            foreach (var id in ids)
+            if (ids?.Count > 0)
             {
-                db.Delete<TEntity>(id);
+                foreach (var id in ids)
+                {
+                    db.Delete<TEntity>(id);
+                }
             }
         }
 
