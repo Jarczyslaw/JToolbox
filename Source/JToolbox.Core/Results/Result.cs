@@ -33,6 +33,8 @@ namespace JToolbox.Core.Results
 
         public bool IsSuccess => !Messages.Any(s => s.Type == MessageType.Error);
 
+        public bool IsError => !IsSuccess;
+
         public List<Message> Informations => GetMessagesOfType(MessageType.Information);
 
         public Message Information => Informations.FirstOrDefault();
