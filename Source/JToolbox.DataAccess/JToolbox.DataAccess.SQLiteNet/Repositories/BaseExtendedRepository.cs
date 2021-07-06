@@ -6,8 +6,7 @@ using System.Linq;
 
 namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
-    public abstract class BaseExtendedRepository<TEntity> : BaseRepository<TEntity>
-        where TEntity : BaseExtendedEntity, new()
+    public abstract class BaseExtendedRepository<TEntity> : BaseRepository<TEntity>, IBaseExtendedRepository<TEntity> where TEntity : BaseExtendedEntity, new()
     {
         public virtual bool SafeDelete(SQLiteConnection db, int id)
         {
