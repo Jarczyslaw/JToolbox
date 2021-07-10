@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using JToolbox.DataAccess.SQLiteNet.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JToolbox.DataAccess.SQLiteNet
 {
     public class Merge<T>
+        where T : BaseEntity
     {
         public List<T> ToCreate { get; set; }
         public List<T> ToUpdate { get; set; }
@@ -13,7 +15,7 @@ namespace JToolbox.DataAccess.SQLiteNet
         {
             ToUpdate = newList.Intersect(currentList, comparer)
                 .ToList();
-            ToCreate = newList.Except(currentList, comparer)
+            ToCreate = newList.Where(x => x.Id <= 0)
                 .ToList();
             ToDelete = currentList.Except(newList, comparer)
                 .ToList();
