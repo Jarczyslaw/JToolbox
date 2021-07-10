@@ -1,5 +1,4 @@
-﻿using JToolbox.Core.Abstraction;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,14 +7,14 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
     public abstract class CommonRepository
     {
         protected void IncludeMany<T1, T2>(List<T1> collection, List<T2> toInclude,
-            Func<T2, int> foreignKeySelector, Action<T1, List<T2>> includeAction)
-            where T1 : IKey
+            Func<T1, int> collectionKeySelector, Func<T2, int> toIncludeKeySelector, Action<T1, List<T2>> includeAction)
         {
-            var dict = toInclude.GroupBy(foreignKeySelector).ToDictionary(a => a.Key, a => a.ToList());
+            var dict = toInclude.GroupBy(toIncludeKeySelector).ToDictionary(a => a.Key, a => a.ToList());
             foreach (var entity in collection)
             {
                 var list = new List<T2>();
-                if (dict.TryGetValue(entity.Id, out List<T2> value))
+                var key = collectionKeySelector(entity);
+                if (dict.TryGetValue(key, out List<T2> value))
                 {
                     list = value;
                 }
@@ -24,11 +23,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         }
 
         protected void IncludeOne<T1, T2>(List<T1> collection, List<T2> toInclude,
-            Func<T2, int> foreignKeySelector, Action<T1, T2> includeAction)
-            where T1 : IKey
+            Func<T1, int> collectionKeySelector, Func<T2, int> toIncludeKeySelector, Action<T1, T2> includeAction)
         {
-            IncludeMany(collection, toInclude, foreignKeySelector,
-                (e1, e2) => includeAction(e1, e2.SingleOrDefault()));
+            IncludeMany(collection, toInclude,
+                collectionKeySelector, toIncludeKeySelector, (e1, e2) => includeAction(e1, e2.SingleOrDefault()));
         }
     }
 }
