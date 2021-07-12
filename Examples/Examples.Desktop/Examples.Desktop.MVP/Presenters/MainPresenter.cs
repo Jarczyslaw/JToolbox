@@ -1,7 +1,6 @@
 ﻿using Examples.Desktop.MVP.Forms;
 using JToolbox.Desktop.Dialogs;
 using JToolbox.WinForms.MVP;
-using System.Threading.Tasks;
 
 namespace Examples.Desktop.MVP.Presenters
 {
@@ -15,19 +14,19 @@ namespace Examples.Desktop.MVP.Presenters
             this.dialogsService = dialogsService;
         }
 
-        protected override Task OnAttach()
+        public override void Attach(IMainView view)
         {
+            base.Attach(view);
             View.OnPass += BaseView_OnPass;
-            return base.OnAttach();
         }
 
-        protected override Task OnDetach()
+        protected override void Detach()
         {
             View.OnPass -= BaseView_OnPass;
-            return base.OnDetach();
+            base.Detach();
         }
 
-        private async void BaseView_OnPass(bool modal, string value)
+        private void BaseView_OnPass(bool modal, string value)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -35,24 +34,22 @@ namespace Examples.Desktop.MVP.Presenters
                 return;
             }
 
-            var presenter = await presenterFactory.Create<ResultPresenter, IResultView>(ViewKeys.Result, value);
-            string result;
+            var presenter = presenterFactory.Create<ResultPresenter, IResultView>(ViewKeys.Result, value);
             if (modal)
             {
-                result = (string)await presenter.ShowAsModal();
+                var result = (string)presenter.ShowAsModal();
+                if (string.IsNullOrEmpty(result))
+                {
+                    dialogsService.ShowInfo("Cancelled");
+                }
+                else
+                {
+                    dialogsService.ShowInfo("Retured value: " + result);
+                }
             }
             else
             {
-                result = (string)await presenter.Show();
-            }
-
-            if (string.IsNullOrEmpty(result))
-            {
-                dialogsService.ShowInfo("Cancelled");
-            }
-            else
-            {
-                dialogsService.ShowInfo("Retured value: " + result);
+                presenter.Show();
             }
         }
     }

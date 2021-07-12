@@ -19,6 +19,18 @@ namespace JToolbox.WinForms.Core.Extensions
             }
         }
 
+        public static void SafeBeginInvoke(this Control control, Action action)
+        {
+            if (control.InvokeRequired)
+            {
+                control.BeginInvoke(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
         public static List<T> FindControlsOfType<T>(this Control @this, bool includeSubclasses)
             where T : Control
         {

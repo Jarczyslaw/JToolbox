@@ -1,4 +1,6 @@
-﻿namespace JToolbox.WinForms.MVP
+﻿using System;
+
+namespace JToolbox.WinForms.MVP
 {
     public delegate void ViewShown();
 
@@ -26,5 +28,9 @@
         void ShowViewAsModal();
 
         void CloseView();
+
+        void ViewInvoke(Action action);
+
+        void ViewBeginInvoke(Action action);
     }
 }

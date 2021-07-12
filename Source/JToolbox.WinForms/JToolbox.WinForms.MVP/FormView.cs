@@ -64,5 +64,15 @@ namespace JToolbox.WinForms.MVP
         {
             this.SafeInvoke(() => Close());
         }
+
+        public void ViewInvoke(Action action)
+        {
+            this.SafeInvoke(action);
+        }
+
+        public void ViewBeginInvoke(Action action)
+        {
+            this.SafeBeginInvoke(action);
+        }
     }
 }

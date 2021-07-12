@@ -1,6 +1,5 @@
 ﻿using Examples.Desktop.MVP.Forms;
 using JToolbox.WinForms.MVP;
-using System.Threading.Tasks;
 
 namespace Examples.Desktop.MVP.Presenters
 {
@@ -13,25 +12,24 @@ namespace Examples.Desktop.MVP.Presenters
         {
         }
 
-        protected override Task OnAttach()
+        public override void Attach(IResultView view)
         {
+            base.Attach(view);
             View.OnAccept += View_OnAccept;
             View.OnCancel += View_OnCancel;
-            return base.OnAttach();
         }
 
-        protected override Task OnInitialize(object input)
+        public override void Initialize(object input)
         {
+            base.Initialize(input);
             inputString = (string)input;
             View.Value = inputString;
-            return base.OnInitialize(input);
         }
 
-        protected override Task OnDetach()
+        protected override void Detach()
         {
             View.OnAccept -= View_OnAccept;
             View.OnCancel -= View_OnCancel;
-            return base.OnDetach();
         }
 
         private void View_OnCancel()
