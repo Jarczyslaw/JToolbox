@@ -19,6 +19,21 @@ namespace JToolbox.WinForms.Core.Extensions
             }
         }
 
+        public static T SafeInvoke<T>(this Control control, Func<T> func)
+        {
+            if (control.InvokeRequired)
+            {
+                T result = default;
+                Action action = () => result = func();
+                control.Invoke(action);
+                return result;
+            }
+            else
+            {
+                return func();
+            }
+        }
+
         public static void SafeBeginInvoke(this Control control, Action action)
         {
             if (control.InvokeRequired)
