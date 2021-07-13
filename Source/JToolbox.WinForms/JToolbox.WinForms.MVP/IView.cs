@@ -31,6 +31,8 @@ namespace JToolbox.WinForms.MVP
 
         void ViewInvoke(Action action);
 
+        T ViewInvoke<T>(Func<T> func);
+
         void ViewBeginInvoke(Action action);
     }
 }

@@ -70,6 +70,11 @@ namespace JToolbox.WinForms.MVP
             this.SafeInvoke(action);
         }
 
+        public T ViewInvoke<T>(Func<T> func)
+        {
+            return this.SafeInvoke<T>(func);
+        }
+
         public void ViewBeginInvoke(Action action)
         {
             this.SafeBeginInvoke(action);
