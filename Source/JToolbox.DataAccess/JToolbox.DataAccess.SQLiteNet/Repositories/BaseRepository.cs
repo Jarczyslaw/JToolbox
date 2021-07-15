@@ -31,6 +31,15 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             return db.Table<TEntity>().FirstOrDefault(e => e.Id == id);
         }
 
+        public virtual List<TEntity> GetByIds(SQLiteConnection db, List<int> ids)
+        {
+            var lookup = ids.Distinct()
+                .ToList();
+            return db.Table<TEntity>()
+                .Where(x => lookup.Contains(x.Id))
+                .ToList();
+        }
+
         public virtual List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
         {
             return GetBy(db, new List<Expression<Func<TEntity, bool>>> { expression });
