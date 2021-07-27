@@ -30,16 +30,6 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             InternalGetUpdate(db, ids, x => x.Deleted = true);
         }
 
-        public virtual bool SetLock(SQLiteConnection db, int id, bool lockState)
-        {
-            return InternalGetUpdate(db, id, e => e.Locked = lockState);
-        }
-
-        public virtual bool SetLock(SQLiteConnection db, TEntity entity, bool lockState)
-        {
-            return SetLock(db, entity.Id, lockState);
-        }
-
         public virtual void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
         {
             var merge = new Merge<TEntity>();

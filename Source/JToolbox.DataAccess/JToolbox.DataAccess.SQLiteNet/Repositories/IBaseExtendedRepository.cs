@@ -16,9 +16,5 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         bool SafeDelete(SQLiteConnection db, TEntity entity);
 
         void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer);
-
-        bool SetLock(SQLiteConnection db, int id, bool lockState);
-
-        bool SetLock(SQLiteConnection db, TEntity entity, bool lockState);
     }
 }
