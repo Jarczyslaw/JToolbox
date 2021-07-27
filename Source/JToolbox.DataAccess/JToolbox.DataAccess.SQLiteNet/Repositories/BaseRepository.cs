@@ -95,9 +95,8 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         {
             if (entities?.Count > 0)
             {
-                var ids = entities.Select(x => x.Id)
-                .ToList();
-                db.Delete<TEntity>(ids);
+                var ids = entities.ConvertAll(x => x.Id);
+                DeleteMany(db, ids);
             }
         }
 
