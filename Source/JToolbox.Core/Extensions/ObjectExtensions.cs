@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -47,6 +48,11 @@ namespace JToolbox.Core.Extensions
                 ms.Position = 0;
                 return (T)formatter.Deserialize(ms);
             }
+        }
+
+        public static List<T> AsList<T>(this T @this)
+        {
+            return new List<T> { @this };
         }
     }
 }

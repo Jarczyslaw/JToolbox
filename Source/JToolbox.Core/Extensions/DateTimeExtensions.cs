@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace JToolbox.Core.Extensions
 {
@@ -37,6 +38,18 @@ namespace JToolbox.Core.Extensions
         public static bool IsWeekDay(this DateTime dateTime)
         {
             return dateTime.DayOfWeek == DayOfWeek.Saturday || dateTime.DayOfWeek == DayOfWeek.Sunday;
+        }
+
+        public static int GetIsoWeekNumber(this DateTime date)
+        {
+            //https://docs.microsoft.com/pl-pl/archive/blogs/shawnste/iso-8601-week-of-year-format-in-microsoft-net
+            DayOfWeek day = CultureInfo.CurrentCulture.Calendar.GetDayOfWeek(date);
+            if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
+            {
+                date = date.AddDays(3);
+            }
+
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
     }
 }

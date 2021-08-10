@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JToolbox.Core.Extensions
 {
@@ -46,6 +47,14 @@ namespace JToolbox.Core.Extensions
             foreach (T value in values)
             {
                 @this.Remove(value);
+            }
+        }
+
+        public static void ForEach<T>(this ICollection<T> @this, Action<T> action)
+        {
+            foreach (var item in @this)
+            {
+                action(item);
             }
         }
     }
