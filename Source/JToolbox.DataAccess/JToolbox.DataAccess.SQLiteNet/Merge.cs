@@ -15,7 +15,7 @@ namespace JToolbox.DataAccess.SQLiteNet
         {
             ToUpdate = newList.Intersect(currentList, comparer)
                 .ToList();
-            ToCreate = newList.Where(x => x.Id <= 0)
+            ToCreate = newList.Except(currentList, comparer)
                 .ToList();
             ToDelete = currentList.Except(newList, comparer)
                 .ToList();
