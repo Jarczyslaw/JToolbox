@@ -51,14 +51,6 @@ namespace JToolbox.Core.Nodes
             }
         }
 
-        public void MoveTo(Node<T> targetNode)
-        {
-            if (targetNode != this)
-            {
-                targetNode.AddNode(this);
-            }
-        }
-
         public List<Node<T>> GetAllParents()
         {
             var result = new List<Node<T>>();

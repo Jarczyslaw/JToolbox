@@ -94,12 +94,12 @@ namespace JToolbox.Core.Nodes
             OnPropertyChanged(nameof(Nodes));
         }
 
-        public void OnRecursiveNodeChanged()
+        public void OnRecursiveNodesChanged()
         {
             OnPropertyChanged(nameof(Nodes));
             foreach (var node in nodes)
             {
-                node.OnRecursiveNodeChanged();
+                node.OnRecursiveNodesChanged();
             }
         }
     }

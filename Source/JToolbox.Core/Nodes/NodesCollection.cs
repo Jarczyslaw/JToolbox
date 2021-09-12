@@ -84,7 +84,7 @@ namespace JToolbox.Core.Nodes
                 }
                 itemsCopy.Remove(item);
             }
-            OnRecursiveNodeChanged();
+            OnRecursiveNodesChanged();
         }
 
         public bool CompareTo(NodesCollection<T> other)

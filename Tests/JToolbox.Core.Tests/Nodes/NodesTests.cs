@@ -34,7 +34,7 @@ namespace JToolbox.Core.Tests.Nodes
                 .First();
             var node6 = collection2.FindNodes(x => x.Tag == 6)
                 .First();
-            node5.MoveTo(node6);
+            node5.AddNode(node6);
             Assert.IsFalse(collection1.CompareTo(collection2));
         }
 
@@ -66,6 +66,44 @@ namespace JToolbox.Core.Tests.Nodes
             var mappedCollection = new NodesCollection<int>();
             mappedCollection.Map(items, x => x.Id, x => x.ParentId, x => x.Id);
             Assert.IsTrue(collection.CompareTo(mappedCollection));
+        }
+
+        [TestMethod]
+        public void GetAllNodesTest()
+        {
+            var collection = dataSource.CreateNodesCollection();
+            var allNodes = collection.GetAllNodes();
+            Assert.AreEqual(16, allNodes.Count);
+        }
+
+        [TestMethod]
+        public void RemoveNodesTest()
+        {
+            var collection = dataSource.CreateNodesCollection();
+            var node3 = collection.FindNode(x => x.Tag == 3);
+            collection.RemoveNode(node3);
+            Assert.AreEqual(13, collection.AllNodesCount);
+
+            var node13 = collection.FindNode(x => x.Tag == 13);
+            var node15 = collection.FindNode(x => x.Tag == 15);
+            node13.RemoveNode(node15);
+            Assert.AreEqual(11, collection.AllNodesCount);
+        }
+
+        [TestMethod]
+        public void AddExistingNode()
+        {
+            var collection = dataSource.CreateNodesCollection();
+            var node3 = collection.FindNode(x => x.Tag == 3);
+            var node13 = collection.FindNode(x => x.Tag == 13);
+
+            Assert.AreEqual(1, node3.Parent.Tag);
+            Assert.AreEqual(8, node13.Parent.Tag);
+
+            node13.AddNode(node3);
+            Assert.AreEqual(node13.Tag, node3.Parent.Tag);
+            Assert.IsTrue(node13.Nodes.Contains(node3));
+            Assert.AreEqual(6, node13.AllNodesCount);
         }
     }
 }
