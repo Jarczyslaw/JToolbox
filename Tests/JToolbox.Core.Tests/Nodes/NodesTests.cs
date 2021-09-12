@@ -91,7 +91,7 @@ namespace JToolbox.Core.Tests.Nodes
         }
 
         [TestMethod]
-        public void AddExistingNode()
+        public void AddExistingNodeTest()
         {
             var collection = dataSource.CreateNodesCollection();
             var node3 = collection.FindNode(x => x.Tag == 3);
@@ -104,6 +104,14 @@ namespace JToolbox.Core.Tests.Nodes
             Assert.AreEqual(node13.Tag, node3.Parent.Tag);
             Assert.IsTrue(node13.Nodes.Contains(node3));
             Assert.AreEqual(6, node13.AllNodesCount);
+        }
+
+        [TestMethod]
+        public void GetAllParentsTest()
+        {
+            var collection = dataSource.CreateNodesCollection();
+            var node16 = collection.FindNode(x => x.Tag == 16);
+            Assert.AreEqual(3, node16.GetAllParents().Count);
         }
     }
 }
