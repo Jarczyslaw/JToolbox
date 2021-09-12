@@ -2,7 +2,6 @@
 using JToolbox.Desktop.Dialogs;
 using JToolbox.WPF.Core.Base;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -18,14 +17,12 @@ namespace ToolboxInstaller
         private ObservableCollection<ItemViewModel> flatItems = new ObservableCollection<ItemViewModel>();
         private bool windowEnabled = true;
         private string title;
-        private bool busy;
         private readonly string startPath = "../../../../Source/";
         private string selectedPath;
 
         public MainViewModel()
         {
             SetBusy(false);
-            //TestData();
             InitData(null, startPath);
         }
 
@@ -135,14 +132,22 @@ namespace ToolboxInstaller
                 SetBusy(true, "Reading structure");
                 await Task.Run(() =>
                 {
-                    var projects = Directory.GetFiles(ToolboxPath, "*.csproj", SearchOption.AllDirectories)
-                        .Select(s => Path.GetFileNameWithoutExtension(s));
                     foreach (var item in flatItems)
                     {
-                        item.SetChecked(false, true);
-                        if (item.IsProject && projects.Contains(item.Title))
+                        item.SetChecked(false, false);
+                    }
+
+                    if (Directory.Exists(ToolboxPath))
+                    {
+                        var projects = Directory.GetFiles(ToolboxPath, "*.csproj", SearchOption.AllDirectories)
+                            .Select(s => Path.GetFileNameWithoutExtension(s));
+                        foreach (var item in flatItems)
                         {
-                            item.SetChecked(true, true);
+                            item.SetChecked(false, true);
+                            if (item.IsProject && projects.Contains(item.Title))
+                            {
+                                item.SetChecked(true, true);
+                            }
                         }
                     }
                 });
@@ -160,7 +165,6 @@ namespace ToolboxInstaller
 
         private void SetBusy(bool busy, string msg = null)
         {
-            this.busy = busy;
             var tempTitle = "Toolbox Installer";
             if (busy)
             {
@@ -199,81 +203,6 @@ namespace ToolboxInstaller
                     InitData(item, folder);
                 }
             }
-        }
-
-        private void TestData()
-        {
-            var project11 = new ItemViewModel
-            {
-                Title = "Project_1_1",
-                IsProject = true
-            };
-            var project12 = new ItemViewModel
-            {
-                Title = "Project_1_2",
-                IsProject = true,
-            };
-            var project211 = new ItemViewModel
-            {
-                Title = "Project_2_1_1",
-                IsProject = true
-            };
-            var project212 = new ItemViewModel
-            {
-                Title = "Project_2_1_2",
-                IsProject = true
-            };
-            var project213 = new ItemViewModel
-            {
-                Title = "Project_2_1_3",
-                IsProject = true
-            };
-
-            var project21 = new ItemViewModel
-            {
-                Title = "Project_2_1",
-                IsProject = true
-            };
-            var project22 = new ItemViewModel
-            {
-                Title = "Project_2_2",
-                IsProject = true
-            };
-
-            var folder1 = new ItemViewModel
-            {
-                Title = "Folder_1",
-            };
-
-            var folder2 = new ItemViewModel
-            {
-                Title = "Folder_2",
-            };
-
-            var folder21 = new ItemViewModel
-            {
-                Title = "Folder_21",
-            };
-
-            Items = new ObservableCollection<ItemViewModel>(new List<ItemViewModel>
-            {
-                folder1.AddChildren(new List<ItemViewModel>
-                {
-                    project11,
-                    project12
-                }),
-                folder2.AddChildren(new List<ItemViewModel>
-                {
-                    folder21.AddChildren(new List<ItemViewModel>
-                    {
-                        project211,
-                        project212,
-                        project213,
-                    }),
-                    project21,
-                    project22
-                }),
-            });
         }
     }
 }
