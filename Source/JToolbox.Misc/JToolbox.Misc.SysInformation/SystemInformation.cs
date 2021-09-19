@@ -6,9 +6,29 @@ namespace JToolbox.Misc.SysInformation
 {
     public static class SystemInformation
     {
-        public static string UserName => Environment.UserName;
-        public static string UserDomainName => Environment.UserDomainName;
         public static string MachineName => Environment.MachineName;
+        public static string UserDomainName => Environment.UserDomainName;
+        public static string UserName => Environment.UserName;
+
+        public static CPUInfo GetCPUInfo()
+        {
+            var mo = GetCPUManagementObject();
+            return new CPUInfo
+            {
+                Caption = Convert.ToString(mo["Caption"]),
+                MaxClockSpeed = Convert.ToInt32(mo["MaxClockSpeed"]),
+                Name = Convert.ToString(mo["Name"]),
+                NumberOfCores = Convert.ToInt32(mo["NumberOfCores"]),
+                NumberOfEnabledCores = Convert.ToInt32(mo["NumberOfEnabledCore"]),
+                NumberOfLogicalProcessors = Convert.ToInt32(mo["NumberOfLogicalProcessors"]),
+                Manufacturer = Convert.ToString(mo["Manufacturer"])
+            };
+        }
+
+        public static ManagementObject GetCPUManagementObject()
+        {
+            return GetManagementObject("select * from Win32_Processor");
+        }
 
         public static ManagementObject GetManagementObject(string query)
         {
@@ -18,14 +38,16 @@ namespace JToolbox.Misc.SysInformation
                .First();
         }
 
-        public static ManagementObject GetSystemManagementObject()
+        public static MemoryInfo GetMemoryInfo()
         {
-            return GetManagementObject("select * from Win32_OperatingSystem");
-        }
-
-        public static ManagementObject GetCPUManagementObject()
-        {
-            return GetManagementObject("select * from Win32_Processor");
+            var mo = GetSystemManagementObject();
+            return new MemoryInfo
+            {
+                FreePhysicalMemory = Convert.ToUInt64(mo["FreePhysicalMemory"]),
+                FreeVirtualMemory = Convert.ToUInt64(mo["FreeVirtualMemory"]),
+                TotalVirtualMemory = Convert.ToUInt64(mo["TotalVirtualMemorySize"]),
+                TotalVisibleMemory = Convert.ToUInt64(mo["TotalVisibleMemorySize"]),
+            };
         }
 
         public static OSInfo GetOSInfo()
@@ -43,31 +65,9 @@ namespace JToolbox.Misc.SysInformation
             };
         }
 
-        public static MemoryInfo GetMemoryInfo()
+        public static ManagementObject GetSystemManagementObject()
         {
-            var mo = GetSystemManagementObject();
-            return new MemoryInfo
-            {
-                FreePhysicalMemory = Convert.ToUInt64(mo["FreePhysicalMemory"]),
-                FreeVirtualMemory = Convert.ToUInt64(mo["FreeVirtualMemory"]),
-                TotalVirtualMemory = Convert.ToUInt64(mo["TotalVirtualMemorySize"]),
-                TotalVisibleMemory = Convert.ToUInt64(mo["TotalVisibleMemorySize"]),
-            };
-        }
-
-        public static CPUInfo GetCPUInfo()
-        {
-            var mo = GetCPUManagementObject();
-            return new CPUInfo
-            {
-                Caption = Convert.ToString(mo["Caption"]),
-                MaxClockSpeed = Convert.ToInt32(mo["MaxClockSpeed"]),
-                Name = Convert.ToString(mo["Name"]),
-                NumberOfCores = Convert.ToInt32(mo["NumberOfCores"]),
-                NumberOfEnabledCores = Convert.ToInt32(mo["NumberOfEnabledCore"]),
-                NumberOfLogicalProcessors = Convert.ToInt32(mo["NumberOfLogicalProcessors"]),
-                Manufacturer = Convert.ToString(mo["Manufacturer"])
-            };
+            return GetManagementObject("select * from Win32_OperatingSystem");
         }
     }
 }

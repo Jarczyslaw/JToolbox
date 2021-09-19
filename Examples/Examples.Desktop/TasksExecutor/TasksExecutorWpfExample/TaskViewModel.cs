@@ -8,8 +8,8 @@ namespace TasksExecutorWpfExample
 {
     public class TaskViewModel : BaseViewModel, ITask
     {
-        public Action<TaskViewModel> OnTaskStart;
         public Action<TaskViewModel> OnTaskFinish;
+        public Action<TaskViewModel> OnTaskStart;
         private double remaining;
 
         public TaskViewModel(int id, int duration)
@@ -21,13 +21,18 @@ namespace TasksExecutorWpfExample
 
         public int Duration { get; }
 
+        public int Id { get; }
+
         public double Remaining
         {
             get => remaining;
             set => Set(ref remaining, value);
         }
 
-        public int Id { get; }
+        public void Finish(TasksExecutor tasksExecutor, Exception exception, TimeSpan elapsed)
+        {
+            OnTaskFinish?.Invoke(this);
+        }
 
         public void Run(TasksExecutor tasksExecutor)
         {
@@ -42,11 +47,6 @@ namespace TasksExecutorWpfExample
                 }
                 Thread.Sleep(1);
             }
-        }
-
-        public void Finish(TasksExecutor tasksExecutor, Exception exception, TimeSpan elapsed)
-        {
-            OnTaskFinish?.Invoke(this);
         }
     }
 }

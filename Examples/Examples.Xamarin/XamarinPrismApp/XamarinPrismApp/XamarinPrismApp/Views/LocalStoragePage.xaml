@@ -60,5 +60,4 @@
             Command="{Binding AddCommand}"
             Text="Add new" />
     </Grid>
-
 </base:PageBase>

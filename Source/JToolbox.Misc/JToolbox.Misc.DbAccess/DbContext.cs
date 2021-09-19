@@ -5,11 +5,6 @@ namespace JToolbox.Misc.DbAccess
 {
     public class DbContext : IDisposable
     {
-        public IDbFactory DbFactory { get; }
-
-        public IDbConnection Connection { get; }
-        public IDbCommand Command { get; }
-
         public DbContext(IDbFactory factory)
         {
             DbFactory = factory;
@@ -17,6 +12,10 @@ namespace JToolbox.Misc.DbAccess
             Command = Connection.CreateCommand();
             Connection.Open();
         }
+
+        public IDbCommand Command { get; }
+        public IDbConnection Connection { get; }
+        public IDbFactory DbFactory { get; }
 
         public virtual void Dispose()
         {

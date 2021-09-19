@@ -6,44 +6,18 @@ namespace JToolbox.DataAccess.SQLiteNet
 {
     public class DataAccessService : IDataAccessService
     {
-        private SQLiteConnection connection;
-
         private readonly BaseInitializer initializer;
+        private SQLiteConnection connection;
 
         public DataAccessService(BaseInitializer initializer)
         {
             this.initializer = initializer;
         }
 
-        private SQLiteConnectionString ConnectionString => new SQLiteConnectionString(DataSource, false, key: Password);
-
-        public string DataSource { get; private set; }
-
-        public string Password { get; private set; }
-
         public bool CacheConnection { get; set; } = true;
-
-        private SQLiteConnection OpenConnection()
-        {
-            if (CacheConnection)
-            {
-                if (connection != null && connection.DatabasePath != DataSource)
-                {
-                    CloseConnection(true);
-                }
-
-                if (connection == null)
-                {
-                    connection = new SQLiteConnection(ConnectionString);
-                }
-            }
-            else
-            {
-                connection?.Close();
-                connection = new SQLiteConnection(ConnectionString);
-            }
-            return connection;
-        }
+        public string DataSource { get; private set; }
+        public string Password { get; private set; }
+        private SQLiteConnectionString ConnectionString => new SQLiteConnectionString(DataSource, false, key: Password);
 
         public void CloseConnection(bool forceClose)
         {
@@ -52,26 +26,6 @@ namespace JToolbox.DataAccess.SQLiteNet
                 connection?.Close();
                 connection = null;
             }
-        }
-
-        public Task Init(string dataSource, string password)
-        {
-            if (DataSource != dataSource)
-            {
-                DataSource = dataSource;
-                Password = password;
-                return Task.Run(() =>
-                {
-                    ExecuteTransaction(db =>
-                    {
-                        initializer.InitializeTables(db);
-                        initializer.InitializeMigrations(db);
-                        initializer.InitializeData(db);
-                        return true;
-                    });
-                });
-            }
-            return Task.CompletedTask;
         }
 
         public void Execute(Action<SQLiteConnection> action)
@@ -131,6 +85,48 @@ namespace JToolbox.DataAccess.SQLiteNet
                 db.Rollback();
                 CloseConnection(false);
             }
+        }
+
+        public Task Init(string dataSource, string password)
+        {
+            if (DataSource != dataSource)
+            {
+                DataSource = dataSource;
+                Password = password;
+                return Task.Run(() =>
+                {
+                    ExecuteTransaction(db =>
+                    {
+                        initializer.InitializeTables(db);
+                        initializer.InitializeMigrations(db);
+                        initializer.InitializeData(db);
+                        return true;
+                    });
+                });
+            }
+            return Task.CompletedTask;
+        }
+
+        private SQLiteConnection OpenConnection()
+        {
+            if (CacheConnection)
+            {
+                if (connection != null && connection.DatabasePath != DataSource)
+                {
+                    CloseConnection(true);
+                }
+
+                if (connection == null)
+                {
+                    connection = new SQLiteConnection(ConnectionString);
+                }
+            }
+            else
+            {
+                connection?.Close();
+                connection = new SQLiteConnection(ConnectionString);
+            }
+            return connection;
         }
     }
 }

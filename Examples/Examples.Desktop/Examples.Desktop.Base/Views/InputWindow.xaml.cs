@@ -1,6 +1,5 @@
 ﻿using Examples.Desktop.Base.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Examples.Desktop.Base.Views
 {

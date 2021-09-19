@@ -1,16 +1,16 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
+using JToolbox.XamarinForms.Core.Navigation;
 using Prism.Commands;
 using Prism.Navigation;
 using XamarinPrismApp.Views;
-using JToolbox.XamarinForms.Core.Navigation;
 
 namespace XamarinPrismApp.ViewModels
 {
     public class NaviViewModel : ViewModelBase
     {
+        private string inputValue;
         private string message;
         private bool messageVisible;
-        private string inputValue;
 
         public NaviViewModel(INavigationService navigationService)
             : base(navigationService)
@@ -18,7 +18,11 @@ namespace XamarinPrismApp.ViewModels
             Title = "Navigation";
         }
 
-        public DelegateCommand NaviSubCommand => new DelegateCommand(async () => await Navigate<SubnaviViewModel>());
+        public string InputValue
+        {
+            get => inputValue;
+            set => SetProperty(ref inputValue, value);
+        }
 
         public DelegateCommand IsCurrentPageCommand => new DelegateCommand(() =>
         {
@@ -38,22 +42,6 @@ namespace XamarinPrismApp.ViewModels
             SetResult(nameof(IsViewModelOpenedCommand), result);
         });
 
-        public DelegateCommand NavigateWithInputCommand => new DelegateCommand(async () =>
-        {
-            var @params = new Parameters
-            {
-                SourceViewModel = this,
-                Value = InputValue
-            };
-            await Navigate<NaviInputViewModel>(@params);
-        });
-
-        public string InputValue
-        {
-            get => inputValue;
-            set => SetProperty(ref inputValue, value);
-        }
-
         public string Message
         {
             get => message;
@@ -69,6 +57,18 @@ namespace XamarinPrismApp.ViewModels
             get => messageVisible;
             set => SetProperty(ref messageVisible, value);
         }
+
+        public DelegateCommand NavigateWithInputCommand => new DelegateCommand(async () =>
+        {
+            var @params = new Parameters
+            {
+                SourceViewModel = this,
+                Value = InputValue
+            };
+            await Navigate<NaviInputViewModel>(@params);
+        });
+
+        public DelegateCommand NaviSubCommand => new DelegateCommand(async () => await Navigate<SubnaviViewModel>());
 
         private void SetResult(string functionName, object result)
         {

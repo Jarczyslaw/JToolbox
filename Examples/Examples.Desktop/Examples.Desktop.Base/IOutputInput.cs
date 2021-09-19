@@ -6,9 +6,7 @@ namespace Examples.Desktop.Base
 {
     public interface IOutputInput
     {
-        void Write(string message);
-
-        void WriteLine(string message);
+        void Clear();
 
         void PutLine();
 
@@ -16,12 +14,14 @@ namespace Examples.Desktop.Base
 
         T SelectValue<T>(string label, List<T> values);
 
-        Task Wait();
-
-        void Clear();
-
         void StartTime();
 
         void StopTime();
+
+        Task Wait();
+
+        void Write(string message);
+
+        void WriteLine(string message);
     }
 }

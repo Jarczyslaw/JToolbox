@@ -15,6 +15,10 @@ namespace JToolbox.XamarinForms.Core.Navigation
 
         public static NavigationMapper Instance => instance.Value;
 
+        public Dictionary<Type, Type> ViewModelsMapping { get; } = new Dictionary<Type, Type>();
+
+        public string ViewModelSuffix => "ViewModel";
+
         public List<string> ViewsSuffixes => new List<string>
         {
             "View",
@@ -22,28 +26,14 @@ namespace JToolbox.XamarinForms.Core.Navigation
             "Window"
         };
 
-        public string ViewModelSuffix => "ViewModel";
-
-        public Dictionary<Type, Type> ViewModelsMapping { get; } = new Dictionary<Type, Type>();
-
-        private void CheckType(Type type, Type constraint)
+        public Type GetPageForViewModel(Type viewModelType)
         {
-            if (type.IsAssignableFrom(constraint))
+            CheckType(viewModelType, typeof(ViewModelBase));
+            if (ViewModelsMapping.TryGetValue(viewModelType, out var type))
             {
-                throw new InvalidTypeException(type, constraint);
+                return type;
             }
-        }
-
-        public bool IsValidViewName(string typeName)
-        {
-            foreach (var suffix in ViewsSuffixes)
-            {
-                if (typeName.EndsWith(suffix))
-                {
-                    return true;
-                }
-            }
-            return false;
+            throw new NoPageException(viewModelType.Name);
         }
 
         public string GetPageName(Type pageType)
@@ -60,14 +50,16 @@ namespace JToolbox.XamarinForms.Core.Navigation
             throw new Exception($"{pageType.Name} is not a valid page name");
         }
 
-        public Type GetPageForViewModel(Type viewModelType)
+        public bool IsValidViewName(string typeName)
         {
-            CheckType(viewModelType, typeof(ViewModelBase));
-            if (ViewModelsMapping.TryGetValue(viewModelType, out var type))
+            foreach (var suffix in ViewsSuffixes)
             {
-                return type;
+                if (typeName.EndsWith(suffix))
+                {
+                    return true;
+                }
             }
-            throw new NoPageException(viewModelType.Name);
+            return false;
         }
 
         public void Register<TPage, TViewModel>(IContainerRegistry containerRegistry)
@@ -110,6 +102,14 @@ namespace JToolbox.XamarinForms.Core.Navigation
                     wrapper.RegisterTypes(containerRegistry, page, viewModel);
                     ViewModelsMapping.Add(viewModel, page);
                 }
+            }
+        }
+
+        private void CheckType(Type type, Type constraint)
+        {
+            if (type.IsAssignableFrom(constraint))
+            {
+                throw new InvalidTypeException(type, constraint);
             }
         }
     }

@@ -8,10 +8,10 @@ namespace JToolbox.XamarinForms.Themes
 
         IThemeResourceDictionary CurrentTheme { get; }
 
+        void ReloadTheme();
+
         void SetTheme<T>() where T : ResourceDictionary, IThemeResourceDictionary;
 
         void SetTheme(ResourceDictionary resourceDictionary);
-
-        void ReloadTheme();
     }
 }

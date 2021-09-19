@@ -11,6 +11,7 @@ namespace Examples.Desktop.MVP.Forms
         event Accept OnAccept;
 
         event Cancel OnCancel;
+
         string Value { set; }
     }
 }

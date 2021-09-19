@@ -14,5 +14,4 @@
         <Button Command="{Binding CheckPermissionCommand}" Text="Check" />
         <Button Command="{Binding RequestPermissionCommand}" Text="Request" />
     </StackLayout>
-
 </base:PageBase>

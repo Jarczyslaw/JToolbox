@@ -9,22 +9,6 @@ namespace Examples.Desktop.Base
 {
     public static class WindowManager
     {
-        private static Window FindWindow(object dataContext)
-        {
-            return Application.Current.Windows
-                .OfType<Window>()
-                .First(w => w.DataContext == dataContext);
-        }
-
-        public static MainWindow GetMainWindow(string title)
-        {
-            var viewModel = new MainViewModel
-            {
-                Title = title
-            };
-            return new MainWindow(viewModel);
-        }
-
         public static string GetInput(MainViewModel parentViewModel, string label, string text = null, Func<string, string> validationRule = null)
         {
             var viewModel = new InputViewModel
@@ -41,6 +25,15 @@ namespace Examples.Desktop.Base
             return viewModel.Result;
         }
 
+        public static MainWindow GetMainWindow(string title)
+        {
+            var viewModel = new MainViewModel
+            {
+                Title = title
+            };
+            return new MainWindow(viewModel);
+        }
+
         public static T SelectValue<T>(MainViewModel parentViewModel, string label, List<T> values)
         {
             var viewModel = new SelectViewModel(values.Cast<object>().ToList())
@@ -53,6 +46,13 @@ namespace Examples.Desktop.Base
             };
             window.ShowDialog();
             return (T)viewModel.Result;
+        }
+
+        private static Window FindWindow(object dataContext)
+        {
+            return Application.Current.Windows
+                .OfType<Window>()
+                .First(w => w.DataContext == dataContext);
         }
     }
 }

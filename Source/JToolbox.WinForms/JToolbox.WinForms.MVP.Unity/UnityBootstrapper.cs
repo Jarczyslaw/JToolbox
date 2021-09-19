@@ -4,8 +4,10 @@ namespace JToolbox.WinForms.MVP.Unity
 {
     public abstract class UnityBootstrapper
     {
+        public abstract void RegisterDependencies(IUnityContainer container);
+
         public void Start<TMainPresenter, TMainView>(IUnityContainer container, PresenterFactory presenterFactory, string viewKey, object input = null)
-            where TMainPresenter : Presenter<TMainView>
+                    where TMainPresenter : Presenter<TMainView>
             where TMainView : class, IView
         {
             if (!container.IsRegistered(presenterFactory.GetType()))
@@ -15,7 +17,5 @@ namespace JToolbox.WinForms.MVP.Unity
 
             presenterFactory.Show<TMainPresenter, TMainView>(viewKey, input);
         }
-
-        public abstract void RegisterDependencies(IUnityContainer container);
     }
 }

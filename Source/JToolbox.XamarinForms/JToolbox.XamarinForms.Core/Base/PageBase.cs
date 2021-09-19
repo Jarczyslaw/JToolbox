@@ -26,16 +26,6 @@ namespace JToolbox.XamarinForms.Core.Base
             }
         }
 
-        protected override async void OnDisappearing()
-        {
-            base.OnDisappearing();
-            ViewVisible = false;
-            if (Context is IOnDisappearingAware onDisappearingAware)
-            {
-                await onDisappearingAware.OnDisappearing();
-            }
-        }
-
         protected override bool OnBackButtonPressed()
         {
             base.OnBackButtonPressed();
@@ -52,6 +42,16 @@ namespace JToolbox.XamarinForms.Core.Base
                 }
             });
             return true;
+        }
+
+        protected override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+            ViewVisible = false;
+            if (Context is IOnDisappearingAware onDisappearingAware)
+            {
+                await onDisappearingAware.OnDisappearing();
+            }
         }
     }
 }

@@ -9,21 +9,16 @@ namespace JToolbox.Misc.Threading
 
     public class TasksExecutor
     {
+        private readonly QueuedLock queuedLock = new QueuedLock();
         private readonly BlockingCollection<ITask> tasks = new BlockingCollection<ITask>();
         private readonly ConcurrentDictionary<int, Thread> threads = new ConcurrentDictionary<int, Thread>();
-        private readonly QueuedLock queuedLock = new QueuedLock();
-
-        private int workingThreads;
-        private int waitingThreads;
+        private TasksExecutorState lastState;
         private int maxThreads = 4;
         private int minThreads = 1;
-        private TasksExecutorState lastState;
+        private int waitingThreads;
+        private int workingThreads;
 
         public event TasksExecutorStateChanged OnTasksExecutorStateChanged;
-
-        public int WorkingThreads => workingThreads;
-
-        public int WaitingThreads => waitingThreads;
 
         public int IdleThreads => threads.Count - workingThreads;
 
@@ -54,20 +49,18 @@ namespace JToolbox.Misc.Threading
         }
 
         public TimeSpan? ThreadsTimeout { get; set; }
-
+        public int WaitingThreads => waitingThreads;
         public bool Working => workingThreads != 0;
+        public int WorkingThreads => workingThreads;
 
-        private void OnStateChanged()
+        public void Add(ITask task)
         {
-            queuedLock.LockedAction(() =>
+            if (tasks.Count + 1 > waitingThreads && threads.Count < maxThreads)
             {
-                var newState = GetState();
-                if (lastState?.Compare(newState) != true)
-                {
-                    OnTasksExecutorStateChanged?.Invoke(newState);
-                }
-                lastState = newState;
-            });
+                CreateNewThread();
+            }
+            tasks.Add(task);
+            OnStateChanged();
         }
 
         public TasksExecutorState GetState()
@@ -82,16 +75,6 @@ namespace JToolbox.Misc.Threading
             };
         }
 
-        public void Add(ITask task)
-        {
-            if (tasks.Count + 1 > waitingThreads && threads.Count < maxThreads)
-            {
-                CreateNewThread();
-            }
-            tasks.Add(task);
-            OnStateChanged();
-        }
-
         private void CreateNewThread()
         {
             var thread = new Thread(PoolForTasks)
@@ -103,16 +86,49 @@ namespace JToolbox.Misc.Threading
             thread.Start(thread);
         }
 
+        private void DecrementCounter(ref int counter)
+        {
+            Interlocked.Decrement(ref counter);
+            OnStateChanged();
+        }
+
+        private void ExecuteTask(ITask task)
+        {
+            IncrementCounter(ref workingThreads);
+            var stopwatch = Stopwatch.StartNew();
+            Exception exception = null;
+            try
+            {
+                task.Run(this);
+            }
+            catch (Exception exc)
+            {
+                exception = exc;
+            }
+            finally
+            {
+                task.Finish(this, exception, stopwatch.Elapsed);
+                DecrementCounter(ref workingThreads);
+            }
+        }
+
         private void IncrementCounter(ref int counter)
         {
             Interlocked.Increment(ref counter);
             OnStateChanged();
         }
 
-        private void DecrementCounter(ref int counter)
+        private void OnStateChanged()
         {
-            Interlocked.Decrement(ref counter);
-            OnStateChanged();
+            queuedLock.LockedAction(() =>
+            {
+                var newState = GetState();
+                if (lastState?.Compare(newState) != true)
+                {
+                    OnTasksExecutorStateChanged?.Invoke(newState);
+                }
+                lastState = newState;
+            });
         }
 
         private void PoolForTasks(object state)
@@ -169,26 +185,6 @@ namespace JToolbox.Misc.Threading
             {
                 threads.TryRemove(thread.ManagedThreadId, out _);
                 OnStateChanged();
-            }
-        }
-
-        private void ExecuteTask(ITask task)
-        {
-            IncrementCounter(ref workingThreads);
-            var stopwatch = Stopwatch.StartNew();
-            Exception exception = null;
-            try
-            {
-                task.Run(this);
-            }
-            catch (Exception exc)
-            {
-                exception = exc;
-            }
-            finally
-            {
-                task.Finish(this, exception, stopwatch.Elapsed);
-                DecrementCounter(ref workingThreads);
             }
         }
     }

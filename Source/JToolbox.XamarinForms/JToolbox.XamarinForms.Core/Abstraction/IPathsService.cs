@@ -3,7 +3,7 @@
     public interface IPaths
     {
         string InternalFolder { get; }
-        string PublicExternalFolder { get; }
         string PrivateExternalFolder { get; }
+        string PublicExternalFolder { get; }
     }
 }

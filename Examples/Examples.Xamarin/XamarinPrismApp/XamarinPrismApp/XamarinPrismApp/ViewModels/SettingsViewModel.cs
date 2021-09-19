@@ -8,9 +8,9 @@ namespace XamarinPrismApp.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private string setValue, currentValue;
         private readonly IAppSettings appSettings;
         private readonly IDialogsService dialogsService;
+        private string setValue, currentValue;
 
         public SettingsViewModel(IAppSettings appSettings, IDialogsService dialogsService, INavigationService navigationService)
             : base(navigationService)
@@ -23,11 +23,11 @@ namespace XamarinPrismApp.ViewModels
             CurrentValue = appSettings.Value;
         }
 
-        public string SetValue
+        public DelegateCommand ClearCommand => new DelegateCommand(() =>
         {
-            get => setValue;
-            set => SetProperty(ref setValue, value);
-        }
+            appSettings.Clear();
+            CurrentValue = appSettings.Value;
+        });
 
         public string CurrentValue
         {
@@ -47,10 +47,10 @@ namespace XamarinPrismApp.ViewModels
             CurrentValue = appSettings.Value;
         });
 
-        public DelegateCommand ClearCommand => new DelegateCommand(() =>
+        public string SetValue
         {
-            appSettings.Clear();
-            CurrentValue = appSettings.Value;
-        });
+            get => setValue;
+            set => SetProperty(ref setValue, value);
+        }
     }
 }

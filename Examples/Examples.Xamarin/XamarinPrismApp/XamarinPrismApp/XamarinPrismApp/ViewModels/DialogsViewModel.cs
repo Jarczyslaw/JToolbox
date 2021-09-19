@@ -72,6 +72,24 @@ namespace XamarinPrismApp.ViewModels
             }
         });
 
+        private void InitializeEntries()
+        {
+            var entries = new List<DialogsEntryViewModel>
+            {
+                new DialogsEntryViewModel(DialogsEntryType.Alert),
+                new DialogsEntryViewModel(DialogsEntryType.Toast),
+                new DialogsEntryViewModel(DialogsEntryType.Confirm),
+                new DialogsEntryViewModel(DialogsEntryType.DatePrompt),
+                new DialogsEntryViewModel(DialogsEntryType.Loading),
+                new DialogsEntryViewModel(DialogsEntryType.Prompt),
+                new DialogsEntryViewModel(DialogsEntryType.Busy),
+                new DialogsEntryViewModel(DialogsEntryType.ActionSheet)
+            };
+            Entries = new ObservableCollection<DialogsEntryViewModel>(entries.OrderBy(p => p.Title)
+                .ToList());
+            SelectedEntry = Entries.First();
+        }
+
         private async Task ShowActionSheet()
         {
             var actionSheet = new ActionSheet<int>()
@@ -90,17 +108,31 @@ namespace XamarinPrismApp.ViewModels
             }
         }
 
+        private Task ShowAlert()
+        {
+            return dialogsService.UserDialogs.AlertAsync("Message", "Title", "OK");
+        }
+
         private void ShowBusy()
         {
             dialogsService.Busy(null, async () => await Task.Delay(3000));
         }
 
-        private async Task ShowPrompt()
+        private async Task ShowConfirm()
         {
-            var result = await dialogsService.UserDialogs.PromptAsync("Message", "Title", "OK", "Cancel", "Placeholder", Acr.UserDialogs.InputType.Name);
+            var result = await dialogsService.UserDialogs.ConfirmAsync("Message", "Title", "OK", "Cancel");
+            if (result)
+            {
+                dialogsService.Toast("Confirmed");
+            }
+        }
+
+        private async Task ShowDatePrompt()
+        {
+            var result = await dialogsService.UserDialogs.DatePromptAsync("Title", DateTime.Now);
             if (result.Ok)
             {
-                dialogsService.Toast("Inserted text: " + result.Text);
+                dialogsService.Toast("Selected date: " + result.SelectedDate.ToString("yyyy-MM-dd"));
             }
         }
 
@@ -113,50 +145,18 @@ namespace XamarinPrismApp.ViewModels
             }, () => dialogsService.Toast("Cancelled"));
         }
 
-        private async Task ShowDatePrompt()
+        private async Task ShowPrompt()
         {
-            var result = await dialogsService.UserDialogs.DatePromptAsync("Title", DateTime.Now);
+            var result = await dialogsService.UserDialogs.PromptAsync("Message", "Title", "OK", "Cancel", "Placeholder", Acr.UserDialogs.InputType.Name);
             if (result.Ok)
             {
-                dialogsService.Toast("Selected date: " + result.SelectedDate.ToString("yyyy-MM-dd"));
-            }
-        }
-
-        private async Task ShowConfirm()
-        {
-            var result = await dialogsService.UserDialogs.ConfirmAsync("Message", "Title", "OK", "Cancel");
-            if (result)
-            {
-                dialogsService.Toast("Confirmed");
+                dialogsService.Toast("Inserted text: " + result.Text);
             }
         }
 
         private void ShowToast()
         {
             dialogsService.UserDialogs.Toast("Toast", TimeSpan.FromSeconds(5));
-        }
-
-        private Task ShowAlert()
-        {
-            return dialogsService.UserDialogs.AlertAsync("Message", "Title", "OK");
-        }
-
-        private void InitializeEntries()
-        {
-            var entries = new List<DialogsEntryViewModel>
-            {
-                new DialogsEntryViewModel(DialogsEntryType.Alert),
-                new DialogsEntryViewModel(DialogsEntryType.Toast),
-                new DialogsEntryViewModel(DialogsEntryType.Confirm),
-                new DialogsEntryViewModel(DialogsEntryType.DatePrompt),
-                new DialogsEntryViewModel(DialogsEntryType.Loading),
-                new DialogsEntryViewModel(DialogsEntryType.Prompt),
-                new DialogsEntryViewModel(DialogsEntryType.Busy),
-                new DialogsEntryViewModel(DialogsEntryType.ActionSheet)
-            };
-            Entries = new ObservableCollection<DialogsEntryViewModel>(entries.OrderBy(p => p.Title)
-                .ToList());
-            SelectedEntry = Entries.First();
         }
     }
 }

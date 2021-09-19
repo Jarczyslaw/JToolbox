@@ -15,12 +15,6 @@ namespace JToolbox.WinForms.Core.Controls
     public abstract class BufferedGrid<T> : DataGridView
         where T : class
     {
-        public event BufferedGridItemClick<T> OnItemClick = delegate { };
-
-        public event BufferedGridItemDoubleClick<T> OnItemDoubleClick = delegate { };
-
-        public event BufferedGridItemRightClick<T> OnItemRightClick = delegate { };
-
         private readonly BindingSource bindingSource = new BindingSource();
 
         protected BufferedGrid()
@@ -29,6 +23,23 @@ namespace JToolbox.WinForms.Core.Controls
             CellDoubleClick += BufferedGrid_CellDoubleClick;
             MouseClick += BufferedGrid_MouseClick;
             CellContentClick += BufferedGrid_CellContentClick;
+        }
+
+        public event BufferedGridItemClick<T> OnItemClick = delegate { };
+
+        public event BufferedGridItemDoubleClick<T> OnItemDoubleClick = delegate { };
+
+        public event BufferedGridItemRightClick<T> OnItemRightClick = delegate { };
+
+        public List<T> Items
+        {
+            get => bindingSource.DataSource as List<T>;
+            set
+            {
+                bindingSource.DataSource = null;
+                bindingSource.DataSource = value;
+                ClearSelection();
+            }
         }
 
         public bool ItemsSelected => SelectedRows.Count > 0;
@@ -84,29 +95,10 @@ namespace JToolbox.WinForms.Core.Controls
             }
         }
 
-        public List<T> Items
+        public void AddTextColumn(string header, string mapping, int width = 0)
         {
-            get => bindingSource.DataSource as List<T>;
-            set
-            {
-                bindingSource.DataSource = null;
-                bindingSource.DataSource = value;
-                ClearSelection();
-            }
-        }
-
-        public void UpdateItem(T item, Predicate<T> predicate)
-        {
-            if (Items != null)
-            {
-                Items.Replace(item, predicate);
-                UpdateBinding();
-            }
-        }
-
-        public void UpdateBinding()
-        {
-            bindingSource.ResetBindings(false);
+            var column = GetTextColumn(header, mapping, width);
+            Columns.Add(column);
         }
 
         public virtual void Initialize()
@@ -136,32 +128,18 @@ namespace JToolbox.WinForms.Core.Controls
             ColumnHeadersDefaultCellStyle.SelectionBackColor = ColumnHeadersDefaultCellStyle.BackColor;
         }
 
-        private DataGridViewTextBoxColumn GetTextColumn(string header, string mapping, int width)
+        public void UpdateBinding()
         {
-            var dgvc = new DataGridViewTextBoxColumn
-            {
-                SortMode = DataGridViewColumnSortMode.NotSortable,
-                DataPropertyName = mapping,
-                HeaderText = header,
-                ReadOnly = true
-            };
-
-            if (width != 0)
-            {
-                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                dgvc.Width = width;
-            }
-            else
-            {
-                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            }
-            return dgvc;
+            bindingSource.ResetBindings(false);
         }
 
-        public void AddTextColumn(string header, string mapping, int width = 0)
+        public void UpdateItem(T item, Predicate<T> predicate)
         {
-            var column = GetTextColumn(header, mapping, width);
-            Columns.Add(column);
+            if (Items != null)
+            {
+                Items.Replace(item, predicate);
+                UpdateBinding();
+            }
         }
 
         private void BufferedGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -195,6 +173,28 @@ namespace JToolbox.WinForms.Core.Controls
                     OnItemRightClick.Invoke(sender, args, (T)item);
                 }
             }
+        }
+
+        private DataGridViewTextBoxColumn GetTextColumn(string header, string mapping, int width)
+        {
+            var dgvc = new DataGridViewTextBoxColumn
+            {
+                SortMode = DataGridViewColumnSortMode.NotSortable,
+                DataPropertyName = mapping,
+                HeaderText = header,
+                ReadOnly = true
+            };
+
+            if (width != 0)
+            {
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dgvc.Width = width;
+            }
+            else
+            {
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            return dgvc;
         }
     }
 }

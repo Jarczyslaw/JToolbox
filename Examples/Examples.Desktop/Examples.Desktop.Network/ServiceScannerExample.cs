@@ -11,9 +11,8 @@ namespace Examples.Desktop.Network
 {
     public class ServiceScannerExample : IDesktopExample
     {
-        public string Title => "Service scanner - find machines with port";
-
         private IOutputInput outputInput;
+        public string Title => "Service scanner - find machines with port";
 
         public Task CleanUp()
         {

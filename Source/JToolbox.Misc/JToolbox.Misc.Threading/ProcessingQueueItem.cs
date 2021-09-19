@@ -9,9 +9,9 @@ namespace JToolbox.Misc.Threading
             Input = input;
         }
 
+        public Exception Exception { get; set; }
         public TInput Input { get; }
         public TOutput Output { get; set; }
-        public Exception Exception { get; set; }
         public bool Processed { get; set; }
 
         public void Clear()

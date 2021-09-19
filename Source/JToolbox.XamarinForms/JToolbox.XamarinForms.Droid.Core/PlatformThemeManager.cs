@@ -11,15 +11,15 @@ namespace JToolbox.XamarinForms.Droid.Core
     {
         private readonly FormsAppCompatActivity activity = CrossCurrentActivity.Current.Activity as FormsAppCompatActivity;
 
+        public void SetTheme(IThemeResourceDictionary themeResourceDictionary)
+        {
+            SetStatusBar(themeResourceDictionary.ThemeColorExtractor.SecondaryColor);
+        }
+
         private void SetStatusBar(Color color)
         {
             activity.SetStatusBarColor(color.ToAndroid());
             activity.SetLightStatusBar(color.IsLight());
-        }
-
-        public void SetTheme(IThemeResourceDictionary themeResourceDictionary)
-        {
-            SetStatusBar(themeResourceDictionary.ThemeColorExtractor.SecondaryColor);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class FilesContextViewModel : BaseViewModel, IFileDragDropAware
     {
-        private string selectedFile;
         private ObservableCollection<string> files = new ObservableCollection<string>();
+        private string selectedFile;
 
         public ObservableCollection<string> Files
         {

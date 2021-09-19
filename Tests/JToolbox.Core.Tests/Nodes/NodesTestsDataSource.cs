@@ -126,17 +126,6 @@ namespace JToolbox.Core.Tests.Nodes
             return collection;
         }
 
-        public class Item
-        {
-            public Item(int value)
-            {
-                Value = value;
-            }
-
-            public int Value { get; set; }
-            public List<Item> Items { get; set; } = new List<Item>();
-        }
-
         public class FlatItem
         {
             public FlatItem(int id, int parentId)
@@ -147,6 +136,17 @@ namespace JToolbox.Core.Tests.Nodes
 
             public int Id { get; set; }
             public int ParentId { get; set; }
+        }
+
+        public class Item
+        {
+            public Item(int value)
+            {
+                Value = value;
+            }
+
+            public List<Item> Items { get; set; } = new List<Item>();
+            public int Value { get; set; }
         }
     }
 }

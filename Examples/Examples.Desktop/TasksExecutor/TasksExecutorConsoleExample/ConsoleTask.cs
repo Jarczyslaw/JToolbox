@@ -6,10 +6,8 @@ namespace TasksExecutorConsoleExample
 {
     public class ConsoleTask : ITask
     {
-        private static int taskId;
         private static readonly Random random = new Random();
-
-        public int TaskId { get; set; }
+        private static int taskId;
 
         public ConsoleTask()
         {
@@ -17,15 +15,17 @@ namespace TasksExecutorConsoleExample
             TaskId = taskId;
         }
 
-        public void Run(TasksExecutor tasksExecutor)
-        {
-            Console.WriteLine($"Task {TaskId} started");
-            Thread.Sleep(random.Next(100, 2000));
-        }
+        public int TaskId { get; set; }
 
         public void Finish(TasksExecutor tasksExecutor, Exception exception, TimeSpan elapsed)
         {
             Console.WriteLine($"Task {TaskId} stopped in {elapsed.TotalMilliseconds}ms");
+        }
+
+        public void Run(TasksExecutor tasksExecutor)
+        {
+            Console.WriteLine($"Task {TaskId} started");
+            Thread.Sleep(random.Next(100, 2000));
         }
     }
 }

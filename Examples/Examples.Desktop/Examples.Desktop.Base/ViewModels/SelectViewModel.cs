@@ -21,19 +21,9 @@ namespace Examples.Desktop.Base.ViewModels
             SelectedItem = Items[0];
         }
 
-        public DelegateCommand SaveCommand => new DelegateCommand(() =>
-        {
-            Result = SelectedItem.Value;
-            Close?.Invoke();
-        });
+        public Action Close { get; set; }
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => Close?.Invoke());
-
-        public SelectItemViewModel SelectedItem
-        {
-            get => selectedItem;
-            set => SetProperty(ref selectedItem, value);
-        }
 
         public ObservableCollection<SelectItemViewModel> Items { get; }
 
@@ -43,8 +33,18 @@ namespace Examples.Desktop.Base.ViewModels
             set => SetProperty(ref label, value);
         }
 
-        public Action Close { get; set; }
-
         public object Result { get; set; }
+
+        public DelegateCommand SaveCommand => new DelegateCommand(() =>
+                                                {
+                                                    Result = SelectedItem.Value;
+                                                    Close?.Invoke();
+                                                });
+
+        public SelectItemViewModel SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
+        }
     }
 }

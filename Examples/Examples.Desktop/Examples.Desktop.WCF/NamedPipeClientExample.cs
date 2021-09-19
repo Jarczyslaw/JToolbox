@@ -1,5 +1,4 @@
 ﻿using Examples.Desktop.Base;
-using JToolbox.Misc.WCF.ClientSide;
 using System.Threading.Tasks;
 
 namespace Examples.Desktop.WCF

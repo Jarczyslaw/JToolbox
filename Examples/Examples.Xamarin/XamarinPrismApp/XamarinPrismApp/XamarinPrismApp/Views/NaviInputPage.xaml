@@ -10,5 +10,4 @@
         <Label HorizontalTextAlignment="Center" Text="{Binding SourceViewModel}" />
         <Label HorizontalTextAlignment="Center" Text="{Binding Input}" />
     </StackLayout>
-
 </base:PageBase>

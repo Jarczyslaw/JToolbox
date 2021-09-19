@@ -6,7 +6,9 @@ namespace JToolbox.XamarinForms.Core.Abstraction
     {
         string DeviceId { get; }
         string LogPath { get; }
-        void Kill();
+
         void FilesScan(List<string> files);
+
+        void Kill();
     }
 }

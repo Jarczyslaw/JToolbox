@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace JToolbox.XamarinForms.Themes
+﻿namespace JToolbox.XamarinForms.Themes
 {
     public interface IThemeResourceDictionary
     {

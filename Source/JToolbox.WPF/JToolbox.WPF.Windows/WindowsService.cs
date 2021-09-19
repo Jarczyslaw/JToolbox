@@ -5,29 +5,9 @@ namespace Barcodes.Services.Windows
 {
     public class WindowsService : IWindowsService
     {
-        public bool? ShowDialog(Window window, object dataContext = null)
+        public Window GetActiveWindow()
         {
-            SetupWindow(window, dataContext, GetActiveWindow());
-            return window.ShowDialog();
-        }
-
-        public void Show(Window window, object dataContext = null, Window owner = null)
-        {
-            SetupWindow(window, dataContext, owner);
-            window.Show();
-        }
-
-        private void SetupWindow(Window window, object dataContext, Window owner)
-        {
-            if (dataContext != null)
-            {
-                window.DataContext = dataContext;
-            }
-
-            if (owner != null)
-            {
-                window.Owner = owner;
-            }
+            return Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         }
 
         public bool IsWindowOpen<T>()
@@ -51,9 +31,29 @@ namespace Barcodes.Services.Windows
             }
         }
 
-        public Window GetActiveWindow()
+        public void Show(Window window, object dataContext = null, Window owner = null)
         {
-            return Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            SetupWindow(window, dataContext, owner);
+            window.Show();
+        }
+
+        public bool? ShowDialog(Window window, object dataContext = null)
+        {
+            SetupWindow(window, dataContext, GetActiveWindow());
+            return window.ShowDialog();
+        }
+
+        private void SetupWindow(Window window, object dataContext, Window owner)
+        {
+            if (dataContext != null)
+            {
+                window.DataContext = dataContext;
+            }
+
+            if (owner != null)
+            {
+                window.Owner = owner;
+            }
         }
     }
 }

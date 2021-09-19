@@ -11,11 +11,17 @@ namespace JToolbox.Misc.NetworkTools
 {
     public class PortScanner : ProcessingQueue<PortInput, List<PortResult>>
     {
-        public delegate void ScanProgress(ProcessingQueueItem<PortInput, List<PortResult>> item);
-
         public ScanProgress OnScanProgress = delegate { };
 
         private IPortClient portClient;
+
+        public delegate void ScanProgress(ProcessingQueueItem<PortInput, List<PortResult>> item);
+
+        public Task<List<PortResult>> CheckPort(PortInput item, IPortClient portClient)
+        {
+            this.portClient = portClient;
+            return ProcessItem(item);
+        }
 
         public Task<List<ProcessingQueueItem<PortInput, List<PortResult>>>> PortScan(PortScanInput portScanInput, IPortClient portClient, CancellationToken cancellationToken = default)
         {
@@ -28,12 +34,6 @@ namespace JToolbox.Misc.NetworkTools
                 Timeout = portScanInput.Timeout
             }).ToList();
             return Run(input, cancellationToken);
-        }
-
-        public Task<List<PortResult>> CheckPort(PortInput item, IPortClient portClient)
-        {
-            this.portClient = portClient;
-            return ProcessItem(item);
         }
 
         public override Task<List<PortResult>> ProcessItem(PortInput item)

@@ -9,15 +9,15 @@ namespace Examples.Desktop.SysInformation
     {
         public string Title => "Memory Information";
 
+        public Task CleanUp()
+        {
+            return Task.CompletedTask;
+        }
+
         public Task Run(IOutputInput outputInput)
         {
             outputInput.WriteLine("Memory information:");
             outputInput.WriteLine(SystemInformation.GetMemoryInfo().PublicPropertiesToString());
-            return Task.CompletedTask;
-        }
-
-        public Task CleanUp()
-        {
             return Task.CompletedTask;
         }
     }

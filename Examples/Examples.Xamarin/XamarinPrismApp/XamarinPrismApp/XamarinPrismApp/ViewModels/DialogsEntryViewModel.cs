@@ -5,8 +5,8 @@ namespace XamarinPrismApp.ViewModels
 {
     public class DialogsEntryViewModel : BindableBase
     {
-        private DialogsEntryType type;
         private string title;
+        private DialogsEntryType type;
 
         public DialogsEntryViewModel(DialogsEntryType dialogsEntryType)
         {
@@ -14,16 +14,16 @@ namespace XamarinPrismApp.ViewModels
             Title = Type.ToString();
         }
 
-        public DialogsEntryType Type
-        {
-            get => type;
-            set => SetProperty(ref type, value);
-        }
-
         public string Title
         {
             get => title;
             set => SetProperty(ref title, value);
+        }
+
+        public DialogsEntryType Type
+        {
+            get => type;
+            set => SetProperty(ref type, value);
         }
     }
 }

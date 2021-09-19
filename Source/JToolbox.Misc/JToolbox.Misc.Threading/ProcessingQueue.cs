@@ -8,31 +8,12 @@ namespace JToolbox.Misc.Threading
 {
     public abstract class ProcessingQueue<TItem, TResult>
     {
-        public int TasksCount { get; set; }
         public bool StopOnFirstException { get; set; }
+        public int TasksCount { get; set; }
 
-        private BlockingCollection<ProcessingQueueItem<TItem, TResult>> InitializeCollection(List<ProcessingQueueItem<TItem, TResult>> items)
-        {
-            var collection = new BlockingCollection<ProcessingQueueItem<TItem, TResult>>();
-            foreach (var item in items)
-            {
-                item.Clear();
-                collection.Add(item);
-            }
-            return collection;
-        }
+        public abstract Task<TResult> ProcessItem(TItem item);
 
-        private int GetTasksCount(List<ProcessingQueueItem<TItem, TResult>> item)
-        {
-            if (TasksCount > 0)
-            {
-                return TasksCount;
-            }
-            else
-            {
-                return item.Count;
-            }
-        }
+        public abstract Task ReportProgress(ProcessingQueueItem<TItem, TResult> item);
 
         public Task<List<ProcessingQueueItem<TItem, TResult>>> Run(List<TItem> items, CancellationToken cancellationToken = default)
         {
@@ -77,6 +58,29 @@ namespace JToolbox.Misc.Threading
             return items;
         }
 
+        private int GetTasksCount(List<ProcessingQueueItem<TItem, TResult>> item)
+        {
+            if (TasksCount > 0)
+            {
+                return TasksCount;
+            }
+            else
+            {
+                return item.Count;
+            }
+        }
+
+        private BlockingCollection<ProcessingQueueItem<TItem, TResult>> InitializeCollection(List<ProcessingQueueItem<TItem, TResult>> items)
+        {
+            var collection = new BlockingCollection<ProcessingQueueItem<TItem, TResult>>();
+            foreach (var item in items)
+            {
+                item.Clear();
+                collection.Add(item);
+            }
+            return collection;
+        }
+
         private async Task<bool> RunProcessItem(ProcessingQueueItem<TItem, TResult> item, CancellationTokenSource internalCancellationTokenSource)
         {
             item.Processed = true;
@@ -111,9 +115,5 @@ namespace JToolbox.Misc.Threading
             }
             catch { }
         }
-
-        public abstract Task<TResult> ProcessItem(TItem item);
-
-        public abstract Task ReportProgress(ProcessingQueueItem<TItem, TResult> item);
     }
 }

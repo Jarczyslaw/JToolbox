@@ -12,5 +12,4 @@
         <Button Command="{Binding SetCommand}" Text="Set" />
         <Button Command="{Binding ClearCommand}" Text="Clear" />
     </StackLayout>
-
 </base:PageBase>

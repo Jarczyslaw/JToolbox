@@ -13,12 +13,12 @@ namespace ToolboxInstaller
     public class MainViewModel : BaseViewModel
     {
         private readonly IDialogsService dialogs = new DialogsService();
-        private ObservableCollection<ItemViewModel> items = new ObservableCollection<ItemViewModel>();
-        private ObservableCollection<ItemViewModel> flatItems = new ObservableCollection<ItemViewModel>();
-        private bool windowEnabled = true;
-        private string title;
         private readonly string startPath = "../../../../Source/";
+        private ObservableCollection<ItemViewModel> flatItems = new ObservableCollection<ItemViewModel>();
+        private ObservableCollection<ItemViewModel> items = new ObservableCollection<ItemViewModel>();
         private string selectedPath;
+        private string title;
+        private bool windowEnabled = true;
 
         public MainViewModel()
         {
@@ -26,30 +26,18 @@ namespace ToolboxInstaller
             InitData(null, startPath);
         }
 
-        public string SelectedPath
-        {
-            get => selectedPath;
-            set => Set(ref selectedPath, value);
-        }
-
-        public string Title
-        {
-            get => title;
-            set => Set(ref title, value);
-        }
-
-        public bool WindowEnabled
-        {
-            get => windowEnabled;
-            set => Set(ref windowEnabled, value);
-        }
-
-        public string ToolboxPath => Path.Combine(SelectedPath, "JToolbox");
+        public RelayCommand CloseCommand => new RelayCommand(() => Application.Current.Shutdown());
 
         public ObservableCollection<ItemViewModel> Items
         {
             get => items;
             set => Set(ref items, value);
+        }
+
+        public string SelectedPath
+        {
+            get => selectedPath;
+            set => Set(ref selectedPath, value);
         }
 
         public RelayCommand SelectPathCommand => new RelayCommand(async () =>
@@ -61,6 +49,14 @@ namespace ToolboxInstaller
                 await FindProjects();
             }
         });
+
+        public string Title
+        {
+            get => title;
+            set => Set(ref title, value);
+        }
+
+        public string ToolboxPath => Path.Combine(SelectedPath, "JToolbox");
 
         public RelayCommand UpdateCommand => new RelayCommand(async () =>
         {
@@ -79,50 +75,10 @@ namespace ToolboxInstaller
             await UpdateStructure();
         });
 
-        public RelayCommand CloseCommand => new RelayCommand(() => Application.Current.Shutdown());
-
-        private async Task UpdateStructure()
+        public bool WindowEnabled
         {
-            try
-            {
-                SetBusy(true, "Updating");
-                var toolboxPath = Path.Combine(SelectedPath, "JToolbox");
-                if (Directory.Exists(toolboxPath))
-                {
-                    Directory.Delete(toolboxPath, true);
-                }
-                await RebuildStructure();
-                dialogs.ShowInfo("Updated!");
-            }
-            catch (Exception exc)
-            {
-                SetBusy(false);
-                dialogs.ShowException(exc);
-            }
-            finally
-            {
-                SetBusy(false);
-            }
-        }
-
-        private Task RebuildStructure()
-        {
-            return Task.Run(() =>
-            {
-                var projects = flatItems.Where(f => f.IsProject && f.IsChecked);
-                foreach (var project in projects)
-                {
-                    var directoryPath = Path.Combine(ToolboxPath, project.GetPath());
-                    if (!Directory.Exists(directoryPath))
-                    {
-                        Directory.CreateDirectory(directoryPath);
-                    }
-
-                    var source = new DirectoryInfo(project.SourcePath);
-                    var target = new DirectoryInfo(Path.Combine(directoryPath, project.Title));
-                    FileHelper.CopyAll(source, target);
-                }
-            });
+            get => windowEnabled;
+            set => Set(ref windowEnabled, value);
         }
 
         private async Task FindProjects()
@@ -163,17 +119,6 @@ namespace ToolboxInstaller
             }
         }
 
-        private void SetBusy(bool busy, string msg = null)
-        {
-            var tempTitle = "Toolbox Installer";
-            if (busy)
-            {
-                tempTitle += " - " + (string.IsNullOrEmpty(msg) ? "BUSY" : msg.ToUpper());
-            }
-            Title = tempTitle;
-            WindowEnabled = !busy;
-        }
-
         private void InitData(ItemViewModel parent, string path)
         {
             var content = Directory.GetDirectories(path, "*.*").ToList();
@@ -202,6 +147,61 @@ namespace ToolboxInstaller
                 {
                     InitData(item, folder);
                 }
+            }
+        }
+
+        private Task RebuildStructure()
+        {
+            return Task.Run(() =>
+            {
+                var projects = flatItems.Where(f => f.IsProject && f.IsChecked);
+                foreach (var project in projects)
+                {
+                    var directoryPath = Path.Combine(ToolboxPath, project.GetPath());
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    var source = new DirectoryInfo(project.SourcePath);
+                    var target = new DirectoryInfo(Path.Combine(directoryPath, project.Title));
+                    FileHelper.CopyAll(source, target);
+                }
+            });
+        }
+
+        private void SetBusy(bool busy, string msg = null)
+        {
+            var tempTitle = "Toolbox Installer";
+            if (busy)
+            {
+                tempTitle += " - " + (string.IsNullOrEmpty(msg) ? "BUSY" : msg.ToUpper());
+            }
+            Title = tempTitle;
+            WindowEnabled = !busy;
+        }
+
+        private async Task UpdateStructure()
+        {
+            try
+            {
+                SetBusy(true, "Updating");
+                var toolboxPath = Path.Combine(SelectedPath, "JToolbox");
+                if (Directory.Exists(toolboxPath))
+                {
+                    Directory.Delete(toolboxPath, true);
+                }
+                await RebuildStructure();
+                dialogs.ShowInfo("Updated!");
+            }
+            catch (Exception exc)
+            {
+                SetBusy(false);
+                dialogs.ShowException(exc);
+            }
+            finally
+            {
+                SetBusy(false);
             }
         }
     }

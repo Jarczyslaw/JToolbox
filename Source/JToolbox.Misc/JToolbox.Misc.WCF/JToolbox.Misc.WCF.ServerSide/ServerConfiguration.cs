@@ -2,7 +2,7 @@
 {
     public class ServerConfiguration
     {
-        public bool IncludeExceptionDetailInFaults { get; set; }
         public bool CreateMexBinding { get; set; }
+        public bool IncludeExceptionDetailInFaults { get; set; }
     }
 }

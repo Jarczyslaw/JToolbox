@@ -12,10 +12,10 @@ namespace JToolbox.WPF.PrismCore
             RegisterRegion(regionManager);
         }
 
+        public abstract void RegisterRegion(IRegionManager regionManager);
+
         public virtual void RegisterTypes(IContainerRegistry containerRegistry)
         {
         }
-
-        public abstract void RegisterRegion(IRegionManager regionManager);
     }
 }

@@ -12,5 +12,4 @@
         <Button Command="{Binding StartCommand}" Text="Start" />
         <Button Command="{Binding StopCommand}" Text="Stop" />
     </StackLayout>
-
 </base:PageBase>

@@ -127,10 +127,8 @@ namespace Examples.Desktop.Dialogs
             SelectedAction = DialogActions.First();
         }
 
-        public RelayCommand OpenCommand => new RelayCommand(() => SelectedAction?.Action());
-
         public ObservableCollection<DialogActionViewModel> DialogActions { get; set; }
-
+        public RelayCommand OpenCommand => new RelayCommand(() => SelectedAction?.Action());
         public DialogActionViewModel SelectedAction { get; set; }
 
         private Exception GetException()

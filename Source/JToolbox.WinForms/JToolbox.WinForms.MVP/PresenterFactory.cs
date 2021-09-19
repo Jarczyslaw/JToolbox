@@ -43,10 +43,10 @@ namespace JToolbox.WinForms.MVP
             return presenter.ShowAsModal();
         }
 
-        protected abstract IView ResolveView(string viewKey);
-
         protected abstract TPresenter ResolvePresenter<TPresenter, TView>()
             where TPresenter : Presenter<TView>
             where TView : class, IView;
+
+        protected abstract IView ResolveView(string viewKey);
     }
 }

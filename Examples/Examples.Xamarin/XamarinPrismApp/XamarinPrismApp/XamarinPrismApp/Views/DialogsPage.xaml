@@ -13,5 +13,4 @@
             SelectedItem="{Binding SelectedEntry}" />
         <Button Command="{Binding ShowCommand}" Text="Show" />
     </StackLayout>
-
 </base:PageBase>

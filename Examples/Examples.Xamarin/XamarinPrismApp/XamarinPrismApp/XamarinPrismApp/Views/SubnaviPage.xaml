@@ -10,5 +10,4 @@
         <Button Command="{Binding ReturnCommand}" Text="Return" />
         <Button Command="{Binding ReturnToRootCommand}" Text="Return to root" />
     </StackLayout>
-
 </base:PageBase>

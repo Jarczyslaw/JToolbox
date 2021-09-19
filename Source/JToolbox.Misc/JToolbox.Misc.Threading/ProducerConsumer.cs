@@ -8,8 +8,8 @@ namespace JToolbox.Misc.Threading
     public abstract class ProducerConsumer<T>
     {
         private readonly BlockingCollection<T> items = new BlockingCollection<T>();
-        private Task task;
         private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private Task task;
 
         protected ProducerConsumer()
         {
@@ -18,9 +18,23 @@ namespace JToolbox.Misc.Threading
 
         public int PendingTasks => items.Count;
 
-        public abstract Task HandleItem(T item);
+        public void Add(T item)
+        {
+            items.Add(item);
+        }
+
+        public async Task Cancel()
+        {
+            if (!tokenSource.IsCancellationRequested)
+            {
+                tokenSource.Cancel();
+                await Task.WhenAll(task);
+            }
+        }
 
         public abstract Task ExceptionOccured(T item, Exception exc);
+
+        public abstract Task HandleItem(T item);
 
         private void Start()
         {
@@ -44,20 +58,6 @@ namespace JToolbox.Misc.Threading
                     }
                 }
             }, token);
-        }
-
-        public void Add(T item)
-        {
-            items.Add(item);
-        }
-
-        public async Task Cancel()
-        {
-            if (!tokenSource.IsCancellationRequested)
-            {
-                tokenSource.Cancel();
-                await Task.WhenAll(task);
-            }
         }
     }
 }

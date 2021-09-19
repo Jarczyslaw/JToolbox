@@ -8,15 +8,15 @@ namespace Examples.Desktop.MVP
 {
     public class AppPresenterFactory : UnityPresenterFactory
     {
+        public AppPresenterFactory(IUnityContainer container)
+            : base(container)
+        {
+        }
+
         protected override Dictionary<string, Type> Views { get; } = new Dictionary<string, Type>
         {
             { ViewKeys.Main, typeof(MainForm) },
             { ViewKeys.Result, typeof(ResultForm) }
         };
-
-        public AppPresenterFactory(IUnityContainer container)
-            : base(container)
-        {
-        }
     }
 }

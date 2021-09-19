@@ -10,21 +10,7 @@ namespace Examples.Desktop.Base.ViewModels
         private string label;
         private string text;
 
-        public DelegateCommand SaveCommand => new DelegateCommand(() =>
-        {
-            if (ValidationRule != null)
-            {
-                var error = ValidationRule(Text);
-                if (!string.IsNullOrEmpty(error))
-                {
-                    new DialogsService().ShowInfo(error);
-                    return;
-                }
-            }
-
-            Result = Text;
-            Close?.Invoke();
-        });
+        public Action Close { get; set; }
 
         public DelegateCommand CloseCommand => new DelegateCommand(() => Close?.Invoke());
 
@@ -34,6 +20,24 @@ namespace Examples.Desktop.Base.ViewModels
             set => SetProperty(ref label, value);
         }
 
+        public string Result { get; set; }
+
+        public DelegateCommand SaveCommand => new DelegateCommand(() =>
+                                        {
+                                            if (ValidationRule != null)
+                                            {
+                                                var error = ValidationRule(Text);
+                                                if (!string.IsNullOrEmpty(error))
+                                                {
+                                                    new DialogsService().ShowInfo(error);
+                                                    return;
+                                                }
+                                            }
+
+                                            Result = Text;
+                                            Close?.Invoke();
+                                        });
+
         public string Text
         {
             get => text;
@@ -41,9 +45,5 @@ namespace Examples.Desktop.Base.ViewModels
         }
 
         public Func<string, string> ValidationRule { get; set; }
-
-        public Action Close { get; set; }
-
-        public string Result { get; set; }
     }
 }

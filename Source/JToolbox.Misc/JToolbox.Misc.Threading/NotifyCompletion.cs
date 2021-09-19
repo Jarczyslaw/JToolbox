@@ -17,10 +17,10 @@ namespace JToolbox.Misc.Threading
 
         public bool IsCompleted => context == SynchronizationContext.Current;
 
-        public void OnCompleted(Action continuation) => context.Post(postCallback, continuation);
-
         public void GetResult()
         {
         }
+
+        public void OnCompleted(Action continuation) => context.Post(postCallback, continuation);
     }
 }

@@ -17,10 +17,9 @@ namespace JToolbox.Misc.WCF.Common
 
         public BasicHttpBinding BasicHttpBinding => Binding as BasicHttpBinding;
 
-        public string IpAddress { get; set; }
-        public int Port { get; set; }
-
-        public override string MachineAddress { get => $"{IpAddress}:{Port}"; }
         public override string BindingAddress => "http://";
+        public string IpAddress { get; set; }
+        public override string MachineAddress { get => $"{IpAddress}:{Port}"; }
+        public int Port { get; set; }
     }
 }

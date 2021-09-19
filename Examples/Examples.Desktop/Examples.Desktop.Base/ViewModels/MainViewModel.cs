@@ -16,15 +16,15 @@ namespace Examples.Desktop.Base.ViewModels
     public class MainViewModel : BindableBase, IOutputInput
     {
         private bool busy;
-        private string title;
-        private string messages;
-        private ExampleViewModel selectedExample;
-        private DelegateCommand runCommand;
         private DelegateCommand continueCommand;
-        private Stopwatch internalStopwatch;
-        private MessagesProxy messagesProxy;
-        private List<IDesktopExample> toCleanup = new List<IDesktopExample>();
         private TaskCompletionSource<object> continueTaskCompletionSource;
+        private Stopwatch internalStopwatch;
+        private string messages;
+        private MessagesProxy messagesProxy;
+        private DelegateCommand runCommand;
+        private ExampleViewModel selectedExample;
+        private string title;
+        private List<IDesktopExample> toCleanup = new List<IDesktopExample>();
 
         public MainViewModel()
         {
@@ -37,41 +37,6 @@ namespace Examples.Desktop.Base.ViewModels
             messagesProxy = new MessagesProxy(this);
         }
 
-        public DelegateCommand RunCommand => runCommand ?? (runCommand = new DelegateCommand(async () =>
-        {
-            Busy = true;
-            Clear();
-            WriteLine($"[MAIN] {SelectedExample.Display} started...");
-            try
-            {
-                var example = SelectedExample.Example;
-                if (!toCleanup.Contains(example))
-                {
-                    toCleanup.Add(example);
-                }
-
-                var stopwatch = Stopwatch.StartNew();
-                await Task.Run(() => example.Run(this));
-                WriteLine($"[MAIN] {SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
-            }
-            catch (Exception exc)
-            {
-                WriteLine($"[MAIN] {SelectedExample.Display} failed with exception:");
-                WriteLine(exc.ToString());
-            }
-            finally
-            {
-                Busy = false;
-            }
-        }, () => SelectedExample != null && !Busy));
-
-        public DelegateCommand ContinueCommand => continueCommand ?? (continueCommand = new DelegateCommand(() =>
-        {
-            continueTaskCompletionSource.SetResult(null);
-        }, () => continueTaskCompletionSource != null));
-
-        public DelegateCommand NewWindowCommand => new DelegateCommand(() => WindowManager.GetMainWindow(Title).Show());
-
         public bool Busy
         {
             get => busy;
@@ -82,11 +47,48 @@ namespace Examples.Desktop.Base.ViewModels
             }
         }
 
-        public string Title
+        public DelegateCommand ContinueCommand => continueCommand ?? (continueCommand = new DelegateCommand(() =>
         {
-            get => title;
-            set => SetProperty(ref title, value);
+            continueTaskCompletionSource.SetResult(null);
+        }, () => continueTaskCompletionSource != null));
+
+        public ObservableCollection<ExampleViewModel> Examples { get; set; } = new ObservableCollection<ExampleViewModel>();
+
+        public string Messages
+        {
+            get => messages;
+            set => SetProperty(ref messages, value);
         }
+
+        public DelegateCommand NewWindowCommand => new DelegateCommand(() => WindowManager.GetMainWindow(Title).Show());
+
+        public DelegateCommand RunCommand => runCommand ?? (runCommand = new DelegateCommand(async () =>
+                                                {
+                                                    Busy = true;
+                                                    Clear();
+                                                    WriteLine($"[MAIN] {SelectedExample.Display} started...");
+                                                    try
+                                                    {
+                                                        var example = SelectedExample.Example;
+                                                        if (!toCleanup.Contains(example))
+                                                        {
+                                                            toCleanup.Add(example);
+                                                        }
+
+                                                        var stopwatch = Stopwatch.StartNew();
+                                                        await Task.Run(() => example.Run(this));
+                                                        WriteLine($"[MAIN] {SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
+                                                    }
+                                                    catch (Exception exc)
+                                                    {
+                                                        WriteLine($"[MAIN] {SelectedExample.Display} failed with exception:");
+                                                        WriteLine(exc.ToString());
+                                                    }
+                                                    finally
+                                                    {
+                                                        Busy = false;
+                                                    }
+                                                }, () => SelectedExample != null && !Busy));
 
         public ExampleViewModel SelectedExample
         {
@@ -98,12 +100,39 @@ namespace Examples.Desktop.Base.ViewModels
             }
         }
 
-        public ObservableCollection<ExampleViewModel> Examples { get; set; } = new ObservableCollection<ExampleViewModel>();
-
-        public string Messages
+        public string Title
         {
-            get => messages;
-            set => SetProperty(ref messages, value);
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+
+        public bool CheckClose()
+        {
+            if (Busy)
+            {
+                var dialogs = new DialogsService();
+                return dialogs.ShowYesNoQuestion("Example is running. Do you want to force close?");
+            }
+            return true;
+        }
+
+        public async Task CleanUp()
+        {
+            await messagesProxy.Cancel();
+            foreach (var example in Examples)
+            {
+                await example.Example.CleanUp();
+            }
+        }
+
+        public void Clear()
+        {
+            messagesProxy.Add(null);
+        }
+
+        public void PutLine()
+        {
+            WriteLine(string.Empty);
         }
 
         public string Read(string label, string text = null, Func<string, string> validationRule = null)
@@ -118,6 +147,27 @@ namespace Examples.Desktop.Base.ViewModels
             T result = default;
             Threading.SafeInvoke(() => result = WindowManager.SelectValue(this, label, values));
             return result;
+        }
+
+        public void StartTime()
+        {
+            internalStopwatch = Stopwatch.StartNew();
+            WriteLine("[MAIN] Stopwatch started");
+        }
+
+        public void StopTime()
+        {
+            WriteLine($"[MAIN] Elapsed time: {Math.Round(internalStopwatch.Elapsed.TotalMilliseconds)}ms");
+        }
+
+        public async Task Wait()
+        {
+            WriteLine("[MAIN] Waiting for continuation...");
+            continueTaskCompletionSource = new TaskCompletionSource<object>();
+            ContinueCommand.RaiseCanExecuteChanged();
+            await continueTaskCompletionSource.Task;
+            continueTaskCompletionSource = null;
+            ContinueCommand.RaiseCanExecuteChanged();
         }
 
         public void Write(string message)
@@ -136,26 +186,6 @@ namespace Examples.Desktop.Base.ViewModels
             }
         }
 
-        public void PutLine()
-        {
-            WriteLine(string.Empty);
-        }
-
-        public void Clear()
-        {
-            messagesProxy.Add(null);
-        }
-
-        public async Task Wait()
-        {
-            WriteLine("[MAIN] Waiting for continuation...");
-            continueTaskCompletionSource = new TaskCompletionSource<object>();
-            ContinueCommand.RaiseCanExecuteChanged();
-            await continueTaskCompletionSource.Task;
-            continueTaskCompletionSource = null;
-            ContinueCommand.RaiseCanExecuteChanged();
-        }
-
         private void InitializeExamples(List<IDesktopExample> examples)
         {
             Examples = new ObservableCollection<ExampleViewModel>(examples.Select(e => new ExampleViewModel
@@ -163,36 +193,6 @@ namespace Examples.Desktop.Base.ViewModels
                 Example = e
             }));
             SelectedExample = Examples.FirstOrDefault();
-        }
-
-        public async Task CleanUp()
-        {
-            await messagesProxy.Cancel();
-            foreach (var example in Examples)
-            {
-                await example.Example.CleanUp();
-            }
-        }
-
-        public void StartTime()
-        {
-            internalStopwatch = Stopwatch.StartNew();
-            WriteLine("[MAIN] Stopwatch started");
-        }
-
-        public void StopTime()
-        {
-            WriteLine($"[MAIN] Elapsed time: {Math.Round(internalStopwatch.Elapsed.TotalMilliseconds)}ms");
-        }
-
-        public bool CheckClose()
-        {
-            if (Busy)
-            {
-                var dialogs = new DialogsService();
-                return dialogs.ShowYesNoQuestion("Example is running. Do you want to force close?");
-            }
-            return true;
         }
     }
 }

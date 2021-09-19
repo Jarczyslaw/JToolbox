@@ -26,5 +26,4 @@
             IsVisible="{Binding MessageVisible}"
             Text="{Binding Message}" />
     </Grid>
-
 </base:PageBase>

@@ -9,8 +9,8 @@ namespace XamarinPrismApp.ViewModels
 {
     public class AccelerometerViewModel : ViewModelBase
     {
-        private string accelerometerOutput;
         private readonly IDialogsService dialogsService;
+        private string accelerometerOutput;
 
         public AccelerometerViewModel(IDialogsService dialogsService, INavigationService navigationService)
             : base(navigationService)
@@ -21,26 +21,18 @@ namespace XamarinPrismApp.ViewModels
             SetReading(null);
         }
 
-        public DelegateCommand StartCommand => new DelegateCommand(Start);
-        public DelegateCommand StopCommand => new DelegateCommand(Stop);
-
         public string AccelerometerOutput
         {
             get => accelerometerOutput;
             set => SetProperty(ref accelerometerOutput, value);
         }
 
-        private void Start()
-        {
-            if (Accelerometer.IsMonitoring)
-            {
-                return;
-            }
+        public DelegateCommand StartCommand => new DelegateCommand(Start);
+        public DelegateCommand StopCommand => new DelegateCommand(Stop);
 
-            Accelerometer.ReadingChanged -= Accelerometer_ReadingChanged;
-            Accelerometer.ReadingChanged += Accelerometer_ReadingChanged;
-            Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
-            Accelerometer.Start(SensorSpeed.UI);
+        private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
+        {
+            SetReading(e.Reading.Acceleration);
         }
 
         private void Accelerometer_ShakeDetected(object sender, System.EventArgs e)
@@ -48,22 +40,9 @@ namespace XamarinPrismApp.ViewModels
             dialogsService.Toast("Shake detected");
         }
 
-        private void Stop()
+        private string GetFloatString(float value)
         {
-            if (!Accelerometer.IsMonitoring)
-            {
-                return;
-            }
-
-            Accelerometer.ReadingChanged -= Accelerometer_ReadingChanged;
-            Accelerometer.ShakeDetected -= Accelerometer_ShakeDetected;
-            Accelerometer.Stop();
-            SetReading(null);
-        }
-
-        private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
-        {
-            SetReading(e.Reading.Acceleration);
+            return value.ToString("n2");
         }
 
         private void SetReading(Vector3? reading)
@@ -79,9 +58,30 @@ namespace XamarinPrismApp.ViewModels
             }
         }
 
-        private string GetFloatString(float value)
+        private void Start()
         {
-            return value.ToString("n2");
+            if (Accelerometer.IsMonitoring)
+            {
+                return;
+            }
+
+            Accelerometer.ReadingChanged -= Accelerometer_ReadingChanged;
+            Accelerometer.ReadingChanged += Accelerometer_ReadingChanged;
+            Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
+            Accelerometer.Start(SensorSpeed.UI);
+        }
+
+        private void Stop()
+        {
+            if (!Accelerometer.IsMonitoring)
+            {
+                return;
+            }
+
+            Accelerometer.ReadingChanged -= Accelerometer_ReadingChanged;
+            Accelerometer.ShakeDetected -= Accelerometer_ShakeDetected;
+            Accelerometer.Stop();
+            SetReading(null);
         }
     }
 }

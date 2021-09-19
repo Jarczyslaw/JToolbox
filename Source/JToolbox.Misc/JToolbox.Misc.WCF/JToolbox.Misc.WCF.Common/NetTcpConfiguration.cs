@@ -15,12 +15,10 @@ namespace JToolbox.Misc.WCF.Common
                 binding.MaxBufferSize = int.MaxValue;
         }
 
-        public NetTcpBinding NetTcpBinding => Binding as NetTcpBinding;
-
-        public string IpAddress { get; set; }
-        public int Port { get; set; }
-
-        public override string MachineAddress { get => $"{IpAddress}:{Port}"; }
         public override string BindingAddress => "net.tcp://";
+        public string IpAddress { get; set; }
+        public override string MachineAddress { get => $"{IpAddress}:{Port}"; }
+        public NetTcpBinding NetTcpBinding => Binding as NetTcpBinding;
+        public int Port { get; set; }
     }
 }

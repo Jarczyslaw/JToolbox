@@ -2,14 +2,13 @@
 using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class TabViewModel : BaseViewModel, IDragDropAware
     {
-        private string name;
         private ObservableCollection<ItemViewModel> items;
+        private string name;
 
         public ObservableCollection<ItemViewModel> Items
         {
@@ -23,10 +22,14 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
             set => Set(ref name, value);
         }
 
-        public void SetAsLast(ItemViewModel item)
+        public void OnDrag(DragDropArgs args)
         {
-            Items.Remove(item);
-            Items.Add(item);
+            EventLogs.AddWithClassName("Tab OnDrag");
+        }
+
+        public void OnDrop(DragDropArgs args)
+        {
+            EventLogs.AddWithClassName("Tab OnDrop, source: " + args.Source.GetType().Name);
         }
 
         public void ReplaceItem(ItemViewModel item, ItemViewModel other)
@@ -36,14 +39,10 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
             Items.Move(source, target);
         }
 
-        public void OnDrag(DragDropArgs args)
+        public void SetAsLast(ItemViewModel item)
         {
-            EventLogs.AddWithClassName("Tab OnDrag");
-        }
-
-        public void OnDrop(DragDropArgs args)
-        {
-            EventLogs.AddWithClassName("Tab OnDrop, source: " + args.Source.GetType().Name);
+            Items.Remove(item);
+            Items.Add(item);
         }
     }
 }

@@ -8,8 +8,8 @@ namespace JToolbox.DataAccess.SQLiteNet
         where T : BaseEntity
     {
         public List<T> ToCreate { get; set; }
-        public List<T> ToUpdate { get; set; }
         public List<T> ToDelete { get; set; }
+        public List<T> ToUpdate { get; set; }
 
         public void MergeLists(List<T> newList, List<T> currentList, IEqualityComparer<T> comparer)
         {

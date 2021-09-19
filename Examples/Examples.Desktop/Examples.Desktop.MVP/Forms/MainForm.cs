@@ -12,6 +12,11 @@ namespace Examples.Desktop.MVP.Forms
 
         public event Pass OnPass;
 
+        public override void ShowView()
+        {
+            Application.Run(this);
+        }
+
         private void btnPass_Click(object sender, System.EventArgs e)
         {
             OnPass?.Invoke(false, tbValue.Text);
@@ -20,11 +25,6 @@ namespace Examples.Desktop.MVP.Forms
         private void btnPassModal_Click(object sender, System.EventArgs e)
         {
             OnPass?.Invoke(true, tbValue.Text);
-        }
-
-        public override void ShowView()
-        {
-            Application.Run(this);
         }
     }
 }

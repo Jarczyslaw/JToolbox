@@ -7,45 +7,6 @@ namespace JToolbox.WinForms.Core.Extensions
 {
     public static class ControlExtensions
     {
-        public static void SafeInvoke(this Control control, Action action)
-        {
-            if (control.InvokeRequired)
-            {
-                control.Invoke(action);
-            }
-            else
-            {
-                action();
-            }
-        }
-
-        public static T SafeInvoke<T>(this Control control, Func<T> func)
-        {
-            if (control.InvokeRequired)
-            {
-                T result = default;
-                Action action = () => result = func();
-                control.Invoke(action);
-                return result;
-            }
-            else
-            {
-                return func();
-            }
-        }
-
-        public static void SafeBeginInvoke(this Control control, Action action)
-        {
-            if (control.InvokeRequired)
-            {
-                control.BeginInvoke(action);
-            }
-            else
-            {
-                action();
-            }
-        }
-
         public static List<T> FindControlsOfType<T>(this Control @this, bool includeSubclasses)
             where T : Control
         {
@@ -81,6 +42,45 @@ namespace JToolbox.WinForms.Core.Extensions
                 {
                     IterateOverControls(control, action);
                 }
+            }
+        }
+
+        public static void SafeBeginInvoke(this Control control, Action action)
+        {
+            if (control.InvokeRequired)
+            {
+                control.BeginInvoke(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
+        public static void SafeInvoke(this Control control, Action action)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
+        public static T SafeInvoke<T>(this Control control, Func<T> func)
+        {
+            if (control.InvokeRequired)
+            {
+                T result = default;
+                Action action = () => result = func();
+                control.Invoke(action);
+                return result;
+            }
+            else
+            {
+                return func();
             }
         }
     }

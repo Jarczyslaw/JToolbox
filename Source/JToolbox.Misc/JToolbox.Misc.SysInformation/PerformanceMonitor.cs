@@ -12,14 +12,14 @@ namespace JToolbox.Misc.SysInformation
             cpuCounter.NextValue();
         }
 
-        public static float GetCpuUsage()
-        {
-            return cpuCounter.NextValue();
-        }
-
         public static float GetAvailableMemoryMB()
         {
             return memoryCounter.NextValue();
+        }
+
+        public static float GetCpuUsage()
+        {
+            return cpuCounter.NextValue();
         }
     }
 }

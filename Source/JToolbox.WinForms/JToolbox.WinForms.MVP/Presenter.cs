@@ -12,11 +12,9 @@ namespace JToolbox.WinForms.MVP
             this.presenterFactory = presenterFactory;
         }
 
-        public TView View { get; private set; }
-
         public object Input { get; protected set; }
-
         public object Output { get; protected set; }
+        public TView View { get; private set; }
 
         public virtual void Attach(TView view)
         {
@@ -29,20 +27,15 @@ namespace JToolbox.WinForms.MVP
             View.OnViewClosed += View_OnClosed;
         }
 
+        public void Close(object output = null)
+        {
+            Output = output;
+            View.CloseView();
+        }
+
         public virtual void Initialize(object input)
         {
             Input = input;
-        }
-
-        protected virtual void Detach()
-        {
-            if (View == null)
-            {
-                throw new Exception("View is already attached");
-            }
-
-            View.OnViewClosed -= View_OnClosed;
-            View = default;
         }
 
         public void Show()
@@ -56,10 +49,15 @@ namespace JToolbox.WinForms.MVP
             return Output;
         }
 
-        public void Close(object output = null)
+        protected virtual void Detach()
         {
-            Output = output;
-            View.CloseView();
+            if (View == null)
+            {
+                throw new Exception("View is already attached");
+            }
+
+            View.OnViewClosed -= View_OnClosed;
+            View = default;
         }
 
         private void View_OnClosed()

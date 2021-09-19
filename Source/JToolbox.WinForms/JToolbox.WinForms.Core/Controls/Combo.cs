@@ -9,13 +9,13 @@ namespace JToolbox.WinForms.Core.Controls
 
     public class Combo<T> : ComboBox
     {
-        public event ComboValueChanged<T> OnComboValueChanged = delegate { };
-
         public Combo()
         {
             DropDownStyle = ComboBoxStyle.DropDownList;
             SelectionChangeCommitted += Combo_SelectionChangeCommitted;
         }
+
+        public event ComboValueChanged<T> OnComboValueChanged = delegate { };
 
         public List<ComboItem<T>> ComboItems
         {

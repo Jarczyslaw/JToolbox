@@ -2,7 +2,7 @@
 {
     public class ExampleViewModel
     {
-        public IDesktopExample Example { get; set; }
         public string Display => Example.Title;
+        public IDesktopExample Example { get; set; }
     }
 }

@@ -4,13 +4,6 @@ namespace JToolbox.Misc.WCF.Common
 {
     public abstract class BindingConfigurationBase
     {
-        public Binding Binding { get; protected set; }
-        public string ApplicationName { get; set; }
-        public string ServiceName { get; set; }
-        public virtual string MachineAddress { get; protected set; }
-
-        public abstract string BindingAddress { get; }
-
         public string ApplicationAddress
         {
             get
@@ -24,6 +17,11 @@ namespace JToolbox.Misc.WCF.Common
             }
         }
 
+        public string ApplicationName { get; set; }
+        public Binding Binding { get; protected set; }
+        public abstract string BindingAddress { get; }
+        public virtual string MachineAddress { get; protected set; }
+
         public string ServiceAddress
         {
             get
@@ -36,5 +34,7 @@ namespace JToolbox.Misc.WCF.Common
                 return result;
             }
         }
+
+        public string ServiceName { get; set; }
     }
 }

@@ -12,8 +12,8 @@ namespace XamarinPrismApp.ViewModels
 {
     public class PermissionsViewModel : ViewModelBase
     {
-        private readonly IPermsService permissionsService;
         private readonly IDialogsService dialogsService;
+        private readonly IPermsService permissionsService;
         private PermissionsEntryViewModel selectedPermission;
 
         public PermissionsViewModel(IDialogsService dialogsService, IPermsService permissionsService, INavigationService navigationService)
@@ -25,14 +25,6 @@ namespace XamarinPrismApp.ViewModels
             this.dialogsService = dialogsService;
             InitializePermissions();
         }
-
-        public PermissionsEntryViewModel SelectedPermission
-        {
-            get => selectedPermission;
-            set => SetProperty(ref selectedPermission, value);
-        }
-
-        public ObservableCollection<PermissionsEntryViewModel> Permissions { get; set; }
 
         public DelegateCommand CheckPermissionCommand => new DelegateCommand(async () =>
         {
@@ -47,6 +39,8 @@ namespace XamarinPrismApp.ViewModels
             }
         });
 
+        public ObservableCollection<PermissionsEntryViewModel> Permissions { get; set; }
+
         public DelegateCommand RequestPermissionCommand => new DelegateCommand(async () =>
         {
             try
@@ -59,6 +53,12 @@ namespace XamarinPrismApp.ViewModels
                 await dialogsService.Error(exc.Message);
             }
         });
+
+        public PermissionsEntryViewModel SelectedPermission
+        {
+            get => selectedPermission;
+            set => SetProperty(ref selectedPermission, value);
+        }
 
         private void InitializePermissions()
         {

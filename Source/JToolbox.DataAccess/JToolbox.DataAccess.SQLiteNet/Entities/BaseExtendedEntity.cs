@@ -6,9 +6,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Entities
     public abstract class BaseExtendedEntity : BaseEntity
     {
         public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
 
         [NotNull]
         public bool Deleted { get; set; }
+
+        public DateTime UpdateDate { get; set; }
     }
 }

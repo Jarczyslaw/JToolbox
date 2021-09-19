@@ -12,16 +12,16 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
             EventLogs.AddEvent += AddEvent;
         }
 
-        public TabsContextViewModel TabsContext { get; set; } = new TabsContextViewModel();
-        public FilesContextViewModel FilesContext { get; set; } = new FilesContextViewModel();
-
         public RelayCommand ClearCommand => new RelayCommand(() => Logs = string.Empty);
+        public FilesContextViewModel FilesContext { get; set; } = new FilesContextViewModel();
 
         public string Logs
         {
             get => logs;
             set => Set(ref logs, value);
         }
+
+        public TabsContextViewModel TabsContext { get; set; } = new TabsContextViewModel();
 
         private void AddEvent(string log)
         {

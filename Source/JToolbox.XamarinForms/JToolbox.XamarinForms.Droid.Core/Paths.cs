@@ -7,8 +7,7 @@ namespace JToolbox.XamarinForms.Droid.Core
     {
         public string InternalFolder => Application.Context.FilesDir.AbsolutePath;
 
-        public string PublicExternalFolder => Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
-
         public string PrivateExternalFolder => Application.Context.GetExternalFilesDir(null).AbsolutePath;
+        public string PublicExternalFolder => Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
     }
 }

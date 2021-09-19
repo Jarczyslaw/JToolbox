@@ -4,9 +4,6 @@ namespace JToolbox.Misc.DbAccess
 {
     public class TransactionalDbContext : DbContext
     {
-        public IDbTransaction Transaction { get; set; }
-        public bool CommitTransaction { get; set; }
-
         public TransactionalDbContext(IDbFactory factory)
             : base(factory)
         {
@@ -14,6 +11,9 @@ namespace JToolbox.Misc.DbAccess
             Command.Transaction = Transaction;
             CommitTransaction = true;
         }
+
+        public bool CommitTransaction { get; set; }
+        public IDbTransaction Transaction { get; set; }
 
         public override void Dispose()
         {

@@ -12,19 +12,27 @@ namespace JToolbox.XamarinForms.Themes
             this.resourceDictionary = resourceDictionary;
         }
 
+        public Color PrimaryBackgroundColor => GetColor();
+
+        public Color PrimaryColor => GetColor();
+
+        public Color PrimaryTextColor => GetColor();
+
+        public Color SecondaryBackgroundColor => GetColor();
+
+        public Color SecondaryColor => GetColor();
+
+        public Color SecondaryTextColor => GetColor();
+
+        public Color TertiaryColor => GetColor();
+
+        public Color TertiaryTextColor => GetColor();
+
+        public Color TransparentColor => GetColor();
+
         private Color GetColor([CallerMemberName] string colorName = null)
         {
             return (Color)resourceDictionary[colorName];
         }
-
-        public Color PrimaryBackgroundColor => GetColor();
-        public Color SecondaryBackgroundColor => GetColor();
-        public Color PrimaryColor => GetColor();
-        public Color SecondaryColor => GetColor();
-        public Color TertiaryColor => GetColor();
-        public Color PrimaryTextColor => GetColor();
-        public Color SecondaryTextColor => GetColor();
-        public Color TertiaryTextColor => GetColor();
-        public Color TransparentColor => GetColor();
     }
 }

@@ -7,9 +7,8 @@ namespace Examples.Desktop.Network
 {
     public class TcpListenerExample : IDesktopExample
     {
-        public string Title => "TCP Listener";
-
         private TcpListener listener;
+        public string Title => "TCP Listener";
 
         public Task CleanUp()
         {

@@ -10,11 +10,19 @@ namespace JToolbox.Core.Tests.Nodes
         private readonly NodesTestsDataSource dataSource = new NodesTestsDataSource();
 
         [TestMethod]
-        public void CreateNodesCollectionTest()
+        public void AddExistingNodeTest()
         {
             var collection = dataSource.CreateNodesCollection();
-            Assert.AreEqual(3, collection.NodesCount);
-            Assert.AreEqual(16, collection.AllNodesCount);
+            var node3 = collection.FindNode(x => x.Tag == 3);
+            var node13 = collection.FindNode(x => x.Tag == 13);
+
+            Assert.AreEqual(1, node3.Parent.Tag);
+            Assert.AreEqual(8, node13.Parent.Tag);
+
+            node13.AddNode(node3);
+            Assert.AreEqual(node13.Tag, node3.Parent.Tag);
+            Assert.IsTrue(node13.Nodes.Contains(node3));
+            Assert.AreEqual(6, node13.AllNodesCount);
         }
 
         [TestMethod]
@@ -49,13 +57,27 @@ namespace JToolbox.Core.Tests.Nodes
         }
 
         [TestMethod]
-        public void MapItemsTest()
+        public void CreateNodesCollectionTest()
         {
-            var items = dataSource.CreateItems();
             var collection = dataSource.CreateNodesCollection();
-            var mappedCollection = new NodesCollection<int>();
-            mappedCollection.Map(items, x => x.Items, x => x.Value);
-            Assert.IsTrue(collection.CompareTo(mappedCollection));
+            Assert.AreEqual(3, collection.NodesCount);
+            Assert.AreEqual(16, collection.AllNodesCount);
+        }
+
+        [TestMethod]
+        public void GetAllNodesTest()
+        {
+            var collection = dataSource.CreateNodesCollection();
+            var allNodes = collection.GetAllNodes();
+            Assert.AreEqual(16, allNodes.Count);
+        }
+
+        [TestMethod]
+        public void GetAllParentsTest()
+        {
+            var collection = dataSource.CreateNodesCollection();
+            var node16 = collection.FindNode(x => x.Tag == 16);
+            Assert.AreEqual(3, node16.GetAllParents().Count);
         }
 
         [TestMethod]
@@ -69,11 +91,13 @@ namespace JToolbox.Core.Tests.Nodes
         }
 
         [TestMethod]
-        public void GetAllNodesTest()
+        public void MapItemsTest()
         {
+            var items = dataSource.CreateItems();
             var collection = dataSource.CreateNodesCollection();
-            var allNodes = collection.GetAllNodes();
-            Assert.AreEqual(16, allNodes.Count);
+            var mappedCollection = new NodesCollection<int>();
+            mappedCollection.Map(items, x => x.Items, x => x.Value);
+            Assert.IsTrue(collection.CompareTo(mappedCollection));
         }
 
         [TestMethod]
@@ -88,30 +112,6 @@ namespace JToolbox.Core.Tests.Nodes
             var node15 = collection.FindNode(x => x.Tag == 15);
             node13.RemoveNode(node15);
             Assert.AreEqual(11, collection.AllNodesCount);
-        }
-
-        [TestMethod]
-        public void AddExistingNodeTest()
-        {
-            var collection = dataSource.CreateNodesCollection();
-            var node3 = collection.FindNode(x => x.Tag == 3);
-            var node13 = collection.FindNode(x => x.Tag == 13);
-
-            Assert.AreEqual(1, node3.Parent.Tag);
-            Assert.AreEqual(8, node13.Parent.Tag);
-
-            node13.AddNode(node3);
-            Assert.AreEqual(node13.Tag, node3.Parent.Tag);
-            Assert.IsTrue(node13.Nodes.Contains(node3));
-            Assert.AreEqual(6, node13.AllNodesCount);
-        }
-
-        [TestMethod]
-        public void GetAllParentsTest()
-        {
-            var collection = dataSource.CreateNodesCollection();
-            var node16 = collection.FindNode(x => x.Tag == 16);
-            Assert.AreEqual(3, node16.GetAllParents().Count);
         }
     }
 }

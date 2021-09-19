@@ -10,35 +10,6 @@ namespace JToolbox.Misc.NetworkTools
 {
     public static class ScannersCommon
     {
-        public static async Task<PingResult> Ping(PingInput pingInput)
-        {
-            using (var ping = new Ping())
-            {
-                PingReply pingReply = null;
-                Exception exception = null;
-                for (int i = 0; i < pingInput.Retries; i++)
-                {
-                    try
-                    {
-                        pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
-                        if (pingReply.Status == IPStatus.Success)
-                        {
-                            break;
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        exception = exc;
-                    }
-                }
-                return new PingResult
-                {
-                    Reply = pingReply,
-                    LastException = exception
-                };
-            }
-        }
-
         public static async Task<List<PortResult>> IsPortOpen(PortInput input, IPortClient portClient)
         {
             var result = new List<PortResult>();
@@ -70,6 +41,35 @@ namespace JToolbox.Misc.NetworkTools
                 });
             }
             return result;
+        }
+
+        public static async Task<PingResult> Ping(PingInput pingInput)
+        {
+            using (var ping = new Ping())
+            {
+                PingReply pingReply = null;
+                Exception exception = null;
+                for (int i = 0; i < pingInput.Retries; i++)
+                {
+                    try
+                    {
+                        pingReply = await ping.SendPingAsync(pingInput.Address, pingInput.Timeout);
+                        if (pingReply.Status == IPStatus.Success)
+                        {
+                            break;
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        exception = exc;
+                    }
+                }
+                return new PingResult
+                {
+                    Reply = pingReply,
+                    LastException = exception
+                };
+            }
         }
     }
 }

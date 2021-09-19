@@ -13,6 +13,11 @@ namespace JToolbox.XamarinForms.Logging
         private readonly ILogger logger = LogManager.GetCurrentClassLogger();
         private readonly string noMessage = "No message provided";
 
+        public LoggerService(LoggingConfiguration config)
+        {
+            LogManager.Configuration = config;
+        }
+
         public static LoggerService CreateSingleConfiguration(string logPath)
         {
             return new LoggerService(new LoggerConfigBuilder(logPath).GetSingleConfiguration());
@@ -21,11 +26,6 @@ namespace JToolbox.XamarinForms.Logging
         public static LoggerService CreateSplittedConfiguration(string logPath)
         {
             return new LoggerService(new LoggerConfigBuilder(logPath).GetSplittedConfiguration());
-        }
-
-        public LoggerService(LoggingConfiguration config)
-        {
-            LogManager.Configuration = config;
         }
 
         public void Debug(string message, params object[] args)
@@ -63,21 +63,6 @@ namespace JToolbox.XamarinForms.Logging
             logger.Fatal(message, args);
         }
 
-        public void Info(string message, params object[] args)
-        {
-            logger.Info(message, args);
-        }
-
-        public void Trace(string message, params object[] args)
-        {
-            logger.Trace(message, args);
-        }
-
-        public void Warn(string message, params object[] args)
-        {
-            logger.Warn(message, args);
-        }
-
         public List<string> GetAllLogFiles()
         {
             var result = new List<string>();
@@ -96,6 +81,21 @@ namespace JToolbox.XamarinForms.Logging
             return GetAllLogFiles().Select(f => Path.GetDirectoryName(f))
                 .Distinct()
                 .ToList();
+        }
+
+        public void Info(string message, params object[] args)
+        {
+            logger.Info(message, args);
+        }
+
+        public void Trace(string message, params object[] args)
+        {
+            logger.Trace(message, args);
+        }
+
+        public void Warn(string message, params object[] args)
+        {
+            logger.Warn(message, args);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Android.Media;
-using JToolbox.XamarinForms.Core.Abstraction;
+﻿using JToolbox.XamarinForms.Core.Abstraction;
 using JToolbox.XamarinForms.Droid.Core;
 using Prism;
 using Prism.Ioc;

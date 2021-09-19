@@ -8,6 +8,14 @@ namespace JToolbox.Misc.WCF.ServerSide
 {
     public class Server : IDisposable
     {
+        public ServiceHost Host { get; private set; }
+
+        public bool IsListening => Host?.State == CommunicationState.Opened;
+
+        public Type ProxyImplType { get; private set; }
+
+        public Type ProxyType { get; private set; }
+
         public static Server CreateMultiple<TProxy>(BindingConfigurationBase bindingConfiguration, Type proxyImplType, ServerConfiguration serverConfiguration = null)
         {
             var server = new Server
@@ -33,10 +41,10 @@ namespace JToolbox.Misc.WCF.ServerSide
             return server;
         }
 
-        public ServiceHost Host { get; private set; }
-        public Type ProxyType { get; private set; }
-        public Type ProxyImplType { get; private set; }
-        public bool IsListening => Host?.State == CommunicationState.Opened;
+        public void Dispose()
+        {
+            Stop();
+        }
 
         public void Start()
         {
@@ -56,11 +64,6 @@ namespace JToolbox.Misc.WCF.ServerSide
                     Host.Abort();
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            Stop();
         }
 
         private void Initialize(BindingConfigurationBase bindingConfiguration, Type proxyType, Type proxyImplType, ServerConfiguration serverConfiguration)

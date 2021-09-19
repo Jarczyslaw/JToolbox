@@ -14,6 +14,11 @@ namespace JToolbox.Misc.NetworkTools
 
         public event ScanProgress OnScanProgress = delegate { };
 
+        public Task<PingResult> Ping(PingInput item)
+        {
+            return ProcessItem(item);
+        }
+
         public Task<List<ProcessingQueueItem<PingInput, PingResult>>> PingScan(PingScanInput pingScanInput, CancellationToken token = default)
         {
             var input = pingScanInput.Addresses.Select(s => new PingInput
@@ -23,11 +28,6 @@ namespace JToolbox.Misc.NetworkTools
                 Timeout = pingScanInput.Timeout
             }).ToList();
             return Run(input, token);
-        }
-
-        public Task<PingResult> Ping(PingInput item)
-        {
-            return ProcessItem(item);
         }
 
         public override Task<PingResult> ProcessItem(PingInput item)

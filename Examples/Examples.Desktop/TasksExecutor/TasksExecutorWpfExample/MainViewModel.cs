@@ -11,12 +11,12 @@ namespace TasksExecutorWpfExample
     public class MainViewModel : BaseViewModel
     {
         private readonly TasksExecutor tasksExecutor = new TasksExecutor();
-        private TasksExecutorState state;
-        private ObservableCollection<TaskViewModel> pendingTasks = new ObservableCollection<TaskViewModel>();
         private ObservableCollection<TaskViewModel> activeTasks = new ObservableCollection<TaskViewModel>();
         private ObservableCollection<TaskViewModel> completedTasks = new ObservableCollection<TaskViewModel>();
-        private int taskDelay = 4;
         private int id;
+        private ObservableCollection<TaskViewModel> pendingTasks = new ObservableCollection<TaskViewModel>();
+        private TasksExecutorState state;
+        private int taskDelay = 4;
         private int tasksCount = 1;
         private string title;
 
@@ -28,10 +28,18 @@ namespace TasksExecutorWpfExample
             StartUpdateTimer();
         }
 
-        public TasksExecutorState State
+        public ObservableCollection<TaskViewModel> ActiveTasks
         {
-            get => state;
-            set => Set(ref state, value);
+            get => activeTasks;
+            set => Set(ref activeTasks, value);
+        }
+
+        public RelayCommand AddTaskCommand => new RelayCommand(() => CreateNewTask(TasksCount));
+
+        public ObservableCollection<TaskViewModel> CompletedTasks
+        {
+            get => completedTasks;
+            set => Set(ref completedTasks, value);
         }
 
         public int MaxThreads
@@ -54,32 +62,16 @@ namespace TasksExecutorWpfExample
             }
         }
 
-        public int ThreadsTimeout
-        {
-            get => tasksExecutor.ThreadsTimeout.HasValue ? (int)Math.Round(tasksExecutor.ThreadsTimeout.Value.TotalSeconds) : 0;
-            set
-            {
-                tasksExecutor.ThreadsTimeout = TimeSpan.FromSeconds(value);
-                OnPropertyChanged(nameof(ThreadsTimeout));
-            }
-        }
-
         public ObservableCollection<TaskViewModel> PendingTasks
         {
             get => pendingTasks;
             set => Set(ref pendingTasks, value);
         }
 
-        public ObservableCollection<TaskViewModel> ActiveTasks
+        public TasksExecutorState State
         {
-            get => activeTasks;
-            set => Set(ref activeTasks, value);
-        }
-
-        public ObservableCollection<TaskViewModel> CompletedTasks
-        {
-            get => completedTasks;
-            set => Set(ref completedTasks, value);
+            get => state;
+            set => Set(ref state, value);
         }
 
         public int TaskDelay
@@ -94,13 +86,21 @@ namespace TasksExecutorWpfExample
             set => Set(ref tasksCount, value);
         }
 
+        public int ThreadsTimeout
+        {
+            get => tasksExecutor.ThreadsTimeout.HasValue ? (int)Math.Round(tasksExecutor.ThreadsTimeout.Value.TotalSeconds) : 0;
+            set
+            {
+                tasksExecutor.ThreadsTimeout = TimeSpan.FromSeconds(value);
+                OnPropertyChanged(nameof(ThreadsTimeout));
+            }
+        }
+
         public string Title
         {
             get => title;
             set => Set(ref title, value);
         }
-
-        public RelayCommand AddTaskCommand => new RelayCommand(() => CreateNewTask(TasksCount));
 
         private void CreateNewTask(int tasksCount = 1)
         {

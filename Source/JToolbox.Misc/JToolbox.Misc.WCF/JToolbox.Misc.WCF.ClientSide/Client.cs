@@ -13,9 +13,14 @@ namespace JToolbox.Misc.WCF.ClientSide
             ChannelFactory = channelFactoryProvider.GetChannelFactory(bindingConfiguration);
         }
 
-        public TProxy Proxy { get; private set; }
         public ChannelFactory<TProxy> ChannelFactory { get; }
         public bool IsConnected => ChannelFactory?.State == CommunicationState.Opened;
+        public TProxy Proxy { get; private set; }
+
+        public void Dispose()
+        {
+            Stop();
+        }
 
         public void Start()
         {
@@ -35,11 +40,6 @@ namespace JToolbox.Misc.WCF.ClientSide
                     ChannelFactory.Abort();
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            Stop();
         }
     }
 }

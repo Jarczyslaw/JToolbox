@@ -12,23 +12,11 @@ namespace JToolbox.Misc.NetworkTools
 {
     public class ServiceScanner : ProcessingQueue<ServiceInput, bool>
     {
-        public delegate void ScanProgress(ProcessingQueueItem<ServiceInput, bool> item);
-
         public ScanProgress OnScanProgress = delegate { };
 
         private IPortClient portClient;
 
-        public Task<List<ProcessingQueueItem<ServiceInput, bool>>> ServiceScan(ServiceScanInput serviceScanInput, IPortClient portClient, CancellationToken cancellationToken = default)
-        {
-            this.portClient = portClient;
-            var input = serviceScanInput.Addresses.Select(s => new ServiceInput
-            {
-                Endpoint = new IPEndPoint(s, serviceScanInput.Port),
-                Retries = serviceScanInput.Retries,
-                Timeout = serviceScanInput.Timeout
-            }).ToList();
-            return Run(input, cancellationToken);
-        }
+        public delegate void ScanProgress(ProcessingQueueItem<ServiceInput, bool> item);
 
         public Task<bool> CheckService(ServiceInput item, IPortClient portClient)
         {
@@ -64,6 +52,18 @@ namespace JToolbox.Misc.NetworkTools
         {
             OnScanProgress(item);
             return Task.CompletedTask;
+        }
+
+        public Task<List<ProcessingQueueItem<ServiceInput, bool>>> ServiceScan(ServiceScanInput serviceScanInput, IPortClient portClient, CancellationToken cancellationToken = default)
+        {
+            this.portClient = portClient;
+            var input = serviceScanInput.Addresses.Select(s => new ServiceInput
+            {
+                Endpoint = new IPEndPoint(s, serviceScanInput.Port),
+                Retries = serviceScanInput.Retries,
+                Timeout = serviceScanInput.Timeout
+            }).ToList();
+            return Run(input, cancellationToken);
         }
     }
 }

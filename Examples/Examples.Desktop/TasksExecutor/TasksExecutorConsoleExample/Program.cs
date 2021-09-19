@@ -6,6 +6,11 @@ namespace TasksExecutorConsoleExample
 {
     internal static class Program
     {
+        private static void Executor_OnTasksExecutorStateChanged(TasksExecutorState state)
+        {
+            Console.WriteLine($"Threads: {state.Threads}, working: {state.WorkingThreads}, idle: {state.IdleThreads}, waiting: {state.WaitingThreads}, pending tasks: {state.PendingTasks}");
+        }
+
         private static void Main(string[] args)
         {
             var executor = new TasksExecutor
@@ -21,11 +26,6 @@ namespace TasksExecutorConsoleExample
             }
 
             Console.ReadKey();
-        }
-
-        private static void Executor_OnTasksExecutorStateChanged(TasksExecutorState state)
-        {
-            Console.WriteLine($"Threads: {state.Threads}, working: {state.WorkingThreads}, idle: {state.IdleThreads}, waiting: {state.WaitingThreads}, pending tasks: {state.PendingTasks}");
         }
     }
 }

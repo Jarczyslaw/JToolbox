@@ -13,16 +13,16 @@ namespace XamarinPrismApp.ViewModels
             Title = "Navigation input";
         }
 
-        public string SourceViewModel
-        {
-            get => sourceViewModel;
-            set => SetProperty(ref sourceViewModel, value);
-        }
-
         public string Input
         {
             get => input;
             set => SetProperty(ref input, value);
+        }
+
+        public string SourceViewModel
+        {
+            get => sourceViewModel;
+            set => SetProperty(ref sourceViewModel, value);
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)

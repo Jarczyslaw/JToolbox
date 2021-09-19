@@ -38,12 +38,6 @@ namespace XamarinPrismApp
             RegisterViews(containerRegistry);
         }
 
-        private void RegisterViews(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            NavigationMapper.Instance.Register(containerRegistry, Assembly.GetExecutingAssembly());
-        }
-
         private void RegisterDependencies(IContainerRegistry containerRegistry)
         {
             if (!containerRegistry.IsRegistered<IAppCore>())
@@ -64,6 +58,12 @@ namespace XamarinPrismApp
             var appConfig = Container.Resolve<IAppCore>();
             var loggerService = LoggerService.CreateSplittedConfiguration(appConfig.LogPath);
             containerRegistry.RegisterInstance<ILoggerService>(loggerService);
+        }
+
+        private void RegisterViews(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            NavigationMapper.Instance.Register(containerRegistry, Assembly.GetExecutingAssembly());
         }
     }
 }

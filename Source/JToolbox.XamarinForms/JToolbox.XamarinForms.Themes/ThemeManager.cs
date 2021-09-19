@@ -10,17 +10,22 @@ namespace JToolbox.XamarinForms.Themes
     {
         private readonly IPlatformThemeManager platformThemeManager;
 
-        public event ThemeChanged OnThemeChanged = delegate { };
-
         public ThemeManager(IPlatformThemeManager platformThemeManager)
         {
             this.platformThemeManager = platformThemeManager;
         }
 
+        public event ThemeChanged OnThemeChanged = delegate { };
+
         public IThemeResourceDictionary CurrentTheme { get; private set; }
 
+        public void ReloadTheme()
+        {
+            SetTheme(CurrentTheme as ResourceDictionary, false);
+        }
+
         public void SetTheme<T>()
-            where T : ResourceDictionary, IThemeResourceDictionary
+                    where T : ResourceDictionary, IThemeResourceDictionary
         {
             SetTheme(Activator.CreateInstance<T>());
         }
@@ -28,6 +33,25 @@ namespace JToolbox.XamarinForms.Themes
         public void SetTheme(ResourceDictionary resourceDictionary)
         {
             SetTheme(resourceDictionary, true);
+        }
+
+        private void ReplaceThemeResourceDictionaries(ICollection<ResourceDictionary> mergedDictionaries, ResourceDictionary resourceDictionary)
+        {
+            var dictionaries = new List<ResourceDictionary>();
+            foreach (var dictionary in mergedDictionaries)
+            {
+                if (!(dictionary is IThemeResourceDictionary))
+                {
+                    dictionaries.Add(dictionary);
+                }
+            }
+
+            mergedDictionaries.Clear();
+            mergedDictionaries.Add(resourceDictionary);
+            foreach (var dictionary in dictionaries)
+            {
+                mergedDictionaries.Add(dictionary);
+            }
         }
 
         private void SetTheme(ResourceDictionary resourceDictionary, bool invokeOnThemeChanged)
@@ -49,30 +73,6 @@ namespace JToolbox.XamarinForms.Themes
                 {
                     OnThemeChanged(themeResourceDictionary);
                 }
-            }
-        }
-
-        public void ReloadTheme()
-        {
-            SetTheme(CurrentTheme as ResourceDictionary, false);
-        }
-
-        private void ReplaceThemeResourceDictionaries(ICollection<ResourceDictionary> mergedDictionaries, ResourceDictionary resourceDictionary)
-        {
-            var dictionaries = new List<ResourceDictionary>();
-            foreach (var dictionary in mergedDictionaries)
-            {
-                if (!(dictionary is IThemeResourceDictionary))
-                {
-                    dictionaries.Add(dictionary);
-                }
-            }
-
-            mergedDictionaries.Clear();
-            mergedDictionaries.Add(resourceDictionary);
-            foreach (var dictionary in dictionaries)
-            {
-                mergedDictionaries.Add(dictionary);
             }
         }
     }

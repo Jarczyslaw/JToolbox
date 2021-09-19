@@ -13,6 +13,16 @@ namespace XamarinPrismApp.Models
             this.user = user;
         }
 
+        public DateTime Date
+        {
+            get => user.UpdateDate;
+            set
+            {
+                user.UpdateDate = value;
+                RaisePropertyChanged(nameof(Date));
+            }
+        }
+
         public int Id
         {
             get => user.Id;
@@ -30,16 +40,6 @@ namespace XamarinPrismApp.Models
             {
                 user.Name = value;
                 RaisePropertyChanged(nameof(Name));
-            }
-        }
-
-        public DateTime Date
-        {
-            get => user.UpdateDate;
-            set
-            {
-                user.UpdateDate = value;
-                RaisePropertyChanged(nameof(Date));
             }
         }
     }

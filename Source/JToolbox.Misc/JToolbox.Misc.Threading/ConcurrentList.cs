@@ -19,6 +19,14 @@ namespace JToolbox.Misc.Threading
             internalList = list.ToList();
         }
 
+        public int Count
+        {
+            get
+            {
+                return LockAndQuery(l => l.Count);
+            }
+        }
+
         public T this[int index]
         {
             get
@@ -28,14 +36,6 @@ namespace JToolbox.Misc.Threading
             set
             {
                 LockAndCommand(l => l[index] = value);
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                return LockAndQuery(l => l.Count);
             }
         }
 
@@ -59,6 +59,17 @@ namespace JToolbox.Misc.Threading
             LockAndCommand(l => l.CopyTo(array, arrayIndex));
         }
 
+        public void ForEach(Action<IList<T>, T> action)
+        {
+            lock (lockObject)
+            {
+                foreach (var item in internalList)
+                {
+                    action(internalList, item);
+                }
+            }
+        }
+
         public int IndexOf(T item)
         {
             return LockAndQuery(l => l.IndexOf(item));
@@ -77,17 +88,6 @@ namespace JToolbox.Misc.Threading
         public void RemoveAt(int index)
         {
             LockAndCommand(l => l.RemoveAt(index));
-        }
-
-        public void ForEach(Action<IList<T>, T> action)
-        {
-            lock (lockObject)
-            {
-                foreach (var item in internalList)
-                {
-                    action(internalList, item);
-                }
-            }
         }
 
         public T[] ToArray()

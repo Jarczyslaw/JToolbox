@@ -7,13 +7,19 @@ namespace JToolbox.XamarinForms.Logging
 {
     public class LoggerConfigBuilder
     {
-        private readonly string logsPath;
         private readonly LoggingConfiguration config;
+        private readonly string logsPath;
 
         public LoggerConfigBuilder(string logsPath)
         {
             this.logsPath = logsPath;
             config = new LoggingConfiguration();
+        }
+
+        public LoggingConfiguration AddRule(LogLevel minLevel, LogLevel maxLevel, string targetName, string loggerNamePattern)
+        {
+            config.AddRule(minLevel, maxLevel, targetName, loggerNamePattern);
+            return config;
         }
 
         public LoggingConfiguration AddTargetFile(string targetName, string fileName)
@@ -31,12 +37,6 @@ namespace JToolbox.XamarinForms.Logging
                 Layout = @"${date:format=yyyy-MM-dd HH\:mm\:ss.fff} - [${level:uppercase=true}]: ${message} ${onexception:${newline}${exception:format=ToString}}"
             };
             config.AddTarget(target);
-            return config;
-        }
-
-        public LoggingConfiguration AddRule(LogLevel minLevel, LogLevel maxLevel, string targetName, string loggerNamePattern)
-        {
-            config.AddRule(minLevel, maxLevel, targetName, loggerNamePattern);
             return config;
         }
 

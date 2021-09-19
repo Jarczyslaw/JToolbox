@@ -21,19 +21,6 @@ namespace JToolbox.XamarinForms.Perms
                 .Invoke(this, null);
         }
 
-        public Task<PermissionStatus> Request<T>()
-            where T : Permissions.BasePermission, new()
-        {
-            return Permissions.RequestAsync<T>();
-        }
-
-        public Task<PermissionStatus> Request(Type permissionType)
-        {
-            CheckPermissionType(permissionType);
-            return (Task<PermissionStatus>)CreateGenericMethod(nameof(Permissions.RequestAsync), permissionType)
-                .Invoke(this, null);
-        }
-
         public Task<PermissionStatus> CheckAndRequest<T>()
             where T : Permissions.BasePermission, new()
         {
@@ -63,10 +50,17 @@ namespace JToolbox.XamarinForms.Perms
             return true;
         }
 
-        private MethodInfo CreateGenericMethod(string methodName, Type permissionType)
+        public Task<PermissionStatus> Request<T>()
+                                    where T : Permissions.BasePermission, new()
         {
-            var method = typeof(Permissions).GetMethod(methodName);
-            return method.MakeGenericMethod(permissionType);
+            return Permissions.RequestAsync<T>();
+        }
+
+        public Task<PermissionStatus> Request(Type permissionType)
+        {
+            CheckPermissionType(permissionType);
+            return (Task<PermissionStatus>)CreateGenericMethod(nameof(Permissions.RequestAsync), permissionType)
+                .Invoke(this, null);
         }
 
         private void CheckPermissionType(Type permissionType)
@@ -75,6 +69,12 @@ namespace JToolbox.XamarinForms.Perms
             {
                 throw new ArgumentException("Permission type has to derive from BasePermission");
             }
+        }
+
+        private MethodInfo CreateGenericMethod(string methodName, Type permissionType)
+        {
+            var method = typeof(Permissions).GetMethod(methodName);
+            return method.MakeGenericMethod(permissionType);
         }
     }
 }

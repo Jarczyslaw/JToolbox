@@ -1,10 +1,10 @@
-﻿using JToolbox.WPF.UI.DragAndDrop;
+﻿using Examples.Desktop.WPFDragDrop.ViewModels;
+using JToolbox.WPF.UI.DragAndDrop;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Examples.Desktop.WPFDragDrop.ViewModels;
 
 namespace Examples.Desktop.WPFDragDrop
 {
@@ -32,14 +32,9 @@ namespace Examples.Desktop.WPFDragDrop
             fileDragDropHelper.OnFileDrop += FileDragDropHelper_OnFileDrop;
         }
 
-        private void FileDragDropHelper_OnFileDrop(UiFileDropArgs args)
+        private void DragDropHelper_OnDrag(UiDragDropArgs args)
         {
-            EventLogs.AddWithClassName("OnFileDrop, element: " + args.Element.GetType().Name);
-        }
-
-        private void FileDragDropHelper_OnFileDrag(UiFileDragArgs args)
-        {
-            EventLogs.AddWithClassName("OnFileDrag, element: " + args.Element.GetType().Name);
+            EventLogs.AddWithClassName("OnDrag, source: " + args.SourceElement.GetType().Name);
         }
 
         private void DragDropHelper_OnDrop(UiDragDropArgs args)
@@ -47,9 +42,14 @@ namespace Examples.Desktop.WPFDragDrop
             EventLogs.AddWithClassName("OnDrop, source: " + args.SourceElement.GetType().Name + ", target: " + args.TargetElement.GetType().Name);
         }
 
-        private void DragDropHelper_OnDrag(UiDragDropArgs args)
+        private void FileDragDropHelper_OnFileDrag(UiFileDragArgs args)
         {
-            EventLogs.AddWithClassName("OnDrag, source: " + args.SourceElement.GetType().Name);
+            EventLogs.AddWithClassName("OnFileDrag, element: " + args.Element.GetType().Name);
+        }
+
+        private void FileDragDropHelper_OnFileDrop(UiFileDropArgs args)
+        {
+            EventLogs.AddWithClassName("OnFileDrop, element: " + args.Element.GetType().Name);
         }
 
         private void TbLogs_TextChanged(object sender, TextChangedEventArgs e)

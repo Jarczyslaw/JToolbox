@@ -9,15 +9,15 @@ namespace Examples.Desktop.SysInformation
     {
         public string Title => "OS Information";
 
+        public Task CleanUp()
+        {
+            return Task.CompletedTask;
+        }
+
         public Task Run(IOutputInput outputInput)
         {
             outputInput.WriteLine("OS information:");
             outputInput.WriteLine(SystemInformation.GetOSInfo().PublicPropertiesToString());
-            return Task.CompletedTask;
-        }
-
-        public Task CleanUp()
-        {
             return Task.CompletedTask;
         }
     }

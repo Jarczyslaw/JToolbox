@@ -2,7 +2,7 @@
 {
     public class SelectItemViewModel
     {
-        public object Value { get; set; }
         public string Display => Value.ToString();
+        public object Value { get; set; }
     }
 }

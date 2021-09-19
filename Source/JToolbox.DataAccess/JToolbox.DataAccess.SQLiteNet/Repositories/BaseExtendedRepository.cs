@@ -51,6 +51,15 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             }
         }
 
+        protected override void PrepareEntity(TEntity entity)
+        {
+            entity.UpdateDate = DateTime.Now;
+            if (entity.CreateDate == default)
+            {
+                entity.CreateDate = DateTime.Now;
+            }
+        }
+
         private bool InternalGetUpdate(SQLiteConnection db, int id, Action<TEntity> action)
         {
             var entity = db.Table<TEntity>().Where(t => t.Id == id).FirstOrDefault();
@@ -76,15 +85,6 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
                 }
 
                 db.UpdateAll(entities, true);
-            }
-        }
-
-        protected override void PrepareEntity(TEntity entity)
-        {
-            entity.UpdateDate = DateTime.Now;
-            if (entity.CreateDate == default)
-            {
-                entity.CreateDate = DateTime.Now;
             }
         }
     }

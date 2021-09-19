@@ -32,14 +32,14 @@ namespace Examples.Desktop.MVP.Presenters
             View.OnCancel -= View_OnCancel;
         }
 
-        private void View_OnCancel()
-        {
-            Close(null);
-        }
-
         private void View_OnAccept()
         {
             Close(inputString);
+        }
+
+        private void View_OnCancel()
+        {
+            Close(null);
         }
     }
 }

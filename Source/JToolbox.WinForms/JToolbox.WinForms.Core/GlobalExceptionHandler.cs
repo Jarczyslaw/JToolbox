@@ -13,16 +13,16 @@ namespace JToolbox.WinForms.Core
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            HandleException((Exception)e.ExceptionObject, nameof(CurrentDomain_UnhandledException));
-        }
+        protected abstract void HandleException(Exception exception, string source);
 
         private void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             HandleException(e.Exception, nameof(Application_ThreadException));
         }
 
-        protected abstract void HandleException(Exception exception, string source);
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            HandleException((Exception)e.ExceptionObject, nameof(CurrentDomain_UnhandledException));
+        }
     }
 }

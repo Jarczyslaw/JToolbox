@@ -57,12 +57,13 @@ namespace Examples.Desktop.Threading
         private class Queue : ProcessingQueue<int, int>
         {
             private readonly IOutputInput outputInput;
-            public bool Throw { get; set; }
 
             public Queue(IOutputInput outputInput)
             {
                 this.outputInput = outputInput;
             }
+
+            public bool Throw { get; set; }
 
             public override async Task<int> ProcessItem(int item)
             {

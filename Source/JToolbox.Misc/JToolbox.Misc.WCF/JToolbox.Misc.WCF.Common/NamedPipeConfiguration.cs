@@ -16,8 +16,7 @@ namespace JToolbox.Misc.WCF.Common
                 binding.MaxBufferSize = int.MaxValue;
         }
 
-        public NetNamedPipeBinding NetNamedPipeBinding => Binding as NetNamedPipeBinding;
-
         public override string BindingAddress => "net.pipe://";
+        public NetNamedPipeBinding NetNamedPipeBinding => Binding as NetNamedPipeBinding;
     }
 }

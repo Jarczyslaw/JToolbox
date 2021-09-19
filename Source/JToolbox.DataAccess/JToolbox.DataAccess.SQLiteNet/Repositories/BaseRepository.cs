@@ -9,6 +9,11 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
     public abstract class BaseRepository<TEntity> : CommonRepository, IBaseRepository<TEntity> where TEntity : BaseEntity, new()
     {
+        public virtual int Count(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
+        {
+            return db.Table<TEntity>().Where(expression).Count();
+        }
+
         public virtual int Create(SQLiteConnection db, TEntity entity)
         {
             PrepareEntity(entity);
@@ -22,61 +27,6 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             {
                 entities.ForEach(e => PrepareEntity(e));
                 return db.InsertAll(entities, true);
-            }
-            return 0;
-        }
-
-        public virtual TEntity GetById(SQLiteConnection db, int id)
-        {
-            return db.Table<TEntity>().FirstOrDefault(e => e.Id == id);
-        }
-
-        public virtual List<TEntity> GetByIds(SQLiteConnection db, List<int> ids)
-        {
-            var lookup = ids.Distinct()
-                .ToList();
-            return db.Table<TEntity>()
-                .Where(x => lookup.Contains(x.Id))
-                .ToList();
-        }
-
-        public virtual List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
-        {
-            return GetBy(db, new List<Expression<Func<TEntity, bool>>> { expression });
-        }
-
-        public virtual List<TEntity> GetBy(SQLiteConnection db, IEnumerable<Expression<Func<TEntity, bool>>> expressions)
-        {
-            var entities = db.Table<TEntity>();
-            foreach (var expression in expressions)
-            {
-                entities = entities.Where(expression);
-            }
-            return entities.ToList();
-        }
-
-        public virtual List<TEntity> GetAll(SQLiteConnection db)
-        {
-            return db.Table<TEntity>().ToList();
-        }
-
-        public virtual int Count(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
-        {
-            return db.Table<TEntity>().Where(expression).Count();
-        }
-
-        public virtual bool Update(SQLiteConnection db, TEntity entity)
-        {
-            PrepareEntity(entity);
-            return db.Update(entity) > 0;
-        }
-
-        public virtual int UpdateMany(SQLiteConnection db, List<TEntity> entities)
-        {
-            if (entities?.Count > 0)
-            {
-                entities.ForEach(e => PrepareEntity(e));
-                return db.UpdateAll(entities);
             }
             return 0;
         }
@@ -121,6 +71,40 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             return GetBy(db, expressions).Count > 0;
         }
 
+        public virtual List<TEntity> GetAll(SQLiteConnection db)
+        {
+            return db.Table<TEntity>().ToList();
+        }
+
+        public virtual List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
+        {
+            return GetBy(db, new List<Expression<Func<TEntity, bool>>> { expression });
+        }
+
+        public virtual List<TEntity> GetBy(SQLiteConnection db, IEnumerable<Expression<Func<TEntity, bool>>> expressions)
+        {
+            var entities = db.Table<TEntity>();
+            foreach (var expression in expressions)
+            {
+                entities = entities.Where(expression);
+            }
+            return entities.ToList();
+        }
+
+        public virtual TEntity GetById(SQLiteConnection db, int id)
+        {
+            return db.Table<TEntity>().FirstOrDefault(e => e.Id == id);
+        }
+
+        public virtual List<TEntity> GetByIds(SQLiteConnection db, List<int> ids)
+        {
+            var lookup = ids.Distinct()
+                .ToList();
+            return db.Table<TEntity>()
+                .Where(x => lookup.Contains(x.Id))
+                .ToList();
+        }
+
         public virtual void Merge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
         {
             var merge = new Merge<TEntity>();
@@ -140,6 +124,22 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             {
                 CreateMany(db, merge.ToCreate);
             }
+        }
+
+        public virtual bool Update(SQLiteConnection db, TEntity entity)
+        {
+            PrepareEntity(entity);
+            return db.Update(entity) > 0;
+        }
+
+        public virtual int UpdateMany(SQLiteConnection db, List<TEntity> entities)
+        {
+            if (entities?.Count > 0)
+            {
+                entities.ForEach(e => PrepareEntity(e));
+                return db.UpdateAll(entities);
+            }
+            return 0;
         }
 
         protected virtual void PrepareEntity(TEntity entity)

@@ -2,14 +2,13 @@
 using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Examples.Desktop.WPFDragDrop.ViewModels
 {
     public class TabsContextViewModel : BaseViewModel, IDragDropAware
     {
-        private ObservableCollection<TabViewModel> tabs;
         private TabViewModel selectedTab;
+        private ObservableCollection<TabViewModel> tabs;
 
         public TabsContextViewModel()
         {
@@ -132,16 +131,35 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
             }
         }
 
-        private void MoveTab(TabViewModel source, TabViewModel target)
+        private TabViewModel GetTabByItem(ItemViewModel item)
         {
-            Tabs.Move(Tabs.IndexOf(source), Tabs.IndexOf(target));
-            SelectedTab = source;
+            foreach (var tab in Tabs)
+            {
+                if (tab.Items.Contains(item))
+                {
+                    return tab;
+                }
+            }
+            return null;
+        }
+
+        private void MoveFromTabToTab(TabViewModel sourceTab, ItemViewModel item, TabViewModel targetTab)
+        {
+            sourceTab.Items.Remove(item);
+            targetTab.Items.Add(item);
+            SelectedTab = targetTab;
         }
 
         private void MoveItem(TabViewModel tab, ItemViewModel source, ItemViewModel target)
         {
             var items = tab.Items;
             items.Move(items.IndexOf(source), items.IndexOf(target));
+        }
+
+        private void MoveTab(TabViewModel source, TabViewModel target)
+        {
+            Tabs.Move(Tabs.IndexOf(source), Tabs.IndexOf(target));
+            SelectedTab = source;
         }
 
         private void SetItemAsLast(TabViewModel tab, ItemViewModel item)
@@ -156,25 +174,6 @@ namespace Examples.Desktop.WPFDragDrop.ViewModels
             Tabs.Remove(tab);
             Tabs.Add(tab);
             SelectedTab = tab;
-        }
-
-        private void MoveFromTabToTab(TabViewModel sourceTab, ItemViewModel item, TabViewModel targetTab)
-        {
-            sourceTab.Items.Remove(item);
-            targetTab.Items.Add(item);
-            SelectedTab = targetTab;
-        }
-
-        private TabViewModel GetTabByItem(ItemViewModel item)
-        {
-            foreach (var tab in Tabs)
-            {
-                if (tab.Items.Contains(item))
-                {
-                    return tab;
-                }
-            }
-            return null;
         }
     }
 }

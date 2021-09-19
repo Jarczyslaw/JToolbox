@@ -8,6 +8,20 @@ namespace JToolbox.Misc.Threading
 {
     public static class AsyncHelper
     {
+        public static Task<T> AsyncCallback<T>(Action<Action<T>> methodWithCallback)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            try
+            {
+                methodWithCallback(t => tcs.SetResult(t));
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+            return tcs.Task;
+        }
+
         public static async Task ForEach<TItem>(IEnumerable<TItem> input, Func<TItem, CancellationToken, Task> handler, CancellationToken cancellationToken = default)
         {
             var tasks = new List<Task>();
@@ -28,20 +42,6 @@ namespace JToolbox.Misc.Threading
             }
             await Task.WhenAll(tasks.Select(p => p.Value));
             return tasks.Select(p => new KeyValuePair<TItem, TResult>(p.Key, p.Value.Result)).ToList();
-        }
-
-        public static Task<T> AsyncCallback<T>(Action<Action<T>> methodWithCallback)
-        {
-            var tcs = new TaskCompletionSource<T>();
-            try
-            {
-                methodWithCallback(t => tcs.SetResult(t));
-            }
-            catch (Exception ex)
-            {
-                tcs.SetException(ex);
-            }
-            return tcs.Task;
         }
     }
 }

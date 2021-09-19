@@ -14,10 +14,10 @@ namespace XamarinPrismApp.ViewModels
 {
     public class LocalStorageViewModel : ViewModelBase
     {
-        private UserViewModel selectedEntry;
-        private ObservableCollection<UserViewModel> entries;
-        private readonly IDialogsService dialogsService;
         private readonly IDataAccessService dataAccessService;
+        private readonly IDialogsService dialogsService;
+        private ObservableCollection<UserViewModel> entries;
+        private UserViewModel selectedEntry;
 
         public LocalStorageViewModel(IDialogsService dialogsService, IDataAccessService dataAccessService, INavigationService navigationService)
             : base(navigationService)
@@ -44,23 +44,6 @@ namespace XamarinPrismApp.ViewModels
             }
         });
 
-        public DelegateCommand<UserViewModel> EditCommand => new DelegateCommand<UserViewModel>(async (parameter) =>
-        {
-            if (parameter != null)
-            {
-                var name = await GetName(parameter.Name);
-                if (!string.IsNullOrEmpty(name))
-                {
-                    dataAccessService.UpdateUser(parameter.Id, new User
-                    {
-                        Name = name,
-                        UpdateDate = DateTime.Now
-                    });
-                    UpdateUsers();
-                }
-            }
-        });
-
         public DelegateCommand<UserViewModel> DeleteCommand => new DelegateCommand<UserViewModel>(async (parameter) =>
         {
             if (parameter != null)
@@ -74,16 +57,33 @@ namespace XamarinPrismApp.ViewModels
             }
         });
 
-        public UserViewModel SelectedEntry
-        {
-            get => selectedEntry;
-            set => SetProperty(ref selectedEntry, value);
-        }
+        public DelegateCommand<UserViewModel> EditCommand => new DelegateCommand<UserViewModel>(async (parameter) =>
+                {
+                    if (parameter != null)
+                    {
+                        var name = await GetName(parameter.Name);
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            dataAccessService.UpdateUser(parameter.Id, new User
+                            {
+                                Name = name,
+                                UpdateDate = DateTime.Now
+                            });
+                            UpdateUsers();
+                        }
+                    }
+                });
 
         public ObservableCollection<UserViewModel> Entries
         {
             get => entries;
             set => SetProperty(ref entries, value);
+        }
+
+        public UserViewModel SelectedEntry
+        {
+            get => selectedEntry;
+            set => SetProperty(ref selectedEntry, value);
         }
 
         private async Task<string> GetName(string name = "")

@@ -5,9 +5,9 @@ namespace JToolbox.XamarinForms.UI
     public class ToolbarItemTemplate
     {
         public Color Color { get; set; }
+        public string CommandBinding { get; set; }
         public string FontFamily { get; set; }
         public string Glyph { get; set; }
-        public string CommandBinding { get; set; }
 
         public ToolbarItem GetItem()
         {

@@ -10,12 +10,11 @@ namespace JToolbox.XamarinForms.Core.Navigation
 {
     public static class INavigationServiceExtensions
     {
-        private static void CheckType(Type type, Type constraint)
+        public static Task<INavigationResult> Close(this INavigationService navigationService, Parameters parameters = null)
         {
-            if (type.IsAssignableFrom(constraint))
-            {
-                throw new InvalidTypeException(type, constraint);
-            }
+            var navigationParams = parameters == null
+                ? new NavigationParameters() : parameters.CreateNavigationParameters();
+            return navigationService.GoBackAsync(navigationParams);
         }
 
         public static Page GetCurrentPage(this INavigationService navigationService)
@@ -88,12 +87,6 @@ namespace JToolbox.XamarinForms.Core.Navigation
             return navigationService.IsPageOpened(targetPageType);
         }
 
-        public static Task<INavigationResult> StartNavigationViewModel<T>(this INavigationService navigationService, Parameters parameters = null)
-            where T : ViewModelBase
-        {
-            return navigationService.NavigateToViewModel(typeof(T), parameters, true);
-        }
-
         public static Task<INavigationResult> NavigateToViewModel<T>(this INavigationService navigationService, Parameters parameters = null)
             where T : ViewModelBase
         {
@@ -103,6 +96,27 @@ namespace JToolbox.XamarinForms.Core.Navigation
         public static Task<INavigationResult> NavigateToViewModel(this INavigationService navigationService, Type viewModelType, Parameters parameters = null)
         {
             return navigationService.NavigateToViewModel(viewModelType, parameters, false);
+        }
+
+        public static Task<INavigationResult> ReturnToRoot(this INavigationService navigationService, Parameters parameters = null)
+        {
+            var navigationParams = parameters == null
+                ? new NavigationParameters() : parameters.CreateNavigationParameters();
+            return navigationService.GoBackToRootAsync(navigationParams);
+        }
+
+        public static Task<INavigationResult> StartNavigationViewModel<T>(this INavigationService navigationService, Parameters parameters = null)
+            where T : ViewModelBase
+        {
+            return navigationService.NavigateToViewModel(typeof(T), parameters, true);
+        }
+
+        private static void CheckType(Type type, Type constraint)
+        {
+            if (type.IsAssignableFrom(constraint))
+            {
+                throw new InvalidTypeException(type, constraint);
+            }
         }
 
         private static Task<INavigationResult> NavigateToViewModel(this INavigationService navigationService, Type viewModelType, Parameters parameters = null, bool isNavigationPage = false)
@@ -124,20 +138,6 @@ namespace JToolbox.XamarinForms.Core.Navigation
             {
                 throw new NoPageException(viewModelType.Name);
             }
-        }
-
-        public static Task<INavigationResult> Close(this INavigationService navigationService, Parameters parameters = null)
-        {
-            var navigationParams = parameters == null
-                ? new NavigationParameters() : parameters.CreateNavigationParameters();
-            return navigationService.GoBackAsync(navigationParams);
-        }
-
-        public static Task<INavigationResult> ReturnToRoot(this INavigationService navigationService, Parameters parameters = null)
-        {
-            var navigationParams = parameters == null
-                ? new NavigationParameters() : parameters.CreateNavigationParameters();
-            return navigationService.GoBackToRootAsync(navigationParams);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using JToolbox.WPF.Core.Awareness;
 using JToolbox.WPF.Core.Awareness.Args;
 using JToolbox.WPF.Core.Base;
-using System.Diagnostics;
 
 namespace Examples.Desktop.WPFDragDrop.ViewModels
 {

@@ -9,6 +9,17 @@ namespace JToolbox.Core.Tests
     public class IEnumerableExtensionsTests
     {
         [TestMethod]
+        public void SearchRecursively_GetItemsWithIdsBetween()
+        {
+            var items = GetItems();
+
+            var result = new List<Item>();
+            items.SearchRecursively(x => x.Items, x => x.Id >= 5 && x.Id <= 8, result);
+
+            Assert.AreEqual(4, result.Count);
+        }
+
+        [TestMethod]
         public void SearchRecursively_GetItemWithGivenId()
         {
             var items = GetItems();
@@ -18,17 +29,6 @@ namespace JToolbox.Core.Tests
 
             Assert.AreEqual(1, foundItems.Count);
             Assert.AreEqual(id, foundItems.Single().Id);
-        }
-
-        [TestMethod]
-        public void SearchRecursively_GetItemsWithIdsBetween()
-        {
-            var items = GetItems();
-
-            var result = new List<Item>();
-            items.SearchRecursively(x => x.Items, x => x.Id >= 5 && x.Id <= 8, result);
-
-            Assert.AreEqual(4, result.Count);
         }
 
         private List<Item> GetItems()

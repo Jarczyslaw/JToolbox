@@ -2,37 +2,37 @@
 
 namespace JToolbox.WinForms.MVP
 {
-    public delegate void ViewShown();
-
-    public delegate void ViewLoaded();
+    public delegate void ViewClosed();
 
     public delegate bool ViewClosing();
 
-    public delegate void ViewClosed();
+    public delegate void ViewLoaded();
+
+    public delegate void ViewShown();
 
     public interface IView
     {
-        event ViewShown OnViewShown;
-
-        event ViewLoaded OnViewLoaded;
+        event ViewClosed OnViewClosed;
 
         event ViewClosing OnViewClosing;
 
-        event ViewClosed OnViewClosed;
+        event ViewLoaded OnViewLoaded;
 
-        string ViewTitle { set; }
+        event ViewShown OnViewShown;
+
         bool ViewEnabled { get; set; }
+        string ViewTitle { set; }
+
+        void CloseView();
 
         void ShowView();
 
         void ShowViewAsModal();
 
-        void CloseView();
+        void ViewBeginInvoke(Action action);
 
         void ViewInvoke(Action action);
 
         T ViewInvoke<T>(Func<T> func);
-
-        void ViewBeginInvoke(Action action);
     }
 }
