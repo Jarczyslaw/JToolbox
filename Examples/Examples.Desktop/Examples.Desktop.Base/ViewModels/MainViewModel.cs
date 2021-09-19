@@ -63,32 +63,32 @@ namespace Examples.Desktop.Base.ViewModels
         public DelegateCommand NewWindowCommand => new DelegateCommand(() => WindowManager.GetMainWindow(Title).Show());
 
         public DelegateCommand RunCommand => runCommand ?? (runCommand = new DelegateCommand(async () =>
-                                                {
-                                                    Busy = true;
-                                                    Clear();
-                                                    WriteLine($"[MAIN] {SelectedExample.Display} started...");
-                                                    try
-                                                    {
-                                                        var example = SelectedExample.Example;
-                                                        if (!toCleanup.Contains(example))
-                                                        {
-                                                            toCleanup.Add(example);
-                                                        }
+        {
+            Busy = true;
+            Clear();
+            WriteLine($"[MAIN] {SelectedExample.Display} started...");
+            try
+            {
+                var example = SelectedExample.Example;
+                if (!toCleanup.Contains(example))
+                {
+                    toCleanup.Add(example);
+                }
 
-                                                        var stopwatch = Stopwatch.StartNew();
-                                                        await Task.Run(() => example.Run(this));
-                                                        WriteLine($"[MAIN] {SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
-                                                    }
-                                                    catch (Exception exc)
-                                                    {
-                                                        WriteLine($"[MAIN] {SelectedExample.Display} failed with exception:");
-                                                        WriteLine(exc.ToString());
-                                                    }
-                                                    finally
-                                                    {
-                                                        Busy = false;
-                                                    }
-                                                }, () => SelectedExample != null && !Busy));
+                var stopwatch = Stopwatch.StartNew();
+                await Task.Run(() => example.Run(this));
+                WriteLine($"[MAIN] {SelectedExample.Display} finished successfully in {Math.Round(stopwatch.Elapsed.TotalMilliseconds)}ms");
+            }
+            catch (Exception exc)
+            {
+                WriteLine($"[MAIN] {SelectedExample.Display} failed with exception:");
+                WriteLine(exc.ToString());
+            }
+            finally
+            {
+                Busy = false;
+            }
+        }, () => SelectedExample != null && !Busy));
 
         public ExampleViewModel SelectedExample
         {
