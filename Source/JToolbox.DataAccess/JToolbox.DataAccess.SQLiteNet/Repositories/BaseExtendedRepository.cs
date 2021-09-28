@@ -10,7 +10,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
     {
         public virtual bool SafeDelete(SQLiteConnection db, int id)
         {
-            return InternalGetUpdate(db, id, e => e.Deleted = true);
+            return InternalGetAndUpdate(db, id, e => e.Deleted = true);
         }
 
         public virtual bool SafeDelete(SQLiteConnection db, TEntity entity)
@@ -20,14 +20,14 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual void SafeDelete(SQLiteConnection db, List<int> ids)
         {
-            InternalGetUpdate(db, ids, x => x.Deleted = true);
+            InternalGetAndUpdate(db, ids, x => x.Deleted = true);
         }
 
         public virtual void SafeDelete(SQLiteConnection db, List<TEntity> entities)
         {
             var ids = entities.Select(x => x.Id)
                 .ToList();
-            InternalGetUpdate(db, ids, x => x.Deleted = true);
+            InternalGetAndUpdate(db, ids, x => x.Deleted = true);
         }
 
         public virtual void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
@@ -57,34 +57,6 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             if (entity.CreateDate == default)
             {
                 entity.CreateDate = DateTime.Now;
-            }
-        }
-
-        private bool InternalGetUpdate(SQLiteConnection db, int id, Action<TEntity> action)
-        {
-            var entity = db.Table<TEntity>().Where(t => t.Id == id).FirstOrDefault();
-            if (entity != null)
-            {
-                PrepareEntity(entity);
-                action(entity);
-                return db.Update(entity) > 0;
-            }
-            return false;
-        }
-
-        private void InternalGetUpdate(SQLiteConnection db, List<int> ids, Action<TEntity> action)
-        {
-            var entities = db.Table<TEntity>().Where(t => ids.Contains(t.Id))
-                .ToList();
-            if (entities?.Count > 0)
-            {
-                foreach (var entity in entities)
-                {
-                    PrepareEntity(entity);
-                    action(entity);
-                }
-
-                db.UpdateAll(entities, true);
             }
         }
     }

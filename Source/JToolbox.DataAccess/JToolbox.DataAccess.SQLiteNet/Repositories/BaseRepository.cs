@@ -132,6 +132,11 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             return db.Update(entity) > 0;
         }
 
+        public virtual bool Update(SQLiteConnection db, int id, Action<TEntity> action)
+        {
+            return InternalGetAndUpdate(db, id, action);
+        }
+
         public virtual int UpdateMany(SQLiteConnection db, List<TEntity> entities)
         {
             if (entities?.Count > 0)
@@ -139,6 +144,41 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
                 entities.ForEach(e => PrepareEntity(e));
                 return db.UpdateAll(entities);
             }
+            return 0;
+        }
+
+        public virtual int UpdateMany(SQLiteConnection db, List<int> ids, Action<TEntity> action)
+        {
+            return InternalGetAndUpdate(db, ids, action);
+        }
+
+        protected bool InternalGetAndUpdate(SQLiteConnection db, int id, Action<TEntity> action)
+        {
+            var entity = db.Table<TEntity>().Where(t => t.Id == id).FirstOrDefault();
+            if (entity != null)
+            {
+                PrepareEntity(entity);
+                action(entity);
+                return db.Update(entity) > 0;
+            }
+            return false;
+        }
+
+        protected int InternalGetAndUpdate(SQLiteConnection db, List<int> ids, Action<TEntity> action)
+        {
+            var entities = db.Table<TEntity>().Where(t => ids.Contains(t.Id))
+                .ToList();
+            if (entities?.Count > 0)
+            {
+                foreach (var entity in entities)
+                {
+                    PrepareEntity(entity);
+                    action(entity);
+                }
+
+                return db.UpdateAll(entities, true);
+            }
+
             return 0;
         }
 
