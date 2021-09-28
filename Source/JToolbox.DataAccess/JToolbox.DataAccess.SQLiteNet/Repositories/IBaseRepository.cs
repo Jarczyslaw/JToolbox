@@ -38,6 +38,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         bool Update(SQLiteConnection db, TEntity entity);
 
+        bool Update(SQLiteConnection db, int id, Action<TEntity> action);
+
         int UpdateMany(SQLiteConnection db, List<TEntity> entities);
+
+        int UpdateMany(SQLiteConnection db, List<int> ids, Action<TEntity> action);
     }
 }
