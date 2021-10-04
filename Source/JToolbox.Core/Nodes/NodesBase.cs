@@ -69,7 +69,19 @@ namespace JToolbox.Core.Nodes
 
         public void ForEachNode(Action<Node<T>> action)
         {
-            GetAllNodes().ForEach(action);
+            foreach (var node in nodes)
+            {
+                action(node);
+            }
+        }
+
+        public void ForEachNodeRecursive(Action<Node<T>> action)
+        {
+            foreach (var node in nodes)
+            {
+                action(node);
+                node.ForEachNodeRecursive(action);
+            }
         }
 
         public List<Node<T>> GetAllNodes(List<Node<T>> result = null)

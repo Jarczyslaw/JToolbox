@@ -6,6 +6,14 @@ namespace JToolbox.Core.Extensions
 {
     public static class IEnumerableExtensions
     {
+        public static void ForEach<T>(this IEnumerable<T> @this, Action<T> action)
+        {
+            foreach (var item in @this)
+            {
+                action(item);
+            }
+        }
+
         public static int SafeMax<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
         {
             return enumerable.Any() ? enumerable.Max(selector) : defaultValue;
