@@ -1,11 +1,9 @@
-﻿using JToolbox.DataAccess.SQLiteNet.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace JToolbox.DataAccess.SQLiteNet
+namespace JToolbox.DataAccess.Common
 {
     public class Merge<T>
-        where T : BaseEntity
     {
         public List<T> ToCreate { get; set; }
         public List<T> ToDelete { get; set; }

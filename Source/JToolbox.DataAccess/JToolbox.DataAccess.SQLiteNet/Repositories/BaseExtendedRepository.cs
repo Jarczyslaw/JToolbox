@@ -1,4 +1,5 @@
-﻿using JToolbox.DataAccess.SQLiteNet.Entities;
+﻿using JToolbox.DataAccess.Common;
+using JToolbox.DataAccess.SQLiteNet.Entities;
 using SQLite;
 using System;
 using System.Collections.Generic;
