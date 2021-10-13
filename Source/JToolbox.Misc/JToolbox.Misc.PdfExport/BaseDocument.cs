@@ -9,14 +9,13 @@ namespace JToolbox.Misc.PdfExport
 {
     public abstract class BaseDocument
     {
-        protected Section lastSection;
-
         protected BaseDocument(DocumentInfo documentInfo, double leftRightMargin = 1, double topBottomMargin = 1)
         {
             InitializeDocument(documentInfo, leftRightMargin, topBottomMargin);
         }
 
-        public Document Document { get; private set; }
+        protected Section LastSection => Document.LastSection;
+        protected Document Document { get; private set; }
 
         public void Print()
         {
@@ -49,8 +48,8 @@ namespace JToolbox.Misc.PdfExport
             pageSetup.LeftMargin = Unit.FromCentimeter(leftRightMargin);
             pageSetup.RightMargin = Unit.FromCentimeter(leftRightMargin);
 
-            lastSection = Document.AddSection();
-            lastSection.PageSetup = pageSetup;
+            Document.AddSection();
+            Document.LastSection.PageSetup = pageSetup;
         }
 
         private PdfDocument Render()
