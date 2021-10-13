@@ -1,6 +1,7 @@
 ﻿using JToolbox.Desktop.Dialogs;
 using MigraDoc.DocumentObjectModel;
 using System;
+using System.Diagnostics;
 
 namespace Examples.Desktop.SimplePdfExport
 {
@@ -32,7 +33,10 @@ namespace Examples.Desktop.SimplePdfExport
                     simpleDocument.Fill();
                     simpleDocument.Save(filePath);
 
-                    Console.WriteLine("Document created successfully");
+                    Console.WriteLine("Document created successfully. Press any key to open this file");
+                    Console.ReadKey();
+
+                    Process.Start(filePath);
                 }
             }
             catch (Exception exc)
