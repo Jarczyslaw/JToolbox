@@ -15,7 +15,9 @@ namespace JToolbox.Misc.PdfExport
         }
 
         protected Section LastSection => Document.LastSection;
+        protected double PageWidth => PageSetup.PageWidth - PageSetup.LeftMargin - PageSetup.RightMargin;
         protected Document Document { get; private set; }
+        protected PageSetup PageSetup { get; private set; }
 
         public void Print()
         {
@@ -42,14 +44,14 @@ namespace JToolbox.Misc.PdfExport
             Document = new Document();
             Document.Info = documentInfo;
 
-            var pageSetup = Document.DefaultPageSetup.Clone();
-            pageSetup.TopMargin = Unit.FromCentimeter(topBottomMargin);
-            pageSetup.BottomMargin = Unit.FromCentimeter(topBottomMargin);
-            pageSetup.LeftMargin = Unit.FromCentimeter(leftRightMargin);
-            pageSetup.RightMargin = Unit.FromCentimeter(leftRightMargin);
+            PageSetup = Document.DefaultPageSetup.Clone();
+            PageSetup.TopMargin = Unit.FromCentimeter(topBottomMargin);
+            PageSetup.BottomMargin = Unit.FromCentimeter(topBottomMargin);
+            PageSetup.LeftMargin = Unit.FromCentimeter(leftRightMargin);
+            PageSetup.RightMargin = Unit.FromCentimeter(leftRightMargin);
 
             Document.AddSection();
-            Document.LastSection.PageSetup = pageSetup;
+            Document.LastSection.PageSetup = PageSetup;
         }
 
         private PdfDocument Render()
