@@ -71,6 +71,8 @@
     </Compile>
     <Compile Include="PdfUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\GenericTable.cs" />
+    <Compile Include="Tables\GenericTableColumn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

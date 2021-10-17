@@ -14,10 +14,10 @@ namespace JToolbox.Misc.PdfExport
             InitializeDocument(documentInfo, leftRightMargin, topBottomMargin);
         }
 
-        protected Section LastSection => Document.LastSection;
-        protected double PageWidth => PageSetup.PageWidth - PageSetup.LeftMargin - PageSetup.RightMargin;
-        protected Document Document { get; private set; }
-        protected PageSetup PageSetup { get; private set; }
+        public Document Document { get; private set; }
+        public Section LastSection => Document.LastSection;
+        public PageSetup PageSetup { get; private set; }
+        public double PageWidth => PageSetup.PageWidth - PageSetup.LeftMargin - PageSetup.RightMargin;
 
         public void Print()
         {
