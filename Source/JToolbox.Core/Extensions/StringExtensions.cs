@@ -1,10 +1,20 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace JToolbox.Core.Extensions
 {
     public static class StringExtensions
     {
+        public static string AsValidFileName(this string @string, string replaceChar = "_")
+        {
+            string invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+            return Regex.Replace(@string, invalidRegStr, replaceChar);
+        }
+
         public static string ExtractBetween(this string @string, string from, string to)
         {
             if (@string == null)
