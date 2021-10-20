@@ -1,5 +1,4 @@
-﻿using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Tables;
+﻿using MigraDoc.DocumentObjectModel.Tables;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,8 +24,8 @@ namespace JToolbox.Misc.PdfExport.Tables
 
             foreach (var column in Columns)
             {
-                var col = table.AddColumn(column.Width);
-                PrepareColumn(col);
+                var tableColumn = table.AddColumn(column.Width);
+                PrepareColumn(column, tableColumn);
             }
 
             var headerRow = table.AddRow();
@@ -35,8 +34,7 @@ namespace JToolbox.Misc.PdfExport.Tables
             for (int i = 0; i < Columns.Count; i++)
             {
                 var column = Columns[i];
-                var paragraph = headerRow[i].AddParagraph();
-                PrepareHeaderColumn(i, column, paragraph);
+                PrepareHeaderColumn(i, column, headerRow);
             }
 
             for (int i = 0; i < items.Count; i++)
@@ -47,11 +45,11 @@ namespace JToolbox.Misc.PdfExport.Tables
             }
         }
 
-        protected virtual void PrepareColumn(Column column)
+        protected virtual void PrepareColumn(GenericTableColumn column, Column tableColumn)
         {
         }
 
-        protected virtual void PrepareHeaderColumn(int i, GenericTableColumn column, Paragraph paragraph)
+        protected virtual void PrepareHeaderColumn(int i, GenericTableColumn column, Row headerRow)
         {
         }
 
@@ -70,7 +68,11 @@ namespace JToolbox.Misc.PdfExport.Tables
         private void CalculateFillColumnWidth()
         {
             var columnsWidth = Columns.Sum(x => x.Width);
-            Columns.Single(x => x.Width == default).Width = document.PageWidth - columnsWidth;
+            var columnToStretch = Columns.SingleOrDefault(x => x.Width == default);
+            if (columnToStretch != null)
+            {
+                columnToStretch.Width = document.PageWidth - columnsWidth;
+            }
         }
     }
 }

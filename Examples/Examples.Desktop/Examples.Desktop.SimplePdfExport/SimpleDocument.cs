@@ -1,6 +1,7 @@
 ﻿using JToolbox.Misc.PdfExport;
 using MigraDoc.DocumentObjectModel;
 using System;
+using System.Collections.Generic;
 
 namespace Examples.Desktop.SimplePdfExport
 {
@@ -12,6 +13,30 @@ namespace Examples.Desktop.SimplePdfExport
         }
 
         public void Fill()
+        {
+            AddTitle();
+            AddTable();
+        }
+
+        private void AddTable()
+        {
+            var table = new SimpleTable(this);
+            table.Print(new List<TableItem>
+            {
+                new TableItem
+                {
+                    Title = "Title1",
+                    Value = 1
+                },
+                new TableItem
+                {
+                    Title = "Title2",
+                    Value =2
+                }
+            });
+        }
+
+        private void AddTitle()
         {
             var paragraph = LastSection.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;

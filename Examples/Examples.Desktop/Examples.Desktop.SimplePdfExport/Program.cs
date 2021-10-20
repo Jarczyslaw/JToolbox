@@ -11,9 +11,6 @@ namespace Examples.Desktop.SimplePdfExport
         {
             try
             {
-                Console.WriteLine("Press any key to create simple PDF document");
-                Console.ReadKey();
-
                 var filter = new FilterPair
                 {
                     Extensions = "pdf",
@@ -32,9 +29,6 @@ namespace Examples.Desktop.SimplePdfExport
                     var simpleDocument = new SimpleDocument(documentInfo, 1, 2);
                     simpleDocument.Fill();
                     simpleDocument.Save(filePath);
-
-                    Console.WriteLine("Document created successfully. Press any key to open this file");
-                    Console.ReadKey();
 
                     Process.Start(filePath);
                 }
