@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Net.Sockets;
 
@@ -21,11 +20,9 @@ namespace JToolbox.Misc.TimeProviders
             using (var rdr = new StreamReader(tcp.GetStream()))
             {
                 resp = rdr.ReadToEnd();
+                var utc = resp.Substring(7, 17);
+                return ParseDateTimeOffset(utc, "yy-MM-dd HH:mm:ss");
             }
-
-            string utc = resp.Substring(7, 17);
-            var dt = DateTimeOffset.ParseExact(utc, "yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
-            return dt.UtcDateTime.ToLocalTime();
         }
     }
 }

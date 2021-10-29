@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Examples.Desktop.TimeProviders
 {
@@ -22,22 +21,15 @@ namespace Examples.Desktop.TimeProviders
 
                 while (true)
                 {
-                    var tasks = new List<Task>();
                     foreach (var provider in providers)
                     {
-                        tasks.Add(new Task(() =>
-                        {
-                            var stopwatch = Stopwatch.StartNew();
-                            var now = provider.Now();
-                            var localNow = DateTime.Now;
-                            var elapsed = stopwatch.Elapsed;
-                            var diff = Math.Abs((localNow - now).TotalMilliseconds);
-                            Console.WriteLine($"{DateTime.Now:HH:mm:ss.fff}: Now from {provider.GetType().Name}: \t{now:HH:mm:ss.fff}, elapsed: {elapsed.TotalMilliseconds}ms, diff: {diff}ms");
-                        }));
+                        var stopwatch = Stopwatch.StartNew();
+                        var now = provider.Now();
+                        var localNow = DateTime.Now;
+                        var elapsed = stopwatch.Elapsed;
+                        var diff = (now - localNow).TotalMilliseconds;
+                        Console.WriteLine($"{localNow:HH:mm:ss.fff}: {provider.GetType().Name}: \t{now:HH:mm:ss.fff}, elapsed: {elapsed.TotalMilliseconds}ms, diff: {diff}ms");
                     }
-
-                    tasks.ForEach(x => x.Start());
-                    Task.WaitAll(tasks.ToArray());
 
                     Console.ReadKey();
                 }

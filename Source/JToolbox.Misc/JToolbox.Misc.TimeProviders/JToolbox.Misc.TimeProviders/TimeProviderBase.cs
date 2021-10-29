@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace JToolbox.Misc.TimeProviders
 {
@@ -30,6 +31,15 @@ namespace JToolbox.Misc.TimeProviders
 
                 return synchronizationDate.Value + stopwatch.Elapsed;
             }
+        }
+
+        protected DateTime ParseDateTimeOffset(string dateTimeOffset, string format)
+        {
+            var dt = DateTimeOffset.ParseExact(dateTimeOffset,
+                format,
+                CultureInfo.InvariantCulture.DateTimeFormat,
+                DateTimeStyles.AssumeUniversal);
+            return dt.UtcDateTime.ToLocalTime();
         }
 
         protected abstract DateTime Synchronize();
