@@ -199,7 +199,7 @@ namespace JToolbox.Desktop.Dialogs
             dialog.CheckFileExists = checkFileExists;
             dialog.CheckPathExists = checkFileExists;
             dialog.Filter = CreateFilter(filters);
-            dialog.DefaultExt = filters.First().Extensions;
+            dialog.DefaultExt = filters?.Count > 0 ? filters[0].Extensions : null;
         }
 
         private void ShowMessageTaskDialog(TaskDialogIcon icon, string title, string message, string details, IntPtr? owner)
