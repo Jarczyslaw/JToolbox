@@ -138,7 +138,11 @@ namespace JToolbox.Desktop.Dialogs
 
         private string CreateFilter(List<FilterPair> filters)
         {
-            return string.Join("|", filters.Select(s => s.ToString()));
+            if (filters?.Count > 0)
+            {
+                return string.Join("|", filters.Select(s => s.ToString()));
+            }
+            return null;
         }
 
         private string GetMessageFromException(Exception exception, string message)
