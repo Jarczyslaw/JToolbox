@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Examples.Desktop.TimeProviders
 {
-    internal class Program
+    internal static class Program
     {
         private static void Main(string[] args)
         {
