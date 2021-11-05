@@ -1,13 +1,13 @@
 ﻿using JToolbox.Core.Abstraction;
 using JToolbox.DataAccess.Common;
-using JToolbox.DataAccess.SQLiteNet.Entities;
-using SQLite;
+using JToolbox.DataAccess.EntityFrameworkAccess.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
-namespace JToolbox.DataAccess.SQLiteNet.Repositories
+namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
 {
-    public abstract class BaseExtendedRepository<TEntity> : BaseRepository<TEntity>, IBaseExtendedRepository<TEntity> where TEntity : BaseExtendedEntity, new()
+    public class BaseExtendedRepository<TModel> : BaseRepository<TModel>, IBaseExtendedRepository<TModel> where TModel : BaseExtendedModel
     {
         private readonly ITimeProvider timeProvider;
 
@@ -16,31 +16,31 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             this.timeProvider = timeProvider;
         }
 
-        public virtual bool SafeDelete(SQLiteConnection db, int id)
+        public virtual bool SafeDelete(DbContext db, int id)
         {
             return InternalGetAndUpdate(db, id, e => e.Deleted = true);
         }
 
-        public virtual bool SafeDelete(SQLiteConnection db, TEntity entity)
+        public virtual bool SafeDelete(DbContext db, TModel model)
         {
-            return SafeDelete(db, entity.Id);
+            return SafeDelete(db, model.Id);
         }
 
-        public virtual void SafeDelete(SQLiteConnection db, List<int> ids)
+        public virtual void SafeDelete(DbContext db, List<int> ids)
         {
             InternalGetAndUpdate(db, ids, x => x.Deleted = true);
         }
 
-        public virtual void SafeDelete(SQLiteConnection db, List<TEntity> entities)
+        public virtual void SafeDelete(DbContext db, List<TModel> models)
         {
-            var ids = entities.Select(x => x.Id)
+            var ids = models.Select(x => x.Id)
                 .ToList();
             InternalGetAndUpdate(db, ids, x => x.Deleted = true);
         }
 
-        public virtual void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
+        public virtual void SafeMerge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer)
         {
-            var merge = new Merge<TEntity>();
+            var merge = new Merge<TModel>();
             merge.MergeLists(newList, currentList, equalityComparer);
 
             foreach (var entity in merge.ToDelete)
@@ -59,12 +59,12 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             }
         }
 
-        protected override void PrepareEntity(TEntity entity)
+        protected override void PrepareModel(TModel model)
         {
-            entity.UpdateDate = timeProvider.Now();
-            if (entity.CreateDate == default)
+            model.UpdateDate = timeProvider.Now();
+            if (model.CreateDate == default)
             {
-                entity.CreateDate = timeProvider.Now();
+                model.CreateDate = timeProvider.Now();
             }
         }
     }

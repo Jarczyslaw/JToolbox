@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{29495D19-7102-48AB-B3F2-653F93A9779D}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.TimeProviders\JToolbox.Misc.TimeProviders\JToolbox.Misc.TimeProviders.csproj">
       <Project>{7c41ec2d-8390-4e97-8428-0473d2589381}</Project>
       <Name>JToolbox.Misc.TimeProviders</Name>

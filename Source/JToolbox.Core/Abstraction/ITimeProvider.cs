@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace JToolbox.Misc.TimeProviders
+namespace JToolbox.Core.Abstraction
 {
     public interface ITimeProvider
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JToolbox.Core.Abstraction;
+using System;
 
 namespace JToolbox.Misc.TimeProviders
 {

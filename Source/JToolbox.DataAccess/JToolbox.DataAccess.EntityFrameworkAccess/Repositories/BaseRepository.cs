@@ -2,22 +2,22 @@
 using JToolbox.DataAccess.EntityFrameworkAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
 {
-    public class BaseRepository<TModel>
-        where TModel : BaseModel
+    public class BaseRepository<TModel> : IBaseRepository<TModel> where TModel : BaseModel
     {
-        public virtual int Count(BaseContext db, Expression<Func<TModel, bool>> expression)
+        public virtual int Count(DbContext db, Expression<Func<TModel, bool>> expression)
         {
             return db.Set<TModel>()
                 .Where(expression)
                 .Count();
         }
 
-        public virtual int Create(BaseContext db, TModel model)
+        public virtual int Create(DbContext db, TModel model)
         {
             PrepareModel(model);
             db.Set<TModel>().Add(model);
@@ -25,7 +25,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return model.Id;
         }
 
-        public virtual int CreateMany(BaseContext db, List<TModel> models)
+        public virtual int CreateMany(DbContext db, List<TModel> models)
         {
             if (models?.Count > 0)
             {
@@ -37,12 +37,12 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return 0;
         }
 
-        public virtual bool Delete(BaseContext db, TModel model)
+        public virtual bool Delete(DbContext db, TModel model)
         {
             return Delete(db, model.Id);
         }
 
-        public virtual bool Delete(BaseContext db, int id)
+        public virtual bool Delete(DbContext db, int id)
         {
             var model = GetById(db, id);
             if (model != null)
@@ -54,7 +54,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return false;
         }
 
-        public virtual void DeleteMany(BaseContext db, List<TModel> models)
+        public virtual void DeleteMany(DbContext db, List<TModel> models)
         {
             if (models?.Count > 0)
             {
@@ -63,7 +63,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             }
         }
 
-        public virtual void DeleteMany(BaseContext db, List<int> ids)
+        public virtual void DeleteMany(DbContext db, List<int> ids)
         {
             if (ids?.Count > 0)
             {
@@ -73,7 +73,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             }
         }
 
-        public virtual bool EntityExists(BaseContext db, TModel model, Expression<Func<TModel, bool>> expression)
+        public virtual bool EntityExists(DbContext db, TModel model, Expression<Func<TModel, bool>> expression)
         {
             var expressions = new List<Expression<Func<TModel, bool>>>
             {
@@ -83,17 +83,17 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return GetBy(db, expressions).Count > 0;
         }
 
-        public virtual List<TModel> GetAll(BaseContext db)
+        public virtual List<TModel> GetAll(DbContext db)
         {
             return db.Set<TModel>().ToList();
         }
 
-        public virtual List<TModel> GetBy(BaseContext db, Expression<Func<TModel, bool>> expression)
+        public virtual List<TModel> GetBy(DbContext db, Expression<Func<TModel, bool>> expression)
         {
             return GetBy(db, new List<Expression<Func<TModel, bool>>> { expression });
         }
 
-        public virtual List<TModel> GetBy(BaseContext db, IEnumerable<Expression<Func<TModel, bool>>> expressions)
+        public virtual List<TModel> GetBy(DbContext db, IEnumerable<Expression<Func<TModel, bool>>> expressions)
         {
             var entities = db.Set<TModel>().AsQueryable();
             foreach (var expression in expressions)
@@ -103,12 +103,12 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return entities.ToList();
         }
 
-        public virtual TModel GetById(BaseContext db, int id)
+        public virtual TModel GetById(DbContext db, int id)
         {
             return db.Set<TModel>().FirstOrDefault(e => e.Id == id);
         }
 
-        public virtual List<TModel> GetByIds(BaseContext db, List<int> ids)
+        public virtual List<TModel> GetByIds(DbContext db, List<int> ids)
         {
             var lookup = ids.Distinct()
                 .ToList();
@@ -117,7 +117,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
                 .ToList();
         }
 
-        public virtual void Merge(BaseContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer)
+        public virtual void Merge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer)
         {
             var merge = new Merge<TModel>();
             merge.MergeLists(newList, currentList, equalityComparer);
@@ -138,7 +138,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             }
         }
 
-        public virtual bool Update(BaseContext db, TModel model)
+        public virtual bool Update(DbContext db, TModel model)
         {
             PrepareModel(model);
             var attachedModel = GetById(db, model.Id);
@@ -151,12 +151,12 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return false;
         }
 
-        public virtual bool Update(BaseContext db, int id, Action<TModel> action)
+        public virtual bool Update(DbContext db, int id, Action<TModel> action)
         {
             return InternalGetAndUpdate(db, id, action);
         }
 
-        public virtual int UpdateMany(BaseContext db, List<TModel> models)
+        public virtual int UpdateMany(DbContext db, List<TModel> models)
         {
             if (models?.Count > 0)
             {
@@ -173,12 +173,12 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return 0;
         }
 
-        public virtual int UpdateMany(BaseContext db, List<int> ids, Action<TModel> action)
+        public virtual int UpdateMany(DbContext db, List<int> ids, Action<TModel> action)
         {
             return InternalGetAndUpdate(db, ids, action);
         }
 
-        protected bool InternalGetAndUpdate(BaseContext db, int id, Action<TModel> action)
+        protected bool InternalGetAndUpdate(DbContext db, int id, Action<TModel> action)
         {
             var attachedModel = GetById(db, id);
             if (attachedModel != null)
@@ -191,7 +191,7 @@ namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
             return false;
         }
 
-        protected int InternalGetAndUpdate(BaseContext db, List<int> ids, Action<TModel> action)
+        protected int InternalGetAndUpdate(DbContext db, List<int> ids, Action<TModel> action)
         {
             var attachedModels = GetByIds(db, ids);
             if (attachedModels?.Count > 0)
