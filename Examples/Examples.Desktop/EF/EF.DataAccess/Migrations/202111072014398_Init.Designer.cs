@@ -13,7 +13,7 @@ namespace EF.DataAccess
         
         string IMigrationMetadata.Id
         {
-            get { return "202111071701093_Init"; }
+            get { return "202111072014398_Init"; }
         }
         
         string IMigrationMetadata.Source

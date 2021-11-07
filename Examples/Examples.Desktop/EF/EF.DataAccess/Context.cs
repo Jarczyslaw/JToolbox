@@ -20,6 +20,15 @@ namespace EF.DataAccess
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
             modelBuilder.HasDefaultSchema(nameof(Context));
 
+            modelBuilder.Entity<Subject>()
+                .HasMany(x => x.Students)
+                .WithMany(x => x.Subjects)
+                .Map(x =>
+                {
+                    x.MapLeftKey("StudentId");
+                    x.MapRightKey("SubjectId");
+                });
+
             base.OnModelCreating(modelBuilder);
         }
     }

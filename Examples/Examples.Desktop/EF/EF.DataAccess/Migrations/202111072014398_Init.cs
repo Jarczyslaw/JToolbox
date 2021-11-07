@@ -70,26 +70,26 @@
                 "Context.SubjectStudents",
                 c => new
                     {
-                        Subject_Id = c.Int(nullable: false),
-                        Student_Id = c.Int(nullable: false),
+                        StudentId = c.Int(nullable: false),
+                        SubjectId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Subject_Id, t.Student_Id })
-                .ForeignKey("Context.Subjects", t => t.Subject_Id, cascadeDelete: true)
-                .ForeignKey("Context.Students", t => t.Student_Id, cascadeDelete: true)
-                .Index(t => t.Subject_Id)
-                .Index(t => t.Student_Id);
+                .PrimaryKey(t => new { t.StudentId, t.SubjectId })
+                .ForeignKey("Context.Subjects", t => t.StudentId, cascadeDelete: true)
+                .ForeignKey("Context.Students", t => t.SubjectId, cascadeDelete: true)
+                .Index(t => t.StudentId)
+                .Index(t => t.SubjectId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("Context.SubjectStudents", "Student_Id", "Context.Students");
-            DropForeignKey("Context.SubjectStudents", "Subject_Id", "Context.Subjects");
+            DropForeignKey("Context.SubjectStudents", "SubjectId", "Context.Students");
+            DropForeignKey("Context.SubjectStudents", "StudentId", "Context.Subjects");
             DropForeignKey("Context.Assessments", "SubjectId", "Context.Subjects");
             DropForeignKey("Context.Students", "StudentsGroupId", "Context.StudentsGroups");
             DropForeignKey("Context.Assessments", "StudentId", "Context.Students");
-            DropIndex("Context.SubjectStudents", new[] { "Student_Id" });
-            DropIndex("Context.SubjectStudents", new[] { "Subject_Id" });
+            DropIndex("Context.SubjectStudents", new[] { "SubjectId" });
+            DropIndex("Context.SubjectStudents", new[] { "StudentId" });
             DropIndex("Context.Students", new[] { "StudentsGroupId" });
             DropIndex("Context.Assessments", new[] { "SubjectId" });
             DropIndex("Context.Assessments", new[] { "StudentId" });
