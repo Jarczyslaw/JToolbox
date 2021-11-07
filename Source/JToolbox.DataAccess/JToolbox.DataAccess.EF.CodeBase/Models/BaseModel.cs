@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JToolbox.DataAccess.EntityFrameworkAccess.Models
+namespace JToolbox.DataAccess.EF.Models
 {
     public class BaseModel
     {

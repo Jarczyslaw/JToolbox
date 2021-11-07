@@ -1,10 +1,14 @@
 ﻿using System.Data.Entity;
 
-namespace JToolbox.DataAccess.EntityFrameworkAccess
+namespace JToolbox.DataAccess.EF
 {
     public abstract class BaseContext : DbContext
     {
-        public BaseContext(string nameOrConnectionString)
+        protected BaseContext()
+        {
+        }
+
+        protected BaseContext(string nameOrConnectionString)
            : base(nameOrConnectionString)
         {
             Configuration.ProxyCreationEnabled = false;

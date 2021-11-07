@@ -1,8 +1,8 @@
-﻿using JToolbox.DataAccess.EntityFrameworkAccess.Models;
+﻿using JToolbox.DataAccess.EF.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 
-namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
+namespace JToolbox.DataAccess.EF.Repositories
 {
     public interface IBaseExtendedRepository<TModel> : IBaseRepository<TModel> where TModel : BaseExtendedModel
     {

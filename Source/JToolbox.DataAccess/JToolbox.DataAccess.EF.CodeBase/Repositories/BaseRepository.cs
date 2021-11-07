@@ -1,12 +1,12 @@
 ﻿using JToolbox.DataAccess.Common;
-using JToolbox.DataAccess.EntityFrameworkAccess.Models;
+using JToolbox.DataAccess.EF.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace JToolbox.DataAccess.EntityFrameworkAccess.Repositories
+namespace JToolbox.DataAccess.EF.Repositories
 {
     public class BaseRepository<TModel> : IBaseRepository<TModel> where TModel : BaseModel
     {

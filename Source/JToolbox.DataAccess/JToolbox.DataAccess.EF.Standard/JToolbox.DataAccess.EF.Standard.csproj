@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\BaseConfiguration.cs" Link="BaseConfiguration.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\BaseContext.cs" Link="BaseContext.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\Models\BaseExtendedModel.cs" Link="Models\BaseExtendedModel.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\Models\BaseModel.cs" Link="Models\BaseModel.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\Repositories\BaseExtendedRepository.cs" Link="Repositories\BaseExtendedRepository.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\Repositories\BaseRepository.cs" Link="Repositories\BaseRepository.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\Repositories\IBaseExtendedRepository.cs" Link="Repositories\IBaseExtendedRepository.cs" />
+    <Compile Include="..\JToolbox.DataAccess.EF.CodeBase\Repositories\IBaseRepository.cs" Link="Repositories\IBaseRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox.Core\JToolbox.Core.csproj" />
+    <ProjectReference Include="..\JToolbox.DataAccess.Common\JToolbox.DataAccess.Common.csproj" />
+    <ProjectReference Include="..\JToolbox.DataAccess.EF.CodeBase\JToolbox.DataAccess.EF.CodeBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+
+</Project>
