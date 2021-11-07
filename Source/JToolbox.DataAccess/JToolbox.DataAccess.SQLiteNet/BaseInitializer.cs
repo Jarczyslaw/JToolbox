@@ -26,6 +26,11 @@ namespace JToolbox.DataAccess.SQLiteNet
                 throw new Exception("No migrations defined. Add initial migration to initialize database");
             }
 
+            if (Migrations.Any(x => x.GetVersion() == null))
+            {
+                throw new Exception("At least one migration has invalid name. Migration should be named as 'Migration_{version}_{migrationName}");
+            }
+
             var repository = new MigrationsRepository();
             var currentMigrations = repository.GetAll(db)
                 .ConvertAll(s => s.Name);
@@ -44,7 +49,8 @@ namespace JToolbox.DataAccess.SQLiteNet
                     db.Insert(new MigrationEntity
                     {
                         Name = migrationName,
-                        ExecutionDate = DateTime.Now
+                        ExecutionDate = DateTime.Now,
+                        Version = migration.GetVersion().Value
                     });
                 }
             }
