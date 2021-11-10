@@ -1,5 +1,5 @@
-﻿using JToolbox.Core.Abstraction;
-using JToolbox.Misc.TimeProviders;
+﻿using JToolbox.Core.TimeProvider;
+using JToolbox.Misc.TimeProviders.Ntp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

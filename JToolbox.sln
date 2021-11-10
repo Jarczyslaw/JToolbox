@@ -138,15 +138,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.PdfExport", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.SimplePdfExport", "Examples\Examples.Desktop\Examples.Desktop.SimplePdfExport\Examples.Desktop.SimplePdfExport.csproj", "{9EF215DE-EC68-4525-AD54-29C5201B85FD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JToolbox.Misc.TimeProviders", "JToolbox.Misc.TimeProviders", "{E2956B32-2DA2-469B-9BCC-1022347A0A67}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.TimeProviders", "Source\JToolbox.Misc\JToolbox.Misc.TimeProviders\JToolbox.Misc.TimeProviders\JToolbox.Misc.TimeProviders.csproj", "{7C41EC2D-8390-4E97-8428-0473D2589381}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.TimeProviders", "Examples\Examples.Desktop\Examples.Desktop.TimeProviders\Examples.Desktop.TimeProviders.csproj", "{A820F502-3837-4FDF-AA0B-6F08B0275D05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.EF.CodeBase", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EF.CodeBase\JToolbox.DataAccess.EF.CodeBase.csproj", "{A4A8661E-2D64-4F81-A079-10C0AFA9B942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.EF.CodeBase", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EF.CodeBase\JToolbox.DataAccess.EF.CodeBase.csproj", "{A4A8661E-2D64-4F81-A079-10C0AFA9B942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.EF.Standard", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EF.Standard\JToolbox.DataAccess.EF.Standard.csproj", "{9F6E3136-1697-4D9E-B55C-359BA76CC66A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.EF.Standard", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EF.Standard\JToolbox.DataAccess.EF.Standard.csproj", "{9F6E3136-1697-4D9E-B55C-359BA76CC66A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.EF.Framework", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EF.Framework\JToolbox.DataAccess.EF.Framework.csproj", "{925F5B76-C246-4CFC-8439-5C8E7C559A22}"
 EndProject
@@ -155,6 +151,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.App", "Examples\Examples.Desktop\EF\EF.App\EF.App.csproj", "{6A1B595C-CE62-4787-857C-81DDDD461E11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.DataAccess", "Examples\Examples.Desktop\EF\EF.DataAccess\EF.DataAccess.csproj", "{C155008C-E35C-47A4-8263-CF79F9900F6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.TimeProviders.Ntp", "Source\JToolbox.Misc\JToolbox.Misc.TimeProviders.Ntp\JToolbox.Misc.TimeProviders.Ntp.csproj", "{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -358,10 +356,6 @@ Global
 		{9EF215DE-EC68-4525-AD54-29C5201B85FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EF215DE-EC68-4525-AD54-29C5201B85FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EF215DE-EC68-4525-AD54-29C5201B85FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C41EC2D-8390-4E97-8428-0473D2589381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C41EC2D-8390-4E97-8428-0473D2589381}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C41EC2D-8390-4E97-8428-0473D2589381}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C41EC2D-8390-4E97-8428-0473D2589381}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A820F502-3837-4FDF-AA0B-6F08B0275D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A820F502-3837-4FDF-AA0B-6F08B0275D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A820F502-3837-4FDF-AA0B-6F08B0275D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -386,6 +380,10 @@ Global
 		{C155008C-E35C-47A4-8263-CF79F9900F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C155008C-E35C-47A4-8263-CF79F9900F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C155008C-E35C-47A4-8263-CF79F9900F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -452,8 +450,6 @@ Global
 		{970DEC23-F83F-40C3-9837-0ED036D97D3C} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
 		{310E3FD8-4BC2-4D77-AEE7-42320AA7CE7D} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{9EF215DE-EC68-4525-AD54-29C5201B85FD} = {907A859F-6219-4D41-9B8C-1EF003286419}
-		{E2956B32-2DA2-469B-9BCC-1022347A0A67} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
-		{7C41EC2D-8390-4E97-8428-0473D2589381} = {E2956B32-2DA2-469B-9BCC-1022347A0A67}
 		{A820F502-3837-4FDF-AA0B-6F08B0275D05} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{A4A8661E-2D64-4F81-A079-10C0AFA9B942} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
 		{9F6E3136-1697-4D9E-B55C-359BA76CC66A} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
@@ -461,6 +457,7 @@ Global
 		{E46E460E-9E89-4526-A55D-B2A1C7D80995} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{6A1B595C-CE62-4787-857C-81DDDD461E11} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{C155008C-E35C-47A4-8263-CF79F9900F6D} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
+		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

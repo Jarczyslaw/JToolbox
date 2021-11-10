@@ -1,7 +1,6 @@
-﻿using JToolbox.Core.Abstraction;
-using System;
+﻿using System;
 
-namespace JToolbox.Misc.TimeProviders
+namespace JToolbox.Core.TimeProvider
 {
     public class LocalTimeProvider : ITimeProvider
     {

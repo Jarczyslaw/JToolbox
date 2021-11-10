@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace JToolbox.Misc.TimeProviders
+namespace JToolbox.Misc.TimeProviders.Ntp
 {
     public class NtpUdpTimeProvider : TimeProviderBase
     {

@@ -1,9 +1,9 @@
-﻿using JToolbox.Core.Abstraction;
+﻿using JToolbox.Core.TimeProvider;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace JToolbox.Misc.TimeProviders
+namespace JToolbox.Misc.TimeProviders.Ntp
 {
     public abstract class TimeProviderBase : ITimeProvider
     {

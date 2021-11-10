@@ -1,4 +1,4 @@
-﻿using JToolbox.Core.Abstraction;
+﻿using JToolbox.Core.TimeProvider;
 using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.EF.Models;
 using System.Collections.Generic;

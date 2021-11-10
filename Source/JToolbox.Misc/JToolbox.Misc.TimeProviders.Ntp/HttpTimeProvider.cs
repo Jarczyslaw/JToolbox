@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace JToolbox.Misc.TimeProviders
+namespace JToolbox.Misc.TimeProviders.Ntp
 {
     public class HttpTimeProvider : TimeProviderBase
     {
