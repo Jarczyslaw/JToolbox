@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JToolbox.Core.TimeProvider;
+using System;
 using System.Net;
 
 namespace JToolbox.Misc.TimeProviders.Ntp
