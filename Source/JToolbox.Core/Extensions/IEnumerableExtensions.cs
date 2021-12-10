@@ -14,12 +14,22 @@ namespace JToolbox.Core.Extensions
             }
         }
 
-        public static int SafeMax<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
+        public static bool IsEmpty<T>(this IEnumerable<T> @this)
+        {
+            return !@this.Any();
+        }
+
+        public static bool IsNotEmpty<T>(this IEnumerable<T> @this)
+        {
+            return @this != null && @this.Any();
+        }
+
+        public static int MaxOrDefault<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
         {
             return enumerable.Any() ? enumerable.Max(selector) : defaultValue;
         }
 
-        public static int SafeMin<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
+        public static int MinOrDefault<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
         {
             return enumerable.Any() ? enumerable.Min(selector) : defaultValue;
         }

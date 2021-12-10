@@ -22,24 +22,44 @@ namespace JToolbox.Core.Extensions
             return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
 
-        public static bool IsEarlierThan(this DateTime dt1, DateTime dt2)
+        public static bool IsDateEarlierThan(this DateTime dt1, DateTime dt2)
         {
             return DateTime.Compare(dt1.Date, dt2.Date) <= 0;
         }
 
-        public static bool IsInRange(this DateTime dateTime, DateTime start, DateTime end)
+        public static bool IsDateInRange(this DateTime dateTime, DateTime start, DateTime end)
         {
             return dateTime.IsLaterThan(start.Date) && dateTime.IsEarlierThan(end.Date);
         }
 
-        public static bool IsLaterThan(this DateTime dt1, DateTime dt2)
+        public static bool IsDateLaterThan(this DateTime dt1, DateTime dt2)
         {
             return DateTime.Compare(dt1.Date, dt2.Date) >= 0;
         }
 
-        public static bool IsNotInRange(this DateTime dateTime, DateTime start, DateTime end)
+        public static bool IsDateNotInRange(this DateTime dateTime, DateTime start, DateTime end)
         {
             return DateTime.Compare(dateTime.Date, start.Date) < 0 || DateTime.Compare(dateTime.Date, end.Date) > 0;
+        }
+
+        public static bool IsEarlierThan(this DateTime dt1, DateTime dt2)
+        {
+            return DateTime.Compare(dt1, dt2) <= 0;
+        }
+
+        public static bool IsInRange(this DateTime dateTime, DateTime start, DateTime end)
+        {
+            return dateTime.IsLaterThan(start) && dateTime.IsEarlierThan(end);
+        }
+
+        public static bool IsLaterThan(this DateTime dt1, DateTime dt2)
+        {
+            return DateTime.Compare(dt1, dt2) >= 0;
+        }
+
+        public static bool IsNotInRange(this DateTime dateTime, DateTime start, DateTime end)
+        {
+            return DateTime.Compare(dateTime, start) < 0 || DateTime.Compare(dateTime, end) > 0;
         }
 
         public static bool IsWeekDay(this DateTime dateTime)
