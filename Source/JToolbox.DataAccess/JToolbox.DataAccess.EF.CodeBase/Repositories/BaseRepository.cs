@@ -1,4 +1,5 @@
-﻿using JToolbox.DataAccess.Common;
+﻿using JToolbox.Core.Abstraction;
+using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.EF.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace JToolbox.DataAccess.EF.Repositories
 {
-    public class BaseRepository<TModel> : IBaseRepository<TModel> where TModel : BaseModel
+    public class BaseRepository<TModel> : IBaseRepository<TModel> where TModel : BaseModel, IKey
     {
         public virtual int Count(DbContext db, Expression<Func<TModel, bool>> expression)
         {

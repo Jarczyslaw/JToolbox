@@ -56,6 +56,16 @@ namespace JToolbox.Core.Extensions
             return val1.Equals(val2, StringComparison.OrdinalIgnoreCase);
         }
 
+        public static bool IsNullOrEmpty(this string @this)
+        {
+            return string.IsNullOrEmpty(@this);
+        }
+
+        public static bool IsNullOrWhiteSpace(this string @this)
+        {
+            return string.IsNullOrWhiteSpace(@this);
+        }
+
         public static string OnlyDigits(this string @this)
         {
             if (@this == null)

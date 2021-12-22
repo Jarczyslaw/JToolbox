@@ -6,6 +6,11 @@ namespace JToolbox.Core.Extensions
 {
     public static class ListExtensions
     {
+        public static List<T> AsNotEmpty<T>(this List<T> @this)
+        {
+            return @this ?? new List<T>();
+        }
+
         public static List<List<T>> ChunkBy<T>(this List<T> list, int chunkSize)
         {
             var result = new List<List<T>>();

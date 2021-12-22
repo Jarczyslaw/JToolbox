@@ -1,4 +1,5 @@
-﻿using JToolbox.Core.TimeProvider;
+﻿using JToolbox.Core.Abstraction;
+using JToolbox.Core.TimeProvider;
 using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.EF.Models;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace JToolbox.DataAccess.EF.Repositories
 {
-    public class BaseExtendedRepository<TModel> : BaseRepository<TModel>, IBaseExtendedRepository<TModel> where TModel : BaseExtendedModel
+    public class BaseExtendedRepository<TModel> : BaseRepository<TModel>, IBaseExtendedRepository<TModel> where TModel : BaseExtendedModel, IKey
     {
         private readonly ITimeProvider timeProvider;
 
