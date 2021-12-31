@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EF.DataAccess.Models
+namespace EntityFramework.DataAccess.Models
 {
     public class Assessment : BaseExtendedModel
     {

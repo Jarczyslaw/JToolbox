@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace EF.App.Properties
+namespace EntityFramework.App.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

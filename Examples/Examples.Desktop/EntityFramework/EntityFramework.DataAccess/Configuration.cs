@@ -1,6 +1,6 @@
 ﻿using JToolbox.DataAccess.EF;
 
-namespace EF.DataAccess
+namespace EntityFramework.DataAccess
 {
     public class Configuration : BaseConfiguration<Context>
     {

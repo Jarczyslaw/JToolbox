@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace EF.DataAccess.Models
+namespace EntityFramework.DataAccess.Models
 {
     public class Subject : BaseExtendedModel
     {

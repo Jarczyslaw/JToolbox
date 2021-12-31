@@ -1,8 +1,8 @@
-﻿using EF.DataAccess.Models;
+﻿using EntityFramework.DataAccess.Models;
 using JToolbox.DataAccess.EF;
 using System.Data.Entity;
 
-namespace EF.DataAccess
+namespace EntityFramework.DataAccess
 {
     public class Context : BaseContext
     {
