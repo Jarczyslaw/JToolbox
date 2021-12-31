@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29409.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{E9C7357C-3F1A-4069-8491-06883F7782BB}"
 EndProject
@@ -153,6 +153,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.DataAccess", "Examples\Examples.Desktop\EF\EF.DataAccess\EF.DataAccess.csproj", "{C155008C-E35C-47A4-8263-CF79F9900F6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.TimeProviders.Ntp", "Source\JToolbox.Misc\JToolbox.Misc.TimeProviders.Ntp\JToolbox.Misc.TimeProviders.Ntp.csproj", "{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.EFCore", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EFCore\JToolbox.DataAccess.EFCore.csproj", "{780F72F7-1BD2-46BB-988C-BDE97AF95219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -384,6 +386,10 @@ Global
 		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{780F72F7-1BD2-46BB-988C-BDE97AF95219}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{780F72F7-1BD2-46BB-988C-BDE97AF95219}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{780F72F7-1BD2-46BB-988C-BDE97AF95219}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{780F72F7-1BD2-46BB-988C-BDE97AF95219}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -458,6 +464,7 @@ Global
 		{6A1B595C-CE62-4787-857C-81DDDD461E11} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{C155008C-E35C-47A4-8263-CF79F9900F6D} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{34AC7506-DFAF-4883-B2B0-999EB0FF5A84} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
+		{780F72F7-1BD2-46BB-988C-BDE97AF95219} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
