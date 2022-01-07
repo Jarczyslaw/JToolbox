@@ -6,17 +6,17 @@
     {
         public override void Down()
         {
-            DropForeignKey("Context.SubjectStudents", "SubjectId", "Context.Students");
-            DropForeignKey("Context.SubjectStudents", "StudentId", "Context.Subjects");
+            DropForeignKey("Context.StudentsSubjects", "SubjectId", "Context.Students");
+            DropForeignKey("Context.StudentsSubjects", "StudentId", "Context.Subjects");
             DropForeignKey("Context.Assessments", "SubjectId", "Context.Subjects");
             DropForeignKey("Context.Students", "StudentsGroupId", "Context.StudentsGroups");
             DropForeignKey("Context.Assessments", "StudentId", "Context.Students");
-            DropIndex("Context.SubjectStudents", new[] { "SubjectId" });
-            DropIndex("Context.SubjectStudents", new[] { "StudentId" });
+            DropIndex("Context.StudentsSubjects", new[] { "SubjectId" });
+            DropIndex("Context.StudentsSubjects", new[] { "StudentId" });
             DropIndex("Context.Students", new[] { "StudentsGroupId" });
             DropIndex("Context.Assessments", new[] { "SubjectId" });
             DropIndex("Context.Assessments", new[] { "StudentId" });
-            DropTable("Context.SubjectStudents");
+            DropTable("Context.StudentsSubjects");
             DropTable("Context.Subjects");
             DropTable("Context.StudentsGroups");
             DropTable("Context.Students");
@@ -85,7 +85,7 @@
                 .PrimaryKey(t => t.Id);
 
             CreateTable(
-                "Context.SubjectStudents",
+                "Context.StudentsSubjects",
                 c => new
                 {
                     StudentId = c.Int(nullable: false),

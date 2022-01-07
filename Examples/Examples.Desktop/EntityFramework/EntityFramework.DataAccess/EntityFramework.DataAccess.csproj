@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EntityFramework.DataAccess</RootNamespace>
     <AssemblyName>EntityFramework.DataAccess</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,9 +54,9 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="Migrations\202111072014398_Init.cs" />
-    <Compile Include="Migrations\202111072014398_Init.designer.cs">
-      <DependentUpon>202111072014398_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202201072134036_Init.cs" />
+    <Compile Include="Migrations\202201072134036_Init.designer.cs">
+      <DependentUpon>202201072134036_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\Student.cs" />
@@ -87,8 +88,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111072014398_Init.resx">
-      <DependentUpon>202111072014398_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201072134036_Init.resx">
+      <DependentUpon>202201072134036_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

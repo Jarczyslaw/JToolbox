@@ -1,11 +1,28 @@
-﻿using System.Windows;
+﻿using EntityFramework.App.Views;
+using JToolbox.Desktop.Dialogs;
+using System.Windows;
+using Unity;
 
 namespace EntityFramework.App
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var container = CreateContainer();
+
+            var mainWindow = container.Resolve<MainWindow>();
+            mainWindow.Show();
+        }
+
+        private IUnityContainer CreateContainer()
+        {
+            var container = new UnityContainer();
+            container.RegisterInstance<IUnityContainer>(container);
+            container.RegisterSingleton<IDialogsService, DialogsService>();
+            return container;
+        }
     }
 }

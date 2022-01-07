@@ -150,11 +150,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EntityFramework", "EntityFr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.TimeProviders.Ntp", "Source\JToolbox.Misc\JToolbox.Misc.TimeProviders.Ntp\JToolbox.Misc.TimeProviders.Ntp.csproj", "{34AC7506-DFAF-4883-B2B0-999EB0FF5A84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.EFCore", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EFCore\JToolbox.DataAccess.EFCore.csproj", "{780F72F7-1BD2-46BB-988C-BDE97AF95219}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.EFCore", "Source\JToolbox.DataAccess\JToolbox.DataAccess.EFCore\JToolbox.DataAccess.EFCore.csproj", "{780F72F7-1BD2-46BB-988C-BDE97AF95219}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.App", "Examples\Examples.Desktop\EntityFramework\EntityFramework.App\EntityFramework.App.csproj", "{6A1B595C-CE62-4787-857C-81DDDD461E11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.DataAccess", "Examples\Examples.Desktop\EntityFramework\EntityFramework.DataAccess\EntityFramework.DataAccess.csproj", "{C155008C-E35C-47A4-8263-CF79F9900F6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.BusinessLogic", "Examples\Examples.Desktop\EntityFramework\EntityFramework.BusinessLogic\EntityFramework.BusinessLogic.csproj", "{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -390,6 +392,10 @@ Global
 		{C155008C-E35C-47A4-8263-CF79F9900F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C155008C-E35C-47A4-8263-CF79F9900F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C155008C-E35C-47A4-8263-CF79F9900F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -465,6 +471,7 @@ Global
 		{780F72F7-1BD2-46BB-988C-BDE97AF95219} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
 		{6A1B595C-CE62-4787-857C-81DDDD461E11} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{C155008C-E35C-47A4-8263-CF79F9900F6D} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
+		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

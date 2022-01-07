@@ -6,7 +6,7 @@ namespace EntityFramework.DataAccess
 {
     public class Context : BaseContext
     {
-        public Context() : base("EFApp")
+        public Context() : base("ExampleAppConnectionString")
         {
         }
 
@@ -25,6 +25,7 @@ namespace EntityFramework.DataAccess
                 .WithMany(x => x.Subjects)
                 .Map(x =>
                 {
+                    x.ToTable("StudentsSubjects");
                     x.MapLeftKey("StudentId");
                     x.MapRightKey("SubjectId");
                 });
