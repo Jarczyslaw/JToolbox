@@ -79,6 +79,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\StudentGroupsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\StudentsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,12 +98,16 @@
     <Compile Include="Controls\Common\CrudButtonsView.xaml.cs">
       <DependentUpon>CrudButtonsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StudentGroupsView.xaml.cs">
+      <DependentUpon>StudentGroupsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StudentsView.xaml.cs">
       <DependentUpon>StudentsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\WindowsService.cs" />
     <Compile Include="ViewModels\Common\CommonListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\StudentGroupsViewModel.cs" />
     <Compile Include="ViewModels\StudentsViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

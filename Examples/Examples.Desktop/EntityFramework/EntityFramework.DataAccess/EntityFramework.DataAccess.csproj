@@ -54,14 +54,14 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="Migrations\202201072134036_Init.cs" />
-    <Compile Include="Migrations\202201072134036_Init.designer.cs">
-      <DependentUpon>202201072134036_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202201080822357_Init.cs" />
+    <Compile Include="Migrations\202201080822357_Init.designer.cs">
+      <DependentUpon>202201080822357_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Assessment.cs" />
-    <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\StudentsGroup.cs" />
-    <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\AssessmentEntity.cs" />
+    <Compile Include="Models\StudentEntity.cs" />
+    <Compile Include="Models\StudentGroupEntity.cs" />
+    <Compile Include="Models\SubjectEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,8 +88,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201072134036_Init.resx">
-      <DependentUpon>202201072134036_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201080822357_Init.resx">
+      <DependentUpon>202201080822357_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

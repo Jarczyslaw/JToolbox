@@ -10,25 +10,25 @@ namespace EntityFramework.DataAccess
         {
         }
 
-        public DbSet<Assessment> Assessments { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<StudentsGroup> StudentsGroups { get; set; }
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<AssessmentEntity> Assessments { get; set; }
+        public DbSet<StudentEntity> Students { get; set; }
+        public DbSet<StudentGroupEntity> StudentsGroups { get; set; }
+        public DbSet<SubjectEntity> Subjects { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<Context, Configuration>());
             modelBuilder.HasDefaultSchema(nameof(Context));
 
-            modelBuilder.Entity<Subject>()
+            modelBuilder.Entity<SubjectEntity>()
                 .HasMany(x => x.Students)
                 .WithMany(x => x.Subjects)
-                .Map(x =>
-                {
-                    x.ToTable("StudentsSubjects");
-                    x.MapLeftKey("StudentId");
-                    x.MapRightKey("SubjectId");
-                });
+                .Map(x => x.ToTable("StudentsSubjects").MapLeftKey("SubjectId").MapRightKey("StudentId"));
+
+            modelBuilder.Entity<StudentGroupEntity>()
+                .HasOptional(x => x.Leader)
+                .WithMany()
+                .HasForeignKey(x => x.LeaderId);
 
             base.OnModelCreating(modelBuilder);
         }

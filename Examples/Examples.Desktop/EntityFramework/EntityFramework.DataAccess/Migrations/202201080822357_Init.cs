@@ -6,19 +6,21 @@
     {
         public override void Down()
         {
-            DropForeignKey("Context.StudentsSubjects", "SubjectId", "Context.Students");
-            DropForeignKey("Context.StudentsSubjects", "StudentId", "Context.Subjects");
+            DropForeignKey("Context.StudentsSubjects", "StudentId", "Context.Students");
+            DropForeignKey("Context.StudentsSubjects", "SubjectId", "Context.Subjects");
             DropForeignKey("Context.Assessments", "SubjectId", "Context.Subjects");
-            DropForeignKey("Context.Students", "StudentsGroupId", "Context.StudentsGroups");
+            DropForeignKey("Context.Students", "StudentsGroupId", "Context.StudentGroups");
+            DropForeignKey("Context.StudentGroups", "LeaderId", "Context.Students");
             DropForeignKey("Context.Assessments", "StudentId", "Context.Students");
-            DropIndex("Context.StudentsSubjects", new[] { "SubjectId" });
             DropIndex("Context.StudentsSubjects", new[] { "StudentId" });
+            DropIndex("Context.StudentsSubjects", new[] { "SubjectId" });
+            DropIndex("Context.StudentGroups", new[] { "LeaderId" });
             DropIndex("Context.Students", new[] { "StudentsGroupId" });
             DropIndex("Context.Assessments", new[] { "SubjectId" });
             DropIndex("Context.Assessments", new[] { "StudentId" });
             DropTable("Context.StudentsSubjects");
             DropTable("Context.Subjects");
-            DropTable("Context.StudentsGroups");
+            DropTable("Context.StudentGroups");
             DropTable("Context.Students");
             DropTable("Context.Assessments");
         }
@@ -57,20 +59,23 @@
                     UpdateDate = c.DateTime(nullable: false),
                 })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("Context.StudentsGroups", t => t.StudentsGroupId)
+                .ForeignKey("Context.StudentGroups", t => t.StudentsGroupId)
                 .Index(t => t.StudentsGroupId);
 
             CreateTable(
-                "Context.StudentsGroups",
+                "Context.StudentGroups",
                 c => new
                 {
                     Id = c.Int(nullable: false, identity: true),
+                    LeaderId = c.Int(),
                     Name = c.String(nullable: false, maxLength: 100),
                     CreateDate = c.DateTime(nullable: false),
                     Deleted = c.Boolean(nullable: false),
                     UpdateDate = c.DateTime(nullable: false),
                 })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("Context.Students", t => t.LeaderId)
+                .Index(t => t.LeaderId);
 
             CreateTable(
                 "Context.Subjects",
@@ -88,14 +93,14 @@
                 "Context.StudentsSubjects",
                 c => new
                 {
-                    StudentId = c.Int(nullable: false),
                     SubjectId = c.Int(nullable: false),
+                    StudentId = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => new { t.StudentId, t.SubjectId })
-                .ForeignKey("Context.Subjects", t => t.StudentId, cascadeDelete: true)
-                .ForeignKey("Context.Students", t => t.SubjectId, cascadeDelete: true)
-                .Index(t => t.StudentId)
-                .Index(t => t.SubjectId);
+                .PrimaryKey(t => new { t.SubjectId, t.StudentId })
+                .ForeignKey("Context.Subjects", t => t.SubjectId, cascadeDelete: true)
+                .ForeignKey("Context.Students", t => t.StudentId, cascadeDelete: true)
+                .Index(t => t.SubjectId)
+                .Index(t => t.StudentId);
         }
     }
 }

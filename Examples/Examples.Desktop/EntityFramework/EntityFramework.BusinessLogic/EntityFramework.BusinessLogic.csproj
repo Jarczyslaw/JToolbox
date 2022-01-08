@@ -45,6 +45,7 @@
     <Compile Include="Models\Common\BaseExtendedModel.cs" />
     <Compile Include="Models\Common\BaseModel.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

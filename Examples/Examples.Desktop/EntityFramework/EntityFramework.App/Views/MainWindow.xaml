@@ -14,7 +14,9 @@
             <TabItem Header="Students">
                 <controls:StudentsView DataContext="{Binding Students}" />
             </TabItem>
-            <TabItem Header="Student groups" />
+            <TabItem Header="Student groups">
+                <controls:StudentGroupsView DataContext="{Binding StudentGroups}" />
+            </TabItem>
             <TabItem Header="Subjects" />
             <TabItem Header="Assignments" />
         </TabControl>

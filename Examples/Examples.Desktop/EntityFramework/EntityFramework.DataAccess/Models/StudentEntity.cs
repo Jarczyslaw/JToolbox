@@ -5,9 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFramework.DataAccess.Models
 {
-    public class Student : BaseExtendedModel
+    [Table("Students")]
+    public class StudentEntity : BaseExtendedModel
     {
-        public virtual ICollection<Assessment> Assessments { get; set; }
+        public virtual ICollection<AssessmentEntity> Assessments { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -18,9 +19,9 @@ namespace EntityFramework.DataAccess.Models
         public string LastName { get; set; }
 
         [ForeignKey(nameof(StudentsGroupId))]
-        public virtual StudentsGroup StudentsGroup { get; set; }
+        public virtual StudentGroupEntity StudentsGroup { get; set; }
 
         public int? StudentsGroupId { get; set; }
-        public virtual ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<SubjectEntity> Subjects { get; set; }
     }
 }

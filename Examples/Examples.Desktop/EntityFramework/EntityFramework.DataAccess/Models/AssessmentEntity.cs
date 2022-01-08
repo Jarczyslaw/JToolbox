@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityFramework.DataAccess.Models
 {
-    public class Assessment : BaseExtendedModel
+    [Table("Assessments")]
+    public class AssessmentEntity : BaseExtendedModel
     {
         public string Notes { get; set; }
 
         [ForeignKey(nameof(StudentId))]
-        public virtual Student Student { get; set; }
+        public virtual StudentEntity Student { get; set; }
 
         public int StudentId { get; set; }
 
         [ForeignKey(nameof(SubjectId))]
-        public virtual Subject Subject { get; set; }
+        public virtual SubjectEntity Subject { get; set; }
 
         public int SubjectId { get; set; }
 
