@@ -1,4 +1,5 @@
-﻿using JToolbox.Desktop.Dialogs;
+﻿using EntityFramework.BusinessLogic;
+using JToolbox.Desktop.Dialogs;
 using JToolbox.WPF.Core.Base;
 using System;
 using System.Collections.Generic;
@@ -7,8 +8,9 @@ using System.Windows.Input;
 
 namespace EntityFramework.App.ViewModels.Common
 {
-    public abstract class CommonListViewModel<T> : BaseViewModel
+    public abstract class CommonListViewModel<T> : BaseViewModel, IOnRefresh
     {
+        protected readonly IBusinessService business;
         protected readonly IDialogsService dialogs;
         private RelayCommand addCommand;
         private RelayCommand editCommand;
@@ -16,11 +18,10 @@ namespace EntityFramework.App.ViewModels.Common
         private RelayCommand removeCommand;
         private T selectedItem;
 
-        protected CommonListViewModel(IDialogsService dialogs)
+        protected CommonListViewModel(IBusinessService business, IDialogsService dialogs)
         {
             this.dialogs = dialogs;
-
-            LoadItems();
+            this.business = business;
         }
 
         public RelayCommand AddCommand => addCommand ?? (addCommand = new RelayCommand(() => AddItem()));
@@ -45,6 +46,11 @@ namespace EntityFramework.App.ViewModels.Common
                 Set(ref selectedItem, value);
                 CommandManager.InvalidateRequerySuggested();
             }
+        }
+
+        public virtual void OnRefresh()
+        {
+            LoadItems();
         }
 
         protected abstract void AddItem();

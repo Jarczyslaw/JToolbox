@@ -9,8 +9,14 @@ namespace EntityFramework.App.Views
         public MainWindow(IUnityContainer container)
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
 
             DataContext = container.Resolve<MainViewModel>();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            tcTabs.SelectedItem = tiStudents;
         }
     }
 }

@@ -9,16 +9,28 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TabControl>
-            <TabItem Header="Students">
+        <TabControl x:Name="tcTabs" SelectedItem="{Binding SelectedTab}">
+            <TabItem x:Name="tiStudents" Header="Students">
                 <controls:StudentsView DataContext="{Binding Students}" />
             </TabItem>
             <TabItem Header="Student groups">
                 <controls:StudentGroupsView DataContext="{Binding StudentGroups}" />
             </TabItem>
-            <TabItem Header="Subjects" />
-            <TabItem Header="Assignments" />
+            <TabItem Header="Subjects">
+                <controls:SubjectsView DataContext="{Binding Subjects}" />
+            </TabItem>
+            <TabItem Header="Assignments">
+                <controls:AssessmentsView DataContext="{Binding Assessments}" />
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

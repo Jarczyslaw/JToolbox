@@ -42,10 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessService.cs" />
+    <Compile Include="IBusinessService.cs" />
+    <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\Common\BaseExtendedModel.cs" />
     <Compile Include="Models\Common\BaseModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentGroup.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

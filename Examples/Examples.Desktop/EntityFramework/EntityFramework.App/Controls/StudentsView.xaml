@@ -14,12 +14,7 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <DataGrid
-            AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            CanUserDeleteRows="False"
-            ItemsSource="{Binding Items}"
-            SelectedItem="{Binding SelectedItem}">
+        <DataGrid ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id" />
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="First name" />

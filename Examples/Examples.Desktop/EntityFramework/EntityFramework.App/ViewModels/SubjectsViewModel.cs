@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace EntityFramework.App.ViewModels
 {
-    public class StudentsViewModel : CommonListViewModel<Student>
+    public class SubjectsViewModel : CommonListViewModel<Subject>
     {
-        public StudentsViewModel(IBusinessService businessService, IDialogsService dialogsService)
+        public SubjectsViewModel(IBusinessService businessService, IDialogsService dialogsService)
             : base(businessService, dialogsService)
         {
         }
@@ -17,16 +17,16 @@ namespace EntityFramework.App.ViewModels
         {
         }
 
-        protected override void EditItem(Student item)
+        protected override void EditItem(Subject item)
         {
         }
 
-        protected override IEnumerable<Student> GetItems()
+        protected override IEnumerable<Subject> GetItems()
         {
-            return business.GetStudents();
+            return business.GetSubjects();
         }
 
-        protected override void RemoveItem(Student item)
+        protected override void RemoveItem(Subject item)
         {
         }
     }

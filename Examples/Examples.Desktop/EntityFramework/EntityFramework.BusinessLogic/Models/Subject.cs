@@ -3,11 +3,9 @@ using System.Collections.Generic;
 
 namespace EntityFramework.BusinessLogic.Models
 {
-    public class StudentGroup : BaseExtendedModel
+    public class Subject : BaseExtendedModel
     {
-        public Student Leader { get; set; }
-
-        public int? LeaderId { get; set; }
+        public List<Assessment> Assessments { get; set; }
 
         public string Name { get; set; }
 

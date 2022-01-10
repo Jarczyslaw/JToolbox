@@ -1,4 +1,5 @@
 ﻿using EntityFramework.App.Views;
+using EntityFramework.BusinessLogic;
 using JToolbox.Desktop.Dialogs;
 using System.Windows;
 using Unity;
@@ -22,6 +23,7 @@ namespace EntityFramework.App
             var container = new UnityContainer();
             container.RegisterInstance<IUnityContainer>(container);
             container.RegisterSingleton<IDialogsService, DialogsService>();
+            container.RegisterSingleton<IBusinessService, BusinessService>();
             return container;
         }
     }

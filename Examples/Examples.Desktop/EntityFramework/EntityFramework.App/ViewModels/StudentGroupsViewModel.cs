@@ -1,4 +1,5 @@
 ﻿using EntityFramework.App.ViewModels.Common;
+using EntityFramework.BusinessLogic;
 using EntityFramework.BusinessLogic.Models;
 using JToolbox.Desktop.Dialogs;
 using System.Collections.Generic;
@@ -7,7 +8,8 @@ namespace EntityFramework.App.ViewModels
 {
     public class StudentGroupsViewModel : CommonListViewModel<StudentGroup>
     {
-        public StudentGroupsViewModel(IDialogsService dialogs) : base(dialogs)
+        public StudentGroupsViewModel(IBusinessService businessService, IDialogsService dialogsService)
+            : base(businessService, dialogsService)
         {
         }
 
@@ -23,19 +25,7 @@ namespace EntityFramework.App.ViewModels
 
         protected override IEnumerable<StudentGroup> GetItems()
         {
-            return new List<StudentGroup>()
-            {
-                new StudentGroup
-                {
-                    Id = 1,
-                    Name = "Group1",
-                },
-                new StudentGroup
-                {
-                    Id = 2,
-                    Name = "Group2",
-                },
-            };
+            return business.GetStudentGroups();
         }
 
         protected override void RemoveItem(StudentGroup item)
