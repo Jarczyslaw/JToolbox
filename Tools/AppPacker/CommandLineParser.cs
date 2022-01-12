@@ -9,8 +9,8 @@ namespace AppPacker
         {
             var parser = new FluentCommandLineParser<Config>();
 
-            parser.Setup(x => x.BuildOutputPath)
-                .As('o', "outputPath")
+            parser.Setup(x => x.AssemblyFolderPath)
+                .As("afp")
                 .Required();
 
             parser.Setup(x => x.IgnoreXmlFiles)

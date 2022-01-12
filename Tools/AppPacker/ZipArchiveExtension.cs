@@ -15,7 +15,7 @@ namespace AppPacker
             }
             else
             {
-                archive.CreateEntryFromFile(sourceName, Path.Combine(entryName, fileName), CompressionLevel.Fastest);
+                archive.CreateEntryFromFile(sourceName, Path.Combine(entryName, fileName), CompressionLevel.Optimal);
             }
         }
 

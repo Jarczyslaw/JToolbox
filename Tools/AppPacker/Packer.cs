@@ -10,7 +10,7 @@ namespace AppPacker
     {
         public void Run(Config config)
         {
-            var files = Directory.EnumerateFiles(config.BuildOutputPath, "*.exe")
+            var files = Directory.EnumerateFiles(config.AssemblyFolderPath, "*.exe")
                 .ToList();
 
             if (files.Count == 0)
