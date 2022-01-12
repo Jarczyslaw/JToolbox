@@ -56,6 +56,12 @@ namespace AppPacker
                     continue;
                 }
 
+                if (config.IgnoreExeConfigFile
+                    && file.EndsWith(".exe.config", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 OutputFilesAndFolders.Add(file);
             }
             OutputFilesAndFolders.AddRange(folders);

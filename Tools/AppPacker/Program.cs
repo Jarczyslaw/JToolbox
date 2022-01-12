@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace AppPacker
 {
@@ -15,6 +16,8 @@ namespace AppPacker
 
                 if (config != null)
                 {
+                    Console.WriteLine($"Loaded config: {JsonConvert.SerializeObject(config)}");
+
                     var packer = new Packer();
                     packer.Run(config);
                 }

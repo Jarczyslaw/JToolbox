@@ -160,6 +160,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.BusinessLog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPacker", "Tools\AppPacker\AppPacker.csproj", "{2440764C-D864-41DF-87B8-A28FF3AF1FB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPacker.Example", "Tools\AppPacker.Example\AppPacker.Example.csproj", "{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -402,6 +404,10 @@ Global
 		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -479,6 +485,7 @@ Global
 		{C155008C-E35C-47A4-8263-CF79F9900F6D} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{2440764C-D864-41DF-87B8-A28FF3AF1FB1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

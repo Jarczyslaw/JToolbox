@@ -19,6 +19,9 @@ namespace AppPacker
             parser.Setup(x => x.IgnorePdbFiles)
                 .As("ipf");
 
+            parser.Setup(x => x.IgnoreExeConfigFile)
+                .As("icf");
+
             parser.Setup(x => x.OutputFileNamePattern)
                 .As("pattern");
 
