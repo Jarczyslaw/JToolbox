@@ -8,7 +8,7 @@
     <ProjectGuid>{2440764C-D864-41DF-87B8-A28FF3AF1FB1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>AppPacker</RootNamespace>
-    <AssemblyName>AppPacker</AssemblyName>
+    <AssemblyName>apppacker</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

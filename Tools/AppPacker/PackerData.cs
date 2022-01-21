@@ -18,15 +18,18 @@ namespace AppPacker
             FileName = Path.GetFileNameWithoutExtension(filePath);
             FileVersion = FileVersionInfo.GetVersionInfo(filePath).FileVersion;
             OutputFileName = GetOutputFile();
-            OutputFilePath = Path.Combine(Directory.GetParent(FileFolderPath).FullName, OutputFileName);
+            OutputFolderPath = Directory.GetParent(FileFolderPath).FullName;
+            OutputFilePath = Path.Combine(OutputFolderPath, OutputFileName);
 
             GetFilesAndFolders();
         }
 
         public string FileFolderPath { get; }
+
         public string FileName { get; }
 
         public string FilePath { get; }
+
         public string FileVersion { get; }
 
         public string OutputFileName { get; }
@@ -34,6 +37,8 @@ namespace AppPacker
         public string OutputFilePath { get; }
 
         public List<string> OutputFilesAndFolders { get; } = new List<string>();
+
+        public string OutputFolderPath { get; }
 
         private void GetFilesAndFolders()
         {

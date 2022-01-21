@@ -30,12 +30,9 @@ namespace AppPacker
 
             if (packerData.OutputFilesAndFolders.Any())
             {
-                if (File.Exists(packerData.OutputFilePath))
-                {
-                    File.Delete(packerData.OutputFilePath);
-                }
-
+                RemovePreviousPackages(packerData, config);
                 Pack(packerData.OutputFilePath, packerData.OutputFilesAndFolders);
+
                 Console.WriteLine($"{packerData.OutputFileName} with {packerData.OutputFilesAndFolders.Count} elements created successfully");
             }
             else
@@ -51,6 +48,23 @@ namespace AppPacker
                 foreach (var filePath in filePaths)
                 {
                     archive.CreateEntryFromAny(filePath);
+                }
+            }
+        }
+
+        private void RemovePreviousPackages(PackerData packerData, Config config)
+        {
+            if (File.Exists(packerData.OutputFilePath))
+            {
+                File.Delete(packerData.OutputFilePath);
+            }
+
+            if (config.RemovePreviousPackages)
+            {
+                var files = Directory.GetFiles(packerData.OutputFolderPath, $"*{packerData.FileName}*.zip");
+                foreach (var file in files)
+                {
+                    File.Delete(file);
                 }
             }
         }

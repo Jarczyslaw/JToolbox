@@ -67,6 +67,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(ProjectDir)BuildTools\AppPacker.exe --afp $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)BuildTools\apppacker.exe --assemblyFolderPath $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -18,6 +18,11 @@ namespace AppPacker
                 {
                     Console.WriteLine($"Loaded config: {JsonConvert.SerializeObject(config)}");
 
+                    if (!config.Validate())
+                    {
+                        return;
+                    }
+
                     var packer = new Packer();
                     packer.Run(config);
                 }

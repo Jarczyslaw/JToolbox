@@ -10,20 +10,23 @@ namespace AppPacker
             var parser = new FluentCommandLineParser<Config>();
 
             parser.Setup(x => x.AssemblyFolderPath)
-                .As("afp")
+                .As("assemblyFolderPath")
                 .Required();
 
             parser.Setup(x => x.IgnoreXmlFiles)
-                .As("ixf");
+                .As("ignoreXmlFiles");
 
             parser.Setup(x => x.IgnorePdbFiles)
-                .As("ipf");
+                .As("ignorePdbFiles");
 
             parser.Setup(x => x.IgnoreExeConfigFile)
-                .As("icf");
+                .As("ignoreExeConfigFile");
 
             parser.Setup(x => x.OutputFileNamePattern)
-                .As("pattern");
+                .As("outputFileNamePattern");
+
+            parser.Setup(x => x.RemovePreviousPackages)
+                .As("removePreviousPackages");
 
             parser.SetupHelp("?", "help")
                 .Callback(text => Console.WriteLine(text));
