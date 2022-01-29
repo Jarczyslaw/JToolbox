@@ -162,6 +162,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPacker", "Tools\AppPacke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPacker.Example", "Tools\AppPacker.Example\AppPacker.Example.csproj", "{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.AppsUpdater", "Source\JToolbox.Misc\JToolbox.Misc.AppsUpdater\JToolbox.Misc.AppsUpdater.csproj", "{8544A30E-7966-4E63-94C9-206A7DBD92ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -408,6 +410,10 @@ Global
 		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -486,6 +492,7 @@ Global
 		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{2440764C-D864-41DF-87B8-A28FF3AF1FB1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
+		{8544A30E-7966-4E63-94C9-206A7DBD92ED} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
