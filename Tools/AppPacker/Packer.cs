@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text;
 
 namespace AppPacker
 {
@@ -32,8 +33,7 @@ namespace AppPacker
             {
                 RemovePreviousPackages(packerData, config);
                 Pack(packerData.OutputFilePath, packerData.OutputFilesAndFolders);
-
-                Console.WriteLine($"{packerData.OutputFileName} with {packerData.OutputFilesAndFolders.Count} elements created successfully");
+                PrintSummary(packerData);
             }
             else
             {
@@ -50,6 +50,23 @@ namespace AppPacker
                     archive.CreateEntryFromAny(filePath);
                 }
             }
+        }
+
+        private void PrintSummary(PackerData packerData)
+        {
+            Console.WriteLine($"{packerData.OutputFileName} created successfully");
+            Console.WriteLine("Package content:");
+
+            var sb = new StringBuilder();
+            var counter = 1;
+            foreach (var path in packerData.OutputFilesAndFolders.OrderBy(x => x))
+            {
+                var directory = File.GetAttributes(path).HasFlag(FileAttributes.Directory) ? "(Dir)" : string.Empty;
+                var name = Path.GetFileName(path);
+                sb.AppendLine($"{counter}. {name} {directory}");
+                counter++;
+            }
+            Console.Write(sb.ToString());
         }
 
         private void RemovePreviousPackages(PackerData packerData, Config config)
