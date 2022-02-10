@@ -30,6 +30,25 @@ namespace JToolbox.WinForms.Core.Extensions
             return result;
         }
 
+        public static Form FindParentForm(this Control control)
+        {
+            return FindParentOfType<Form>(control);
+        }
+
+        public static T FindParentOfType<T>(this Control control)
+        {
+            if (control.Parent is T parent)
+            {
+                return parent;
+            }
+
+            if (control.Parent != null)
+            {
+                return FindParentOfType<T>(control.Parent);
+            }
+            return default;
+        }
+
         public static void IterateOverControls(this Control parent, Func<Control, bool> action, bool callActionForParent = false)
         {
             if (callActionForParent && !action(parent))
