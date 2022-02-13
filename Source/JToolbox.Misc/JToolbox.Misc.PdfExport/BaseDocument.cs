@@ -32,6 +32,16 @@ namespace JToolbox.Misc.PdfExport
             }
         }
 
+        public PdfDocument Render()
+        {
+            var renderer = new PdfDocumentRenderer(true)
+            {
+                Document = Document
+            };
+            renderer.RenderDocument();
+            return renderer.PdfDocument;
+        }
+
         public void Save(string filePath)
         {
             var pdfDocument = Render();
@@ -52,16 +62,6 @@ namespace JToolbox.Misc.PdfExport
 
             Document.AddSection();
             Document.LastSection.PageSetup = PageSetup;
-        }
-
-        private PdfDocument Render()
-        {
-            var renderer = new PdfDocumentRenderer(true)
-            {
-                Document = Document
-            };
-            renderer.RenderDocument();
-            return renderer.PdfDocument;
         }
 
         private PrinterSettings ShowPrintDialog()
