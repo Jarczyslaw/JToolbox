@@ -56,6 +56,7 @@
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\ScreenCaptureExtensions.cs" />
     <Compile Include="GlobalExceptionHandler.cs" />
+    <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,5 +69,6 @@
       <Name>JToolbox.Desktop.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

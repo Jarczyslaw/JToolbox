@@ -62,6 +62,12 @@ namespace JToolbox.Core.Helpers
             return (int)Math.Floor(value);
         }
 
+        public static double Lerp(double startValue, double endValue, double i)
+        {
+            i = Clamp(i, 0d, 1d);
+            return startValue + i * (endValue - startValue);
+        }
+
         public static byte Max(byte val1, byte val2, byte val3)
         {
             return Math.Max(val1, Math.Max(val2, val3));
