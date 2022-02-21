@@ -6,6 +6,11 @@ namespace JToolbox.Core.Extensions
 {
     public static class IEnumerableExtensions
     {
+        public static IEnumerable<T> AsNotNull<T>(this IEnumerable<T> source)
+        {
+            return source ?? Enumerable.Empty<T>();
+        }
+
         public static void ForEach<T>(this IEnumerable<T> @this, Action<T> action)
         {
             foreach (var item in @this)
@@ -32,6 +37,16 @@ namespace JToolbox.Core.Extensions
         public static int MinOrDefault<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
         {
             return enumerable.Any() ? enumerable.Min(selector) : defaultValue;
+        }
+
+        public static bool None<T>(this IEnumerable<T> source)
+        {
+            return !source.Any();
+        }
+
+        public static bool None<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+        {
+            return !source.Any(predicate);
         }
 
         public static bool ScrambledEquals<T>(this IEnumerable<T> list1, IEnumerable<T> list2, IEqualityComparer<T> comparer = null)

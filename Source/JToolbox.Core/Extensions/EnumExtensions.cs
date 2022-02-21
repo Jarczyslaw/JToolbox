@@ -18,5 +18,23 @@ namespace JToolbox.Core.Extensions
         {
             return value.GetAttribute<DescriptionAttribute>();
         }
+
+        public static bool In<T>(this T value, params T[] list) where T : Enum
+        {
+            foreach (var item in list)
+            {
+                if (value.Equals(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool NotIn<T>(this T value, params T[] list) where T : Enum
+        {
+            return !In(value, list);
+        }
     }
 }
