@@ -215,6 +215,12 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{29495d19-7102-48ab-b3f2-653f93a9779d}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

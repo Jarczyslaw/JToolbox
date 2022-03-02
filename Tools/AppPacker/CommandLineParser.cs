@@ -13,14 +13,11 @@ namespace AppPacker
                 .As("assemblyFolderPath")
                 .Required();
 
-            parser.Setup(x => x.IgnoreXmlFiles)
-                .As("ignoreXmlFiles");
+            parser.Setup(x => x.FilesWhiteList)
+                .As("filesWhiteList");
 
-            parser.Setup(x => x.IgnorePdbFiles)
-                .As("ignorePdbFiles");
-
-            parser.Setup(x => x.IgnoreExeConfigFile)
-                .As("ignoreExeConfigFile");
+            parser.Setup(x => x.IgnoredFilesExtensions)
+                .As("ignoredFilesExtensions");
 
             parser.Setup(x => x.OutputFileNamePattern)
                 .As("outputFileNamePattern");

@@ -66,6 +66,11 @@ namespace JToolbox.Core.Extensions
             return string.IsNullOrWhiteSpace(@this);
         }
 
+        public static bool IsValidFileName(this string @this)
+        {
+            return !string.IsNullOrEmpty(@this) && @this.IndexOfAny(Path.GetInvalidFileNameChars()) < 0;
+        }
+
         public static string OnlyDigits(this string @this)
         {
             if (@this == null)

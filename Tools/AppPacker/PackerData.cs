@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace AppPacker
 {
@@ -47,27 +48,20 @@ namespace AppPacker
 
             foreach (var file in files)
             {
+                var fileName = Path.GetFileName(file);
                 var fileExtension = Path.GetExtension(file);
 
-                if (config.IgnorePdbFiles
-                    && fileExtension.Equals(".pdb", StringComparison.OrdinalIgnoreCase))
+                if (config.FilesWhiteListParsed.Contains(fileName))
                 {
-                    continue;
+                    OutputFilesAndFolders.Add(file);
                 }
-
-                if (config.IgnoreXmlFiles
-                    && fileExtension.Equals(".xml", StringComparison.OrdinalIgnoreCase))
+                else
                 {
-                    continue;
+                    if (!config.IgnoredFilesExtensionsParsed.Any(x => fileName.EndsWith(x)))
+                    {
+                        OutputFilesAndFolders.Add(file);
+                    }
                 }
-
-                if (config.IgnoreExeConfigFile
-                    && file.EndsWith(".exe.config", StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                OutputFilesAndFolders.Add(file);
             }
             OutputFilesAndFolders.AddRange(folders);
         }
