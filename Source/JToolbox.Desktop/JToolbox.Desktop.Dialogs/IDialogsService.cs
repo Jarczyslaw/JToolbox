@@ -15,7 +15,7 @@ namespace JToolbox.Desktop.Dialogs
 
         void ShowCriticalException(Exception exception, string message = null, IntPtr? owner = null);
 
-        T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButton<T>> customButtons, IntPtr? owner = null);
+        T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButton<T>> customButtons, string details = null, IntPtr? owner = null);
 
         void ShowError(string error, string details = null, IntPtr? owner = null);
 

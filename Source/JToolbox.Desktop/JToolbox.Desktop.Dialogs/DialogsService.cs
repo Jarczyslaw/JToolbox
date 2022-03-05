@@ -77,13 +77,14 @@ namespace JToolbox.Desktop.Dialogs
             ShowMessageTaskDialog(TaskDialogIcon.Error, Languages.CriticalException, targetMessage, exception.StackTrace, owner);
         }
 
-        public T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButton<T>> customButtons, IntPtr? owner = null)
+        public T ShowCustomButtonsQuestion<T>(string question, IEnumerable<CustomButton<T>> customButtons, string details = null, IntPtr? owner = null)
         {
             using (var dialog = GetTaskDialog())
             {
                 dialog.WindowTitle = Languages.Question;
                 dialog.MainIcon = TaskDialogIcon.Information;
                 dialog.Content = question;
+                dialog.ExpandedInformation = details;
                 foreach (var button in customButtons)
                 {
                     var btn = new TaskDialogButton(button.Text)
