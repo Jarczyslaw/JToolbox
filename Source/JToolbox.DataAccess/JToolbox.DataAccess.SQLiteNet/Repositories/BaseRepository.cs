@@ -127,6 +127,8 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             }
         }
 
+        public TableQuery<TEntity> Table(SQLiteConnection db) => db.Table<TEntity>();
+
         public virtual bool Update(SQLiteConnection db, TEntity entity)
         {
             PrepareEntity(entity);

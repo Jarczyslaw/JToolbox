@@ -2,13 +2,16 @@
 {
     public static class ApplicationInfo
     {
-        public static bool IsDebug()
+        public static bool IsDebug
         {
+            get
+            {
 #if DEBUG
-            return true;
+                return true;
 #else
-            return false;
+                return false;
 #endif
+            }
         }
     }
 }
