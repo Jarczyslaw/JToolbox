@@ -61,10 +61,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         protected override void PrepareEntity(TEntity entity)
         {
-            entity.UpdateDate = timeProvider.Now();
+            entity.UpdateDate = timeProvider.Now;
             if (entity.CreateDate == default)
             {
-                entity.CreateDate = timeProvider.Now();
+                entity.CreateDate = timeProvider.Now;
             }
         }
     }

@@ -62,10 +62,10 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         protected override void PrepareModel(TModel model)
         {
-            model.UpdateDate = timeProvider.Now();
+            model.UpdateDate = timeProvider.Now;
             if (model.CreateDate == default)
             {
-                model.CreateDate = timeProvider.Now();
+                model.CreateDate = timeProvider.Now;
             }
         }
     }

@@ -25,7 +25,7 @@ namespace Examples.Desktop.TimeProviders
                     foreach (var provider in providers)
                     {
                         var stopwatch = Stopwatch.StartNew();
-                        var now = provider.Now();
+                        var now = provider.Now;
                         var localNow = DateTime.Now;
                         var elapsed = stopwatch.Elapsed;
                         var diff = (now - localNow).TotalMilliseconds;

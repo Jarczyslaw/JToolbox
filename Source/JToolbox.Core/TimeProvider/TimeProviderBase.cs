@@ -10,28 +10,32 @@ namespace JToolbox.Core.TimeProvider
         private static readonly object sync = new object();
         private readonly Stopwatch stopwatch = new Stopwatch();
         public TimeSpan MaxOffset { get; set; } = TimeSpan.FromMinutes(30);
-        public TimeSpan SynchronizationInterval { get; set; } = TimeSpan.FromHours(12);
 
-        public DateTime Now()
+        public DateTime Now
         {
-            lock (sync)
+            get
             {
-                if (!synchronizationDate.HasValue || stopwatch.Elapsed > SynchronizationInterval)
+                lock (sync)
                 {
-                    synchronizationDate = Synchronize();
-                    stopwatch.Restart();
-                }
+                    if (!synchronizationDate.HasValue || stopwatch.Elapsed > SynchronizationInterval)
+                    {
+                        synchronizationDate = Synchronize();
+                        stopwatch.Restart();
+                    }
 
-                DateTime now = synchronizationDate.Value + stopwatch.Elapsed;
-                if ((DateTime.Now - now).Ticks > MaxOffset.Ticks)
-                {
-                    synchronizationDate = Synchronize();
-                    stopwatch.Restart();
-                }
+                    DateTime now = synchronizationDate.Value + stopwatch.Elapsed;
+                    if ((DateTime.Now - now).Ticks > MaxOffset.Ticks)
+                    {
+                        synchronizationDate = Synchronize();
+                        stopwatch.Restart();
+                    }
 
-                return synchronizationDate.Value + stopwatch.Elapsed;
+                    return synchronizationDate.Value + stopwatch.Elapsed;
+                }
             }
         }
+
+        public TimeSpan SynchronizationInterval { get; set; } = TimeSpan.FromHours(12);
 
         protected DateTime ParseDateTimeOffset(string dateTimeOffset, string format)
         {

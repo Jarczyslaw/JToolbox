@@ -4,6 +4,6 @@ namespace JToolbox.Core.TimeProvider
 {
     public interface ITimeProvider
     {
-        DateTime Now();
+        DateTime Now { get; }
     }
 }
