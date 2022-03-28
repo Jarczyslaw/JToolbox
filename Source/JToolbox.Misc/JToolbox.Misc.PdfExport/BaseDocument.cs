@@ -17,7 +17,16 @@ namespace JToolbox.Misc.PdfExport
         public Document Document { get; private set; }
         public Section LastSection => Document.LastSection;
         public PageSetup PageSetup { get; private set; }
-        public double PageWidth => PageSetup.PageWidth - PageSetup.LeftMargin - PageSetup.RightMargin;
+
+        public double PageWidth
+        {
+            get
+            {
+                var width = PageSetup.Orientation == MigraDoc.DocumentObjectModel.Orientation.Portrait
+                    ? PageSetup.PageWidth : PageSetup.PageHeight;
+                return width - PageSetup.LeftMargin - PageSetup.RightMargin;
+            }
+        }
 
         public void Print()
         {
@@ -51,8 +60,10 @@ namespace JToolbox.Misc.PdfExport
 
         protected virtual void InitializeDocument(DocumentInfo documentInfo, double leftRightMargin, double topBottomMargin)
         {
-            Document = new Document();
-            Document.Info = documentInfo;
+            Document = new Document
+            {
+                Info = documentInfo
+            };
 
             PageSetup = Document.DefaultPageSetup.Clone();
             PageSetup.TopMargin = Unit.FromCentimeter(topBottomMargin);
