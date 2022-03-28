@@ -39,13 +39,13 @@ namespace Examples.Desktop.SimplePdfExport
             row.Format.Font.Bold = true;
         }
 
-        protected override void PrepareRow(int i, TableItem item, Row row)
+        protected override void PrepareRow(int i, List<TableItem> items, TableItem currentItem, Row row)
         {
             var paragraph = row.Cells[0].AddParagraph();
-            paragraph.AddText(item.Title);
+            paragraph.AddText(currentItem.Title);
 
             paragraph = row.Cells[1].AddParagraph();
-            paragraph.AddText(item.Value.ToString());
+            paragraph.AddText(currentItem.Value.ToString());
         }
 
         protected override void PrepareTable(Table table)

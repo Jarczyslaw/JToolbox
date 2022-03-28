@@ -41,7 +41,7 @@ namespace JToolbox.Misc.PdfExport.Tables
             {
                 var item = items[i];
                 var row = table.AddRow();
-                PrepareRow(i, item, row);
+                PrepareRow(i, items, item, row);
             }
         }
 
@@ -57,7 +57,7 @@ namespace JToolbox.Misc.PdfExport.Tables
         {
         }
 
-        protected virtual void PrepareRow(int i, TItem item, Row row)
+        protected virtual void PrepareRow(int i, List<TItem> items, TItem currentItem, Row row)
         {
         }
 
