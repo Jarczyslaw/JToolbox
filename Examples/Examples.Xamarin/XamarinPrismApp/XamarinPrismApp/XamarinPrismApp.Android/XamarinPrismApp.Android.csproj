@@ -64,15 +64,15 @@
       <Version>7.2.0.562</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.13</Version>
+      <Version>4.7.15</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>8.1.97</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.7.0</Version>
+      <Version>1.7.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
