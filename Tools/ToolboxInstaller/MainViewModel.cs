@@ -7,14 +7,15 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ToolboxInstaller.Properties;
 
 namespace ToolboxInstaller
 {
     public class MainViewModel : BaseViewModel
     {
         private readonly IDialogsService dialogs = new DialogsService();
+        private readonly ObservableCollection<ItemViewModel> flatItems = new ObservableCollection<ItemViewModel>();
         private readonly string startPath = "../../../../Source/";
-        private ObservableCollection<ItemViewModel> flatItems = new ObservableCollection<ItemViewModel>();
         private ObservableCollection<ItemViewModel> items = new ObservableCollection<ItemViewModel>();
         private string selectedPath;
         private string title;
@@ -24,6 +25,7 @@ namespace ToolboxInstaller
         {
             SetBusy(false);
             InitData(null, startPath);
+            RestorePreviousInstalledPath();
         }
 
         public RelayCommand CloseCommand => new RelayCommand(() => Application.Current.Shutdown());
@@ -41,14 +43,14 @@ namespace ToolboxInstaller
         }
 
         public RelayCommand SelectPathCommand => new RelayCommand(async () =>
-        {
-            var solutionPath = dialogs.OpenFolder("Select solution location");
-            if (!string.IsNullOrEmpty(solutionPath))
-            {
-                SelectedPath = solutionPath;
-                await FindProjects();
-            }
-        });
+              {
+                  var solutionPath = dialogs.OpenFolder("Select solution location");
+                  if (!string.IsNullOrEmpty(solutionPath))
+                  {
+                      SelectedPath = solutionPath;
+                      await FindProjects();
+                  }
+              });
 
         public string Title
         {
@@ -59,21 +61,21 @@ namespace ToolboxInstaller
         public string ToolboxPath => Path.Combine(SelectedPath, "JToolbox");
 
         public RelayCommand UpdateCommand => new RelayCommand(async () =>
-        {
-            if (string.IsNullOrEmpty(SelectedPath))
-            {
-                dialogs.ShowError("No target path selected");
-                return;
-            }
+              {
+                  if (string.IsNullOrEmpty(SelectedPath))
+                  {
+                      dialogs.ShowError("No target path selected");
+                      return;
+                  }
 
-            if (!flatItems.Any(i => i.IsProject && i.IsChecked))
-            {
-                dialogs.ShowError("No projects selected");
-                return;
-            }
+                  if (!flatItems.Any(i => i.IsProject && i.IsChecked))
+                  {
+                      dialogs.ShowError("No projects selected");
+                      return;
+                  }
 
-            await UpdateStructure();
-        });
+                  await UpdateStructure();
+              });
 
         public bool WindowEnabled
         {
@@ -170,6 +172,16 @@ namespace ToolboxInstaller
             });
         }
 
+        private async void RestorePreviousInstalledPath()
+        {
+            var path = Settings.Default.PreviousInstalledPath;
+            if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
+            {
+                SelectedPath = path;
+                await FindProjects();
+            }
+        }
+
         private void SetBusy(bool busy, string msg = null)
         {
             var tempTitle = "Toolbox Installer";
@@ -193,6 +205,9 @@ namespace ToolboxInstaller
                 }
                 await RebuildStructure();
                 dialogs.ShowInfo("Updated!");
+
+                Settings.Default.PreviousInstalledPath = SelectedPath;
+                Settings.Default.Save();
             }
             catch (Exception exc)
             {
