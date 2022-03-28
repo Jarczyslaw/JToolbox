@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace JToolbox.WinForms.Core.Controls
@@ -22,18 +21,14 @@ namespace JToolbox.WinForms.Core.Controls
             get => DataSource as List<ComboItem<T>>;
             set
             {
+                var selectedValue = SelectedComboValue;
+
                 DataSource = null;
                 DataSource = value;
                 DisplayMember = nameof(ComboItem<T>.Header);
                 ValueMember = nameof(ComboItem<T>.Value);
-                if (value == null)
-                {
-                    SelectedComboItem = null;
-                }
-                else
-                {
-                    SelectedComboItem = value.FirstOrDefault();
-                }
+
+                SelectedComboValue = selectedValue;
             }
         }
 
@@ -64,7 +59,7 @@ namespace JToolbox.WinForms.Core.Controls
             {
                 if (value != null)
                 {
-                    SelectedComboItem = ComboItems.Find(i => EqualityComparer<T>.Default.Equals(i.Value, value));
+                    SelectedComboItem = ComboItems?.Find(i => EqualityComparer<T>.Default.Equals(i.Value, value));
                 }
                 else
                 {
