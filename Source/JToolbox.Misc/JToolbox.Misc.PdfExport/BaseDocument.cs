@@ -49,7 +49,7 @@ namespace JToolbox.Misc.PdfExport
             pdfDocument.Close();
         }
 
-        private void InitializeDocument(DocumentInfo documentInfo, double leftRightMargin, double topBottomMargin)
+        protected virtual void InitializeDocument(DocumentInfo documentInfo, double leftRightMargin, double topBottomMargin)
         {
             Document = new Document();
             Document.Info = documentInfo;
