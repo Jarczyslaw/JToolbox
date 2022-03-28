@@ -15,20 +15,22 @@ namespace JToolbox.Misc.PdfExport.Tables
 
         public List<GenericTableColumn> Columns { get; set; } = new List<GenericTableColumn>();
 
+        public Table Table { get; private set; }
+
         public void Print(List<TItem> items)
         {
             CalculateFillColumnWidth();
 
-            var table = document.LastSection.AddTable();
-            PrepareTable(table);
+            Table = document.LastSection.AddTable();
+            PrepareTable(Table);
 
             foreach (var column in Columns)
             {
-                var tableColumn = table.AddColumn(column.Width);
+                var tableColumn = Table.AddColumn(column.Width);
                 PrepareColumn(column, tableColumn);
             }
 
-            var headerRow = table.AddRow();
+            var headerRow = Table.AddRow();
             PrepareHeaderRow(headerRow);
 
             for (int i = 0; i < Columns.Count; i++)
@@ -40,7 +42,7 @@ namespace JToolbox.Misc.PdfExport.Tables
             for (int i = 0; i < items.Count; i++)
             {
                 var item = items[i];
-                var row = table.AddRow();
+                var row = Table.AddRow();
                 PrepareRow(i, items, item, row);
             }
         }
