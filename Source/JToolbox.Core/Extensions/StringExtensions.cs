@@ -38,6 +38,16 @@ namespace JToolbox.Core.Extensions
             return @string.Substring(indexFrom, indexTo - indexFrom);
         }
 
+        public static string FirstCharToUpper(this string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            return input[0].ToString().ToUpper() + input.Substring(1);
+        }
+
         public static bool IgnoreCaseContains(this string val1, string val2)
         {
             if (val1 == null || val2 == null)
