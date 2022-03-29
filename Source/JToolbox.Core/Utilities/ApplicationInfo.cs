@@ -1,4 +1,6 @@
-﻿namespace JToolbox.Core.Utilities
+﻿using System.Diagnostics;
+
+namespace JToolbox.Core.Utilities
 {
     public static class ApplicationInfo
     {
@@ -13,5 +15,7 @@
 #endif
             }
         }
+
+        public static bool IsDebugWithoutDebugger => IsDebug && !Debugger.IsAttached;
     }
 }

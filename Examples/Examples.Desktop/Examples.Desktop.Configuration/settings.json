@@ -1,0 +1,28 @@
+{
+  "boolValue": "true",
+  "intValue": "2",
+  "listValue": [
+    {
+      "bool": "true",
+      "int": 1
+    },
+    {
+      "bool": "true",
+      "int": 2
+    },
+    {
+      "bool": "true",
+      "int": 3
+    }
+  ],
+  "dictValue": {
+    "key1": {
+      "bool": "true",
+      "int": 1
+    },
+    "key2": {
+      "bool": "true",
+      "int": 2
+    }
+  }
+}
