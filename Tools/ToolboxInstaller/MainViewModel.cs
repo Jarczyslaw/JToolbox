@@ -167,7 +167,7 @@ namespace ToolboxInstaller
 
                     var source = new DirectoryInfo(project.SourcePath);
                     var target = new DirectoryInfo(Path.Combine(directoryPath, project.Title));
-                    FileHelper.CopyAll(source, target);
+                    FileSystemHelper.CopyAll(source, target);
                 }
             });
         }

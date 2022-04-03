@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSystemHelperTests.cs" />
     <Compile Include="IListExtensionsTests.cs" />
     <Compile Include="Nodes\NodesTestsDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
