@@ -4,13 +4,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace AppPacker
+namespace AppZipper
 {
-    public class PackerData
+    public class ZipperData
     {
         private readonly Config config;
 
-        public PackerData(Config config, string filePath)
+        public ZipperData(Config config, string filePath)
         {
             this.config = config;
 

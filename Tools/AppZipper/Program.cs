@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace AppPacker
+namespace AppZipper
 {
     public static class Program
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("AppPacker started");
+            Console.WriteLine("AppZipper started");
 
             try
             {
@@ -23,7 +23,7 @@ namespace AppPacker
                         return;
                     }
 
-                    var packer = new Packer();
+                    var packer = new Zipper();
                     packer.Run(config);
                 }
             }
@@ -31,7 +31,7 @@ namespace AppPacker
             {
                 Console.WriteLine(exc.Message);
             }
-            Console.WriteLine("AppPacker finished");
+            Console.WriteLine("AppZipper finished");
         }
     }
 }

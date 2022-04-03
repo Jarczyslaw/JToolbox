@@ -1,7 +1,7 @@
 ﻿using Fclp;
 using System;
 
-namespace AppPacker
+namespace AppZipper
 {
     public class CommandLineParser
     {

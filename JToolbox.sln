@@ -158,15 +158,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.DataAccess"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework.BusinessLogic", "Examples\Examples.Desktop\EntityFramework\EntityFramework.BusinessLogic\EntityFramework.BusinessLogic.csproj", "{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPacker", "Tools\AppPacker\AppPacker.csproj", "{2440764C-D864-41DF-87B8-A28FF3AF1FB1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPacker.Example", "Tools\AppPacker.Example\AppPacker.Example.csproj", "{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.AppsUpdater", "Source\JToolbox.Misc\JToolbox.Misc.AppsUpdater\JToolbox.Misc.AppsUpdater.csproj", "{8544A30E-7966-4E63-94C9-206A7DBD92ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.Configuration", "Source\JToolbox.Misc\JToolbox.Misc.Configuration\JToolbox.Misc.Configuration.csproj", "{C6D532FF-42CE-42FF-A19C-FD00B5149796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.Configuration", "Source\JToolbox.Misc\JToolbox.Misc.Configuration\JToolbox.Misc.Configuration.csproj", "{C6D532FF-42CE-42FF-A19C-FD00B5149796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.Configuration", "Examples\Examples.Desktop\Examples.Desktop.Configuration\Examples.Desktop.Configuration.csproj", "{5426F4F4-522D-413A-8F4E-238539D4D9F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Desktop.Configuration", "Examples\Examples.Desktop\Examples.Desktop.Configuration\Examples.Desktop.Configuration.csproj", "{5426F4F4-522D-413A-8F4E-238539D4D9F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppZipper", "Tools\AppZipper\AppZipper.csproj", "{2440764C-D864-41DF-87B8-A28FF3AF1FB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppZipper.Example", "Tools\AppZipper.Example\AppZipper.Example.csproj", "{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -406,14 +406,6 @@ Global
 		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8544A30E-7966-4E63-94C9-206A7DBD92ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -426,6 +418,14 @@ Global
 		{5426F4F4-522D-413A-8F4E-238539D4D9F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5426F4F4-522D-413A-8F4E-238539D4D9F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5426F4F4-522D-413A-8F4E-238539D4D9F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2440764C-D864-41DF-87B8-A28FF3AF1FB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -502,11 +502,11 @@ Global
 		{6A1B595C-CE62-4787-857C-81DDDD461E11} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{C155008C-E35C-47A4-8263-CF79F9900F6D} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
 		{FBC4E4DE-37F7-46AA-904D-9CFA21E58FF7} = {E46E460E-9E89-4526-A55D-B2A1C7D80995}
-		{2440764C-D864-41DF-87B8-A28FF3AF1FB1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
-		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 		{8544A30E-7966-4E63-94C9-206A7DBD92ED} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{C6D532FF-42CE-42FF-A19C-FD00B5149796} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{5426F4F4-522D-413A-8F4E-238539D4D9F8} = {907A859F-6219-4D41-9B8C-1EF003286419}
+		{2440764C-D864-41DF-87B8-A28FF3AF1FB1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
+		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

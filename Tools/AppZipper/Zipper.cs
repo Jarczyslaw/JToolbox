@@ -5,9 +5,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 
-namespace AppPacker
+namespace AppZipper
 {
-    public class Packer
+    public class Zipper
     {
         public void Run(Config config)
         {
@@ -27,7 +27,7 @@ namespace AppPacker
             }
 
             var exeFile = files.First();
-            var packerData = new PackerData(config, exeFile);
+            var packerData = new ZipperData(config, exeFile);
 
             if (packerData.OutputFilesAndFolders.Any())
             {
@@ -52,7 +52,7 @@ namespace AppPacker
             }
         }
 
-        private void PrintSummary(PackerData packerData)
+        private void PrintSummary(ZipperData packerData)
         {
             Console.WriteLine($"{packerData.OutputFileName} created successfully");
             Console.WriteLine("Package content:");
@@ -69,7 +69,7 @@ namespace AppPacker
             Console.Write(sb.ToString());
         }
 
-        private void RemovePreviousPackages(PackerData packerData, Config config)
+        private void RemovePreviousPackages(ZipperData packerData, Config config)
         {
             if (File.Exists(packerData.OutputFilePath))
             {

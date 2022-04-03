@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C515BFCE-3B34-4414-A6B4-CE2E758E45D1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AppPacker.Example</RootNamespace>
-    <AssemblyName>AppPacker.Example</AssemblyName>
+    <RootNamespace>AppZipper.Example</RootNamespace>
+    <AssemblyName>AppZipper.Example</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -2,7 +2,7 @@
 using System.IO.Compression;
 using System.Linq;
 
-namespace AppPacker
+namespace AppZipper
 {
     public static class ZipArchiveExtension
     {

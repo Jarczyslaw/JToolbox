@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2440764C-D864-41DF-87B8-A28FF3AF1FB1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>AppPacker</RootNamespace>
-    <AssemblyName>apppacker</AssemblyName>
+    <RootNamespace>AppZipper</RootNamespace>
+    <AssemblyName>appZipper</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -199,8 +199,8 @@
   <ItemGroup>
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="PackerData.cs" />
-    <Compile Include="Packer.cs" />
+    <Compile Include="ZipperData.cs" />
+    <Compile Include="Zipper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ZipArchiveExtension.cs" />
