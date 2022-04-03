@@ -43,14 +43,14 @@ namespace ToolboxInstaller
         }
 
         public RelayCommand SelectPathCommand => new RelayCommand(async () =>
-              {
-                  var solutionPath = dialogs.OpenFolder("Select solution location");
-                  if (!string.IsNullOrEmpty(solutionPath))
-                  {
-                      SelectedPath = solutionPath;
-                      await FindProjects();
-                  }
-              });
+         {
+             var solutionPath = dialogs.OpenFolder("Select solution location");
+             if (!string.IsNullOrEmpty(solutionPath))
+             {
+                 SelectedPath = solutionPath;
+                 await FindProjects();
+             }
+         });
 
         public string Title
         {
@@ -61,21 +61,21 @@ namespace ToolboxInstaller
         public string ToolboxPath => Path.Combine(SelectedPath, "JToolbox");
 
         public RelayCommand UpdateCommand => new RelayCommand(async () =>
-              {
-                  if (string.IsNullOrEmpty(SelectedPath))
-                  {
-                      dialogs.ShowError("No target path selected");
-                      return;
-                  }
+         {
+             if (string.IsNullOrEmpty(SelectedPath))
+             {
+                 dialogs.ShowError("No target path selected");
+                 return;
+             }
 
-                  if (!flatItems.Any(i => i.IsProject && i.IsChecked))
-                  {
-                      dialogs.ShowError("No projects selected");
-                      return;
-                  }
+             if (!flatItems.Any(i => i.IsProject && i.IsChecked))
+             {
+                 dialogs.ShowError("No projects selected");
+                 return;
+             }
 
-                  await UpdateStructure();
-              });
+             await UpdateStructure();
+         });
 
         public bool WindowEnabled
         {

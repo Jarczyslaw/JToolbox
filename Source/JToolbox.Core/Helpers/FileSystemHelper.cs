@@ -69,5 +69,49 @@ namespace JToolbox.Core.Helpers
 
             return FileNameMatchesMasks(fileName, masks.ToArray());
         }
+
+        public static bool IsDirectory(string path)
+        {
+            return File.GetAttributes(path).HasFlag(FileAttributes.Directory);
+        }
+
+        public static bool IsFile(string path)
+        {
+            return !IsDirectory(path);
+        }
+
+        public static void IterateFilesAndFolders(string path, Action<FileInfo> fileCallback, Func<DirectoryInfo, bool> directoryCallback)
+        {
+            if (IsFile(path))
+            {
+                fileCallback(new FileInfo(path));
+            }
+            else if (IsDirectory(path))
+            {
+                var directoryInfo = new DirectoryInfo(path);
+                var @continue = directoryCallback(directoryInfo);
+                if (@continue)
+                {
+                    IterateFolders(directoryInfo, fileCallback, directoryCallback);
+                }
+            }
+        }
+
+        private static void IterateFolders(DirectoryInfo directory, Action<FileInfo> fileCallback, Func<DirectoryInfo, bool> directoryCallback)
+        {
+            foreach (var file in directory.EnumerateFiles())
+            {
+                fileCallback(file);
+            }
+
+            foreach (var dir in directory.EnumerateDirectories())
+            {
+                var @continue = directoryCallback(dir);
+                if (@continue)
+                {
+                    IterateFolders(dir, fileCallback, directoryCallback);
+                }
+            }
+        }
     }
 }
