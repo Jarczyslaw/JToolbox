@@ -170,6 +170,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppZipper.Example", "Tools\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.DataProtectionApi", "Source\JToolbox.Misc\JToolbox.Misc.DataProtectionApi\JToolbox.Misc.DataProtectionApi.csproj", "{F8B23211-2448-4F6E-B462-DC501A9C5B82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUploader", "Tools\AppUploader\AppUploader.csproj", "{923C6C07-0CAB-4BC3-9841-7D7A82B87F00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -432,6 +434,10 @@ Global
 		{F8B23211-2448-4F6E-B462-DC501A9C5B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B23211-2448-4F6E-B462-DC501A9C5B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8B23211-2448-4F6E-B462-DC501A9C5B82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{923C6C07-0CAB-4BC3-9841-7D7A82B87F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923C6C07-0CAB-4BC3-9841-7D7A82B87F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923C6C07-0CAB-4BC3-9841-7D7A82B87F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923C6C07-0CAB-4BC3-9841-7D7A82B87F00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -514,6 +520,7 @@ Global
 		{2440764C-D864-41DF-87B8-A28FF3AF1FB1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 		{C515BFCE-3B34-4414-A6B4-CE2E758E45D1} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 		{F8B23211-2448-4F6E-B462-DC501A9C5B82} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
+		{923C6C07-0CAB-4BC3-9841-7D7A82B87F00} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

@@ -69,6 +69,7 @@
     <Compile Include="DragAndDrop\UiDragDropArgs.cs" />
     <Compile Include="DragAndDrop\UiFileDragArgs.cs" />
     <Compile Include="DragAndDrop\UiFileDropArgs.cs" />
+    <Compile Include="PasswordBoxAssistant.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WindowBase.cs" />
     <Compile Include="BindingProxy.cs" />
