@@ -1,9 +1,11 @@
-﻿using JToolbox.WPF.Core.Base;
+﻿using JToolbox.Desktop.Dialogs;
+using JToolbox.WPF.Core.Base;
 
 namespace AppUploader
 {
     public class MainViewModel : BaseViewModel
     {
+        private readonly DialogsService dialogs;
         private string busyContent;
         private string filePath;
         private string hostName;
@@ -15,6 +17,11 @@ namespace AppUploader
         private string targetPath;
         private RelayCommand uploadCommand;
         private string userName;
+
+        public MainViewModel(DialogsService dialogs)
+        {
+            this.dialogs = dialogs;
+        }
 
         public string BusyContent
         {

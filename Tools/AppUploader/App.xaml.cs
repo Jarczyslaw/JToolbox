@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using JToolbox.Desktop.Dialogs;
+using System.Windows;
 
 namespace AppUploader
 {
@@ -6,7 +7,22 @@ namespace AppUploader
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var mainWindow = new MainWindow();
+            var dialogs = new DialogsService();
+
+            var commandLineParser = new CommandLineParser();
+            var parseResult = commandLineParser.Parse(e.Args);
+            if (parseResult.IsError)
+            {
+                dialogs.ShowError(parseResult.Error.Content);
+                return;
+            }
+
+            var mainViewModel = new MainViewModel(dialogs);
+
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainViewModel
+            };
             mainWindow.Show();
         }
     }
