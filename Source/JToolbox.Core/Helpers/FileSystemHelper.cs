@@ -7,6 +7,8 @@ namespace JToolbox.Core.Helpers
 {
     public static class FileSystemHelper
     {
+        private static readonly Random random = new Random();
+
         public static void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
             Directory.CreateDirectory(target.FullName);
@@ -23,7 +25,22 @@ namespace JToolbox.Core.Helpers
             }
         }
 
-        public static bool FileNameFitsMask(string fileName, string fileMask)
+        public static void CreateEmptyFile(string filePath, long size)
+        {
+            using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                fs.SetLength(size);
+            }
+        }
+
+        public static void CreateRandomFile(string filePath, long size)
+        {
+            var data = new byte[size];
+            random.NextBytes(data);
+            File.WriteAllBytes(filePath, data);
+        }
+
+        public static bool FileNameMatchesMask(string fileName, string fileMask)
         {
             var mask = new Regex(
                 '^' +
@@ -36,21 +53,21 @@ namespace JToolbox.Core.Helpers
             return mask.IsMatch(fileName);
         }
 
-        public static bool FileNameFitsMasks(string fileName, params string[] fileMasks)
+        public static bool FileNameMatchesMasks(string fileName, params string[] fileMasks)
         {
             if (fileMasks?.Length > 0)
             {
-                return fileMasks.Any(x => FileNameFitsMask(fileName, x));
+                return fileMasks.Any(x => FileNameMatchesMask(fileName, x));
             }
             return false;
         }
 
-        public static bool FileNameFitsMasks(string fileName, string fileMasks)
+        public static bool FileNameMatchesMasks(string fileName, string fileMasks)
         {
             var masks = fileMasks.Split(new string[] { "\r\n", "\n", ",", "|", " ", ";" },
                 StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
 
-            return FileNameFitsMasks(fileName, masks.ToArray());
+            return FileNameMatchesMasks(fileName, masks.ToArray());
         }
     }
 }

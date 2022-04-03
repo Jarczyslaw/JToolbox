@@ -18,20 +18,22 @@ namespace JToolbox.Core.Tests
                 "qwe.asd.txt",
             };
 
-            Assert.IsTrue(fileNames.All(x => FileSystemHelper.FileNameFitsMask(x, mask)));
+            Assert.IsTrue(fileNames.All(x => FileSystemHelper.FileNameMatchesMask(x, mask)));
         }
 
         [TestMethod]
         public void FileNameFitsMask_AllFilesNamesShouldMatchMasks()
         {
-            var masks = "*.txt;*.bmp";
+            var masks = "*.txt;*.bmp;test.*,.file";
             var fileNames = new List<string>
             {
                 "asd.txt",
                 "asd.bmp",
+                "test.mp3",
+                ".file"
             };
 
-            Assert.IsTrue(fileNames.All(x => FileSystemHelper.FileNameFitsMasks(x, masks)));
+            Assert.IsTrue(fileNames.All(x => FileSystemHelper.FileNameMatchesMasks(x, masks)));
         }
 
         [TestMethod]
@@ -44,7 +46,7 @@ namespace JToolbox.Core.Tests
                 ".bmp",
             };
 
-            Assert.IsTrue(fileNames.All(x => !FileSystemHelper.FileNameFitsMask(x, mask)));
+            Assert.IsTrue(fileNames.All(x => !FileSystemHelper.FileNameMatchesMask(x, mask)));
         }
     }
 }

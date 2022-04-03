@@ -1,7 +1,5 @@
-﻿using JToolbox.Core.Extensions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AppZipper
@@ -13,17 +11,18 @@ namespace AppZipper
 
         public string AssemblyFolderPath { get; set; }
 
+        public string FilesBlackList { get; set; } = "*.dll.config;*.pdb;*.xml";
+
+        [JsonIgnore]
+        public string[] FilesBlackListParsed => SplitString(FilesBlackList);
+
         public string FilesWhiteList { get; set; }
 
         [JsonIgnore]
-        public IEnumerable<string> FilesWhiteListParsed => SplitString(FilesWhiteList);
-
-        public string IgnoredFilesExtensions { get; set; } = "dll.config;pdb;xml";
-
-        [JsonIgnore]
-        public IEnumerable<string> IgnoredFilesExtensionsParsed => SplitString(IgnoredFilesExtensions);
+        public string[] FilesWhiteListParsed => SplitString(FilesWhiteList);
 
         public string OutputFileNamePattern { get; set; } = $"{assemblyNameTag}_{{version}}";
+
         public bool RemovePreviousPackages { get; set; } = true;
 
         public bool Validate()
@@ -40,36 +39,19 @@ namespace AppZipper
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(FilesWhiteList))
-            {
-                if (FilesWhiteListParsed.Any(x => !x.IsValidFileName()))
-                {
-                    Console.WriteLine("Not all values in white list are valid file names");
-                    return false;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(IgnoredFilesExtensions))
-            {
-                if (IgnoredFilesExtensionsParsed.Any(x => !x.IsValidFileName()))
-                {
-                    Console.WriteLine("Not all values in ignored files extensions are valid");
-                    return false;
-                }
-            }
-
             return true;
         }
 
-        private IEnumerable<string> SplitString(string @string)
+        private string[] SplitString(string @string)
         {
             if (string.IsNullOrEmpty(@string))
             {
-                return new List<string>();
+                return new string[0];
             }
 
             return @string.Split(new string[] { splitCharacter }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => x.Trim());
+                .Select(x => x.Trim())
+                .ToArray();
         }
     }
 }

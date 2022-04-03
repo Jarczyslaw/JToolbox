@@ -1,8 +1,8 @@
-﻿using System;
+﻿using JToolbox.Core.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace AppZipper
 {
@@ -49,20 +49,19 @@ namespace AppZipper
             foreach (var file in files)
             {
                 var fileName = Path.GetFileName(file);
-                var fileExtension = Path.GetExtension(file);
 
-                if (config.FilesWhiteListParsed.Contains(fileName))
+                if (FileSystemHelper.FileNameMatchesMasks(fileName, config.FilesWhiteListParsed))
+                {
+                    OutputFilesAndFolders.Add(file);
+                    continue;
+                }
+
+                if (!FileSystemHelper.FileNameMatchesMasks(fileName, config.FilesBlackListParsed))
                 {
                     OutputFilesAndFolders.Add(file);
                 }
-                else
-                {
-                    if (!config.IgnoredFilesExtensionsParsed.Any(x => fileName.EndsWith(x)))
-                    {
-                        OutputFilesAndFolders.Add(file);
-                    }
-                }
             }
+
             OutputFilesAndFolders.AddRange(folders);
         }
 

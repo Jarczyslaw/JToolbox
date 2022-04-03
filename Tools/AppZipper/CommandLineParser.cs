@@ -16,8 +16,8 @@ namespace AppZipper
             parser.Setup(x => x.FilesWhiteList)
                 .As("filesWhiteList");
 
-            parser.Setup(x => x.IgnoredFilesExtensions)
-                .As("ignoredFilesExtensions");
+            parser.Setup(x => x.FilesBlackList)
+                .As("filesBlackList");
 
             parser.Setup(x => x.OutputFileNamePattern)
                 .As("outputFileNamePattern");
