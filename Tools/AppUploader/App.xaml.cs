@@ -1,4 +1,5 @@
 ﻿using JToolbox.Desktop.Dialogs;
+using System;
 using System.Windows;
 
 namespace AppUploader
@@ -9,21 +10,28 @@ namespace AppUploader
         {
             var dialogs = new DialogsService();
 
-            var commandLineParser = new CommandLineParser();
-            var parseResult = commandLineParser.Parse(e.Args);
-            if (parseResult.IsError)
+            try
             {
-                dialogs.ShowError(parseResult.Error.Content);
-                return;
+                var commandLineParser = new CommandLineParser();
+                var parseResult = commandLineParser.Parse(e.Args);
+                if (parseResult.IsError)
+                {
+                    dialogs.ShowError(parseResult.Error.Content);
+                    return;
+                }
+
+                var mainViewModel = new MainViewModel(dialogs);
+
+                var mainWindow = new MainWindow
+                {
+                    DataContext = mainViewModel
+                };
+                mainWindow.Show();
             }
-
-            var mainViewModel = new MainViewModel(dialogs);
-
-            var mainWindow = new MainWindow
+            catch (Exception exc)
             {
-                DataContext = mainViewModel
-            };
-            mainWindow.Show();
+                dialogs.ShowException(exc);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace JToolbox.Misc.DataProtectionApi
     {
         public static string Decrypt(string encryptedText,
             string entropy = null,
-            DataProtectionScope scope = DataProtectionScope.LocalMachine)
+            bool localMachineScope = false)
         {
             if (encryptedText == null) { return encryptedText; }
 
@@ -17,6 +17,7 @@ namespace JToolbox.Misc.DataProtectionApi
             var entropyBytes = string.IsNullOrEmpty(entropy)
                 ? null
                 : Encoding.UTF8.GetBytes(entropy);
+            var scope = localMachineScope ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser;
 
             var decryptedData = CrossProtect.Unprotect(data, entropyBytes, scope);
 
@@ -25,7 +26,7 @@ namespace JToolbox.Misc.DataProtectionApi
 
         public static string Encrypt(string textToEncrypt,
             string entropy = null,
-            DataProtectionScope scope = DataProtectionScope.LocalMachine)
+            bool localMachineScope = false)
         {
             if (textToEncrypt == null) { return textToEncrypt; }
 
@@ -33,6 +34,7 @@ namespace JToolbox.Misc.DataProtectionApi
             var entropyBytes = string.IsNullOrEmpty(entropy)
                 ? null
                 : Encoding.UTF8.GetBytes(entropy);
+            var scope = localMachineScope ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser;
 
             var encrypted = CrossProtect.Protect(textBytes, entropyBytes, scope);
 
