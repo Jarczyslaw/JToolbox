@@ -1,5 +1,8 @@
 ﻿using JToolbox.Desktop.Dialogs;
 using JToolbox.WPF.Core.Base;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace AppUploader
 {
@@ -8,7 +11,7 @@ namespace AppUploader
         private readonly DialogsService dialogs;
         private string busyContent;
         private string filePath;
-        private string hostName;
+        private string hostname;
         private bool isBusy;
         private string password;
         private int port;
@@ -16,11 +19,14 @@ namespace AppUploader
         private RelayCommand selectFileCommand;
         private string targetPath;
         private RelayCommand uploadCommand;
-        private string userName;
+        private string username;
 
-        public MainViewModel(DialogsService dialogs)
+        public MainViewModel(DialogsService dialogs, UploadData uploadData)
         {
             this.dialogs = dialogs;
+
+            LoadUploadData(uploadData);
+            LoadConfiguration();
         }
 
         public string BusyContent
@@ -39,10 +45,10 @@ namespace AppUploader
             set => Set(ref filePath, value);
         }
 
-        public string HostName
+        public string Hostname
         {
-            get => hostName;
-            set => Set(ref hostName, value);
+            get => hostname;
+            set => Set(ref hostname, value);
         }
 
         public bool IsBusy
@@ -75,22 +81,71 @@ namespace AppUploader
 
         public RelayCommand UploadCommand => uploadCommand ?? (uploadCommand = new RelayCommand(Upload));
 
-        public string UserName
+        public string Username
         {
-            get => userName;
-            set => Set(ref userName, value);
+            get => username;
+            set => Set(ref username, value);
         }
 
-        private void SaveConnection()
+        private void LoadConfiguration()
         {
+            var configuration = new Configuration();
+            FilePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configuration.FilePath));
+            TargetPath = configuration.TargetPath;
+        }
+
+        private void LoadUploadData(UploadData uploadData)
+        {
+            FilePath = uploadData.FilePath;
+            Hostname = uploadData.Hostname;
+            Password = uploadData.Password;
+            Port = uploadData.Port;
+            TargetPath = uploadData.TargetPath;
+            Username = uploadData.Username;
+        }
+
+        private async Task Run(Func<Task> action, string message = "Please wait...")
+        {
+            try
+            {
+                BusyContent = message;
+                await action();
+            }
+            finally
+            {
+                BusyContent = null;
+            }
+        }
+
+        private async void SaveConnection()
+        {
+            try
+            {
+                var registryTools = new RegistryTool();
+                var connectionData = new ConnectionData
+                {
+                    Hostname = Hostname,
+                    Password = Password,
+                    Username = Username,
+                    Port = Port,
+                };
+
+                await Run(() => Task.Run(() => registryTools.Save(connectionData)));
+                dialogs.ShowInfo("Connection data saved");
+            }
+            catch (Exception ex)
+            {
+                dialogs.ShowException(ex);
+            }
         }
 
         private void SelectFile()
         {
         }
 
-        private void Upload()
+        private async void Upload()
         {
+            await Run(() => Task.Delay(5000));
         }
     }
 }

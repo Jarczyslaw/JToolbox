@@ -30,7 +30,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="300" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
@@ -83,31 +83,23 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="300" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Label Content="File path:" />
-                    <TextBox Grid.Column="1" Text="{Binding FilePath}" />
+                    <TextBox IsReadOnly="True" Grid.Column="1" Text="{Binding FilePath}" />
 
                     <Label Grid.Row="1" Content="Target path:" />
                     <TextBox
+                        IsReadOnly="True"
                         Grid.Row="1"
                         Grid.Column="1"
                         Text="{Binding TargetPath}" />
-
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Width="60"
-                        HorizontalAlignment="Right"
-                        Command="{Binding SelectFileCommand}"
-                        Content="Select file" />
                 </Grid>
             </GroupBox>
 

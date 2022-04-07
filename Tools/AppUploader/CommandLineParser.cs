@@ -5,9 +5,9 @@ namespace AppUploader
 {
     public class CommandLineParser
     {
-        public Result<CommandLineArgs> Parse(string[] args)
+        public Result<UploadData> Parse(string[] args)
         {
-            var parser = new FluentCommandLineParser<CommandLineArgs>();
+            var parser = new FluentCommandLineParser<UploadData>();
 
             parser.Setup(x => x.Hostname)
                .As("hostName");
@@ -31,10 +31,10 @@ namespace AppUploader
 
             if (result.HasErrors)
             {
-                return Result<CommandLineArgs>.AsError(result.ErrorText);
+                return Result<UploadData>.AsError(result.ErrorText);
             }
 
-            return new Result<CommandLineArgs>(parser.Object);
+            return new Result<UploadData>(parser.Object);
         }
     }
 }

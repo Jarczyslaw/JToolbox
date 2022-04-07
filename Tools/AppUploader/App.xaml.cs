@@ -6,25 +6,18 @@ namespace AppUploader
 {
     public partial class App : Application
     {
+        private readonly DialogsService dialogs = new DialogsService();
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            var dialogs = new DialogsService();
-
             try
             {
-                var commandLineParser = new CommandLineParser();
-                var parseResult = commandLineParser.Parse(e.Args);
-                if (parseResult.IsError)
-                {
-                    dialogs.ShowError(parseResult.Error.Content);
-                    return;
-                }
-
-                var mainViewModel = new MainViewModel(dialogs);
+                var uploadData = GetUploadData(e);
+                if (uploadData == null) { return; }
 
                 var mainWindow = new MainWindow
                 {
-                    DataContext = mainViewModel
+                    DataContext = new MainViewModel(dialogs, uploadData)
                 };
                 mainWindow.Show();
             }
@@ -32,6 +25,24 @@ namespace AppUploader
             {
                 dialogs.ShowException(exc);
             }
+        }
+
+        private UploadData GetUploadData(StartupEventArgs e)
+        {
+            var commandLineParser = new CommandLineParser();
+            var parseResult = commandLineParser.Parse(e.Args);
+            if (parseResult.IsError)
+            {
+                dialogs.ShowError(parseResult.Error.Content);
+                return null;
+            }
+
+            var registryTools = new RegistryTool();
+            var connectionData = registryTools.Load();
+
+            var uploadData = parseResult.Value;
+            uploadData.Set(connectionData);
+            return uploadData;
         }
     }
 }
