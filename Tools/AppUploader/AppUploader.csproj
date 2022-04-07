@@ -38,11 +38,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET, Version=1.7.0.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autoupdater.NET.Official.1.7.0\lib\net45\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentFTP, Version=37.0.2.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentFTP.37.0.2\lib\net45\FluentFTP.dll</HintPath>
     </Reference>
     <Reference Include="Integrative.CrossProtectedData, Version=0.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Integrative.CrossProtect.0.1.3\lib\netstandard2.0\Integrative.CrossProtectedData.dll</HintPath>
@@ -227,6 +233,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
@@ -282,6 +289,8 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -321,6 +330,8 @@
     </ApplicationDefinition>
     <Compile Include="Configuration.cs" />
     <Compile Include="ConnectionData.cs" />
+    <Compile Include="FtpUploader.cs" />
+    <Compile Include="IUploadProgressHandler.cs" />
     <Compile Include="RegistryTool.cs" />
     <Compile Include="UploadData.cs" />
     <Page Include="MainWindow.xaml">
@@ -387,6 +398,10 @@
     <ProjectReference Include="..\..\Source\JToolbox.Misc\JToolbox.Misc.DataProtectionApi\JToolbox.Misc.DataProtectionApi.csproj">
       <Project>{f8b23211-2448-4f6e-b462-dc501a9c5b82}</Project>
       <Name>JToolbox.Misc.DataProtectionApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\JToolbox.Misc\JToolbox.Misc.Serializers\JToolbox.Misc.Serializers.csproj">
+      <Project>{6c474024-fd4a-4639-a8a3-35cf77615be4}</Project>
+      <Name>JToolbox.Misc.Serializers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\JToolbox.WPF\JToolbox.WPF.Core\JToolbox.WPF.Core.csproj">
       <Project>{56bee9b3-2fcb-46e7-a837-d07f0bfcbd98}</Project>

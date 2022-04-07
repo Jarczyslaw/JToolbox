@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppUploader
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel, IUploadProgressHandler
     {
         private readonly DialogsService dialogs;
         private string busyContent;
@@ -71,8 +71,6 @@ namespace AppUploader
 
         public RelayCommand SaveConnectionCommand => saveConnectionCommand ?? (saveConnectionCommand = new RelayCommand(SaveConnection));
 
-        public RelayCommand SelectFileCommand => selectFileCommand ?? (selectFileCommand = new RelayCommand(SelectFile));
-
         public string TargetPath
         {
             get => targetPath;
@@ -85,6 +83,24 @@ namespace AppUploader
         {
             get => username;
             set => Set(ref username, value);
+        }
+
+        public void OnProgress(string taskName, double progress)
+        {
+            BusyContent = $"{taskName}: {progress:F0}%";
+        }
+
+        private UploadData GetUploadData()
+        {
+            return new UploadData
+            {
+                Hostname = Hostname,
+                Password = Password,
+                Username = Username,
+                Port = Port,
+                FilePath = FilePath,
+                TargetPath = TargetPath,
+            };
         }
 
         private void LoadConfiguration()
@@ -122,14 +138,7 @@ namespace AppUploader
             try
             {
                 var registryTools = new RegistryTool();
-                var connectionData = new ConnectionData
-                {
-                    Hostname = Hostname,
-                    Password = Password,
-                    Username = Username,
-                    Port = Port,
-                };
-
+                var connectionData = GetUploadData();
                 await Run(() => Task.Run(() => registryTools.Save(connectionData)));
                 dialogs.ShowInfo("Connection data saved");
             }
@@ -139,13 +148,20 @@ namespace AppUploader
             }
         }
 
-        private void SelectFile()
-        {
-        }
-
         private async void Upload()
         {
-            await Run(() => Task.Delay(5000));
+            try
+            {
+                var uploadData = GetUploadData();
+
+                var ftpUploader = new FtpUploader();
+                await ftpUploader.UploadAppFile(uploadData, this);
+                dialogs.ShowInfo("Upload completed");
+            }
+            catch (Exception ex)
+            {
+                dialogs.ShowException(ex);
+            }
         }
     }
 }
