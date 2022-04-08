@@ -162,6 +162,10 @@ namespace AppUploader
             {
                 dialogs.ShowException(ex);
             }
+            finally
+            {
+                BusyContent = null;
+            }
         }
     }
 }

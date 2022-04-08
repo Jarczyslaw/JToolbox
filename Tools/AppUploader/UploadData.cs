@@ -1,33 +1,31 @@
-﻿using AutoUpdaterDotNET;
-using JToolbox.Misc.Serializers;
+﻿using JToolbox.Misc.Serializers;
 using System.IO;
 
 namespace AppUploader
 {
     public class UploadData : ConnectionData
     {
+        private readonly string updaterFileName = "update.xml";
+
         public string FilePath { get; set; }
         public string TargetFilePath => Path.Combine(TargetPath, Path.GetFileName(FilePath));
         public string TargetPath { get; set; }
+        public string UpdaterFilePath => Path.Combine(TargetPath, updaterFileName);
 
         public string CreateUpdaterFile()
         {
             var fileName = Path.GetFileName(FilePath);
-            var updaterFilePath = Path.Combine(Path.GetTempPath(), fileName);
+            var updaterFilePath = Path.Combine(Path.GetTempPath(), updaterFileName);
 
-            var updateInfo = new UpdateInfoEventArgs
+            var updaterFileContent = new UpdaterFile
             {
-                DownloadURL = fileName,
-                CurrentVersion = GetVersionFromFilename(fileName),
-                Mandatory = new Mandatory
-                {
-                    Value = true,
-                    UpdateMode = Mode.Forced
-                }
+                Url = fileName,
+                Version = GetVersionFromFilename(fileName),
+                Mandatory = "true"
             };
 
             var serializer = new SerializerXml();
-            serializer.ToFile(updateInfo, updaterFilePath);
+            serializer.ToFile(updaterFileContent, updaterFilePath);
             return updaterFilePath;
         }
 

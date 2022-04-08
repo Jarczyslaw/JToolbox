@@ -30,7 +30,7 @@ namespace JToolbox.Misc.Serializers
         public string ToString<T>(T val)
         {
             var s = new XmlSerializer(typeof(T));
-            using (var writer = new StringWriter())
+            using (var writer = new Utf8StringWriter())
             {
                 s.Serialize(writer, val);
                 return writer.ToString();
