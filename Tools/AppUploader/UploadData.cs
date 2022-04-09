@@ -1,5 +1,4 @@
-﻿using JToolbox.Misc.Serializers;
-using System.IO;
+﻿using System.IO;
 
 namespace AppUploader
 {
@@ -24,8 +23,7 @@ namespace AppUploader
                 Mandatory = "true"
             };
 
-            var serializer = new SerializerXml();
-            serializer.ToFile(updaterFileContent, updaterFilePath);
+            updaterFileContent.Serialize(updaterFilePath);
             return updaterFilePath;
         }
 
@@ -39,6 +37,7 @@ namespace AppUploader
 
         private string GetVersionFromFilename(string fileName)
         {
+            fileName = Path.GetFileNameWithoutExtension(fileName);
             return fileName.Split('_')[1];
         }
     }

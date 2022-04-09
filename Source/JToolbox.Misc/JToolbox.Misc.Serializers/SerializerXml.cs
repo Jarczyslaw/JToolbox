@@ -23,16 +23,26 @@ namespace JToolbox.Misc.Serializers
 
         public void ToFile<T>(T obj, string filePath)
         {
-            var serialized = ToString(obj);
+            ToFile(obj, filePath, null);
+        }
+
+        public void ToFile<T>(T obj, string filePath, XmlSerializerNamespaces namespaces)
+        {
+            var serialized = ToString(obj, namespaces);
             File.WriteAllText(filePath, serialized);
         }
 
         public string ToString<T>(T val)
         {
+            return ToString(val, null);
+        }
+
+        public string ToString<T>(T val, XmlSerializerNamespaces namespaces)
+        {
             var s = new XmlSerializer(typeof(T));
             using (var writer = new Utf8StringWriter())
             {
-                s.Serialize(writer, val);
+                s.Serialize(writer, val, namespaces);
                 return writer.ToString();
             }
         }

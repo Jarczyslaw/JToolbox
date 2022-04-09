@@ -2,6 +2,7 @@
 using JToolbox.WPF.Core.Base;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AppUploader
@@ -16,7 +17,6 @@ namespace AppUploader
         private string password;
         private int port;
         private RelayCommand saveConnectionCommand;
-        private RelayCommand selectFileCommand;
         private string targetPath;
         private RelayCommand uploadCommand;
         private string username;
@@ -77,7 +77,7 @@ namespace AppUploader
             set => Set(ref targetPath, value);
         }
 
-        public RelayCommand UploadCommand => uploadCommand ?? (uploadCommand = new RelayCommand(Upload));
+        public RelayCommand UploadCommand => uploadCommand ?? (uploadCommand = new RelayCommand(Upload, UploadEnabled));
 
         public string Username
         {
@@ -106,7 +106,12 @@ namespace AppUploader
         private void LoadConfiguration()
         {
             var configuration = new Configuration();
-            FilePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configuration.FilePath));
+            var filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, configuration.FilePath));
+            var appFile = SearchForAppFile(filePath);
+            if (!string.IsNullOrEmpty(appFile))
+            {
+                FilePath = appFile;
+            }
             TargetPath = configuration.TargetPath;
         }
 
@@ -148,6 +153,16 @@ namespace AppUploader
             }
         }
 
+        private string SearchForAppFile(string filePath)
+        {
+            var foundFiles = Directory.EnumerateFiles(filePath, "*.zip");
+            if (foundFiles.Count() == 1)
+            {
+                return foundFiles.First();
+            }
+            return null;
+        }
+
         private async void Upload()
         {
             try
@@ -166,6 +181,13 @@ namespace AppUploader
             {
                 BusyContent = null;
             }
+        }
+
+        private bool UploadEnabled()
+        {
+            return !string.IsNullOrEmpty(FilePath)
+                && !string.IsNullOrEmpty(Hostname)
+                && !string.IsNullOrEmpty(TargetPath);
         }
     }
 }
