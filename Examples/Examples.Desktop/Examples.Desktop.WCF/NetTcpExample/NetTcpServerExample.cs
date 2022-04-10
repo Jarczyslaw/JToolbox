@@ -1,7 +1,7 @@
 ﻿using Examples.Desktop.Base;
 using System.Threading.Tasks;
 
-namespace Examples.Desktop.WCF
+namespace Examples.Desktop.WCF.NetTcpExample
 {
     public class NetTcpServerExample : ExampleBase, IDesktopExample
     {

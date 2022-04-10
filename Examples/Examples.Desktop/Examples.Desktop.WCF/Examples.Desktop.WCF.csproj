@@ -64,18 +64,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BasicHttpClientExample.cs" />
+    <Compile Include="BasicHttpsExample\BasicHttpsClientExample.cs" />
+    <Compile Include="BasicHttpsExample\BasicHttpsServerExample.cs" />
+    <Compile Include="BasicHttpExample\BasicHttpClientExample.cs" />
     <Compile Include="Configurations.cs" />
     <Compile Include="ITestService.cs" />
-    <Compile Include="NamedPipeClientExample.cs" />
-    <Compile Include="NetTcpClientExample.cs" />
-    <Compile Include="BasicHttpServerExample.cs" />
-    <Compile Include="NetTcpServerExample.cs" />
+    <Compile Include="NamedPipeExample\NamedPipeClientExample.cs" />
+    <Compile Include="NetTcpExample\NetTcpClientExample.cs" />
+    <Compile Include="BasicHttpExample\BasicHttpServerExample.cs" />
+    <Compile Include="NetTcpExample\NetTcpServerExample.cs" />
     <Compile Include="ExampleBase.cs" />
     <Compile Include="TestService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NamedPipeServerExample.cs" />
+    <Compile Include="NamedPipeExample\NamedPipeServerExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -2,11 +2,11 @@
 using JToolbox.Misc.WCF.ServerSide;
 using System.Threading.Tasks;
 
-namespace Examples.Desktop.WCF
+namespace Examples.Desktop.WCF.BasicHttpsExample
 {
-    public class BasicHttpServerExample : ExampleBase, IDesktopExample
+    public class BasicHttpsServerExample : ExampleBase, IDesktopExample
     {
-        public string Title => "BasicHttp server";
+        public string Title => "BasicHttps server";
 
         public Task CleanUp()
         {
@@ -27,7 +27,7 @@ namespace Examples.Desktop.WCF
                 return;
             }
 
-            var configuration = Configurations.GetBasicHttpConfiguration(address.ToString(), port);
+            var configuration = Configurations.GetBasicHttpsConfiguration(address.ToString(), port);
             var serverConfiguration = new ServerConfiguration
             {
                 IncludeExceptionDetailInFaults = true,

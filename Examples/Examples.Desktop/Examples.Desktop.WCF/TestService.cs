@@ -16,7 +16,7 @@ namespace Examples.Desktop.WCF
         public string Ping(string message)
         {
             outputInput.WriteLine("Message received: " + message);
-            return $"Reply from server: {message.ToUpper()}";
+            return message.ToUpper();
         }
     }
 }

@@ -4,12 +4,23 @@ namespace Examples.Desktop.WCF
 {
     public static class Configurations
     {
-        private static string appName = "WCFExamples";
-        private static string serviceName = "TestService";
+        private static readonly string appName = "WCFExamples";
+        private static readonly string serviceName = "TestService";
 
         public static BasicHttpConfiguration GetBasicHttpConfiguration(string ipAddress, int port)
         {
             return new BasicHttpConfiguration
+            {
+                IpAddress = ipAddress,
+                Port = port,
+                ApplicationName = appName,
+                ServiceName = serviceName
+            };
+        }
+
+        public static BasicHttpsConfiguration GetBasicHttpsConfiguration(string ipAddress, int port)
+        {
+            return new BasicHttpsConfiguration
             {
                 IpAddress = ipAddress,
                 Port = port,

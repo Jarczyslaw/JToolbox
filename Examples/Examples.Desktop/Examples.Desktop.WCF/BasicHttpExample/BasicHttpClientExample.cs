@@ -1,7 +1,7 @@
 ﻿using Examples.Desktop.Base;
 using System.Threading.Tasks;
 
-namespace Examples.Desktop.WCF
+namespace Examples.Desktop.WCF.BasicHttpExample
 {
     public class BasicHttpClientExample : ExampleBase, IDesktopExample
     {

@@ -2,7 +2,7 @@
 using JToolbox.Misc.WCF.ServerSide;
 using System.Threading.Tasks;
 
-namespace Examples.Desktop.WCF
+namespace Examples.Desktop.WCF.NamedPipeExample
 {
     public class NamedPipeServerExample : ExampleBase, IDesktopExample
     {
