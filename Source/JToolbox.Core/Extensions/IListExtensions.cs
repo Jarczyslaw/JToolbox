@@ -18,6 +18,15 @@ namespace JToolbox.Core.Extensions
             return result;
         }
 
+        public static T GetRandomElement<T>(this IList<T> @this)
+        {
+            if (@this?.Count > 0)
+            {
+                return @this[random.Next(0, @this.Count)];
+            }
+            return default;
+        }
+
         public static IList<T> GetRange<T>(this IList<T> @this, int index, int count)
         {
             var result = new List<T>();

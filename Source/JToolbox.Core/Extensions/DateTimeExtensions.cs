@@ -75,14 +75,26 @@ namespace JToolbox.Core.Extensions
             return DateTime.Compare(dateTime, start) < 0 || DateTime.Compare(dateTime, end) > 0;
         }
 
-        public static bool IsWeekDay(this DateTime dateTime)
+        public static bool IsWeekend(this DateTime dateTime)
         {
             return dateTime.DayOfWeek == DayOfWeek.Saturday || dateTime.DayOfWeek == DayOfWeek.Sunday;
+        }
+
+        public static bool IsWorkday(this DateTime @this)
+        {
+            return !IsWeekend(@this);
         }
 
         public static DateTime LastDayOfMonth(this DateTime dateTime)
         {
             return new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month));
+        }
+
+        public static DateTime NextWorkday(this DateTime @this)
+        {
+            var current = @this.AddDays(1);
+            while (!current.IsWorkday()) { current = current.AddDays(1); }
+            return current;
         }
     }
 }
