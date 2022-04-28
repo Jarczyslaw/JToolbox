@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace JToolbox.Core.Extensions
@@ -8,6 +9,18 @@ namespace JToolbox.Core.Extensions
         public static DateTime FirstDayOfMonth(this DateTime dateTime)
         {
             return new DateTime(dateTime.Year, dateTime.Month, 1);
+        }
+
+        public static List<DateTime> GetDatesTo(this DateTime @this, DateTime endDate, TimeSpan interval)
+        {
+            var result = new List<DateTime>();
+            var currentDate = @this;
+            while (currentDate <= endDate)
+            {
+                result.Add(currentDate);
+                currentDate += interval;
+            }
+            return result;
         }
 
         public static int GetIsoWeekNumber(this DateTime date)
