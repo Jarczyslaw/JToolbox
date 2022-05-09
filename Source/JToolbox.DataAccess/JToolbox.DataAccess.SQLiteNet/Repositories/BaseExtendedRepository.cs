@@ -18,7 +18,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual bool SafeDelete(SQLiteConnection db, int id)
         {
-            return InternalGetAndUpdate(db, id, e => e.Deleted = true);
+            return Update(db, id, e => e.Deleted = true);
         }
 
         public virtual bool SafeDelete(SQLiteConnection db, TEntity entity)
@@ -28,14 +28,14 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual void SafeDelete(SQLiteConnection db, List<int> ids)
         {
-            InternalGetAndUpdate(db, ids, x => x.Deleted = true);
+            UpdateMany(db, ids, x => x.Deleted = true);
         }
 
         public virtual void SafeDelete(SQLiteConnection db, List<TEntity> entities)
         {
             var ids = entities.Select(x => x.Id)
                 .ToList();
-            InternalGetAndUpdate(db, ids, x => x.Deleted = true);
+            UpdateMany(db, ids, x => x.Deleted = true);
         }
 
         public virtual void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)

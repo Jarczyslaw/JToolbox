@@ -8,7 +8,8 @@ using System.Linq.Expressions;
 
 namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
-    public abstract class BaseRepository<TEntity> : CommonRepository, IBaseRepository<TEntity> where TEntity : BaseEntity, new()
+    public abstract class BaseRepository<TEntity> : CommonRepository, IBaseRepository<TEntity>
+        where TEntity : BaseEntity, new()
     {
         public virtual int Count(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
         {
@@ -77,6 +78,24 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             return db.Table<TEntity>().ToList();
         }
 
+        public int GetAndUpdate(SQLiteConnection db, Expression<Func<TEntity, bool>> expression, Action<TEntity> action)
+        {
+            var entities = db.Table<TEntity>().Where(expression)
+                .ToList();
+            if (entities?.Count > 0)
+            {
+                foreach (var entity in entities)
+                {
+                    PrepareEntity(entity);
+                    action(entity);
+                }
+
+                return db.UpdateAll(entities, true);
+            }
+
+            return 0;
+        }
+
         public virtual List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
         {
             return GetBy(db, new List<Expression<Func<TEntity, bool>>> { expression });
@@ -137,7 +156,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual bool Update(SQLiteConnection db, int id, Action<TEntity> action)
         {
-            return InternalGetAndUpdate(db, id, action);
+            return GetAndUpdate(db, x => x.Id == id, action) > 0;
         }
 
         public virtual int UpdateMany(SQLiteConnection db, List<TEntity> entities)
@@ -152,37 +171,9 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual int UpdateMany(SQLiteConnection db, List<int> ids, Action<TEntity> action)
         {
-            return InternalGetAndUpdate(db, ids, action);
-        }
-
-        protected bool InternalGetAndUpdate(SQLiteConnection db, int id, Action<TEntity> action)
-        {
-            var entity = db.Table<TEntity>().Where(t => t.Id == id).FirstOrDefault();
-            if (entity != null)
-            {
-                PrepareEntity(entity);
-                action(entity);
-                return db.Update(entity) > 0;
-            }
-            return false;
-        }
-
-        protected int InternalGetAndUpdate(SQLiteConnection db, List<int> ids, Action<TEntity> action)
-        {
-            var entities = db.Table<TEntity>().Where(t => ids.Contains(t.Id))
+            ids = ids.Distinct()
                 .ToList();
-            if (entities?.Count > 0)
-            {
-                foreach (var entity in entities)
-                {
-                    PrepareEntity(entity);
-                    action(entity);
-                }
-
-                return db.UpdateAll(entities, true);
-            }
-
-            return 0;
+            return GetAndUpdate(db, x => ids.Contains(x.Id), action);
         }
 
         protected virtual void PrepareEntity(TEntity entity)

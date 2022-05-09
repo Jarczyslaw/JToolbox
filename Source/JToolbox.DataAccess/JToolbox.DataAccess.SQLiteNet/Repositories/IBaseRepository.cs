@@ -26,6 +26,8 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         List<TEntity> GetAll(SQLiteConnection db);
 
+        int GetAndUpdate(SQLiteConnection db, Expression<Func<TEntity, bool>> expression, Action<TEntity> action);
+
         List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression);
 
         List<TEntity> GetBy(SQLiteConnection db, IEnumerable<Expression<Func<TEntity, bool>>> expressions);
