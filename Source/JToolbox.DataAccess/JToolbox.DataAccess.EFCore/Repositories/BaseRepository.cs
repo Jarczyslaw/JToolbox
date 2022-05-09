@@ -89,6 +89,23 @@ namespace JToolbox.DataAccess.EF.Repositories
             return db.Set<TModel>().ToList();
         }
 
+        public int GetAndUpdate(DbContext db, Expression<Func<TModel, bool>> expression, Action<TModel> action)
+        {
+            var attachedModels = GetBy(db, expression);
+            if (attachedModels?.Count > 0)
+            {
+                foreach (var attachedModel in attachedModels)
+                {
+                    PrepareModel(attachedModel);
+                    action(attachedModel);
+                }
+                db.SaveChanges();
+                return attachedModels.Count;
+            }
+
+            return 0;
+        }
+
         public virtual List<TModel> GetBy(DbContext db, Expression<Func<TModel, bool>> expression)
         {
             return GetBy(db, new List<Expression<Func<TModel, bool>>> { expression });
@@ -154,7 +171,7 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         public virtual bool Update(DbContext db, int id, Action<TModel> action)
         {
-            return InternalGetAndUpdate(db, id, action);
+            return GetAndUpdate(db, x => x.Id == id, action) > 0;
         }
 
         public virtual int UpdateMany(DbContext db, List<TModel> models)
@@ -176,37 +193,7 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         public virtual int UpdateMany(DbContext db, List<int> ids, Action<TModel> action)
         {
-            return InternalGetAndUpdate(db, ids, action);
-        }
-
-        protected bool InternalGetAndUpdate(DbContext db, int id, Action<TModel> action)
-        {
-            var attachedModel = GetById(db, id);
-            if (attachedModel != null)
-            {
-                PrepareModel(attachedModel);
-                action(attachedModel);
-                db.SaveChanges();
-                return true;
-            }
-            return false;
-        }
-
-        protected int InternalGetAndUpdate(DbContext db, List<int> ids, Action<TModel> action)
-        {
-            var attachedModels = GetByIds(db, ids);
-            if (attachedModels?.Count > 0)
-            {
-                foreach (var attachedModel in attachedModels)
-                {
-                    PrepareModel(attachedModel);
-                    action(attachedModel);
-                }
-                db.SaveChanges();
-                return attachedModels.Count;
-            }
-
-            return 0;
+            return GetAndUpdate(db, x => ids.Contains(x.Id), action);
         }
 
         protected virtual void PrepareModel(TModel model)

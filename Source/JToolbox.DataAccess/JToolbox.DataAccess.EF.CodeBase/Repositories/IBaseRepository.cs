@@ -26,6 +26,8 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         List<TModel> GetAll(DbContext db);
 
+        int GetAndUpdate(DbContext db, Expression<Func<TModel, bool>> expression, Action<TModel> action);
+
         List<TModel> GetBy(DbContext db, Expression<Func<TModel, bool>> expression);
 
         List<TModel> GetBy(DbContext db, IEnumerable<Expression<Func<TModel, bool>>> expressions);

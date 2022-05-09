@@ -19,7 +19,7 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         public virtual bool SafeDelete(DbContext db, int id)
         {
-            return InternalGetAndUpdate(db, id, e => e.Deleted = true);
+            return Update(db, id, e => e.Deleted = true);
         }
 
         public virtual bool SafeDelete(DbContext db, TModel model)
@@ -29,14 +29,14 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         public virtual void SafeDelete(DbContext db, List<int> ids)
         {
-            InternalGetAndUpdate(db, ids, x => x.Deleted = true);
+            UpdateMany(db, ids, x => x.Deleted = true);
         }
 
         public virtual void SafeDelete(DbContext db, List<TModel> models)
         {
             var ids = models.Select(x => x.Id)
                 .ToList();
-            InternalGetAndUpdate(db, ids, x => x.Deleted = true);
+            UpdateMany(db, ids, x => x.Deleted = true);
         }
 
         public virtual void SafeMerge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer)
