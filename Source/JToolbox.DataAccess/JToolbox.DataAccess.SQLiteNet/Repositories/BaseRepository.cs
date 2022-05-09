@@ -146,7 +146,9 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             }
         }
 
-        public TableQuery<TEntity> Query(SQLiteConnection db) => db.Table<TEntity>();
+        public virtual List<TEntity> Query(SQLiteConnection db, string query, params object[] args) => db.Query<TEntity>(query, args);
+
+        public TableQuery<TEntity> Table(SQLiteConnection db) => db.Table<TEntity>();
 
         public virtual bool Update(SQLiteConnection db, TEntity entity)
         {
