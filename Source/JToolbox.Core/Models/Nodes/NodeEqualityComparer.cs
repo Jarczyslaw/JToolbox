@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Nodes
+namespace JToolbox.Core.Models.Nodes
 {
     internal class NodeEqualityComparer<T> : IEqualityComparer<Node<T>>
     {

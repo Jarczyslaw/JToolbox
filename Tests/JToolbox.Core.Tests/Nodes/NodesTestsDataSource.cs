@@ -1,4 +1,4 @@
-﻿using JToolbox.Core.Nodes;
+﻿using JToolbox.Core.Models.Nodes;
 using System.Collections.Generic;
 
 namespace JToolbox.Core.Tests.Nodes

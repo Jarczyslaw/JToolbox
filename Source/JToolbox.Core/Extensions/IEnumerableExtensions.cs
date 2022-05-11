@@ -21,12 +21,12 @@ namespace JToolbox.Core.Extensions
 
         public static bool IsEmpty<T>(this IEnumerable<T> @this)
         {
-            return !@this.Any();
+            return @this?.Any() != true;
         }
 
         public static bool IsNotEmpty<T>(this IEnumerable<T> @this)
         {
-            return @this != null && @this.Any();
+            return !@this.IsEmpty();
         }
 
         public static int MaxOrDefault<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))

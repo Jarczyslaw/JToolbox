@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JToolbox.Core.Results
+namespace JToolbox.Core.Models.Results
 {
     public class Result
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JToolbox.Core.Nodes
+namespace JToolbox.Core.Models.Nodes
 {
     public class NodesCollection<T> : NodesBase<T>
     {

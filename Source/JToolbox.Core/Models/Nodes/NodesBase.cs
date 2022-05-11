@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace JToolbox.Core.Nodes
+namespace JToolbox.Core.Models.Nodes
 {
     public abstract class NodesBase<T> : NotifyPropertyChanged
     {

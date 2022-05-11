@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Results
+namespace JToolbox.Core.Models.Results
 {
     public class Messages : List<Message>
     {

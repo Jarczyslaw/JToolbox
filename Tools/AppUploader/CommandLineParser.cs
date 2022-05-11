@@ -1,5 +1,5 @@
 ﻿using Fclp;
-using JToolbox.Core.Results;
+using JToolbox.Core.Models.Results;
 
 namespace AppUploader
 {

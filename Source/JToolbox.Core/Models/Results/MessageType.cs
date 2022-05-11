@@ -1,4 +1,4 @@
-﻿namespace JToolbox.Core.Results
+﻿namespace JToolbox.Core.Models.Results
 {
     public enum MessageType
     {
