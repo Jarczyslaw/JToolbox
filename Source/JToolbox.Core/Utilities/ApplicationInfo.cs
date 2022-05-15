@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace JToolbox.Core.Utilities
 {
@@ -17,5 +18,21 @@ namespace JToolbox.Core.Utilities
         }
 
         public static bool IsDebugWithoutDebugger => IsDebug && !Debugger.IsAttached;
+
+        public static void ThrowIfDebugAppRunningWithoutDebugger()
+        {
+            if (IsDebugWithoutDebugger)
+            {
+                throw new DebugAppRunningWithoutDebuggerException();
+            }
+        }
+    }
+
+    public class DebugAppRunningWithoutDebuggerException : Exception
+    {
+        public DebugAppRunningWithoutDebuggerException()
+            : base("Application built with DEBUG configuration can not be run without debugger attached")
+        {
+        }
     }
 }
