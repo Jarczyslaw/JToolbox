@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace JToolbox.DataAccess.EF.Repositories
 {
-    public interface IBaseExtendedRepository<TModel> : IBaseRepository<TModel> where TModel : BaseExtendedModel
+    public interface IBaseExtendedRepository<TModel> : IBaseRepository<TModel>
+        where TModel : BaseExtendedModel
     {
         bool SafeDelete(DbContext db, int id);
 

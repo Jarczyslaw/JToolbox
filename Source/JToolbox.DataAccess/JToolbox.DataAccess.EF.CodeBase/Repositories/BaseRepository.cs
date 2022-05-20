@@ -12,11 +12,12 @@ namespace JToolbox.DataAccess.EF.Repositories
     public class BaseRepository<TModel> : IBaseRepository<TModel>
         where TModel : BaseModel, IKey
     {
-        public virtual int Count(DbContext db, Expression<Func<TModel, bool>> expression)
+        public virtual int Count(DbContext db, params Expression<Func<TModel, bool>>[] expressions)
         {
-            return db.Set<TModel>()
-                .Where(expression)
-                .Count();
+            var set = db.Set<TModel>();
+            ApplyExpressions(set, expressions);
+
+            return set.Count();
         }
 
         public virtual int Create(DbContext db, TModel model)
@@ -75,30 +76,34 @@ namespace JToolbox.DataAccess.EF.Repositories
             }
         }
 
-        public virtual bool EntityExists(DbContext db, TModel model, Expression<Func<TModel, bool>> expression)
+        public virtual bool EntityExists(DbContext db, TModel model, params Expression<Func<TModel, bool>>[] expressions)
         {
-            var expressions = new List<Expression<Func<TModel, bool>>>
+            var tempExpressions = new List<Expression<Func<TModel, bool>>>
             {
                 x => x.Id != model.Id,
-                expression
             };
-            return GetBy(db, expressions).Count > 0;
+            tempExpressions.AddRange(expressions);
+
+            return GetBy(db, true, null, expressions).Count > 0;
         }
 
-        public virtual List<TModel> GetAll(DbContext db)
+        public virtual List<TModel> GetAll(DbContext db, bool noTracking = false)
         {
-            return db.Set<TModel>().ToList();
+            var query = db.Set<TModel>();
+            ApplyNoTracking(query, noTracking);
+
+            return query.ToList();
         }
 
         public int GetAndUpdate(DbContext db, Expression<Func<TModel, bool>> expression, Action<TModel> action)
         {
-            var attachedModels = GetBy(db, expression);
+            var attachedModels = GetBy(db, false, null, expression);
             if (attachedModels?.Count > 0)
             {
                 foreach (var attachedModel in attachedModels)
                 {
-                    PrepareModel(attachedModel);
                     action(attachedModel);
+                    PrepareModel(attachedModel);
                 }
                 db.SaveChanges();
                 return attachedModels.Count;
@@ -107,36 +112,51 @@ namespace JToolbox.DataAccess.EF.Repositories
             return 0;
         }
 
-        public virtual List<TModel> GetBy(DbContext db, Expression<Func<TModel, bool>> expression)
+        public virtual List<TModel> GetBy(DbContext db,
+            bool noTracking = false,
+            IEnumerable<Expression<Func<TModel, object>>> includes = null,
+            params Expression<Func<TModel, bool>>[] expressions)
         {
-            return GetBy(db, new List<Expression<Func<TModel, bool>>> { expression });
+            var query = db.Set<TModel>();
+            ApplyNoTracking(query, noTracking);
+            ApplyExpressions(query, expressions);
+            ApplyIncludes(query, includes);
+
+            return query.ToList();
         }
 
-        public virtual List<TModel> GetBy(DbContext db, IEnumerable<Expression<Func<TModel, bool>>> expressions)
+        public virtual TModel GetById(DbContext db,
+            int id,
+            bool noTracking = false,
+            IEnumerable<Expression<Func<TModel, object>>> includes = null)
         {
-            var entities = db.Set<TModel>().AsQueryable();
-            foreach (var expression in expressions)
-            {
-                entities = entities.Where(expression);
-            }
-            return entities.ToList();
+            var query = db.Set<TModel>();
+            ApplyNoTracking(query, noTracking);
+            ApplyIncludes(query, includes);
+
+            return query.FirstOrDefault(e => e.Id == id);
         }
 
-        public virtual TModel GetById(DbContext db, int id)
+        public virtual List<TModel> GetByIds(DbContext db,
+            List<int> ids,
+            bool noTracking = false,
+            IEnumerable<Expression<Func<TModel, object>>> includes = null)
         {
-            return db.Set<TModel>().FirstOrDefault(e => e.Id == id);
-        }
+            var query = db.Set<TModel>();
+            ApplyNoTracking(query, noTracking);
+            ApplyIncludes(query, includes);
 
-        public virtual List<TModel> GetByIds(DbContext db, List<int> ids)
-        {
             var lookup = ids.Distinct()
                 .ToList();
-            return db.Set<TModel>()
-                .Where(x => lookup.Contains(x.Id))
+
+            return query.Where(x => lookup.Contains(x.Id))
                 .ToList();
         }
 
-        public virtual void Merge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer)
+        public virtual void Merge(DbContext db,
+            List<TModel> newList,
+            List<TModel> currentList,
+            IEqualityComparer<TModel> equalityComparer)
         {
             var merge = new Merge<TModel>();
             merge.MergeLists(newList, currentList, equalityComparer);
@@ -201,6 +221,36 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         protected virtual void PrepareModel(TModel model)
         {
+        }
+
+        private void ApplyExpressions(IQueryable<TModel> query, Expression<Func<TModel, bool>>[] expressions)
+        {
+            if (expressions?.Length > 0)
+            {
+                foreach (var expression in expressions)
+                {
+                    query = query.Where(expression);
+                }
+            }
+        }
+
+        private void ApplyIncludes(IQueryable<TModel> query, IEnumerable<Expression<Func<TModel, object>>> includes)
+        {
+            if (includes?.Count() > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+        }
+
+        private void ApplyNoTracking(IQueryable<TModel> query, bool noTracking)
+        {
+            if (noTracking)
+            {
+                query.AsNoTracking();
+            }
         }
     }
 }

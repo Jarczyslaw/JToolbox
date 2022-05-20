@@ -8,7 +8,8 @@ using System.Linq;
 
 namespace JToolbox.DataAccess.EF.Repositories
 {
-    public class BaseExtendedRepository<TModel> : BaseRepository<TModel>, IBaseExtendedRepository<TModel> where TModel : BaseExtendedModel, IKey
+    public class BaseExtendedRepository<TModel> : BaseRepository<TModel>, IBaseExtendedRepository<TModel>
+        where TModel : BaseExtendedModel, IKey
     {
         private readonly ITimeProvider timeProvider;
 
