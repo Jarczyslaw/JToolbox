@@ -8,7 +8,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity, new()
     {
-        int Count(SQLiteConnection db, Expression<Func<TEntity, bool>> expression);
+        int Count(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions);
 
         int Create(SQLiteConnection db, TEntity entity);
 
@@ -22,15 +22,13 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         void DeleteMany(SQLiteConnection db, List<TEntity> entities);
 
-        bool EntityExists(SQLiteConnection db, TEntity entity, Expression<Func<TEntity, bool>> expression);
+        bool EntityExists(SQLiteConnection db, TEntity entity, params Expression<Func<TEntity, bool>>[] expressions);
 
         List<TEntity> GetAll(SQLiteConnection db);
 
         int GetAndUpdate(SQLiteConnection db, Expression<Func<TEntity, bool>> expression, Action<TEntity> action);
 
-        List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression);
-
-        List<TEntity> GetBy(SQLiteConnection db, IEnumerable<Expression<Func<TEntity, bool>>> expressions);
+        List<TEntity> GetBy(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions);
 
         TEntity GetById(SQLiteConnection db, int id);
 

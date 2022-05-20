@@ -11,9 +11,12 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
     public abstract class BaseRepository<TEntity> : CommonRepository, IBaseRepository<TEntity>
         where TEntity : BaseEntity, new()
     {
-        public virtual int Count(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
+        public virtual int Count(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions)
         {
-            return db.Table<TEntity>().Where(expression).Count();
+            var tableQuery = db.Table<TEntity>();
+            ApplyExpressions(tableQuery, expressions);
+
+            return tableQuery.Count();
         }
 
         public virtual int Create(SQLiteConnection db, TEntity entity)
@@ -63,14 +66,15 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             }
         }
 
-        public virtual bool EntityExists(SQLiteConnection db, TEntity entity, Expression<Func<TEntity, bool>> expression)
+        public virtual bool EntityExists(SQLiteConnection db, TEntity entity, params Expression<Func<TEntity, bool>>[] expressions)
         {
-            var expressions = new List<Expression<Func<TEntity, bool>>>
+            var tempExpressions = new List<Expression<Func<TEntity, bool>>>
             {
                 x => x.Id != entity.Id,
-                expression
             };
-            return GetBy(db, expressions).Count > 0;
+            tempExpressions.AddRange(expressions);
+
+            return GetBy(db, tempExpressions.ToArray()).Count > 0;
         }
 
         public virtual List<TEntity> GetAll(SQLiteConnection db)
@@ -96,18 +100,11 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             return 0;
         }
 
-        public virtual List<TEntity> GetBy(SQLiteConnection db, Expression<Func<TEntity, bool>> expression)
-        {
-            return GetBy(db, new List<Expression<Func<TEntity, bool>>> { expression });
-        }
-
-        public virtual List<TEntity> GetBy(SQLiteConnection db, IEnumerable<Expression<Func<TEntity, bool>>> expressions)
+        public virtual List<TEntity> GetBy(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions)
         {
             var entities = db.Table<TEntity>();
-            foreach (var expression in expressions)
-            {
-                entities = entities.Where(expression);
-            }
+            ApplyExpressions(entities, expressions);
+
             return entities.ToList();
         }
 
@@ -180,6 +177,17 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         protected virtual void PrepareEntity(TEntity entity)
         {
+        }
+
+        private void ApplyExpressions(TableQuery<TEntity> tableQuery, Expression<Func<TEntity, bool>>[] expressions)
+        {
+            if (expressions?.Length > 0)
+            {
+                foreach (var expression in expressions)
+                {
+                    tableQuery = tableQuery.Where(expression);
+                }
+            }
         }
     }
 }
