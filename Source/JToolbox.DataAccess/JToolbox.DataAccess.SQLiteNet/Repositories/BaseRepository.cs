@@ -14,7 +14,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         public virtual int Count(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions)
         {
             var tableQuery = db.Table<TEntity>();
-            ApplyExpressions(tableQuery, expressions);
+            tableQuery = ApplyExpressions(tableQuery, expressions);
 
             return tableQuery.Count();
         }
@@ -102,10 +102,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual List<TEntity> GetBy(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions)
         {
-            var entities = db.Table<TEntity>();
-            ApplyExpressions(entities, expressions);
+            var tableQuery = db.Table<TEntity>();
+            tableQuery = ApplyExpressions(tableQuery, expressions);
 
-            return entities.ToList();
+            return tableQuery.ToList();
         }
 
         public virtual TEntity GetById(SQLiteConnection db, int id)
@@ -179,7 +179,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         {
         }
 
-        private void ApplyExpressions(TableQuery<TEntity> tableQuery, Expression<Func<TEntity, bool>>[] expressions)
+        private TableQuery<TEntity> ApplyExpressions(TableQuery<TEntity> tableQuery, Expression<Func<TEntity, bool>>[] expressions)
         {
             if (expressions?.Length > 0)
             {
@@ -188,6 +188,8 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
                     tableQuery = tableQuery.Where(expression);
                 }
             }
+
+            return tableQuery;
         }
     }
 }
