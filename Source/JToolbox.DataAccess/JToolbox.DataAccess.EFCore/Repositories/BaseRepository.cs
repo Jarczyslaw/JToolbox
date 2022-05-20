@@ -14,8 +14,9 @@ namespace JToolbox.DataAccess.EF.Repositories
     {
         public virtual int Count(DbContext db, params Expression<Func<TModel, bool>>[] expressions)
         {
-            var set = db.Set<TModel>();
-            ApplyExpressions(set, expressions);
+            var set = db.Set<TModel>()
+                .AsQueryable();
+            set = ApplyExpressions(set, expressions);
 
             return set.Count();
         }
@@ -89,8 +90,9 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         public virtual List<TModel> GetAll(DbContext db, bool noTracking = false)
         {
-            var query = db.Set<TModel>();
-            ApplyNoTracking(query, noTracking);
+            var query = db.Set<TModel>()
+                .AsQueryable();
+            query = ApplyNoTracking(query, noTracking);
 
             return query.ToList();
         }
@@ -117,10 +119,12 @@ namespace JToolbox.DataAccess.EF.Repositories
             IEnumerable<Expression<Func<TModel, object>>> includes = null,
             params Expression<Func<TModel, bool>>[] expressions)
         {
-            var query = db.Set<TModel>();
-            ApplyNoTracking(query, noTracking);
-            ApplyExpressions(query, expressions);
-            ApplyIncludes(query, includes);
+            var query = db.Set<TModel>()
+                .AsQueryable();
+
+            query = ApplyNoTracking(query, noTracking);
+            query = ApplyExpressions(query, expressions);
+            query = ApplyIncludes(query, includes);
 
             return query.ToList();
         }
@@ -130,9 +134,11 @@ namespace JToolbox.DataAccess.EF.Repositories
             bool noTracking = false,
             IEnumerable<Expression<Func<TModel, object>>> includes = null)
         {
-            var query = db.Set<TModel>();
-            ApplyNoTracking(query, noTracking);
-            ApplyIncludes(query, includes);
+            var query = db.Set<TModel>()
+                .AsQueryable();
+
+            query = ApplyNoTracking(query, noTracking);
+            query = ApplyIncludes(query, includes);
 
             return query.FirstOrDefault(e => e.Id == id);
         }
@@ -142,9 +148,11 @@ namespace JToolbox.DataAccess.EF.Repositories
             bool noTracking = false,
             IEnumerable<Expression<Func<TModel, object>>> includes = null)
         {
-            var query = db.Set<TModel>();
-            ApplyNoTracking(query, noTracking);
-            ApplyIncludes(query, includes);
+            var query = db.Set<TModel>()
+                .AsQueryable();
+
+            query = ApplyNoTracking(query, noTracking);
+            query = ApplyIncludes(query, includes);
 
             var lookup = ids.Distinct()
                 .ToList();
@@ -223,7 +231,7 @@ namespace JToolbox.DataAccess.EF.Repositories
         {
         }
 
-        private void ApplyExpressions(IQueryable<TModel> query, Expression<Func<TModel, bool>>[] expressions)
+        private IQueryable<TModel> ApplyExpressions(IQueryable<TModel> query, Expression<Func<TModel, bool>>[] expressions)
         {
             if (expressions?.Length > 0)
             {
@@ -232,9 +240,10 @@ namespace JToolbox.DataAccess.EF.Repositories
                     query = query.Where(expression);
                 }
             }
+            return query;
         }
 
-        private void ApplyIncludes(IQueryable<TModel> query, IEnumerable<Expression<Func<TModel, object>>> includes)
+        private IQueryable<TModel> ApplyIncludes(IQueryable<TModel> query, IEnumerable<Expression<Func<TModel, object>>> includes)
         {
             if (includes?.Count() > 0)
             {
@@ -243,14 +252,18 @@ namespace JToolbox.DataAccess.EF.Repositories
                     query = query.Include(include);
                 }
             }
+
+            return query;
         }
 
-        private void ApplyNoTracking(IQueryable<TModel> query, bool noTracking)
+        private IQueryable<TModel> ApplyNoTracking(IQueryable<TModel> query, bool noTracking)
         {
             if (noTracking)
             {
                 query.AsNoTracking();
             }
+
+            return query;
         }
     }
 }
