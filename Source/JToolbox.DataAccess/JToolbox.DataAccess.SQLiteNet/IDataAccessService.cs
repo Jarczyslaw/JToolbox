@@ -9,6 +9,8 @@ namespace JToolbox.DataAccess.SQLiteNet
         bool CacheConnection { get; set; }
         string DataSource { get; }
 
+        Action<string> Tracer { set; }
+
         void Execute(Action<SQLiteConnection> action);
 
         T Execute<T>(Func<SQLiteConnection, T> action);

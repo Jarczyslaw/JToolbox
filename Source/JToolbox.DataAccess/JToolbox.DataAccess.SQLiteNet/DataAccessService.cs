@@ -8,6 +8,7 @@ namespace JToolbox.DataAccess.SQLiteNet
     {
         private readonly BaseInitializer initializer;
         private SQLiteConnection connection;
+        private Action<string> tracer;
 
         public DataAccessService(BaseInitializer initializer)
         {
@@ -17,6 +18,19 @@ namespace JToolbox.DataAccess.SQLiteNet
         public bool CacheConnection { get; set; } = true;
         public string DataSource { get; private set; }
         public string Password { get; private set; }
+
+        public Action<string> Tracer
+        {
+            set
+            {
+                tracer = value;
+                if (connection != null)
+                {
+                    SetTracer(connection);
+                }
+            }
+        }
+
         private SQLiteConnectionString ConnectionString => new SQLiteConnectionString(DataSource, false, key: Password);
 
         public void CloseConnection(bool forceClose)
@@ -107,6 +121,13 @@ namespace JToolbox.DataAccess.SQLiteNet
             return Task.CompletedTask;
         }
 
+        private SQLiteConnection CreateConnection()
+        {
+            var connection = new SQLiteConnection(ConnectionString);
+            SetTracer(connection);
+            return connection;
+        }
+
         private SQLiteConnection OpenConnection()
         {
             if (CacheConnection)
@@ -118,15 +139,21 @@ namespace JToolbox.DataAccess.SQLiteNet
 
                 if (connection == null)
                 {
-                    connection = new SQLiteConnection(ConnectionString);
+                    connection = CreateConnection();
                 }
             }
             else
             {
                 connection?.Close();
-                connection = new SQLiteConnection(ConnectionString);
+                connection = CreateConnection();
             }
             return connection;
+        }
+
+        private void SetTracer(SQLiteConnection connection)
+        {
+            connection.Trace = tracer != null;
+            connection.Tracer = tracer;
         }
     }
 }
