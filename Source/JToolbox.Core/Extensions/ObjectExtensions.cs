@@ -29,6 +29,16 @@ namespace JToolbox.Core.Extensions
             }
         }
 
+        public static object GetPropValue(this object @this, string propName)
+        {
+            return @this?.GetType().GetProperty(propName).GetValue(@this, null);
+        }
+
+        public static T GetPropValue<T>(this object @this, string propName)
+        {
+            return (T)@this?.GetType().GetProperty(propName).GetValue(@this, null);
+        }
+
         public static string PropertiesToString(this object @this, BindingFlags flags)
         {
             var result = new StringBuilder();
