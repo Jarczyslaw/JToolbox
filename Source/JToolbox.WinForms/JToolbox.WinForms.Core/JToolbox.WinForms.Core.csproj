@@ -57,6 +57,8 @@
     <Compile Include="Extensions\ScreenCaptureExtensions.cs" />
     <Compile Include="GlobalExceptionHandler.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
+    <Compile Include="MessageBoxExt\MessageBoxManager.cs" />
+    <Compile Include="MessageBoxExt\MessageBoxUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
