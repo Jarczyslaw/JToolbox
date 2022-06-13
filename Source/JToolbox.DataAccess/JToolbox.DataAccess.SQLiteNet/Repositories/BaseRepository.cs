@@ -59,10 +59,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         {
             if (ids?.Count > 0)
             {
-                foreach (var id in ids)
-                {
-                    db.Delete<TEntity>(id);
-                }
+                var inCondition = SqlHelper.CreateInCondition("Id", ids, 1000);
+                var sql = $"DELETE FROM {Table(db).Table.TableName} WHERE {inCondition}";
+
+                Query(db, sql);
             }
         }
 
