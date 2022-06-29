@@ -24,6 +24,16 @@ namespace JToolbox.Core.Utilities
             return MonthInQuarter(date.Month);
         }
 
+        public static DateTime PreviousQuarterEndDate(DateTime date)
+        {
+            return QuarterEndDate(date.AddMonths(-3));
+        }
+
+        public static DateTime PreviousQuarterStartDate(DateTime date)
+        {
+            return QuarterStartDate(date.AddMonths(-3));
+        }
+
         public static DateTime QuarterEndDate(DateTime date)
         {
             return QuarterEndDate(date.Year, GetQuarter(date));
