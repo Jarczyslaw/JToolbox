@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JToolbox.Core.Helpers;
+using System;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Text;
 
@@ -32,23 +31,12 @@ namespace AppZipper
             if (packerData.OutputFilesAndFolders.Any())
             {
                 RemovePreviousPackages(packerData, config);
-                Pack(packerData.OutputFilePath, packerData.OutputFilesAndFolders);
+                ArchiveHelper.Pack(packerData.OutputFilePath, packerData.OutputFilesAndFolders);
                 PrintSummary(packerData);
             }
             else
             {
                 Console.WriteLine("Nothing to pack");
-            }
-        }
-
-        private void Pack(string targetFilePath, List<string> filePaths)
-        {
-            using (var archive = ZipFile.Open(targetFilePath, ZipArchiveMode.Create))
-            {
-                foreach (var filePath in filePaths)
-                {
-                    archive.CreateEntryFromAny(filePath);
-                }
             }
         }
 
