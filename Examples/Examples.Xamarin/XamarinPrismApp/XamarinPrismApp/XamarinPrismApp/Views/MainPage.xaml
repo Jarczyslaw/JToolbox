@@ -15,19 +15,19 @@
         </Grid.RowDefinitions>
 
         <Label HorizontalTextAlignment="Center" Text="Welcome to Xamarin Forms and Prism!" />
-        <StackLayout
-            Grid.Row="1"
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand">
-            <Button Command="{Binding NavigationCommand}" Text="Navigation" />
-            <Button Command="{Binding DialogsCommand}" Text="Dialogs" />
-            <Button Command="{Binding SettingsCommand}" Text="Settings" />
-            <Button Command="{Binding PermissionsCommand}" Text="Permissions" />
-            <Button Command="{Binding AccelerometerCommand}" Text="Accelerometer" />
-            <Button Command="{Binding LocalStorageCommand}" Text="Local Storage" />
-            <Button Command="{Binding TestCommand}" Text="Test" />
-            <Button Command="{Binding KillCommand}" Text="Kill application" />
-        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                <Button Command="{Binding NavigationCommand}" Text="Navigation" />
+                <Button Command="{Binding DialogsCommand}" Text="Dialogs" />
+                <Button Command="{Binding SettingsCommand}" Text="Settings" />
+                <Button Command="{Binding PermissionsCommand}" Text="Permissions" />
+                <Button Command="{Binding AccelerometerCommand}" Text="Accelerometer" />
+                <Button Command="{Binding LocalStorageCommand}" Text="Local Storage" />
+                <Button Command="{Binding TestCommand}" Text="Test" />
+                <Button Command="{Binding KillCommand}" Text="Kill application" />
+            </StackLayout>
+        </ScrollView>
+
         <Label
             Grid.Row="2"
             HorizontalOptions="CenterAndExpand"
