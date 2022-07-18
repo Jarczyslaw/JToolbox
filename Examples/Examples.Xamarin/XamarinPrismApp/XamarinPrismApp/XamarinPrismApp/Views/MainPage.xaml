@@ -23,7 +23,8 @@
                 <Button Command="{Binding PermissionsCommand}" Text="Permissions" />
                 <Button Command="{Binding AccelerometerCommand}" Text="Accelerometer" />
                 <Button Command="{Binding LocalStorageCommand}" Text="Local Storage" />
-                <Button Command="{Binding TestCommand}" Text="Test" />
+                <Button Command="{Binding SecureLocalStorageCommand}" Text="Secure local Storage" />
+                <Button Command="{Binding LogCommand}" Text="Log test" />
                 <Button Command="{Binding KillCommand}" Text="Kill application" />
             </StackLayout>
         </ScrollView>

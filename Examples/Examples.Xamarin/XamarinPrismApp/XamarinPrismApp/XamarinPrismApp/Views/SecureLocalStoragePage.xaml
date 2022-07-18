@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:PageBase
+    x:Class="XamarinPrismApp.Views.SecureLocalStoragePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:JToolbox.XamarinForms.Core.Base;assembly=JToolbox.XamarinForms.Core"
+    x:Name="pbLocalStorage"
+    Title="{Binding Title}">
+
+    <StackLayout
+        HorizontalOptions="FillAndExpand"
+        Orientation="Vertical"
+        VerticalOptions="FillAndExpand">
+        <Entry Text="{Binding Text, Mode=TwoWay}" />
+        <Button Command="{Binding SaveCommand}" Text="Save" />
+        <Button Command="{Binding LoadCommand}" Text="Load" />
+    </StackLayout>
+</base:PageBase>

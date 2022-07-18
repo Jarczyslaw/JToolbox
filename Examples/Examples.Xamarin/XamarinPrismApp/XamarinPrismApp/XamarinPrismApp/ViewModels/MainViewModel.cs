@@ -15,25 +15,26 @@ namespace XamarinPrismApp.ViewModels
 {
     public class MainViewModel : ViewModelBase, IOnBackButtonAware, IOnShownAware
     {
-        private readonly IAppCore appCore;
+        private readonly IApplicationCoreService applicationCoreService;
         private readonly IDialogsService dialogsService;
         private readonly ILoggerService loggingService;
         private readonly IPermsService permissionsService;
         private string deviceId;
         private string logPath;
 
-        public MainViewModel(ILoggerService loggingService, IAppCore appCore, IDialogsService dialogsService, IPermsService permissionsService, INavigationService navigationService)
+        public MainViewModel(ILoggerService loggingService, IApplicationCoreService applicationCoreService,
+            IDialogsService dialogsService, IPermsService permissionsService, INavigationService navigationService)
             : base(navigationService)
         {
             Title = "Main Page";
 
-            this.appCore = appCore;
+            this.applicationCoreService = applicationCoreService;
             this.dialogsService = dialogsService;
             this.permissionsService = permissionsService;
             this.loggingService = loggingService;
 
-            DeviceId = "DeviceID: " + appCore.DeviceId;
-            LogPath = "Log path: " + appCore.LogPath;
+            DeviceId = "DeviceID: " + applicationCoreService.DeviceId;
+            LogPath = "Log path: " + applicationCoreService.LogPath;
         }
 
         public DelegateCommand AccelerometerCommand => new DelegateCommand(async () => await Navigate<AccelerometerViewModel>());
@@ -50,6 +51,21 @@ namespace XamarinPrismApp.ViewModels
 
         public DelegateCommand LocalStorageCommand => new DelegateCommand(async () => await Navigate<LocalStorageViewModel>());
 
+        public DelegateCommand LogCommand => new DelegateCommand(async () =>
+        {
+            try
+            {
+                loggingService.Debug("DEBUG");
+                loggingService.Error("ERROR");
+
+                dialogsService.Toast("Success");
+            }
+            catch (Exception exc)
+            {
+                await dialogsService.Error(exc.Message);
+            }
+        });
+
         public string LogPath
         {
             get => logPath;
@@ -58,22 +74,8 @@ namespace XamarinPrismApp.ViewModels
 
         public DelegateCommand NavigationCommand => new DelegateCommand(async () => await Navigate<NaviViewModel>());
         public DelegateCommand PermissionsCommand => new DelegateCommand(async () => await Navigate<PermissionsViewModel>());
+        public DelegateCommand SecureLocalStorageCommand => new DelegateCommand(async () => await Navigate<SecureLocalStorageViewModel>());
         public DelegateCommand SettingsCommand => new DelegateCommand(async () => await Navigate<SettingsViewModel>());
-
-        public DelegateCommand TestCommand => new DelegateCommand(async () =>
-        {
-            try
-            {
-                //var s = new PermsService();
-                //var y = await s.Check(typeof(Permissions.StorageRead));
-                loggingService.Debug("DEBUG");
-                loggingService.Error("ERROR");
-            }
-            catch (Exception exc)
-            {
-                await dialogsService.Error(exc.Message);
-            }
-        });
 
         public async Task<bool> OnBackButton()
         {
@@ -92,7 +94,7 @@ namespace XamarinPrismApp.ViewModels
             if (!result)
             {
                 await dialogsService.Information("Permissions not granted. App will be closed");
-                appCore.Kill();
+                applicationCoreService.Kill();
             }
             loggingService.Info("App started");
         }
@@ -102,7 +104,7 @@ namespace XamarinPrismApp.ViewModels
             var result = await dialogsService.QuestionYesNo("Do you really want to kill application?");
             if (result)
             {
-                appCore.Kill();
+                applicationCoreService.Kill();
             }
         }
     }

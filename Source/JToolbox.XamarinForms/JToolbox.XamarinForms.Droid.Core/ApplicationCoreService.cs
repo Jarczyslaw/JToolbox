@@ -10,15 +10,9 @@ using static Android.Provider.Settings;
 
 namespace JToolbox.XamarinForms.Droid.Core
 {
-    public class AppCore : IAppCore
+    public class ApplicationCoreService : IApplicationCoreService
     {
-        private readonly IPaths paths;
         private string deviceId;
-
-        public AppCore(IPaths paths)
-        {
-            this.paths = paths;
-        }
 
         public string DeviceId
         {
@@ -42,7 +36,11 @@ namespace JToolbox.XamarinForms.Droid.Core
             }
         }
 
-        public string LogPath => Path.Combine(paths.PublicExternalFolder, AppInfo.Name);
+        public string InternalFolder => Application.Context.FilesDir.AbsolutePath;
+
+        public string LogPath => Path.Combine(PublicExternalFolder, AppInfo.Name);
+        public string PrivateExternalFolder => Application.Context.GetExternalFilesDir(null).AbsolutePath;
+        public string PublicExternalFolder => Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 
         public void FilesScan(List<string> files)
         {

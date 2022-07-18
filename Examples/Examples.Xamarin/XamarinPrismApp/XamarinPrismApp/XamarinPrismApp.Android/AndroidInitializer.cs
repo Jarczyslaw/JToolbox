@@ -9,8 +9,7 @@ namespace XamarinPrismApp.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IPaths, Paths>();
-            containerRegistry.RegisterSingleton<IAppCore, AppCore>();
+            containerRegistry.RegisterSingleton<IApplicationCoreService, ApplicationCoreService>();
         }
     }
 }

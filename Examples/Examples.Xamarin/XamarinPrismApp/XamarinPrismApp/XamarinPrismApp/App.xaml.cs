@@ -40,9 +40,9 @@ namespace XamarinPrismApp
 
         private void RegisterDependencies(IContainerRegistry containerRegistry)
         {
-            if (!containerRegistry.IsRegistered<IAppCore>())
+            if (!containerRegistry.IsRegistered<IApplicationCoreService>())
             {
-                throw new Exception($"{nameof(IAppCore)} is not registered");
+                throw new Exception($"{nameof(IApplicationCoreService)} is not registered");
             }
 
             RegisterLogger(containerRegistry);
@@ -55,7 +55,7 @@ namespace XamarinPrismApp
 
         private void RegisterLogger(IContainerRegistry containerRegistry)
         {
-            var appConfig = Container.Resolve<IAppCore>();
+            var appConfig = Container.Resolve<IApplicationCoreService>();
             var loggerService = LoggerService.CreateSplittedConfiguration(appConfig.LogPath);
             containerRegistry.RegisterInstance<ILoggerService>(loggerService);
         }

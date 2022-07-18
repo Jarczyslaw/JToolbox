@@ -1,9 +1,12 @@
 ﻿namespace JToolbox.XamarinForms.Core.Abstraction
 {
-    public interface IPaths
+    public interface IApplicationCoreService
     {
+        string DeviceId { get; }
         string InternalFolder { get; }
+        string LogPath { get; }
         string PrivateExternalFolder { get; }
-        string PublicExternalFolder { get; }
+
+        void Kill();
     }
 }

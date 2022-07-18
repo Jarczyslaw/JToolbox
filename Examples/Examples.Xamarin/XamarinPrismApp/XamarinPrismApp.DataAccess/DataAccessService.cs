@@ -11,9 +11,9 @@ namespace XamarinPrismApp.DataAccess
         private readonly string databasePath;
         private readonly string usersCollectionName = "Users";
 
-        public DataAccessService(IPaths paths)
+        public DataAccessService(IApplicationCoreService applicationCoreService)
         {
-            databasePath = Path.Combine(paths.InternalFolder, "database.db");
+            databasePath = Path.Combine(applicationCoreService.InternalFolder, "database.db");
         }
 
         public void AddUser(User user)
