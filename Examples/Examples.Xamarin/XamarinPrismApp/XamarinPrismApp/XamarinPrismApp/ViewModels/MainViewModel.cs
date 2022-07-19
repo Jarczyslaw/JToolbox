@@ -39,6 +39,8 @@ namespace XamarinPrismApp.ViewModels
 
         public DelegateCommand AccelerometerCommand => new DelegateCommand(async () => await Navigate<AccelerometerViewModel>());
 
+        public DelegateCommand CameraCommand => new DelegateCommand(async () => await Navigate<CameraViewModel>());
+
         public string DeviceId
         {
             get => deviceId;
@@ -46,7 +48,6 @@ namespace XamarinPrismApp.ViewModels
         }
 
         public DelegateCommand DialogsCommand => new DelegateCommand(async () => await Navigate<DialogsViewModel>());
-
         public DelegateCommand KillCommand => new DelegateCommand(async () => await KillPrompt());
 
         public DelegateCommand LocalStorageCommand => new DelegateCommand(async () => await Navigate<LocalStorageViewModel>());
