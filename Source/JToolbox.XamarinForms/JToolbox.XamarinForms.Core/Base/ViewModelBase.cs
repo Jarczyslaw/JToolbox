@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace JToolbox.XamarinForms.Core.Base
 {
-    public class ViewModelBase : BindableBase, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
     {
         protected readonly INavigationService navigationService;
         private string title;
@@ -31,7 +31,6 @@ namespace JToolbox.XamarinForms.Core.Base
 
         public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
-            Parameters = Parameters.CreateFromNavigationParameters(parameters);
         }
 
         protected Task<INavigationResult> Close(Parameters parameters = null)
@@ -54,6 +53,11 @@ namespace JToolbox.XamarinForms.Core.Base
 
         public virtual void Destroy()
         {
+        }
+
+        public virtual void Initialize(INavigationParameters parameters)
+        {
+            Parameters = Parameters.CreateFromNavigationParameters(parameters);
         }
     }
 }
