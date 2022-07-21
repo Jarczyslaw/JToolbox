@@ -7,7 +7,9 @@ using JToolbox.XamarinForms.Perms;
 using Prism;
 using Prism.Ioc;
 using System;
+using System.IO;
 using System.Reflection;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinPrismApp.DataAccess;
@@ -56,7 +58,8 @@ namespace XamarinPrismApp
         private void RegisterLogger(IContainerRegistry containerRegistry)
         {
             var appConfig = Container.Resolve<IApplicationCoreService>();
-            var loggerService = LoggerService.CreateSplittedConfiguration(appConfig.LogPath);
+            var logPath = Path.Combine(appConfig.PublicExternalFolder, AppInfo.Name);
+            var loggerService = LoggerService.CreateSplittedConfiguration(logPath);
             containerRegistry.RegisterInstance<ILoggerService>(loggerService);
         }
 

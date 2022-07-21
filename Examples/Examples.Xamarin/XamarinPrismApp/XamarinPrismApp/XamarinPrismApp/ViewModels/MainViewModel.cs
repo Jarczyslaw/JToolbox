@@ -34,7 +34,7 @@ namespace XamarinPrismApp.ViewModels
             this.loggingService = loggingService;
 
             DeviceId = "DeviceID: " + applicationCoreService.DeviceId;
-            LogPath = "Log path: " + applicationCoreService.LogPath;
+            LogPath = "Log path: " + loggingService.GetAllLogFolders()[0];
         }
 
         public DelegateCommand AccelerometerCommand => new DelegateCommand(async () => await Navigate<AccelerometerViewModel>());
