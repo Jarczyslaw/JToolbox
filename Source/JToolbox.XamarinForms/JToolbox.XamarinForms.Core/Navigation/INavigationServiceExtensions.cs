@@ -10,11 +10,16 @@ namespace JToolbox.XamarinForms.Core.Navigation
 {
     public static class INavigationServiceExtensions
     {
-        public static Task<INavigationResult> Close(this INavigationService navigationService, Parameters parameters = null)
+        public static Task<INavigationResult> Close(this INavigationService navigationService)
         {
-            var navigationParams = parameters == null
-                ? new NavigationParameters() : parameters.CreateNavigationParameters();
-            return navigationService.GoBackAsync(navigationParams);
+            return navigationService.GoBackAsync(new NavigationParameters());
+        }
+
+        public static Task<INavigationResult> Close<TArg, TResult>(
+            this INavigationService navigationService,
+            NavigationParams<TArg, TResult> parameters)
+        {
+            return navigationService.GoBackAsync(parameters.CreateNavigationParameters());
         }
 
         public static Page GetCurrentPage(this INavigationService navigationService)
@@ -87,28 +92,44 @@ namespace JToolbox.XamarinForms.Core.Navigation
             return navigationService.IsPageOpened(targetPageType);
         }
 
-        public static Task<INavigationResult> NavigateToViewModel<T>(this INavigationService navigationService, Parameters parameters = null)
-            where T : ViewModelBase
+        public static Task<INavigationResult> NavigateToViewModel<TViewModel>(this INavigationService navigationService)
+            where TViewModel : ViewModelBase
         {
-            return navigationService.NavigateToViewModel(typeof(T), parameters, false);
+            return navigationService.NavigateToViewModel(typeof(TViewModel), new NavigationParameters(), false);
         }
 
-        public static Task<INavigationResult> NavigateToViewModel(this INavigationService navigationService, Type viewModelType, Parameters parameters = null)
+        public static Task<INavigationResult> NavigateToViewModel<TViewModel, TArg, TResult>(
+            this INavigationService navigationService,
+            NavigationParams<TArg, TResult> parameters)
+            where TViewModel : ViewModelBase
         {
-            return navigationService.NavigateToViewModel(viewModelType, parameters, false);
+            return navigationService.NavigateToViewModel(typeof(TViewModel), parameters.CreateNavigationParameters(), false);
         }
 
-        public static Task<INavigationResult> ReturnToRoot(this INavigationService navigationService, Parameters parameters = null)
+        public static Task<INavigationResult> ReturnToRoot<TArg, TResult>(
+            this INavigationService navigationService,
+            NavigationParams<TArg, TResult> parameters)
         {
-            var navigationParams = parameters == null
-                ? new NavigationParameters() : parameters.CreateNavigationParameters();
-            return navigationService.GoBackToRootAsync(navigationParams);
+            return navigationService.GoBackToRootAsync(parameters.CreateNavigationParameters());
         }
 
-        public static Task<INavigationResult> StartNavigationViewModel<T>(this INavigationService navigationService, Parameters parameters = null)
-            where T : ViewModelBase
+        public static Task<INavigationResult> ReturnToRoot(this INavigationService navigationService)
         {
-            return navigationService.NavigateToViewModel(typeof(T), parameters, true);
+            return navigationService.GoBackToRootAsync(new NavigationParameters());
+        }
+
+        public static Task<INavigationResult> StartNavigationViewModel<TViewModel, TArg, TResult>(
+            this INavigationService navigationService,
+            NavigationParams<TArg, TResult> parameters)
+            where TViewModel : ViewModelBase
+        {
+            return navigationService.NavigateToViewModel(typeof(TViewModel), parameters.CreateNavigationParameters(), true);
+        }
+
+        public static Task<INavigationResult> StartNavigationViewModel<TViewModel>(this INavigationService navigationService)
+            where TViewModel : ViewModelBase
+        {
+            return navigationService.NavigateToViewModel(typeof(TViewModel), new NavigationParameters(), true);
         }
 
         private static void CheckType(Type type, Type constraint)
@@ -119,7 +140,11 @@ namespace JToolbox.XamarinForms.Core.Navigation
             }
         }
 
-        private static Task<INavigationResult> NavigateToViewModel(this INavigationService navigationService, Type viewModelType, Parameters parameters = null, bool isNavigationPage = false)
+        private static Task<INavigationResult> NavigateToViewModel(
+            this INavigationService navigationService,
+            Type viewModelType,
+            INavigationParameters parameters,
+            bool isNavigationPage = false)
         {
             CheckType(viewModelType, typeof(ViewModelBase));
             if (NavigationMapper.Instance.ViewModelsMapping.TryGetValue(viewModelType, out var pageType))
@@ -130,9 +155,7 @@ namespace JToolbox.XamarinForms.Core.Navigation
                     pageUri = $"NavigationPage/{pageUri}";
                 }
 
-                var navigationParams = parameters == null
-                    ? new NavigationParameters() : parameters.CreateNavigationParameters();
-                return navigationService.NavigateAsync(pageUri, navigationParams);
+                return navigationService.NavigateAsync(pageUri, parameters);
             }
             else
             {

@@ -21,9 +21,11 @@ namespace JToolbox.XamarinForms.Core.Base
             set => SetProperty(ref title, value);
         }
 
-        protected Parameters Parameters { get; private set; }
-
         #region Navigation
+
+        public virtual void Initialize(INavigationParameters parameters)
+        {
+        }
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
@@ -33,18 +35,34 @@ namespace JToolbox.XamarinForms.Core.Base
         {
         }
 
-        protected Task<INavigationResult> Close(Parameters parameters = null)
+        protected Task Close()
+        {
+            return navigationService.Close();
+        }
+
+        protected Task Close<TArg, TResult>(NavigationParams<TArg, TResult> parameters)
         {
             return navigationService.Close(parameters);
         }
 
-        protected Task<INavigationResult> Navigate<T>(Parameters parameters = null)
-                                    where T : ViewModelBase
+        protected Task Navigate<TViewModel>()
+            where TViewModel : ViewModelBase
         {
-            return navigationService.NavigateToViewModel<T>(parameters);
+            return navigationService.NavigateToViewModel<TViewModel>();
         }
 
-        protected Task<INavigationResult> ReturnToRoot(Parameters parameters = null)
+        protected Task Navigate<TViewModel, TArg, TResult>(NavigationParams<TArg, TResult> parameters)
+            where TViewModel : ViewModelBase
+        {
+            return navigationService.NavigateToViewModel<TViewModel, TArg, TResult>(parameters);
+        }
+
+        protected Task ReturnToRoot()
+        {
+            return navigationService.ReturnToRoot();
+        }
+
+        protected Task ReturnToRoot<TArg, TResult>(NavigationParams<TArg, TResult> parameters)
         {
             return navigationService.ReturnToRoot(parameters);
         }
@@ -53,11 +71,6 @@ namespace JToolbox.XamarinForms.Core.Base
 
         public virtual void Destroy()
         {
-        }
-
-        public virtual void Initialize(INavigationParameters parameters)
-        {
-            Parameters = Parameters.CreateFromNavigationParameters(parameters);
         }
     }
 }

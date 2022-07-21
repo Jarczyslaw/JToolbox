@@ -4,25 +4,25 @@ using System;
 
 namespace JToolbox.XamarinForms.Core.Navigation
 {
-    public class Parameters
+    public class NavigationParams<TArg, TResult>
     {
         public static string CallbackKey => nameof(CallbackKey);
         public static string SourceViewModelKey => nameof(SourceViewModelKey);
         public static string ValueKey => nameof(ValueKey);
-        public Func<object> Callback { get; set; }
+        public TArg Argument { get; set; }
+        public Action<TResult> Callback { get; set; }
         public ViewModelBase SourceViewModel { get; set; }
-        public object Value { get; set; }
 
-        public static Parameters CreateFromNavigationParameters(INavigationParameters navigationParameters)
+        public static NavigationParams<TArg, TResult> CreateFromNavigationParameters(INavigationParameters navigationParameters)
         {
             if (navigationParameters.ContainsKey(SourceViewModelKey)
                 && navigationParameters.ContainsKey(ValueKey))
             {
-                return new Parameters
+                return new NavigationParams<TArg, TResult>
                 {
                     SourceViewModel = (ViewModelBase)navigationParameters[SourceViewModelKey],
-                    Value = navigationParameters[ValueKey],
-                    Callback = (Func<object>)navigationParameters[CallbackKey],
+                    Argument = (TArg)navigationParameters[ValueKey],
+                    Callback = (Action<TResult>)navigationParameters[CallbackKey],
                 };
             }
             return null;
@@ -33,7 +33,7 @@ namespace JToolbox.XamarinForms.Core.Navigation
             return new NavigationParameters
             {
                 { SourceViewModelKey, SourceViewModel },
-                { ValueKey, Value },
+                { ValueKey, Argument },
                 { CallbackKey, Callback },
             };
         }

@@ -60,12 +60,12 @@ namespace XamarinPrismApp.ViewModels
 
         public DelegateCommand NavigateWithInputCommand => new DelegateCommand(async () =>
         {
-            var @params = new Parameters
+            var @params = new NavigationParams<string, object>
             {
                 SourceViewModel = this,
-                Value = InputValue
+                Argument = InputValue
             };
-            await Navigate<NaviInputViewModel>(@params);
+            await Navigate<NaviInputViewModel, string, object>(@params);
         });
 
         public DelegateCommand NaviSubCommand => new DelegateCommand(async () => await Navigate<SubnaviViewModel>());

@@ -1,4 +1,5 @@
 ﻿using JToolbox.XamarinForms.Core.Base;
+using JToolbox.XamarinForms.Core.Navigation;
 using Prism.Navigation;
 
 namespace XamarinPrismApp.ViewModels
@@ -25,14 +26,11 @@ namespace XamarinPrismApp.ViewModels
             set => SetProperty(ref sourceViewModel, value);
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override void Initialize(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
-            if (Parameters != null)
-            {
-                Input = "Input: " + (string)Parameters.Value;
-                SourceViewModel = "Source view model: " + Parameters.SourceViewModel.GetType().Name;
-            }
+            var @params = NavigationParams<string, object>.CreateFromNavigationParameters(parameters);
+            Input = "Input: " + @params.Argument;
+            SourceViewModel = "Source view model: " + @params.SourceViewModel.GetType().Name;
         }
     }
 }
