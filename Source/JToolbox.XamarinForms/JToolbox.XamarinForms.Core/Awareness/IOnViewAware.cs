@@ -1,6 +1,6 @@
 ﻿namespace JToolbox.XamarinForms.Core.Awareness
 {
-    public interface IOnViewAware : IOnAppearingAware, IOnShownAware, IOnDisappearingAware
+    public interface IOnViewAware : IOnAppearingAware, IOnAppearedAware, IOnDisappearingAware
     {
     }
 }

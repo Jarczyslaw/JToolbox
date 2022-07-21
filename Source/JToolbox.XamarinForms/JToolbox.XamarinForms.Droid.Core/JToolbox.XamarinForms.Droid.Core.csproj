@@ -67,6 +67,7 @@
     <Compile Include="ApplicationCoreService.cs" />
     <Compile Include="Extensions\ActivityExtensions.cs" />
     <Compile Include="MainActivityBase.cs" />
+    <Compile Include="PageBaseRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlatformThemeManager.cs" />

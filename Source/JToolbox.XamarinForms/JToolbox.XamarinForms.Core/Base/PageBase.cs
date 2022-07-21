@@ -5,11 +5,17 @@ namespace JToolbox.XamarinForms.Core.Base
 {
     public class PageBase : ContentPage
     {
-        private bool shown;
-
         public ViewModelBase Context => BindingContext as ViewModelBase;
 
         public bool ViewVisible { get; private set; }
+
+        public async void OnAppeared()
+        {
+            if (Context is IOnAppearedAware onAppearedAware)
+            {
+                await onAppearedAware.OnAppeared();
+            }
+        }
 
         protected override async void OnAppearing()
         {
@@ -18,11 +24,6 @@ namespace JToolbox.XamarinForms.Core.Base
             if (Context is IOnAppearingAware onAppearingAware)
             {
                 await onAppearingAware.OnAppearing();
-            }
-            if (!shown && Context is IOnShownAware onShownAware)
-            {
-                await onShownAware.OnShown();
-                shown = true;
             }
         }
 

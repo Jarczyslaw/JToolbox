@@ -13,7 +13,7 @@ using Xamarin.Essentials;
 
 namespace XamarinPrismApp.ViewModels
 {
-    public class MainViewModel : ViewModelBase, IOnBackButtonAware, IOnShownAware
+    public class MainViewModel : ViewModelBase, IOnBackButtonAware, IOnAppearedAware
     {
         private readonly IApplicationCoreService applicationCoreService;
         private readonly IDialogsService dialogsService;
@@ -78,13 +78,7 @@ namespace XamarinPrismApp.ViewModels
         public DelegateCommand SecureLocalStorageCommand => new DelegateCommand(async () => await Navigate<SecureLocalStorageViewModel>());
         public DelegateCommand SettingsCommand => new DelegateCommand(async () => await Navigate<SettingsViewModel>());
 
-        public async Task<bool> OnBackButton()
-        {
-            await KillPrompt();
-            return false;
-        }
-
-        public async Task OnShown()
+        public async Task OnAppeared()
         {
             var result = await permissionsService.CheckAndRequest(new List<Type>
             {
@@ -98,6 +92,12 @@ namespace XamarinPrismApp.ViewModels
                 applicationCoreService.Kill();
             }
             loggingService.Info("App started");
+        }
+
+        public async Task<bool> OnBackButton()
+        {
+            await KillPrompt();
+            return false;
         }
 
         private async Task KillPrompt()
