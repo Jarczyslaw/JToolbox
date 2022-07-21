@@ -48,6 +48,7 @@ namespace XamarinPrismApp.ViewModels
         }
 
         public DelegateCommand DialogsCommand => new DelegateCommand(async () => await Navigate<DialogsViewModel>());
+        public DelegateCommand FileSystemCommand => new DelegateCommand(async () => await Navigate<FileSystemViewModel>());
         public DelegateCommand KillCommand => new DelegateCommand(async () => await KillPrompt());
 
         public DelegateCommand LocalStorageCommand => new DelegateCommand(async () => await Navigate<LocalStorageViewModel>());

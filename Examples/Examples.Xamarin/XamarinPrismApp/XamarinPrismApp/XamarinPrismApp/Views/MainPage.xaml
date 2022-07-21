@@ -21,6 +21,7 @@
                 <Button Command="{Binding DialogsCommand}" Text="Dialogs" />
                 <Button Command="{Binding SettingsCommand}" Text="Settings" />
                 <Button Command="{Binding PermissionsCommand}" Text="Permissions" />
+                <Button Command="{Binding FileSystemCommand}" Text="File system" />
                 <Button Command="{Binding AccelerometerCommand}" Text="Accelerometer" />
                 <Button Command="{Binding LocalStorageCommand}" Text="Local Storage" />
                 <Button Command="{Binding SecureLocalStorageCommand}" Text="Secure local Storage" />

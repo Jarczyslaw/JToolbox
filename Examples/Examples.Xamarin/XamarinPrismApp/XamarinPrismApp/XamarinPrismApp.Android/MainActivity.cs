@@ -5,7 +5,12 @@ using JToolbox.XamarinForms.Droid.Core;
 
 namespace XamarinPrismApp.Droid
 {
-    [Activity(Label = "XamarinPrismApp", Icon = "@mipmap/ic_launcher", Theme = "@style/Splash", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "XamarinPrismApp",
+        Icon = "@mipmap/ic_launcher",
+        Theme = "@style/Splash",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : MainActivityBase
     {
         private readonly AppGlobalExceptionHandler globalExceptionHandler = new AppGlobalExceptionHandler();

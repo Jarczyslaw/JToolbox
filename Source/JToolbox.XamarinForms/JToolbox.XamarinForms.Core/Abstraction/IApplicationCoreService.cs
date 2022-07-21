@@ -7,6 +7,8 @@
         string LogPath { get; }
         string PrivateExternalFolder { get; }
 
+        string PublicExternalFolder { get; }
+
         void Kill();
     }
 }
