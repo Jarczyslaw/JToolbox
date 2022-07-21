@@ -60,12 +60,15 @@ namespace XamarinPrismApp.ViewModels
                 loggingService.Debug("DEBUG");
                 loggingService.Error("ERROR");
 
-                dialogsService.Toast("Success");
+                throw new Exception("TEST EXCEPTION");
             }
             catch (Exception exc)
             {
+                loggingService.Error(exc, "Error occured: ");
                 await dialogsService.Error(exc.Message);
             }
+
+            dialogsService.Toast("Success");
         });
 
         public string LogPath

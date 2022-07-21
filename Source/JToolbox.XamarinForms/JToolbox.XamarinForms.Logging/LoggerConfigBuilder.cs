@@ -34,7 +34,7 @@ namespace JToolbox.XamarinForms.Logging
                 MaxArchiveFiles = 10,
                 ConcurrentWrites = true,
                 KeepFileOpen = false,
-                Layout = @"${date:format=yyyy-MM-dd HH\:mm\:ss.fff} - [${level:uppercase=true}]: ${message} ${onexception:${newline}${exception:format=ToString}}"
+                Layout = "${date:format=yyyy-MM-dd HH:mm:ss.fff} - [${level:uppercase=true}]: ${message} ${onexception:${newline}${exception:format=ToString}}"
             };
             config.AddTarget(target);
             return config;
