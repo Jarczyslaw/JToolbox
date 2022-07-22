@@ -9,6 +9,7 @@ using Prism.Ioc;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -25,6 +26,8 @@ namespace XamarinPrismApp
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
+            Thread.CurrentThread.CurrentCulture =
+                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("pl-PL");
         }
 
         protected override async void OnInitialized()

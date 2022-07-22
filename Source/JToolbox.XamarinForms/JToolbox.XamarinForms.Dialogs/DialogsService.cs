@@ -1,5 +1,5 @@
 ﻿using Acr.UserDialogs;
-using JToolbox.XamarinForms.Dialogs.LabelsProviders;
+using JToolbox.XamarinForms.Dialogs.Resources;
 using System;
 using System.Threading.Tasks;
 
@@ -7,30 +7,15 @@ namespace JToolbox.XamarinForms.Dialogs
 {
     public class DialogsService : IDialogsService
     {
-        private ILabelsProvider labelsProvider;
-
         public DialogsService(IUserDialogs userDialogs)
         {
             UserDialogs = userDialogs;
-        }
-
-        public ILabelsProvider LabelsProvider
-        {
-            get
-            {
-                return labelsProvider ?? (labelsProvider = new DefaultLabelsProvider());
-            }
-            set
-            {
-                labelsProvider = value;
-            }
         }
 
         public IUserDialogs UserDialogs { get; }
 
         public async Task Busy(string message, Action busyAction)
         {
-            message = message ?? LabelsProvider.PleaseWait;
             using (new BusyIndicator(message))
             {
                 await Task.Run(busyAction);
@@ -39,7 +24,6 @@ namespace JToolbox.XamarinForms.Dialogs
 
         public async Task<T> Busy<T>(string message, Func<T> busyAction)
         {
-            message = message ?? LabelsProvider.PleaseWait;
             using (new BusyIndicator(message))
             {
                 return await Task.Run(() => busyAction());
@@ -48,7 +32,6 @@ namespace JToolbox.XamarinForms.Dialogs
 
         public async Task Busy(string message, Func<Task> busyAction)
         {
-            message = message ?? LabelsProvider.PleaseWait;
             using (new BusyIndicator(message))
             {
                 await busyAction();
@@ -57,7 +40,6 @@ namespace JToolbox.XamarinForms.Dialogs
 
         public async Task<T> Busy<T>(string message, Func<Task<T>> busyAction)
         {
-            message = message ?? LabelsProvider.PleaseWait;
             using (new BusyIndicator(message))
             {
                 return await busyAction();
@@ -66,7 +48,7 @@ namespace JToolbox.XamarinForms.Dialogs
 
         public Task Error(string message)
         {
-            return UserDialogs.AlertAsync(message, LabelsProvider.Error, LabelsProvider.Ok);
+            return UserDialogs.AlertAsync(message, Translations.Error, Translations.Ok);
         }
 
         public Task Error(Exception exc, string message)
@@ -76,18 +58,18 @@ namespace JToolbox.XamarinForms.Dialogs
             {
                 msg = message + msg;
             }
-            return UserDialogs.AlertAsync(msg, LabelsProvider.Error, LabelsProvider.Ok);
+            return UserDialogs.AlertAsync(msg, Translations.Error, Translations.Ok);
         }
 
         public Task Information(string message)
         {
-            return UserDialogs.AlertAsync(message, LabelsProvider.Information, LabelsProvider.Ok);
+            return UserDialogs.AlertAsync(message, Translations.Information, Translations.Ok);
         }
 
         public Task<bool> QuestionYesNo(string message, string title = null)
         {
-            title = title ?? LabelsProvider.Question;
-            return UserDialogs.ConfirmAsync(message, title, LabelsProvider.Yes, LabelsProvider.No);
+            title = title ?? Translations.Question;
+            return UserDialogs.ConfirmAsync(message, title, Translations.Yes, Translations.No);
         }
 
         public Task<T> ShowActionSheet<T>(ActionSheet<T> actionSheet)
@@ -108,7 +90,7 @@ namespace JToolbox.XamarinForms.Dialogs
                 message += Environment.NewLine;
             }
 
-            var dialog = UserDialogs.Loading(message, () => cancelAction?.Invoke(), LabelsProvider.Cancel, maskType: MaskType.Gradient);
+            var dialog = UserDialogs.Loading(message, () => cancelAction?.Invoke(), Translations.Cancel, maskType: MaskType.Gradient);
             try
             {
                 await loadingAction();
@@ -126,7 +108,7 @@ namespace JToolbox.XamarinForms.Dialogs
 
         public Task Warning(string message)
         {
-            return UserDialogs.AlertAsync(message, LabelsProvider.Warning, LabelsProvider.Ok);
+            return UserDialogs.AlertAsync(message, Translations.Warning, Translations.Ok);
         }
     }
 }

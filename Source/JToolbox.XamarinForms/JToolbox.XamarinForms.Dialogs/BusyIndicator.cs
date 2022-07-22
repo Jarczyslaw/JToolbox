@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using JToolbox.XamarinForms.Dialogs.Resources;
 using System;
 
 namespace JToolbox.XamarinForms.Dialogs
@@ -7,6 +8,7 @@ namespace JToolbox.XamarinForms.Dialogs
     {
         public BusyIndicator(string message)
         {
+            message = message ?? Translations.PleaseWait;
             UserDialogs.Instance.ShowLoading(message, MaskType.Gradient);
         }
 
