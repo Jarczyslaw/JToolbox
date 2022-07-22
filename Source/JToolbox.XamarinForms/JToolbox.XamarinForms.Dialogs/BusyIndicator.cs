@@ -7,11 +7,6 @@ namespace JToolbox.XamarinForms.Dialogs
     {
         public BusyIndicator(string message)
         {
-            if (string.IsNullOrEmpty(message))
-            {
-                message = "Please wait...";
-            }
-
             UserDialogs.Instance.ShowLoading(message, MaskType.Gradient);
         }
 
