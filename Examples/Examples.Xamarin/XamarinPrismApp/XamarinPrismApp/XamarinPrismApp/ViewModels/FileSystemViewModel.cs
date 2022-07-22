@@ -23,6 +23,10 @@ namespace XamarinPrismApp.ViewModels
 
             this.dialogsService = dialogsService;
             this.applicationCoreService = applicationCoreService;
+
+            Text += $"{nameof(applicationCoreService.InternalFolder)}: {applicationCoreService.InternalFolder}" + Environment.NewLine
+                + $"{nameof(applicationCoreService.PrivateExternalFolder)}: {applicationCoreService.PrivateExternalFolder}" + Environment.NewLine
+                + $"{nameof(applicationCoreService.PublicExternalFolder)}: {applicationCoreService.PublicExternalFolder}";
         }
 
         public DelegateCommand RunCommand => new DelegateCommand(Run);
