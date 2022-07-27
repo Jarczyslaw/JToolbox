@@ -22,7 +22,7 @@ namespace JToolbox.XamarinForms.Dialogs
 
         Task Information(string message);
 
-        Task<bool> QuestionYesNo(string message, string title = "Question");
+        Task<bool> QuestionYesNo(string message, string title = null);
 
         Task<T> ShowActionSheet<T>(ActionSheet<T> actionSheet);
 
