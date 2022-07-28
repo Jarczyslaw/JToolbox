@@ -25,6 +25,14 @@ namespace JToolbox.Core.Helpers
             }
         }
 
+        public static void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
         public static void CreateEmptyFile(string filePath, long size)
         {
             using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -38,6 +46,22 @@ namespace JToolbox.Core.Helpers
             var data = new byte[size];
             random.NextBytes(data);
             File.WriteAllBytes(filePath, data);
+        }
+
+        public static void DeleteFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+
+        public static void DeleteFolder(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+            }
         }
 
         public static bool FileNameMatchesMask(string fileName, string fileMask)
