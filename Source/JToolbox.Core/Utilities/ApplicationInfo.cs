@@ -19,6 +19,8 @@ namespace JToolbox.Core.Utilities
 
         public static bool IsDebugWithoutDebugger => IsDebug && !Debugger.IsAttached;
 
+        public static bool IsDebugWithDebugger => IsDebug && Debugger.IsAttached;
+
         public static void ThrowIfDebugAppRunningWithoutDebugger()
         {
             if (IsDebugWithoutDebugger)
