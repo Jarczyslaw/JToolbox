@@ -5,6 +5,8 @@ namespace JToolbox.Core.Utilities
 {
     public static class ExecutionTime
     {
+        private static Stopwatch stopwatch;
+
         public static void Run(Action action, out TimeSpan elapsed)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -31,6 +33,14 @@ namespace JToolbox.Core.Utilities
                 stopwatch.Stop();
                 elapsed = stopwatch.Elapsed;
             }
+        }
+
+        public static void Start() => stopwatch = Stopwatch.StartNew();
+
+        public static TimeSpan Stop()
+        {
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
         }
     }
 }
