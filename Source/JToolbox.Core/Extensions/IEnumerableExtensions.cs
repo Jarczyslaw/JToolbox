@@ -11,6 +11,11 @@ namespace JToolbox.Core.Extensions
             return source ?? Enumerable.Empty<T>();
         }
 
+        public static decimal AverageOrDefault<T1>(this IEnumerable<T1> enumerable, Func<T1, decimal> selector, decimal defaultValue = default)
+        {
+            return enumerable.Any() ? enumerable.Average(selector) : defaultValue;
+        }
+
         public static void ForEach<T>(this IEnumerable<T> @this, Action<T> action)
         {
             foreach (var item in @this)
@@ -29,12 +34,12 @@ namespace JToolbox.Core.Extensions
             return !@this.IsEmpty();
         }
 
-        public static int MaxOrDefault<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
+        public static T2 MaxOrDefault<T1, T2>(this IEnumerable<T1> enumerable, Func<T1, T2> selector, T2 defaultValue = default)
         {
             return enumerable.Any() ? enumerable.Max(selector) : defaultValue;
         }
 
-        public static int MinOrDefault<T>(this IEnumerable<T> enumerable, Func<T, int> selector, int defaultValue = default(int))
+        public static T2 MinOrDefault<T1, T2>(this IEnumerable<T1> enumerable, Func<T1, T2> selector, T2 defaultValue = default)
         {
             return enumerable.Any() ? enumerable.Min(selector) : defaultValue;
         }
