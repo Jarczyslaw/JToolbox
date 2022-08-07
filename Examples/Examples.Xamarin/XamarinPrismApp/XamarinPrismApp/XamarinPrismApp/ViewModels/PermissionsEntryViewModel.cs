@@ -1,23 +1,23 @@
 ﻿using Prism.Mvvm;
-using System;
+using Xamarin.Essentials;
 
 namespace XamarinPrismApp.ViewModels
 {
     public class PermissionsEntryViewModel : BindableBase
     {
-        private Type permissionType;
+        private Permissions.BasePermission permission;
         private string title;
 
-        public PermissionsEntryViewModel(Type permissionType)
+        public PermissionsEntryViewModel(Permissions.BasePermission permission)
         {
-            Permission = permissionType;
-            Title = Permission.Name;
+            Permission = permission;
+            Title = permission.GetType().Name;
         }
 
-        public Type Permission
+        public Permissions.BasePermission Permission
         {
-            get => permissionType;
-            set => SetProperty(ref permissionType, value);
+            get => permission;
+            set => SetProperty(ref permission, value);
         }
 
         public string Title

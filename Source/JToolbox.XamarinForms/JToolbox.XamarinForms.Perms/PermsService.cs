@@ -1,80 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using static Xamarin.Essentials.Permissions;
 
 namespace JToolbox.XamarinForms.Perms
 {
     public class PermsService : IPermsService
     {
-        public Task<PermissionStatus> Check<T>()
-            where T : Permissions.BasePermission, new()
+        public Task<PermissionStatus> Check(BasePermission permission)
         {
-            return Permissions.CheckStatusAsync<T>();
+            return permission.CheckStatusAsync();
         }
 
-        public Task<PermissionStatus> Check(Type permissionType)
+        public async Task<PermissionStatus> CheckAndRequest(BasePermission permission)
         {
-            CheckPermissionType(permissionType);
-            return (Task<PermissionStatus>)CreateGenericMethod(nameof(Permissions.CheckStatusAsync), permissionType)
-                .Invoke(this, null);
-        }
-
-        public Task<PermissionStatus> CheckAndRequest<T>()
-            where T : Permissions.BasePermission, new()
-        {
-            return CheckAndRequest(typeof(T));
-        }
-
-        public async Task<PermissionStatus> CheckAndRequest(Type permissionType)
-        {
-            var state = await Check(permissionType);
+            var state = await permission.CheckStatusAsync();
             if (state != PermissionStatus.Granted)
             {
-                state = await Request(permissionType);
+                state = await permission.RequestAsync();
             }
             return state;
         }
 
-        public async Task<bool> CheckAndRequest(List<Type> permissionTypes)
+        public async Task<bool> CheckAndRequest(List<BasePermission> permissions)
         {
-            foreach (var permissionType in permissionTypes)
+            foreach (var permission in permissions)
             {
-                var state = await CheckAndRequest(permissionType);
+                var state = await CheckAndRequest(permission);
                 if (state != PermissionStatus.Granted)
                 {
                     return false;
                 }
             }
+
             return true;
-        }
-
-        public Task<PermissionStatus> Request<T>()
-                                    where T : Permissions.BasePermission, new()
-        {
-            return Permissions.RequestAsync<T>();
-        }
-
-        public Task<PermissionStatus> Request(Type permissionType)
-        {
-            CheckPermissionType(permissionType);
-            return (Task<PermissionStatus>)CreateGenericMethod(nameof(Permissions.RequestAsync), permissionType)
-                .Invoke(this, null);
-        }
-
-        private void CheckPermissionType(Type permissionType)
-        {
-            if (!typeof(Permissions.BasePermission).IsAssignableFrom(permissionType))
-            {
-                throw new ArgumentException("Permission type has to derive from BasePermission");
-            }
-        }
-
-        private MethodInfo CreateGenericMethod(string methodName, Type permissionType)
-        {
-            var method = typeof(Permissions).GetMethod(methodName);
-            return method.MakeGenericMethod(permissionType);
         }
     }
 }

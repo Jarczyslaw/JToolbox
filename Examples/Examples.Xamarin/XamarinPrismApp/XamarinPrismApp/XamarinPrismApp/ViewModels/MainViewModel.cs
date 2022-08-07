@@ -84,10 +84,10 @@ namespace XamarinPrismApp.ViewModels
 
         public async Task OnAppeared()
         {
-            var result = await permissionsService.CheckAndRequest(new List<Type>
+            var result = await permissionsService.CheckAndRequest(new List<Permissions.BasePermission>
             {
-                typeof(Permissions.StorageRead),
-                typeof(Permissions.StorageWrite)
+                new Permissions.StorageRead(),
+                new Permissions.StorageWrite()
             });
 
             if (!result)

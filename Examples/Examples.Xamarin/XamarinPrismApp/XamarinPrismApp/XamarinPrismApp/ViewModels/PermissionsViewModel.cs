@@ -64,13 +64,13 @@ namespace XamarinPrismApp.ViewModels
         {
             Permissions = new ObservableCollection<PermissionsEntryViewModel>
             {
-                new PermissionsEntryViewModel(typeof(Permissions.Camera)),
-                new PermissionsEntryViewModel(typeof(Permissions.LocationAlways)),
-                new PermissionsEntryViewModel(typeof(Permissions.LocationWhenInUse)),
-                new PermissionsEntryViewModel(typeof(Permissions.StorageRead)),
-                new PermissionsEntryViewModel(typeof(Permissions.StorageWrite)),
-                new PermissionsEntryViewModel(typeof(Permissions.Phone)),
-                new PermissionsEntryViewModel(typeof(Permissions.CalendarRead)),
+                new PermissionsEntryViewModel(new Permissions.Camera()),
+                new PermissionsEntryViewModel(new Permissions.LocationAlways()),
+                new PermissionsEntryViewModel(new Permissions.LocationWhenInUse()),
+                new PermissionsEntryViewModel(new Permissions.StorageRead()),
+                new PermissionsEntryViewModel(new Permissions.StorageWrite()),
+                new PermissionsEntryViewModel(new Permissions.Phone()),
+                new PermissionsEntryViewModel(new Permissions.CalendarRead()),
             };
             SelectedPermission = Permissions.First();
         }
