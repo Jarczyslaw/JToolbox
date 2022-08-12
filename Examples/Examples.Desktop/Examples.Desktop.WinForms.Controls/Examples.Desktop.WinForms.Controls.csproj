@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JToolbox.WinForms.Core">
-      <HintPath>..\..\..\Source\JToolbox.WinForms\JToolbox.WinForms.Core\obj\Debug\JToolbox.WinForms.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -81,6 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{29495d19-7102-48ab-b3f2-653f93a9779d}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.WinForms\JToolbox.WinForms.Core\JToolbox.WinForms.Core.csproj">
+      <Project>{dbad9875-65dc-4a88-b8d5-caf261bc28dc}</Project>
+      <Name>JToolbox.WinForms.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
