@@ -12,6 +12,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label HorizontalTextAlignment="Center" Text="Welcome to Xamarin Forms and Prism!" />
@@ -28,6 +29,8 @@
                 <Button Command="{Binding CameraCommand}" Text="Camera" />
                 <Button Command="{Binding LogCommand}" Text="Log test" />
                 <Button Command="{Binding KillCommand}" Text="Kill application" />
+                <Button Command="{Binding UpdateCommand}" Text="Update application" />
+                <Button Command="{Binding TestCommand}" Text="Test" />
             </StackLayout>
         </ScrollView>
 
@@ -39,5 +42,9 @@
             Grid.Row="3"
             HorizontalOptions="CenterAndExpand"
             Text="{Binding LogPath}" />
+        <Label
+            Grid.Row="4"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding AppVersion}" />
     </Grid>
 </base:PageBase>

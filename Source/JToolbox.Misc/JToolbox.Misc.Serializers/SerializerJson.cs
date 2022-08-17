@@ -1,10 +1,22 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
+using System.Text;
 
 namespace JToolbox.Misc.Serializers
 {
     public class SerializerJson : ISerializer
     {
+        public T FromBytes<T>(byte[] data) where T : class
+        {
+            using (var stream = new MemoryStream(data))
+            {
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                {
+                    return JsonSerializer.Create().Deserialize(reader, typeof(T)) as T;
+                }
+            }
+        }
+
         public T FromFile<T>(string filePath)
         {
             var serialized = File.ReadAllText(filePath);

@@ -5,6 +5,11 @@ namespace JToolbox.Misc.Serializers
 {
     public class SerializerXml : ISerializer
     {
+        public T FromBytes<T>(byte[] data) where T : class
+        {
+            throw new System.NotImplementedException();
+        }
+
         public T FromFile<T>(string filePath)
         {
             var serialized = File.ReadAllText(filePath);

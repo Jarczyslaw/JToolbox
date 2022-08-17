@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Plugin.XF.AppInstallHelper" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\JToolbox.Misc\JToolbox.Misc.Serializers\JToolbox.Misc.Serializers.csproj" />
+    <ProjectReference Include="..\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
+  </ItemGroup>
+
+</Project>

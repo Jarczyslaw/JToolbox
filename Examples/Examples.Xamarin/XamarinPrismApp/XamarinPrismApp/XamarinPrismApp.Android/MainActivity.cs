@@ -1,7 +1,9 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using JToolbox.XamarinForms.Droid.Core;
+using Plugin.XF.AppInstallHelper;
 
 namespace XamarinPrismApp.Droid
 {
@@ -10,7 +12,8 @@ namespace XamarinPrismApp.Droid
         Theme = "@style/Splash",
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
-        ScreenOrientation = ScreenOrientation.Portrait)]
+        ScreenOrientation = ScreenOrientation.Portrait,
+        LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : MainActivityBase
     {
         private readonly AppGlobalExceptionHandler globalExceptionHandler = new AppGlobalExceptionHandler();
@@ -25,6 +28,7 @@ namespace XamarinPrismApp.Droid
 
             globalExceptionHandler.Attach();
             Initialize(bundle);
+            InstallationHelper.Init("com.jtsolutions.xamarinprismapp.fileprovider");
 
             LoadApplication(new App(new AndroidInitializer()));
         }

@@ -174,6 +174,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUploader", "Tools\AppUpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.WinForms.Controls", "Examples\Examples.Desktop\Examples.Desktop.WinForms.Controls\Examples.Desktop.WinForms.Controls.csproj", "{44D25EAF-877F-4A65-94F4-855B5BEE719C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.XamarinForms.Updater", "Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Updater\JToolbox.XamarinForms.Updater.csproj", "{70C796DB-05BD-45D0-B11B-3949AF6E3C34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -444,6 +446,10 @@ Global
 		{44D25EAF-877F-4A65-94F4-855B5BEE719C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44D25EAF-877F-4A65-94F4-855B5BEE719C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44D25EAF-877F-4A65-94F4-855B5BEE719C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C796DB-05BD-45D0-B11B-3949AF6E3C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C796DB-05BD-45D0-B11B-3949AF6E3C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C796DB-05BD-45D0-B11B-3949AF6E3C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C796DB-05BD-45D0-B11B-3949AF6E3C34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -528,6 +534,7 @@ Global
 		{F8B23211-2448-4F6E-B462-DC501A9C5B82} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{923C6C07-0CAB-4BC3-9841-7D7A82B87F00} = {44211265-F290-4EC9-A6CE-BDA2D4E44D70}
 		{44D25EAF-877F-4A65-94F4-855B5BEE719C} = {907A859F-6219-4D41-9B8C-1EF003286419}
+		{70C796DB-05BD-45D0-B11B-3949AF6E3C34} = {DEE2A711-C9E3-4D61-BA1E-D1454869144C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.jtsolutions.xamarinprismapp" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0.0.0" package="com.jtsolutions.xamarinprismapp" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="31" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -21,8 +21,10 @@
 	<uses-permission android:name="android.permission.INSTALL_LOCATION_PROVIDER" />
 	<uses-permission android:name="android.permission.LOCATION_HARDWARE" />
 	<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.INSTALL_PACKAGES" />
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 	<application android:label="XamarinPrismApp" android:icon="@mipmap/ic_launcher" android:requestLegacyExternalStorage="true">
-		<provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
+		<provider android:name="androidx.core.content.FileProvider" android:authorities="com.jtsolutions.xamarinprismapp.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>
 	</application>

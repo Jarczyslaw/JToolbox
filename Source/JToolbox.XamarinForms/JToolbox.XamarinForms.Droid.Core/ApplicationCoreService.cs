@@ -2,8 +2,8 @@
 using Android.Media;
 using Android.OS;
 using JToolbox.XamarinForms.Core.Abstraction;
-using System;
 using System.Collections.Generic;
+using System.IO;
 using static Android.Provider.Settings;
 
 namespace JToolbox.XamarinForms.Droid.Core
@@ -27,17 +27,20 @@ namespace JToolbox.XamarinForms.Droid.Core
 
                     if (string.IsNullOrEmpty(deviceId))
                     {
-                        throw new Exception("Can not get a deviceId");
+                        throw new System.Exception("Can not get a deviceId");
                     }
                 }
                 return deviceId;
             }
         }
 
+        public string DownloadsFolder => Path.Combine(PublicExternalFolder, Environment.DirectoryDownloads);
+
         public string InternalFolder => Application.Context.FilesDir.AbsolutePath;
 
         public string PrivateExternalFolder => Application.Context.GetExternalFilesDir(null).AbsolutePath;
-        public string PublicExternalFolder => Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
+
+        public string PublicExternalFolder => Environment.ExternalStorageDirectory.AbsolutePath;
 
         public void FilesScan(List<string> files)
         {

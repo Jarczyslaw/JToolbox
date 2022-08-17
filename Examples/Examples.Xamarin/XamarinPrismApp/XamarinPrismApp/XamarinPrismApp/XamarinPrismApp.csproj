@@ -5,17 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.Misc\JToolbox.Misc.Serializers\JToolbox.Misc.Serializers.csproj" />
     <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Core\JToolbox.XamarinForms.Core.csproj" />
     <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Dialogs\JToolbox.XamarinForms.Dialogs.csproj" />
     <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Logging\JToolbox.XamarinForms.Logging.csproj" />
     <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Perms\JToolbox.XamarinForms.Perms.csproj" />
     <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Settings\JToolbox.XamarinForms.Settings.csproj" />
+    <ProjectReference Include="..\..\..\..\..\Source\JToolbox.XamarinForms\JToolbox.XamarinForms.Updater\JToolbox.XamarinForms.Updater.csproj" />
     <ProjectReference Include="..\..\XamarinPrismApp.DataAccess\XamarinPrismApp.DataAccess.csproj" />
   </ItemGroup>
 
