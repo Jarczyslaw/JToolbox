@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JToolbox.WinForms.Core.Controls;
+using System;
 using System.Windows.Forms;
 
 namespace Examples.Desktop.WinForms.Controls
@@ -10,6 +11,7 @@ namespace Examples.Desktop.WinForms.Controls
             InitializeComponent();
 
             dateRangeSelector1.OnValueChanged += DateRangeSelector1_OnValueChanged;
+            dateTimeSelector1.DateTimeChanged += DateTimeSelector1_DateTimeChanged;
         }
 
         private void AppendLog(string message)
@@ -31,7 +33,12 @@ namespace Examples.Desktop.WinForms.Controls
 
         private void DateRangeSelector1_OnValueChanged(DateTime from, DateTime to)
         {
-            AppendLog($"from: {from:yyyy/MM/dd}, to: {to:yyyy/MM/dd}");
+            AppendLog($"DateRangeSelector changed [from: {from:yyyy/MM/dd}, to: {to:yyyy/MM/dd}]");
+        }
+
+        private void DateTimeSelector1_DateTimeChanged(object sender, EventArgs e)
+        {
+            AppendLog($"dateTimeSelector1 changed {dateTimeSelector1.Value:yyyy/MM/dd}]");
         }
     }
 }

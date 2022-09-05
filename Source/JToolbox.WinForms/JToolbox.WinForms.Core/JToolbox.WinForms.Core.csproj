@@ -58,6 +58,9 @@
     <Compile Include="Controls\DateRangeSelector.Designer.cs">
       <DependentUpon>DateRangeSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DateTimeSelector.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\NullableNumericUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>

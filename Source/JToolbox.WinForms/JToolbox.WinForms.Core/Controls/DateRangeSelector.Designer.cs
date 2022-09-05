@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.lblFrom = new System.Windows.Forms.Label();
-            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
+            this.dtpFrom = new DateTimeSelector();
             this.lblTo = new System.Windows.Forms.Label();
-            this.dtpTo = new System.Windows.Forms.DateTimePicker();
+            this.dtpTo = new DateTimeSelector();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -107,9 +107,9 @@
         #endregion
 
         private System.Windows.Forms.Label lblFrom;
-        private System.Windows.Forms.DateTimePicker dtpFrom;
+        private DateTimeSelector dtpFrom;
         private System.Windows.Forms.Label lblTo;
-        private System.Windows.Forms.DateTimePicker dtpTo;
+        private DateTimeSelector dtpTo;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

@@ -12,8 +12,8 @@ namespace JToolbox.WinForms.Core.Controls
         {
             InitializeComponent();
 
-            dtpFrom.ValueChanged += DtpFrom_ValueChanged;
-            dtpTo.ValueChanged += DtpTo_ValueChanged;
+            dtpFrom.DateTimeChanged += DtpFrom_DateTimeChanged;
+            dtpTo.DateTimeChanged += DtpTo_DateTimeChanged;
         }
 
         public event ValueChanged OnValueChanged;
@@ -100,7 +100,7 @@ namespace JToolbox.WinForms.Core.Controls
             }
             else
             {
-                UpdateValueSilently(dtpFrom, DtpFrom_ValueChanged, value);
+                dtpFrom.SetValue(value, false);
                 TrimFromValue();
             }
         }
@@ -113,7 +113,7 @@ namespace JToolbox.WinForms.Core.Controls
             }
             else
             {
-                UpdateValueSilently(dtpTo, DtpTo_ValueChanged, value);
+                dtpTo.SetValue(value, false);
                 TrimToValue();
             }
         }
@@ -124,13 +124,13 @@ namespace JToolbox.WinForms.Core.Controls
             action(dtpTo);
         }
 
-        private void DtpFrom_ValueChanged(object sender, EventArgs e)
+        private void DtpFrom_DateTimeChanged(object sender, EventArgs e)
         {
             TrimFromValue();
             InvokeOnValueChanged();
         }
 
-        private void DtpTo_ValueChanged(object sender, EventArgs e)
+        private void DtpTo_DateTimeChanged(object sender, EventArgs e)
         {
             TrimToValue();
             InvokeOnValueChanged();
@@ -145,7 +145,7 @@ namespace JToolbox.WinForms.Core.Controls
         {
             if (From > To)
             {
-                UpdateValueSilently(dtpTo, DtpTo_ValueChanged, From);
+                dtpTo.SetValue(From, false);
             }
         }
 
@@ -153,15 +153,8 @@ namespace JToolbox.WinForms.Core.Controls
         {
             if (To < From)
             {
-                UpdateValueSilently(dtpFrom, DtpFrom_ValueChanged, To);
+                dtpFrom.SetValue(To, false);
             }
-        }
-
-        private void UpdateValueSilently(DateTimePicker picker, EventHandler eventHandler, DateTime value)
-        {
-            picker.ValueChanged -= eventHandler;
-            picker.Value = value;
-            picker.ValueChanged += eventHandler;
         }
     }
 }
