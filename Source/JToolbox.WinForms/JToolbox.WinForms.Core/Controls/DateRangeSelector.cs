@@ -12,8 +12,8 @@ namespace JToolbox.WinForms.Core.Controls
         {
             InitializeComponent();
 
-            dtpFrom.DateTimeChanged += DtpFrom_DateTimeChanged;
-            dtpTo.DateTimeChanged += DtpTo_DateTimeChanged;
+            dtpFrom.DateTimeValueChanged += DtpFrom_DateTimeChanged;
+            dtpTo.DateTimeValueChanged += DtpTo_DateTimeChanged;
         }
 
         public event ValueChanged OnValueChanged;
@@ -100,7 +100,7 @@ namespace JToolbox.WinForms.Core.Controls
             }
             else
             {
-                dtpFrom.SetValue(value, false);
+                dtpFrom.SetDateTimeValue(value, false);
                 TrimFromValue();
             }
         }
@@ -113,7 +113,7 @@ namespace JToolbox.WinForms.Core.Controls
             }
             else
             {
-                dtpTo.SetValue(value, false);
+                dtpTo.SetDateTimeValue(value, false);
                 TrimToValue();
             }
         }
@@ -145,7 +145,7 @@ namespace JToolbox.WinForms.Core.Controls
         {
             if (From > To)
             {
-                dtpTo.SetValue(From, false);
+                dtpTo.SetDateTimeValue(From, false);
             }
         }
 
@@ -153,7 +153,7 @@ namespace JToolbox.WinForms.Core.Controls
         {
             if (To < From)
             {
-                dtpFrom.SetValue(To, false);
+                dtpFrom.SetDateTimeValue(To, false);
             }
         }
     }

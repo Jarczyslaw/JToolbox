@@ -15,9 +15,9 @@ namespace JToolbox.WinForms.Core.Controls
             ValueChanged += DateTimeSelector_ValueChanged;
         }
 
-        public event EventHandler DateTimeChanged;
+        public event EventHandler DateTimeValueChanged;
 
-        public void SetValue(DateTime value, bool invokeEvents)
+        public void SetDateTimeValue(DateTime value, bool invokeEvents)
         {
             if (invokeEvents)
             {
@@ -25,7 +25,9 @@ namespace JToolbox.WinForms.Core.Controls
             }
             else
             {
-                UpdateValueSilently(DateTimeChanged, value);
+                ValueChanged -= DateTimeSelector_ValueChanged;
+                Value = value;
+                ValueChanged += DateTimeSelector_ValueChanged;
             }
         }
 
@@ -46,14 +48,7 @@ namespace JToolbox.WinForms.Core.Controls
 
         private void DateTimeSelector_ValueChanged(object sender, EventArgs e)
         {
-            DateTimeChanged?.Invoke(sender, e);
-        }
-
-        private void UpdateValueSilently(EventHandler eventHandler, DateTime value)
-        {
-            DateTimeChanged -= eventHandler;
-            Value = value;
-            DateTimeChanged += eventHandler;
+            DateTimeValueChanged?.Invoke(sender, e);
         }
     }
 }

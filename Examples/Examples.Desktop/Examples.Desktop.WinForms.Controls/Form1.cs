@@ -11,7 +11,7 @@ namespace Examples.Desktop.WinForms.Controls
             InitializeComponent();
 
             dateRangeSelector1.OnValueChanged += DateRangeSelector1_OnValueChanged;
-            dateTimeSelector1.DateTimeChanged += DateTimeSelector1_DateTimeChanged;
+            dateTimeSelector1.DateTimeValueChanged += DateTimeSelector1_DateTimeChanged;
         }
 
         private void AppendLog(string message)
