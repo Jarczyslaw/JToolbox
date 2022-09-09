@@ -163,14 +163,14 @@ namespace AppUploader
             return null;
         }
 
-        private async void Upload()
+        private void Upload()
         {
             try
             {
                 var uploadData = GetUploadData();
 
                 var ftpUploader = new FtpUploader();
-                await ftpUploader.UploadAppFile(uploadData, this);
+                ftpUploader.UploadAppFile(uploadData, this);
                 dialogs.ShowInfo("Upload completed");
             }
             catch (Exception ex)

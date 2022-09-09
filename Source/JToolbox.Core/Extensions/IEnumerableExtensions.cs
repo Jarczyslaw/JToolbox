@@ -16,6 +16,14 @@ namespace JToolbox.Core.Extensions
             return enumerable.Any() ? enumerable.Average(selector) : defaultValue;
         }
 
+        public static IEnumerable<List<T>> BatchesOf<T>(this IEnumerable<T> source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList());
+        }
+
         public static void ForEach<T>(this IEnumerable<T> @this, Action<T> action)
         {
             foreach (var item in @this)
@@ -53,6 +61,12 @@ namespace JToolbox.Core.Extensions
         {
             return !source.Any(predicate);
         }
+
+        public static IOrderedEnumerable<T> OrderBy<T>(this IEnumerable<T> collection)
+            => collection.OrderBy(x => x);
+
+        public static IOrderedEnumerable<T> OrderByDescending<T>(this IEnumerable<T> collection)
+            => collection.OrderByDescending(x => x);
 
         public static bool ScrambledEquals<T>(this IEnumerable<T> list1, IEnumerable<T> list2, IEqualityComparer<T> comparer = null)
         {
@@ -103,6 +117,11 @@ namespace JToolbox.Core.Extensions
                 }
             }
             return result;
+        }
+
+        public static TimeSpan Sum(this IEnumerable<TimeSpan> @this)
+        {
+            return @this.Aggregate(TimeSpan.Zero, (TimeSpan current, TimeSpan item) => current + item);
         }
     }
 }
