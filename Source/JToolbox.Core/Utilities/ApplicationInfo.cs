@@ -1,4 +1,4 @@
-﻿using System;
+﻿using JToolbox.Core.Exceptions;
 using System.Diagnostics;
 
 namespace JToolbox.Core.Utilities
@@ -27,14 +27,6 @@ namespace JToolbox.Core.Utilities
             {
                 throw new DebugAppRunningWithoutDebuggerException();
             }
-        }
-    }
-
-    public class DebugAppRunningWithoutDebuggerException : Exception
-    {
-        public DebugAppRunningWithoutDebuggerException()
-            : base("Application built with DEBUG configuration can not be run without debugger attached")
-        {
         }
     }
 }
