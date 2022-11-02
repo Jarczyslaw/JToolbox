@@ -52,6 +52,14 @@ namespace JToolbox.Core.Models.Results
             Messages.Clear();
         }
 
+        public Result<TResult> OfType<TResult>(TResult value = default)
+        {
+            return new Result<TResult>(this)
+            {
+                Value = value
+            };
+        }
+
         private List<Message> GetMessagesOfType(MessageType messageType)
         {
             return Messages.Where(s => s.Type == messageType)

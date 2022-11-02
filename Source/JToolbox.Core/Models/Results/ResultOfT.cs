@@ -41,13 +41,5 @@ namespace JToolbox.Core.Models.Results
             base.Clear();
             Value = default;
         }
-
-        public Result<TResult> OfType<TResult>(TResult value = default)
-        {
-            return new Result<TResult>(this)
-            {
-                Value = value
-            };
-        }
     }
 }
