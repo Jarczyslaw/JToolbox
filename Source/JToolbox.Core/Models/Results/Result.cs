@@ -58,6 +58,4 @@ namespace JToolbox.Core.Models.Results
                 .ToList();
         }
     }
-
-    
 }
