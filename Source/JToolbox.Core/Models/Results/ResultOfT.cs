@@ -25,14 +25,14 @@ namespace JToolbox.Core.Models.Results
         public new static Result<T> AsError(string error)
         {
             var result = new Result<T>();
-            result.Messages.AddError(error);
+            result.AddError(error);
             return result;
         }
 
         public new static Result<T> AsError(Exception exc)
         {
             var result = new Result<T>();
-            result.Messages.AddError(exc);
+            result.AddError(exc);
             return result;
         }
 

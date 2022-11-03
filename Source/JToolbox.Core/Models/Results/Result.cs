@@ -15,36 +15,71 @@ namespace JToolbox.Core.Models.Results
             Messages = other.Messages;
         }
 
-        public Message Error => Errors.FirstOrDefault();
+        public Error Error => Errors.FirstOrDefault();
 
-        public List<Message> Errors => GetMessagesOfType(MessageType.Error);
+        public string ErrorContent => Error?.Content;
 
-        public Message Information => Informations.FirstOrDefault();
+        public List<Error> Errors => GetMessages<Error>();
 
-        public List<Message> Informations => GetMessagesOfType(MessageType.Information);
+        public Information Information => Informations.FirstOrDefault();
+
+        public List<Information> Informations => GetMessages<Information>();
 
         public bool IsError => !IsSuccess;
 
-        public bool IsSuccess => !Messages.Any(s => s.Type == MessageType.Error);
+        public bool IsSuccess => Errors.Count == 0;
 
-        public Messages Messages { get; } = new Messages();
+        public List<Message> Messages { get; } = new List<Message>();
 
-        public Message Warning => Warnings.FirstOrDefault();
+        public Warning Warning => Warnings.FirstOrDefault();
 
-        public List<Message> Warnings => GetMessagesOfType(MessageType.Warning);
+        public List<Warning> Warnings => GetMessages<Warning>();
 
         public static Result AsError(string error)
         {
             var result = new Result();
-            result.Messages.AddError(error);
+            result.AddError(error);
             return result;
         }
 
         public static Result AsError(Exception exc)
         {
             var result = new Result();
-            result.Messages.AddError(exc);
+            result.AddError(exc);
             return result;
+        }
+
+        public void AddError(string error)
+        {
+            Messages.Add(new Error
+            {
+                Content = error
+            });
+        }
+
+        public void AddError(Exception exc)
+        {
+            Messages.Add(new Error
+            {
+                Content = exc.Message,
+                Exception = exc
+            });
+        }
+
+        public void AddInfo(string info)
+        {
+            Messages.Add(new Information
+            {
+                Content = info
+            });
+        }
+
+        public void AddWarning(string warning)
+        {
+            Messages.Add(new Warning
+            {
+                Content = warning
+            });
         }
 
         public virtual void Clear()
@@ -60,10 +95,6 @@ namespace JToolbox.Core.Models.Results
             };
         }
 
-        private List<Message> GetMessagesOfType(MessageType messageType)
-        {
-            return Messages.Where(s => s.Type == messageType)
-                .ToList();
-        }
+        private List<T> GetMessages<T>() => Messages.OfType<T>().ToList();
     }
 }

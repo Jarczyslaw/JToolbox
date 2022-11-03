@@ -1,9 +1,11 @@
 ﻿namespace JToolbox.Core.Models.Results
 {
-    public class Message
+    public abstract class Message
     {
         public int Code { get; set; }
+
         public string Content { get; set; }
-        public MessageType Type { get; set; }
+
+        public object Tag { get; set; }
     }
 }
