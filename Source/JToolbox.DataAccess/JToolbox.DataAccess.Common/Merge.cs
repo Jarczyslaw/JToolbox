@@ -9,11 +9,15 @@ namespace JToolbox.DataAccess.Common
         where T : IKey
     {
         public List<T> ToCreate { get; set; }
+
         public List<T> ToDelete { get; set; }
+
         public List<T> ToUpdate { get; set; }
 
-        public void MergeLists(List<T> newList, List<T> currentList, IEqualityComparer<T> comparer)
+        public void MergeLists(List<T> newList, List<T> currentList, IEqualityComparer<T> comparer = null)
         {
+            comparer = comparer ?? new KeyComparer<T>();
+
             PrepareItems(newList);
 
             ToUpdate = newList.Intersect(currentList, comparer)

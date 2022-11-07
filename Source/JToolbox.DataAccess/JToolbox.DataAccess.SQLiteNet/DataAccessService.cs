@@ -8,6 +8,7 @@ namespace JToolbox.DataAccess.SQLiteNet
     {
         private readonly BaseInitializer initializer;
         private SQLiteConnection connection;
+        private TimeSpan timeSpan;
         private Action<string> tracer;
 
         public DataAccessService(BaseInitializer initializer)
@@ -16,8 +17,23 @@ namespace JToolbox.DataAccess.SQLiteNet
         }
 
         public bool CacheConnection { get; set; } = true;
+
         public string DataSource { get; private set; }
+
         public string Password { get; private set; }
+
+        public TimeSpan Timeout
+        {
+            get => timeSpan;
+            set
+            {
+                timeSpan = value;
+                if (connection != null)
+                {
+                    connection.BusyTimeout = timeSpan;
+                }
+            }
+        }
 
         public Action<string> Tracer
         {
@@ -123,7 +139,10 @@ namespace JToolbox.DataAccess.SQLiteNet
 
         private SQLiteConnection CreateConnection()
         {
-            var connection = new SQLiteConnection(ConnectionString);
+            var connection = new SQLiteConnection(ConnectionString)
+            {
+                BusyTimeout = timeSpan
+            };
             SetTracer(connection);
             return connection;
         }
