@@ -13,21 +13,21 @@ namespace JToolbox.Core.Models
         }
 
         public DateRange(DateTime date)
+            : this(date, date)
         {
-            Start =
-                End = date;
         }
 
         public DateRange(DateTime start, DateTime end)
         {
-            Start = start;
-            End = end;
+            this.start = start;
+            this.end = end;
+            CheckDatesChronology();
         }
 
         public DateRange(DateRange dateRange)
         {
-            Start = dateRange.Start;
-            End = dateRange.End;
+            start = dateRange.Start;
+            end = dateRange.End;
         }
 
         public TimeSpan Duration => End - Start;
@@ -37,11 +37,8 @@ namespace JToolbox.Core.Models
             get => end;
             set
             {
-                if (value < start)
-                {
-                    throw new ArgumentException("End date must be higher than start date");
-                }
                 end = value;
+                CheckDatesChronology();
             }
         }
 
@@ -50,11 +47,8 @@ namespace JToolbox.Core.Models
             get => start;
             set
             {
-                if (value > End)
-                {
-                    throw new ArgumentException("End date must be higher than start date");
-                }
                 start = value;
+                CheckDatesChronology();
             }
         }
 
@@ -64,18 +58,9 @@ namespace JToolbox.Core.Models
         {
             if ((range1 is null) ^ (range2 is null)) { return false; }
 
-            if (range1 is null && range2 is null) { return false; }
+            if (range1 is null && range2 is null) { return true; }
 
             return range1.Equals(range2);
-        }
-
-        public DateRange CommonPart(DateRange dateRange)
-        {
-            if (!Overlaps(dateRange)) { return null; }
-
-            var start = DateTimeHelper.Max(Start, dateRange.Start);
-            var end = DateTimeHelper.Min(End, dateRange.End);
-            return new DateRange(start, end);
         }
 
         public bool Equals(DateRange other)
@@ -101,6 +86,34 @@ namespace JToolbox.Core.Models
 
         public bool Includes(DateTime dateTime) => dateTime >= Start && dateTime <= End;
 
-        public bool Overlaps(DateRange dateRange) => dateRange.End >= Start && dateRange.Start <= End;
+        public DateRange Intersection(DateRange dateRange, bool includeBoundaries)
+        {
+            if (!Overlaps(dateRange, includeBoundaries)) { return null; }
+
+            var start = DateTimeHelper.Max(Start, dateRange.Start);
+            var end = DateTimeHelper.Min(End, dateRange.End);
+
+            return new DateRange(start, end);
+        }
+
+        public bool Overlaps(DateRange dateRange, bool includeBoundaries)
+        {
+            if (includeBoundaries)
+            {
+                return dateRange.End >= Start && dateRange.Start <= End;
+            }
+            else
+            {
+                return dateRange.End > Start && dateRange.Start < End;
+            }
+        }
+
+        private void CheckDatesChronology()
+        {
+            if (start > end)
+            {
+                throw new Exception("End date isolder than start date");
+            }
+        }
     }
 }
