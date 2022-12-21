@@ -8,6 +8,24 @@ namespace JToolbox.Core.Helpers
 {
     public static class DateRangeHelper
     {
+        public static (bool overlap, List<DateRange> orderedRanges) CheckInternalOverlapping(List<DateRange> ranges)
+        {
+            var ordered = ranges.OrderBy(x => x.Start)
+                .ToList();
+
+            if (ordered.Count > 1)
+            {
+                for (int i = 1; i < ordered.Count; i++)
+                {
+                    if (ordered[i - 1].End > ordered[i].Start)
+                    {
+                        return (true, ordered);
+                    }
+                }
+            }
+            return (false, ordered);
+        }
+
         public static List<DateRange> Intersection(
             List<DateRange> ranges1,
             List<DateRange> ranges2,
@@ -43,22 +61,43 @@ namespace JToolbox.Core.Helpers
             return result;
         }
 
-        public static List<DateRange> OrderByStartAndCheckOverlapping(List<DateRange> ranges)
+        public static List<DateRange> Merge(List<DateRange> ranges, bool includeBoundaries)
         {
-            var result = ranges.OrderBy(x => x.Start)
+            if (ranges == null || ranges.Count < 2) { return ranges; }
+
+            var orderedRanges = ranges.OrderBy(x => x.Start)
                 .ToList();
 
-            if (result.Count > 1)
+            var result = new List<DateRange>() { orderedRanges[0] };
+
+            for (var i = 1; i < orderedRanges.Count; i++)
             {
-                for (int i = 1; i < result.Count; i++)
+                var currentRange = orderedRanges[i];
+                var lastRange = result[result.Count - 1];
+
+                var merged = currentRange.Merge(lastRange, includeBoundaries);
+                if (merged == null)
                 {
-                    if (result[i - 1].End > result[i].Start)
-                    {
-                        throw new ArgumentException("Input ranges overlap internally");
-                    }
+                    result.Add(currentRange);
+                }
+                else
+                {
+                    result[result.Count - 1] = merged;
                 }
             }
+
             return result;
+        }
+
+        private static List<DateRange> OrderByStartAndCheckOverlapping(List<DateRange> ranges)
+        {
+            (bool overlap, List<DateRange> orderedRanges) = CheckInternalOverlapping(ranges);
+            if (overlap)
+            {
+                throw new ArgumentException("Input ranges overlap internally");
+            }
+
+            return orderedRanges;
         }
     }
 }

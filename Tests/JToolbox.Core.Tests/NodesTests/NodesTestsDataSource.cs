@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.Models.Nodes;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.Nodes
+namespace JToolbox.Core.Tests.NodesTests
 {
     /* Structure:
          *  1
@@ -135,6 +135,7 @@ namespace JToolbox.Core.Tests.Nodes
             }
 
             public int Id { get; set; }
+
             public int ParentId { get; set; }
         }
 
@@ -146,6 +147,7 @@ namespace JToolbox.Core.Tests.Nodes
             }
 
             public List<Item> Items { get; set; } = new List<Item>();
+
             public int Value { get; set; }
         }
     }

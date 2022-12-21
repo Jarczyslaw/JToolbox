@@ -49,13 +49,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DateRangeHelperTests.cs" />
+    <Compile Include="DateRangeHelperTests\DateRangeHelperTests.cs" />
+    <Compile Include="DateRangeHelperTests\MergeTestCase.cs" />
+    <Compile Include="DateRangeHelperTests\IntersectionTestCase.cs" />
+    <Compile Include="DateRangeHelperTests\TestCasesSource.cs" />
     <Compile Include="FileSystemHelperTests.cs" />
     <Compile Include="IListExtensionsTests.cs" />
-    <Compile Include="Nodes\NodesTestsDataSource.cs" />
+    <Compile Include="NodesTests\NodesTestsDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IEnumerableExtensionsTests.cs" />
-    <Compile Include="Nodes\NodesTests.cs" />
+    <Compile Include="NodesTests\NodesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\JToolbox.Core\JToolbox.Core.csproj">

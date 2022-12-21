@@ -96,6 +96,16 @@ namespace JToolbox.Core.Models
             return new DateRange(start, end);
         }
 
+        public DateRange Merge(DateRange dateRange, bool includeBoundaries)
+        {
+            if (!Overlaps(dateRange, includeBoundaries)) { return null; }
+
+            var start = DateTimeHelper.Min(Start, dateRange.Start);
+            var end = DateTimeHelper.Max(End, dateRange.End);
+
+            return new DateRange(start, end);
+        }
+
         public bool Overlaps(DateRange dateRange, bool includeBoundaries)
         {
             if (includeBoundaries)
