@@ -1,4 +1,5 @@
-﻿using JToolbox.Core.Extensions;
+﻿using JToolbox.Core.Exceptions;
+using JToolbox.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +14,16 @@ namespace JToolbox.Core.Utilities
         private static readonly List<ExecutionTimeCheck> _checks = new List<ExecutionTimeCheck>();
         private static Stopwatch _stopwatch;
 
+        public static TimeSpan Elapsed
+        {
+            get
+            {
+                if (_stopwatch == null) { throw new StopwatchDidNotStartException(); }
+
+                return _stopwatch.Elapsed;
+            }
+        }
+
         public static void Check(string title, bool startNew = true)
         {
             _checks.Add(new ExecutionTimeCheck
@@ -26,14 +37,16 @@ namespace JToolbox.Core.Utilities
 
         public static void ClearChecks() => _checks.Clear();
 
-        public static string GetChecksResult(bool orderBy = false)
+        public static string GetChecksResult(bool clearChecks = true, bool orderByElapsedTime = false)
         {
             if (_checks.Count == 0) { return "NO CHECKS"; }
 
-            var checks = orderBy
+            var checks = orderByElapsedTime
                 ? _checks.OrderByDescending(x => x.Elapsed).ToList()
                 : _checks;
             var format = _checks.Max(x => x.Elapsed).GetTimeSpanFormat();
+
+            if (clearChecks) { _checks.Clear(); }
 
             var sb = new StringBuilder();
             sb.AppendLine("Stopwatch summary:");
@@ -99,7 +112,7 @@ namespace JToolbox.Core.Utilities
 
         private static TimeSpan FinishStopwatch(Stopwatch stopwatch)
         {
-            if (stopwatch == null) { throw new Exception("The stopwatch did not start"); }
+            if (stopwatch == null) { throw new StopwatchDidNotStartException(); }
 
             stopwatch.Stop();
             return stopwatch.Elapsed;
