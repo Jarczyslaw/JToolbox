@@ -348,11 +348,17 @@ namespace JToolbox.Core.Extensions
             @this.MoveByIndex(sourceIndex, targetIndex);
         }
 
+        public static void MoveByIndex<T>(this IList<T> @this, T item, int targetIndex)
+        {
+            var sourceIndex = @this.IndexOf(item);
+            @this.MoveByIndex(sourceIndex, targetIndex);
+        }
+
         public static void MoveByIndex<T>(this IList<T> @this, int sourceIndex, int targetIndex)
         {
-            var item = @this[targetIndex];
-            @this.RemoveAt(targetIndex);
-            @this.Insert(sourceIndex, item);
+            var item = @this[sourceIndex];
+            @this.RemoveAt(sourceIndex);
+            @this.Insert(targetIndex, item);
         }
 
         #endregion Move
