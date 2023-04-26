@@ -43,7 +43,7 @@ namespace JToolbox.Core.Utilities
 
             var checks = orderByElapsedTime
                 ? _checks.OrderByDescending(x => x.Elapsed).ToList()
-                : _checks;
+                : _checks.ToList();
             var format = _checks.Max(x => x.Elapsed).GetTimeSpanFormat();
 
             if (clearChecks) { _checks.Clear(); }
@@ -60,7 +60,11 @@ namespace JToolbox.Core.Utilities
             var elapsedSum = checks.Select(x => x.Elapsed).Sum();
             sb.AppendLine($"Summary: {elapsedSum.GetTimeSpanFormattedString(format)}");
 
-            return sb.ToString();
+            var result = sb.ToString();
+
+            Debug.WriteLine(result);
+
+            return result;
         }
 
         public static TimeSpan RunAction(Action action)
@@ -75,6 +79,8 @@ namespace JToolbox.Core.Utilities
             {
                 elapsed = FinishStopwatch(stopwatch);
             }
+
+            ShowResult(elapsed);
             return elapsed;
         }
 
@@ -90,6 +96,8 @@ namespace JToolbox.Core.Utilities
             {
                 elapsed = FinishStopwatch(stopwatch);
             }
+
+            ShowResult(elapsed);
             return elapsed;
         }
 
@@ -103,6 +111,7 @@ namespace JToolbox.Core.Utilities
             finally
             {
                 elapsed = FinishStopwatch(stopwatch);
+                ShowResult(elapsed);
             }
         }
 
@@ -116,6 +125,12 @@ namespace JToolbox.Core.Utilities
 
             stopwatch.Stop();
             return stopwatch.Elapsed;
+        }
+
+        private static void ShowResult(TimeSpan elapsed)
+        {
+            var timeElapsed = elapsed.GetTimeSpanFormattedString();
+            Debug.WriteLine($"Elapsed: " + timeElapsed);
         }
 
         private class ExecutionTimeCheck
