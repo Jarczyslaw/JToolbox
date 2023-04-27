@@ -29,7 +29,7 @@ namespace JToolbox.Core.Utilities
             _checks.Add(new ExecutionTimeCheck
             {
                 Title = title,
-                Elapsed = FinishStopwatch(_stopwatch)
+                Elapsed = FinishStopwatch(_stopwatch, false)
             });
 
             if (startNew) { Start(); }
@@ -80,7 +80,6 @@ namespace JToolbox.Core.Utilities
                 elapsed = FinishStopwatch(stopwatch);
             }
 
-            ShowResult(elapsed);
             return elapsed;
         }
 
@@ -97,7 +96,6 @@ namespace JToolbox.Core.Utilities
                 elapsed = FinishStopwatch(stopwatch);
             }
 
-            ShowResult(elapsed);
             return elapsed;
         }
 
@@ -111,7 +109,6 @@ namespace JToolbox.Core.Utilities
             finally
             {
                 elapsed = FinishStopwatch(stopwatch);
-                ShowResult(elapsed);
             }
         }
 
@@ -119,11 +116,14 @@ namespace JToolbox.Core.Utilities
 
         public static TimeSpan Stop() => FinishStopwatch(_stopwatch);
 
-        private static TimeSpan FinishStopwatch(Stopwatch stopwatch)
+        private static TimeSpan FinishStopwatch(Stopwatch stopwatch, bool display = true)
         {
             if (stopwatch == null) { throw new StopwatchDidNotStartException(); }
 
             stopwatch.Stop();
+
+            if (display) { ShowResult(stopwatch.Elapsed); }
+
             return stopwatch.Elapsed;
         }
 
