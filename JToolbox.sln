@@ -178,6 +178,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.XamarinForms.Updat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.Others", "Examples\Examples.Desktop\Examples.Desktop.Others\Examples.Desktop.Others.csproj", "{22EF4569-8FED-4665-ACF6-557C557FCB1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.GoogleApi", "Source\JToolbox.Misc\JToolbox.Misc.GoogleApi\JToolbox.Misc.GoogleApi.csproj", "{59576CCC-8F70-4168-88AB-21B10977C5EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -456,6 +458,10 @@ Global
 		{22EF4569-8FED-4665-ACF6-557C557FCB1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22EF4569-8FED-4665-ACF6-557C557FCB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22EF4569-8FED-4665-ACF6-557C557FCB1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59576CCC-8F70-4168-88AB-21B10977C5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59576CCC-8F70-4168-88AB-21B10977C5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59576CCC-8F70-4168-88AB-21B10977C5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59576CCC-8F70-4168-88AB-21B10977C5EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -542,6 +548,7 @@ Global
 		{44D25EAF-877F-4A65-94F4-855B5BEE719C} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{70C796DB-05BD-45D0-B11B-3949AF6E3C34} = {DEE2A711-C9E3-4D61-BA1E-D1454869144C}
 		{22EF4569-8FED-4665-ACF6-557C557FCB1E} = {907A859F-6219-4D41-9B8C-1EF003286419}
+		{59576CCC-8F70-4168-88AB-21B10977C5EF} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
