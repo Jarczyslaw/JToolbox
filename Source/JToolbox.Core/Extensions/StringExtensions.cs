@@ -108,6 +108,16 @@ namespace JToolbox.Core.Extensions
             return @this.Trim();
         }
 
+        public static Stream ToStream(this string @this)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(@this);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
+
         public static string Truncate(this string value, int length)
         {
             if (value == null)
