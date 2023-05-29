@@ -10,8 +10,8 @@ namespace JToolbox.Misc.GoogleApi.GoogleDrive
 {
     public static class GoogleDriveServiceExtensions
     {
-        private const string CSV_CONTENT_TYPE = "text/csv";
-        private const string SHEETS_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
+        public const string CSV_CONTENT_TYPE = "text/csv";
+        public const string SHEETS_MIME_TYPE = "application/vnd.google-apps.spreadsheet";
 
         public static async Task<(IUploadProgress, string)> CreateCsvFile(
             this DriveService service,
@@ -34,6 +34,25 @@ namespace JToolbox.Misc.GoogleApi.GoogleDrive
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
                 return await CreateFile(service, fileMetadata, fileStream, CSV_CONTENT_TYPE);
+            }
+        }
+
+        public static async Task<(IUploadProgress, string)> CreateCsvFile(
+            this DriveService service,
+            Stream stream,
+            string fileName,
+            IList<string> parents = null)
+        {
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = fileName,
+                MimeType = SHEETS_MIME_TYPE,
+                Parents = parents
+            };
+
+            using (stream)
+            {
+                return await CreateFile(service, fileMetadata, stream, CSV_CONTENT_TYPE);
             }
         }
 
@@ -118,6 +137,17 @@ namespace JToolbox.Misc.GoogleApi.GoogleDrive
             };
 
             return service.ShareFile(fileId, permission);
+        }
+
+        public static async Task<(IUploadProgress, bool)> UpdateCsvFile(
+            this DriveService service,
+            Stream fileStream,
+            string fileId)
+        {
+            using (fileStream)
+            {
+                return await UpdateFile(service, new Google.Apis.Drive.v3.Data.File(), fileId, fileStream, CSV_CONTENT_TYPE);
+            }
         }
 
         public static async Task<(IUploadProgress, bool)> UpdateCsvFile(
