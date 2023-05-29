@@ -26,6 +26,8 @@ namespace JToolbox.Core.Helpers
             return (false, ordered);
         }
 
+        public static TimeSpan GetDuration(IEnumerable<DateRange> ranges) => ranges.Select(x => x.Duration).Sum();
+
         public static List<DateRange> Intersection(
             List<DateRange> ranges1,
             List<DateRange> ranges2,
