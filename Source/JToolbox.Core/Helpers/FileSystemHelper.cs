@@ -12,7 +12,6 @@ namespace JToolbox.Core.Helpers
         public static string ChangeFileName(string filePath, string newFileName)
         {
             var path = Path.GetDirectoryName(filePath);
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
             var extension = Path.GetExtension(filePath);
 
             return Path.Combine(path, newFileName + extension);
