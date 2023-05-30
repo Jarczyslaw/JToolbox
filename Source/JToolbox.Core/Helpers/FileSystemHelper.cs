@@ -9,6 +9,15 @@ namespace JToolbox.Core.Helpers
     {
         private static readonly Random random = new Random();
 
+        public static string ChangeFileName(string filePath, string newFileName)
+        {
+            var path = Path.GetDirectoryName(filePath);
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var extension = Path.GetExtension(filePath);
+
+            return Path.Combine(path, newFileName + extension);
+        }
+
         public static void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
             Directory.CreateDirectory(target.FullName);
