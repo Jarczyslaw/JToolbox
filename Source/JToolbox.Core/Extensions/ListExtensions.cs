@@ -48,6 +48,37 @@ namespace JToolbox.Core.Extensions
             return result;
         }
 
+        public static void IncludeMany<T1, T2, TKey>(
+            this List<T1> collection,
+            List<T2> toInclude,
+            Func<T1, TKey> collectionKeySelector,
+            Func<T2, TKey> toIncludeKeySelector,
+            Action<T1, List<T2>> includeAction)
+        {
+            var dict = toInclude.GroupBy(toIncludeKeySelector).ToDictionary(a => a.Key, a => a.ToList());
+            foreach (var entity in collection)
+            {
+                var list = new List<T2>();
+                var key = collectionKeySelector(entity);
+                if (dict.TryGetValue(key, out List<T2> value))
+                {
+                    list = value;
+                }
+                includeAction(entity, list);
+            }
+        }
+
+        public static void IncludeOne<T1, T2, TKey>(
+            this List<T1> collection,
+            List<T2> toInclude,
+            Func<T1, TKey> collectionKeySelector,
+            Func<T2, TKey> toIncludeKeySelector,
+            Action<T1, T2> includeAction)
+        {
+            IncludeMany(collection, toInclude,
+                collectionKeySelector, toIncludeKeySelector, (e1, e2) => includeAction(e1, e2.SingleOrDefault()));
+        }
+
         public static List<T> Peek<T>(this List<T> list, int count)
         {
             var result = list.Take(count)
