@@ -137,6 +137,10 @@ namespace JToolbox.DataAccess.SQLiteNet
             return Task.CompletedTask;
         }
 
+        public void Optimize() => Execute(db => db.Execute("PRAGMA OPTIMIZE"));
+
+        public void Vacuum() => Execute(db => db.Execute("VACUUM"));
+
         private SQLiteConnection CreateConnection()
         {
             var connection = new SQLiteConnection(ConnectionString)
