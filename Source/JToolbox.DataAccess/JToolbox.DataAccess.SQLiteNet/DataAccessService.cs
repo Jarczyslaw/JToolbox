@@ -92,9 +92,13 @@ namespace JToolbox.DataAccess.SQLiteNet
                 action(db);
                 db.Commit();
             }
+            catch
+            {
+                db?.Rollback();
+                throw;
+            }
             finally
             {
-                db.Rollback();
                 CloseConnection(false);
             }
         }
@@ -110,9 +114,13 @@ namespace JToolbox.DataAccess.SQLiteNet
                 db.Commit();
                 return result;
             }
+            catch
+            {
+                db?.Rollback();
+                throw;
+            }
             finally
             {
-                db.Rollback();
                 CloseConnection(false);
             }
         }
