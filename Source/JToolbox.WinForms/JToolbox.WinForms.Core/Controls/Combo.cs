@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace JToolbox.WinForms.Core.Controls
@@ -16,6 +17,9 @@ namespace JToolbox.WinForms.Core.Controls
 
         public event ComboValueChanged<T> OnComboValueChanged = delegate { };
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<ComboItem<T>> ComboItems
         {
             get => DataSource as List<ComboItem<T>>;
@@ -32,6 +36,9 @@ namespace JToolbox.WinForms.Core.Controls
             }
         }
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ComboItem<T> SelectedComboItem
         {
             get
@@ -45,6 +52,9 @@ namespace JToolbox.WinForms.Core.Controls
             set => SelectedItem = value;
         }
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public T SelectedComboValue
         {
             get

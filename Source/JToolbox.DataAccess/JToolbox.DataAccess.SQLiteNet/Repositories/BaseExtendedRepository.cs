@@ -8,7 +8,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 {
     public abstract class BaseExtendedRepository<TEntity> : BaseRepository<TEntity>, IBaseExtendedRepository<TEntity> where TEntity : BaseExtendedEntity, new()
     {
-        private readonly ITimeProvider timeProvider;
+        protected readonly ITimeProvider timeProvider;
 
         protected BaseExtendedRepository(ITimeProvider timeProvider)
         {

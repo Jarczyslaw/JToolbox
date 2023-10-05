@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,8 +14,17 @@ namespace JToolbox.Core.Extensions
             return @this.PropertiesToString(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public static List<T> AsList<T>(this T @this)
+        public static Dictionary<TKey, TValue> AsDictionary<TKey, TValue>(this TValue @this, Func<TKey> keySelector, bool allowNull = false)
         {
+            if (allowNull && @this == null) { return null; }
+
+            return new Dictionary<TKey, TValue> { [keySelector()] = @this };
+        }
+
+        public static List<T> AsList<T>(this T @this, bool allowNull = false)
+        {
+            if (allowNull && @this == null) { return null; }
+
             return new List<T> { @this };
         }
 

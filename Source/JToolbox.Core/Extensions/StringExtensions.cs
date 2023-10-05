@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -97,6 +98,39 @@ namespace JToolbox.Core.Extensions
                 }
             }
             return result;
+        }
+
+        public static string RemoveTaggedContent(this string @string, string startTag, string endTag, List<string> removedContent = null)
+        {
+            if (string.IsNullOrEmpty(@string)
+                || string.IsNullOrEmpty(startTag)
+                || string.IsNullOrEmpty(endTag)) { return @string; }
+
+            while (@string.Length > 0)
+            {
+                int startIndex = @string.IndexOf(startTag);
+                if (startIndex < 0) { break; }
+
+                int endIndex = @string.IndexOf(endTag, startIndex + startTag.Length);
+                if (endIndex < 0) { break; }
+
+                if (removedContent != null)
+                {
+                    int startIndexWithLength = startIndex + startTag.Length;
+                    string contentToRemove = @string.Substring(startIndexWithLength, endIndex - startIndexWithLength);
+
+                    if (!string.IsNullOrEmpty(contentToRemove))
+                    {
+                        removedContent.Add(contentToRemove);
+                    }
+                }
+
+                endIndex += endTag.Length;
+
+                @string = @string.Remove(startIndex, endIndex - startIndex);
+            }
+
+            return @string;
         }
 
         public static string SafeTrim(this string @this)

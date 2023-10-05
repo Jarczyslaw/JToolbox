@@ -11,6 +11,14 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
     public abstract class BaseRepository<TEntity> : CommonRepository, IBaseRepository<TEntity>
         where TEntity : BaseEntity, new()
     {
+        public virtual bool Any(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions)
+        {
+            var tableQuery = db.Table<TEntity>();
+            tableQuery = ApplyExpressions(tableQuery, expressions);
+
+            return tableQuery.Any();
+        }
+
         public virtual int Count(SQLiteConnection db, params Expression<Func<TEntity, bool>>[] expressions)
         {
             var tableQuery = db.Table<TEntity>();

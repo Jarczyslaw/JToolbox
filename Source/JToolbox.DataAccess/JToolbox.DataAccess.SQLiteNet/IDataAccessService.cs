@@ -14,6 +14,8 @@ namespace JToolbox.DataAccess.SQLiteNet
 
         Action<string> Tracer { set; }
 
+        bool UseMigrationLockFile { get; set; }
+
         void Execute(Action<SQLiteConnection> action);
 
         T Execute<T>(Func<SQLiteConnection, T> action);

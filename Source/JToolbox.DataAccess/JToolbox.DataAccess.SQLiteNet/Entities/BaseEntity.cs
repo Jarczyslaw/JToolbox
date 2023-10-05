@@ -7,5 +7,9 @@ namespace JToolbox.DataAccess.SQLiteNet.Entities
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
+        public string GetColumnName(string propertyName) => SqliteExtensions.GetColumnName(GetType(), propertyName);
+
+        public string GetTableName() => SqliteExtensions.GetTableName(GetType());
     }
 }

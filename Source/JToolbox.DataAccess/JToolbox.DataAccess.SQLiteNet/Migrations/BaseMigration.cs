@@ -20,6 +20,6 @@ namespace JToolbox.DataAccess.SQLiteNet.Migrations
             return null;
         }
 
-        public abstract void Up(SQLiteConnection db);
+        public abstract void Up(SQLiteConnection db, bool newDatabase);
     }
 }

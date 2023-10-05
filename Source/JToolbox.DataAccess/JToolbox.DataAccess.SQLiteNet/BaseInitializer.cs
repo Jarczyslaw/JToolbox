@@ -19,7 +19,7 @@ namespace JToolbox.DataAccess.SQLiteNet
         {
         }
 
-        public void InitializeMigrations(SQLiteConnection db)
+        public bool InitializeMigrations(SQLiteConnection db)
         {
             if (Migrations == null || Migrations.Count == 0)
             {
@@ -40,20 +40,26 @@ namespace JToolbox.DataAccess.SQLiteNet
                 throw new Exception("Application is not compatible with the database version");
             }
 
+            var newDatabase = currentMigrations.Count == 0;
+
+            var migrationsApplied = false;
             foreach (var migration in Migrations)
             {
                 var migrationName = migration.GetType().Name;
                 if (!currentMigrations.Contains(migrationName))
                 {
-                    migration.Up(db);
+                    migration.Up(db, newDatabase);
                     db.Insert(new MigrationEntity
                     {
                         Name = migrationName,
                         ExecutionDate = DateTime.Now,
                         Version = migration.GetVersion().Value
                     });
+                    migrationsApplied = true;
                 }
             }
+
+            return migrationsApplied;
         }
 
         public virtual void InitializeTables(SQLiteConnection db)

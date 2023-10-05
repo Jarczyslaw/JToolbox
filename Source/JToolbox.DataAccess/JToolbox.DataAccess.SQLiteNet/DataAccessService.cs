@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace JToolbox.DataAccess.SQLiteNet
@@ -47,7 +48,11 @@ namespace JToolbox.DataAccess.SQLiteNet
             }
         }
 
+        public bool UseMigrationLockFile { get; set; }
+
         private SQLiteConnectionString ConnectionString => new SQLiteConnectionString(DataSource, false, key: Password);
+
+        private string MigrationLockFile => Path.Combine(Path.GetDirectoryName(DataSource), "migration-lock");
 
         public void CloseConnection(bool forceClose)
         {
@@ -131,15 +136,32 @@ namespace JToolbox.DataAccess.SQLiteNet
             {
                 DataSource = dataSource;
                 Password = password;
-                return Task.Run(() =>
+                return Task.Run(async () =>
                 {
-                    ExecuteTransaction(db =>
+                    await CheckMigrationLock();
+
+                    try
                     {
-                        initializer.InitializeTables(db);
-                        initializer.InitializeMigrations(db);
-                        initializer.InitializeData(db);
-                        return true;
-                    });
+                        CreateMigrationLock();
+
+                        var migrationApplied = false;
+                        ExecuteTransaction(db =>
+                        {
+                            initializer.InitializeTables(db);
+                            migrationApplied = initializer.InitializeMigrations(db);
+                            initializer.InitializeData(db);
+                        });
+
+                        if (migrationApplied)
+                        {
+                            Vacuum();
+                            Optimize();
+                        }
+                    }
+                    finally
+                    {
+                        RemoveMigrationLock();
+                    }
                 });
             }
             return Task.CompletedTask;
@@ -149,6 +171,26 @@ namespace JToolbox.DataAccess.SQLiteNet
 
         public void Vacuum() => Execute(db => db.Execute("VACUUM"));
 
+        private async Task CheckMigrationLock()
+        {
+            if (!UseMigrationLockFile) { return; }
+
+            int attempts = 30;
+            for (int i = 1; i <= attempts; i++)
+            {
+                if (!File.Exists(MigrationLockFile))
+                {
+                    return;
+                }
+
+                if (i != attempts)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            }
+            throw new Exception("Database is locked by initialization. Please try again later");
+        }
+
         private SQLiteConnection CreateConnection()
         {
             var connection = new SQLiteConnection(ConnectionString)
@@ -157,6 +199,14 @@ namespace JToolbox.DataAccess.SQLiteNet
             };
             SetTracer(connection);
             return connection;
+        }
+
+        private void CreateMigrationLock()
+        {
+            if (UseMigrationLockFile)
+            {
+                using (File.Create(MigrationLockFile)) { }
+            }
         }
 
         private SQLiteConnection OpenConnection()
@@ -179,6 +229,14 @@ namespace JToolbox.DataAccess.SQLiteNet
                 connection = CreateConnection();
             }
             return connection;
+        }
+
+        private void RemoveMigrationLock()
+        {
+            if (UseMigrationLockFile && File.Exists(MigrationLockFile))
+            {
+                File.Delete(MigrationLockFile);
+            }
         }
 
         private void SetTracer(SQLiteConnection connection)

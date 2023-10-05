@@ -61,6 +61,12 @@
     <Compile Include="Controls\DateTimeSelector.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\NullableDateTimeSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\NullableDateTimeSelector.Designer.cs">
+      <DependentUpon>NullableDateTimeSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NullableNumericUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -89,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\DateRangeSelector.resx">
       <DependentUpon>DateRangeSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NullableDateTimeSelector.resx">
+      <DependentUpon>NullableDateTimeSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NullableNumericUpDown.resx">
       <DependentUpon>NullableNumericUpDown.cs</DependentUpon>
