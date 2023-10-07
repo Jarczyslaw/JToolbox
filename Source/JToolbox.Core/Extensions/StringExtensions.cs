@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace JToolbox.Core.Extensions
@@ -131,6 +132,18 @@ namespace JToolbox.Core.Extensions
             }
 
             return @string;
+        }
+
+        public static string ReplaceMany(this string @this, Dictionary<string, string> toReplace)
+        {
+            if (string.IsNullOrEmpty(@this)) { return @this; }
+
+            var sb = new StringBuilder(@this);
+            foreach (KeyValuePair<string, string> pair in toReplace)
+            {
+                sb.Replace(pair.Key, pair.Value);
+            }
+            return sb.ToString();
         }
 
         public static string SafeTrim(this string @this)
