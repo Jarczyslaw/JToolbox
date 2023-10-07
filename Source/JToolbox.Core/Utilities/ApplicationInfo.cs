@@ -1,4 +1,5 @@
 ﻿using JToolbox.Core.Exceptions;
+using System;
 using System.Diagnostics;
 
 namespace JToolbox.Core.Utilities
@@ -28,5 +29,7 @@ namespace JToolbox.Core.Utilities
                 throw new DebugAppRunningWithoutDebuggerException();
             }
         }
+
+        public static string ApplicationPath => AppContext.BaseDirectory;
     }
 }
