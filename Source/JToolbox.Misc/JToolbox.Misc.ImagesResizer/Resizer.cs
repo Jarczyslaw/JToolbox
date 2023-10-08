@@ -1,5 +1,4 @@
 ﻿using JToolbox.Core.Extensions;
-using JToolbox.Misc.ImagesResizer.ResizingStrategies;
 using PhotoSauce.MagicScaler;
 using System;
 using System.Collections.Generic;
@@ -9,55 +8,41 @@ namespace JToolbox.Misc.ImagesResizer
 {
     public static class Resizer
     {
-        public static List<ImagesPair> ResizeWith(
-            string filePath,
+        public static List<OutputImage> Process(
+            IEnumerable<InputImage> inputImages,
             string outputPath,
-            IResizingStrategy resizingStrategy,
             string outputFileNameMask = null,
             Func<Exception, bool> onExceptionHandler = null)
         {
-            return ResizeWith(filePath.AsList(), outputPath, resizingStrategy, outputFileNameMask, onExceptionHandler);
-        }
-
-        public static List<ImagesPair> ResizeWith(
-            IEnumerable<string> filePaths,
-            string outputPath,
-            IResizingStrategy resizingStrategy,
-            string outputFileNameMask = null,
-            Func<Exception, bool> onExceptionHandler = null)
-        {
-            var imagesPairs = new List<ImagesPair>();
-            foreach (string inputFilePath in filePaths)
+            var outputImages = new List<OutputImage>();
+            foreach (InputImage inputImage in inputImages)
             {
-                string inputFileName = Path.GetFileName(inputFilePath);
-                string outputFileName = GetOutputFileName(imagesPairs.Count + 1, inputFileName, outputFileNameMask);
+                string inputFileName = Path.GetFileName(inputImage.InputFilePath);
+                string outputFileName = GetOutputFileName(outputImages.Count + 1, inputFileName, outputFileNameMask);
                 string outputFilePath = Path.Combine(outputPath, outputFileName);
 
-                var imagePair = new ImagesPair()
+                var outputImage = new OutputImage(inputImage)
                 {
-                    InputFileName = inputFilePath,
-                    OutputFileName = outputFilePath,
+                    OutputFilePath = outputFilePath,
                 };
 
                 CreateDirectories(outputPath);
 
                 try
                 {
-                    ProcessImageSettings settings = resizingStrategy.CreateProcessImageSettings(inputFilePath);
+                    outputImage.ProcessImageResult
+                        = MagicImageProcessor.ProcessImage(inputImage.InputFilePath, outputFilePath, inputImage.Settings);
 
-                    imagePair.ProcessImageResult
-                        = MagicImageProcessor.ProcessImage(inputFilePath, outputFilePath, settings);
-
-                    imagesPairs.Add(imagePair);
+                    outputImages.Add(outputImage);
                 }
                 catch (Exception ex) when (onExceptionHandler != null)
                 {
                     bool cancel = onExceptionHandler(ex);
-                    if (cancel) { return imagesPairs; }
+                    if (cancel) { return outputImages; }
                 }
             }
 
-            return imagesPairs;
+            return outputImages;
         }
 
         private static void CreateDirectories(string outputPath)

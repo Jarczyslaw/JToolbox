@@ -56,6 +56,22 @@ namespace JToolbox.Core.Helpers
             File.WriteAllBytes(filePath, data);
         }
 
+        public static void DeleteDirectoryWithContent(string folderPath)
+        {
+            var directoryInfo = new DirectoryInfo(folderPath);
+
+            if (!directoryInfo.Exists) { return; }
+
+            foreach (FileInfo file in directoryInfo.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
+            {
+                directory.Delete(true);
+            }
+        }
+
         public static void DeleteFile(string path)
         {
             if (File.Exists(path))
