@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IEnumerableExtensionsTests.cs" />
     <Compile Include="NodesTests\NodesTests.cs" />
+    <Compile Include="StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\JToolbox.Core\JToolbox.Core.csproj">

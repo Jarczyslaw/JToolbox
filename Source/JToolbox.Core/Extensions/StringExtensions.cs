@@ -68,6 +68,25 @@ namespace JToolbox.Core.Extensions
             return val1.Equals(val2, StringComparison.OrdinalIgnoreCase);
         }
 
+        public static List<int> IndexesOf(this string @this, string value)
+        {
+            var result = new List<int>();
+
+            if (string.IsNullOrEmpty(@this) || string.IsNullOrEmpty(value)) { return result; }
+
+            var startIndex = 0;
+            while (true)
+            {
+                int index = @this.IndexOf(value, startIndex);
+                if (index < 0) { return result; }
+
+                result.Add(index);
+                startIndex = index + value.Length;
+
+                if (startIndex >= @this.Length) { return result; }
+            }
+        }
+
         public static bool IsNullOrEmpty(this string @this)
         {
             return string.IsNullOrEmpty(@this);
