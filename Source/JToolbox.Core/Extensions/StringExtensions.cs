@@ -174,6 +174,52 @@ namespace JToolbox.Core.Extensions
             return @this.Trim();
         }
 
+        public static string SmartReplaceMany(this string @this, Dictionary<string, string> toReplace)
+        {
+            if (string.IsNullOrEmpty(@this) || toReplace == null || toReplace.Count == 0) { return @this; }
+
+            var replaceEntries = new List<ReplaceEntry>();
+            foreach (KeyValuePair<string, string> pair in toReplace)
+            {
+                List<int> indexes = @this.IndexesOf(pair.Key);
+                if (indexes.Count == 0) { continue; }
+
+                foreach (int index in indexes)
+                {
+                    var replaceEntry = new ReplaceEntry
+                    {
+                        Index = index,
+                        OldValue = pair.Key,
+                        NewValue = pair.Value
+                    };
+
+                    if (!replaceEntries.Any(x => x.IsOverlapping(replaceEntry)))
+                    {
+                        replaceEntries.Add(replaceEntry);
+                    }
+                }
+            }
+
+            if (replaceEntries.Count == 0) { return @this; }
+
+            List<ReplaceEntry> orderedReplaceEntries = replaceEntries.OrderBy(x => x.Index)
+                .ToList();
+
+            var sb = new StringBuilder(@this);
+            for (int i = 0; i < orderedReplaceEntries.Count; i++)
+            {
+                ReplaceEntry replaceEntry = orderedReplaceEntries[i];
+                sb.Remove(replaceEntry.Index, replaceEntry.OldValue.Length);
+                sb.Insert(replaceEntry.Index, replaceEntry.NewValue);
+
+                for (int j = i + 1; j < orderedReplaceEntries.Count; j++)
+                {
+                    orderedReplaceEntries[j].Index += replaceEntry.LengthDifference;
+                }
+            }
+            return sb.ToString();
+        }
+
         public static Stream ToStream(this string @this)
         {
             var stream = new MemoryStream();
@@ -200,6 +246,28 @@ namespace JToolbox.Core.Extensions
                 return null;
             }
             return new string(@this.Where(c => !char.IsWhiteSpace(c)).ToArray());
+        }
+
+        private class ReplaceEntry
+        {
+            public int Index { get; set; }
+
+            public int LengthDifference => NewValue.Length - OldValue.Length;
+
+            public string NewValue { get; set; }
+
+            public string OldValue { get; set; }
+
+            public bool IsOverlapping(ReplaceEntry other)
+            {
+                int start = Index;
+                int end = Index + OldValue.Length - 1;
+
+                int otherStart = other.Index;
+                int otherEnd = other.Index + other.OldValue.Length - 1;
+
+                return end >= otherStart && start <= otherEnd;
+            }
         }
     }
 }
