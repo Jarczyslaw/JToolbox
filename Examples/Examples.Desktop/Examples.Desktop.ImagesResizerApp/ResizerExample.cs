@@ -1,4 +1,5 @@
 ﻿using Examples.Desktop.Base;
+using JToolbox.Core.Helpers;
 using JToolbox.Misc.ImagesResizer;
 using System.Collections.Generic;
 using System.IO;
@@ -26,11 +27,28 @@ namespace Examples.Desktop.ImagesResizerApp
 
             outputInput.WriteLine($"Found {imagesFiles.Count} images");
 
+            int jpegFiles = 0;
+            imagesFiles = imagesFiles.Select(x =>
+            {
+                if (x.EndsWith(".jpeg"))
+                {
+                    jpegFiles++;
+                    return FileSystemHelper.ChangeFileExtension(x, "jpg", preserveOriginalFile: false);
+                }
+                return x;
+            }).OrderBy(x => x).ToList();
+
+            if (jpegFiles > 0)
+            {
+                outputInput.WriteLine($"Converted {jpegFiles} jpeg files to jpg");
+            }
+
             string outputDirectory = outputInput.SelectDirectory("Output directory");
             if (string.IsNullOrEmpty(outputDirectory)) { return Task.CompletedTask; }
 
             outputInput.WriteLine("Converting");
 
+            //IEnumerable<InputImage> images = ResizerInputImagesFactory.ToProcess(new ProcessImageSettings(), imagesFiles);
             IEnumerable<InputImage> images = ResizerInputImagesFactory.ToResizeWithFixedWidth(270, imagesFiles);
             Resizer.Process(images, outputDirectory, "{fileNameWithoutExtension}_min.jpg", x =>
             {

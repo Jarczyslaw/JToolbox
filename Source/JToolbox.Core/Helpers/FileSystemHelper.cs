@@ -9,12 +9,30 @@ namespace JToolbox.Core.Helpers
     {
         private static readonly Random random = new Random();
 
+        public static string ChangeFileExtension(string filePath, string extension, bool preserveOriginalFile = false)
+        {
+            string changed = Path.ChangeExtension(filePath, extension);
+            File.Copy(filePath, changed);
+
+            if (!preserveOriginalFile) { File.Delete(filePath); }
+            return changed;
+        }
+
         public static string ChangeFileName(string filePath, string newFileName)
         {
             var path = Path.GetDirectoryName(filePath);
             var extension = Path.GetExtension(filePath);
 
             return Path.Combine(path, newFileName + extension);
+        }
+
+        public static void ChangeFilesExtension(string path, string extension, string pattern = "*.*", bool preserveOriginalFile = false)
+        {
+            var d = new DirectoryInfo(path);
+            foreach (FileInfo file in d.GetFiles(pattern))
+            {
+                ChangeFileExtension(file.FullName, extension, preserveOriginalFile);
+            }
         }
 
         public static void CopyAll(DirectoryInfo source, DirectoryInfo target)
