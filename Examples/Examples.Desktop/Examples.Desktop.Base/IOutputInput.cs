@@ -12,6 +12,8 @@ namespace Examples.Desktop.Base
 
         string Read(string label, string text = null, Func<string, string> validationRule = null);
 
+        string SelectDirectory(string message);
+
         T SelectValue<T>(string label, List<T> values);
 
         void StartTime();

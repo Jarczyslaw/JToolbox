@@ -184,6 +184,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.ImagesResizer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.ImagesResizer", "Examples\Examples.Desktop\Examples.Desktop.ImagesResizer\Examples.Desktop.ImagesResizer.csproj", "{35796F02-C42F-4DA2-8EE3-8434038BA566}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.ImagesResizerApp", "Examples\Examples.Desktop\Examples.Desktop.ImagesResizerApp\Examples.Desktop.ImagesResizerApp.csproj", "{086D974A-18C7-4F7D-B082-E21DB71F6D11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -474,6 +476,10 @@ Global
 		{35796F02-C42F-4DA2-8EE3-8434038BA566}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35796F02-C42F-4DA2-8EE3-8434038BA566}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35796F02-C42F-4DA2-8EE3-8434038BA566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{086D974A-18C7-4F7D-B082-E21DB71F6D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{086D974A-18C7-4F7D-B082-E21DB71F6D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{086D974A-18C7-4F7D-B082-E21DB71F6D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{086D974A-18C7-4F7D-B082-E21DB71F6D11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -563,6 +569,7 @@ Global
 		{59576CCC-8F70-4168-88AB-21B10977C5EF} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{CBB6428E-46D6-4B03-BA70-5357670620D1} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{35796F02-C42F-4DA2-8EE3-8434038BA566} = {907A859F-6219-4D41-9B8C-1EF003286419}
+		{086D974A-18C7-4F7D-B082-E21DB71F6D11} = {907A859F-6219-4D41-9B8C-1EF003286419}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

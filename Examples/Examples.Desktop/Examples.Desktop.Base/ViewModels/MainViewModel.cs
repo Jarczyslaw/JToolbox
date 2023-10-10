@@ -15,6 +15,7 @@ namespace Examples.Desktop.Base.ViewModels
 {
     public class MainViewModel : BindableBase, IOutputInput
     {
+        private readonly IDialogsService _dialogs = new DialogsService();
         private bool busy;
         private DelegateCommand continueCommand;
         private TaskCompletionSource<object> continueTaskCompletionSource;
@@ -108,8 +109,7 @@ namespace Examples.Desktop.Base.ViewModels
         {
             if (Busy)
             {
-                var dialogs = new DialogsService();
-                return dialogs.ShowYesNoQuestion("Example is running. Do you want to force close?");
+                return _dialogs.ShowYesNoQuestion("Example is running. Do you want to force close?");
             }
             return true;
         }
@@ -138,6 +138,11 @@ namespace Examples.Desktop.Base.ViewModels
             string result = null;
             Threading.SafeInvoke(() => result = WindowManager.GetInput(this, label, text, validationRule));
             return result;
+        }
+
+        public string SelectDirectory(string message)
+        {
+            return _dialogs.OpenFolder(message);
         }
 
         public T SelectValue<T>(string label, List<T> values)

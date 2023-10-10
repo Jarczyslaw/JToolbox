@@ -23,20 +23,20 @@ namespace Examples.Desktop.Base.ViewModels
         public string Result { get; set; }
 
         public DelegateCommand SaveCommand => new DelegateCommand(() =>
-                                        {
-                                            if (ValidationRule != null)
-                                            {
-                                                var error = ValidationRule(Text);
-                                                if (!string.IsNullOrEmpty(error))
-                                                {
-                                                    new DialogsService().ShowInfo(error);
-                                                    return;
-                                                }
-                                            }
+        {
+            if (ValidationRule != null)
+            {
+                var error = ValidationRule(Text);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    new DialogsService().ShowInfo(error);
+                    return;
+                }
+            }
 
-                                            Result = Text;
-                                            Close?.Invoke();
-                                        });
+            Result = Text;
+            Close?.Invoke();
+        });
 
         public string Text
         {

@@ -36,10 +36,10 @@ namespace Examples.Desktop.Base.ViewModels
         public object Result { get; set; }
 
         public DelegateCommand SaveCommand => new DelegateCommand(() =>
-                                                {
-                                                    Result = SelectedItem.Value;
-                                                    Close?.Invoke();
-                                                });
+        {
+            Result = SelectedItem.Value;
+            Close?.Invoke();
+        });
 
         public SelectItemViewModel SelectedItem
         {
