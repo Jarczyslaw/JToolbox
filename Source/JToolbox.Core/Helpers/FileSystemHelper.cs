@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -26,13 +27,18 @@ namespace JToolbox.Core.Helpers
             return Path.Combine(path, newFileName + extension);
         }
 
-        public static void ChangeFilesExtension(string path, string extension, string pattern = "*.*", bool preserveOriginalFile = false)
+        public static List<string> ChangeFilesExtension(string path, string extension, string pattern = "*.*", bool preserveOriginalFile = false)
         {
-            var d = new DirectoryInfo(path);
-            foreach (FileInfo file in d.GetFiles(pattern))
+            var directory = new DirectoryInfo(path);
+            FileInfo[] files = directory.GetFiles(pattern);
+
+            foreach (FileInfo file in files)
             {
                 ChangeFileExtension(file.FullName, extension, preserveOriginalFile);
             }
+
+            return files.Select(x => x.FullName)
+                .ToList();
         }
 
         public static void CopyAll(DirectoryInfo source, DirectoryInfo target)
@@ -161,6 +167,14 @@ namespace JToolbox.Core.Helpers
                     IterateFolders(directoryInfo, fileCallback, directoryCallback);
                 }
             }
+        }
+
+        public static string RenameFile(string filePath, string newFileName)
+        {
+            var path = Path.GetDirectoryName(filePath);
+            var newFilePath = Path.Combine(path, newFileName);
+            File.Move(filePath, newFilePath);
+            return newFilePath;
         }
 
         private static void IterateFolders(DirectoryInfo directory, Action<FileInfo> fileCallback, Func<DirectoryInfo, bool> directoryCallback)

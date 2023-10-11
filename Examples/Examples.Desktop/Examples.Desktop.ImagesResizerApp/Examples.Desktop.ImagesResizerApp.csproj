@@ -103,7 +103,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ResizerExample.cs" />
+    <Compile Include="JpegToJpgExample.cs" />
+    <Compile Include="ResizeExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
