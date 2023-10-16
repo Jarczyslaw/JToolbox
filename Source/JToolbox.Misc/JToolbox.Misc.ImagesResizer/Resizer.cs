@@ -58,7 +58,7 @@ namespace JToolbox.Misc.ImagesResizer
             if (string.IsNullOrEmpty(outputFileNameMask)) { return inputFileName; }
 
             string inputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFileName);
-            string inputFileExtension = Path.GetExtension(inputFileName);
+            string inputFileExtension = Path.GetExtension(inputFileName).TrimStart('.');
 
             var toReplace = new Dictionary<string, string>()
             {
