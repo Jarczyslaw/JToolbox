@@ -34,6 +34,8 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         List<TEntity> GetByIds(SQLiteConnection db, List<int> ids);
 
+        TEntity GetFirstOrDefault(SQLiteConnection db);
+
         void Merge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer);
 
         List<TEntity> Query(SQLiteConnection db, string query, params object[] args);

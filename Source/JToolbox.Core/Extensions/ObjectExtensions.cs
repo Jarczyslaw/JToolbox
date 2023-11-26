@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -49,6 +50,12 @@ namespace JToolbox.Core.Extensions
             return (T)@this?.GetType().GetProperty(propName).GetValue(@this, null);
         }
 
+        public static IEnumerable<PropertyInfo> GetPublicProperties(this object @this)
+        {
+            var flags = BindingFlags.Public | BindingFlags.Instance;
+            return @this.GetType().GetProperties(flags);
+        }
+
         public static string PropertiesToString(this object @this, BindingFlags flags)
         {
             var result = new StringBuilder();
@@ -73,6 +80,17 @@ namespace JToolbox.Core.Extensions
         public static string PublicPropertiesToString(this object @this)
         {
             return @this.PropertiesToString(BindingFlags.Public | BindingFlags.Instance);
+        }
+
+        public static ExpandoObject ToExpandoObject(this object @this)
+        {
+            var expando = new ExpandoObject();
+            foreach (PropertyInfo property in @this.GetPublicProperties())
+            {
+                expando.AddProperty(property.Name, property.GetValue(@this));
+            }
+
+            return expando;
         }
     }
 }

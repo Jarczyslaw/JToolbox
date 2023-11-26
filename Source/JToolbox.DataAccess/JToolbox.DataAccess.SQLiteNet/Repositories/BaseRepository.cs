@@ -130,6 +130,8 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
                 .ToList();
         }
 
+        public virtual TEntity GetFirstOrDefault(SQLiteConnection db) => db.Table<TEntity>().FirstOrDefault();
+
         public virtual void Merge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
         {
             var merge = new Merge<TEntity>();
