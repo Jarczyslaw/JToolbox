@@ -87,7 +87,7 @@ namespace JToolbox.Core.Extensions
             var expando = new ExpandoObject();
             foreach (PropertyInfo property in @this.GetPublicProperties())
             {
-                expando.AddProperty(property.Name, property.GetValue(@this));
+                expando.Set(property.Name, property.GetValue(@this));
             }
 
             return expando;
