@@ -58,15 +58,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BuildTools\AppPacker.exe" />
+    <None Include="content\content.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="content\content.txt">
+    <None Include="BuildTools\appZipper.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(ProjectDir)BuildTools\appZipper.exe --assemblyFolderPath $(TargetDir)</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)BuildTools\appZipper.exe" --assemblyFolderPath "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
