@@ -44,7 +44,7 @@ namespace JToolbox.Core.Utilities
             var month = quarter * 3;
             return new DateTime(year, month, DateTime.DaysInMonth(year, month))
                 .AddDays(1)
-                .AddMilliseconds(-1);
+                .AddTicks(-1);
         }
 
         public static DateTime QuarterStartDate(DateTime date)
