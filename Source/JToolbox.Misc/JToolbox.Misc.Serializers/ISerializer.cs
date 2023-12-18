@@ -8,6 +8,10 @@
 
         T FromString<T>(string input);
 
+        void PopulateFromFile<T>(string filePath, T @object);
+
+        void PopulateFromString<T>(string input, T @object);
+
         void ToFile<T>(T obj, string filePath);
 
         string ToString<T>(T val);

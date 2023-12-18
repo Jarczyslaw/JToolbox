@@ -28,6 +28,17 @@ namespace JToolbox.Misc.Serializers
             return JsonConvert.DeserializeObject<T>(content);
         }
 
+        public void PopulateFromFile<T>(string filePath, T @object)
+        {
+            var serialized = File.ReadAllText(filePath);
+            JsonConvert.PopulateObject(serialized, @object);
+        }
+
+        public void PopulateFromString<T>(string input, T @object)
+        {
+            JsonConvert.PopulateObject(input, @object);
+        }
+
         public void ToFile<T>(T obj, string filePath)
         {
             var serialized = ToString(obj);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace JToolbox.Misc.Serializers
@@ -7,7 +8,7 @@ namespace JToolbox.Misc.Serializers
     {
         public T FromBytes<T>(byte[] data) where T : class
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public T FromFile<T>(string filePath)
@@ -24,6 +25,16 @@ namespace JToolbox.Misc.Serializers
             {
                 return (T)ser.Deserialize(sr);
             }
+        }
+
+        public void PopulateFromFile<T>(string filePath, T @object)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PopulateFromString<T>(string input, T @object)
+        {
+            throw new NotImplementedException();
         }
 
         public void ToFile<T>(T obj, string filePath)
