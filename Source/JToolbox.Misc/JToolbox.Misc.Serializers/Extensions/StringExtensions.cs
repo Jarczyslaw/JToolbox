@@ -7,12 +7,12 @@
 
         public static T FromJson<T>(this string @this)
         {
-            return serializerJson.FromString<T>(@this);
+            return serializerJson.Deserialize<T>(@this);
         }
 
         public static T FromXml<T>(this string @this)
         {
-            return serializerXml.FromString<T>(@this);
+            return serializerXml.Deserialize<T>(@this);
         }
     }
 }

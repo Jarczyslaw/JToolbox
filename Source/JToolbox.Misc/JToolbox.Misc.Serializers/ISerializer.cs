@@ -1,19 +1,21 @@
-﻿namespace JToolbox.Misc.Serializers
+﻿using System.IO;
+
+namespace JToolbox.Misc.Serializers
 {
     public interface ISerializer
     {
-        T FromBytes<T>(byte[] data) where T : class;
+        T Deserialize<T>(byte[] data) where T : class;
 
-        T FromFile<T>(string filePath);
+        T Deserialize<T>(FileInfo file);
 
-        T FromString<T>(string input);
+        T Deserialize<T>(string input);
 
-        void PopulateFromFile<T>(string filePath, T @object);
+        void Populate<T>(T @object, FileInfo file);
 
-        void PopulateFromString<T>(string input, T @object);
+        void Populate<T>(T @object, string input);
 
-        void ToFile<T>(T obj, string filePath);
+        void Serialize<T>(T obj, FileInfo file);
 
-        string ToString<T>(T val);
+        string Serialize<T>(T val);
     }
 }

@@ -6,18 +6,18 @@ namespace JToolbox.Misc.Serializers
 {
     public class SerializerXml : ISerializer
     {
-        public T FromBytes<T>(byte[] data) where T : class
+        public T Deserialize<T>(byte[] data) where T : class
         {
             throw new NotImplementedException();
         }
 
-        public T FromFile<T>(string filePath)
+        public T Deserialize<T>(FileInfo file)
         {
-            var serialized = File.ReadAllText(filePath);
-            return FromString<T>(serialized);
+            var serialized = File.ReadAllText(file.FullName);
+            return Deserialize<T>(serialized);
         }
 
-        public T FromString<T>(string input)
+        public T Deserialize<T>(string input)
         {
             var ser = new XmlSerializer(typeof(T));
 
@@ -27,33 +27,33 @@ namespace JToolbox.Misc.Serializers
             }
         }
 
-        public void PopulateFromFile<T>(string filePath, T @object)
+        public void Populate<T>(T @object, FileInfo file)
         {
             throw new NotImplementedException();
         }
 
-        public void PopulateFromString<T>(string input, T @object)
+        public void Populate<T>(T @object, string input)
         {
             throw new NotImplementedException();
         }
 
-        public void ToFile<T>(T obj, string filePath)
+        public void Serialize<T>(T @object, FileInfo file)
         {
-            ToFile(obj, filePath, null);
+            Serialize(@object, file, null);
         }
 
-        public void ToFile<T>(T obj, string filePath, XmlSerializerNamespaces namespaces)
+        public void Serialize<T>(T @object, FileInfo file, XmlSerializerNamespaces namespaces)
         {
-            var serialized = ToString(obj, namespaces);
-            File.WriteAllText(filePath, serialized);
+            var serialized = Serialize(@object, namespaces);
+            File.WriteAllText(file.FullName, serialized);
         }
 
-        public string ToString<T>(T val)
+        public string Serialize<T>(T val)
         {
-            return ToString(val, null);
+            return Serialize(val, (XmlSerializerNamespaces)null);
         }
 
-        public string ToString<T>(T val, XmlSerializerNamespaces namespaces)
+        public string Serialize<T>(T val, XmlSerializerNamespaces namespaces)
         {
             var s = new XmlSerializer(typeof(T));
             using (var writer = new Utf8StringWriter())

@@ -1,4 +1,5 @@
 ﻿using JToolbox.Misc.Serializers;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace AppUploader
@@ -20,7 +21,7 @@ namespace AppUploader
             var serializer = new SerializerXml();
             var namespaces = new XmlSerializerNamespaces();
             namespaces.Add(string.Empty, string.Empty);
-            serializer.ToFile(this, path, namespaces);
+            serializer.Serialize(this, new FileInfo(path), namespaces);
         }
     }
 }

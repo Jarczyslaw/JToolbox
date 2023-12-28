@@ -28,7 +28,7 @@ namespace JToolbox.XamarinForms.Updater
                 }
 
                 var data = await Task.Run(() => client.DownloadData(settings.FullUrl));
-                var updateFile = new SerializerJson().FromBytes<UpdateFile>(data);
+                var updateFile = new SerializerJson().Deserialize<UpdateFile>(data);
 
                 var newVersion = Version.Parse(updateFile.Version);
                 if (newVersion > AppInfo.Version)

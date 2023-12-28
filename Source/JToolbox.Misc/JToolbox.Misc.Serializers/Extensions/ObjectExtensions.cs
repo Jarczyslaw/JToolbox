@@ -16,14 +16,14 @@
         {
             if (@this == null) { return null; }
 
-            return serializerJson.ToString(@this);
+            return serializerJson.Serialize(@this);
         }
 
         public static string ToXml(this object @this)
         {
             if (@this == null) { return null; }
 
-            return serializerXml.ToString(@this);
+            return serializerXml.Serialize(@this);
         }
     }
 }

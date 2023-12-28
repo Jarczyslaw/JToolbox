@@ -6,7 +6,14 @@ namespace JToolbox.Misc.Serializers
 {
     public class SerializerJson : ISerializer
     {
-        public T FromBytes<T>(byte[] data) where T : class
+        private readonly Formatting formatting;
+
+        public SerializerJson(Formatting formatting = Formatting.Indented)
+        {
+            this.formatting = formatting;
+        }
+
+        public T Deserialize<T>(byte[] data) where T : class
         {
             using (var stream = new MemoryStream(data))
             {
@@ -17,37 +24,37 @@ namespace JToolbox.Misc.Serializers
             }
         }
 
-        public T FromFile<T>(string filePath)
+        public T Deserialize<T>(FileInfo file)
         {
-            var serialized = File.ReadAllText(filePath);
-            return FromString<T>(serialized);
+            var serialized = File.ReadAllText(file.FullName);
+            return Deserialize<T>(serialized);
         }
 
-        public T FromString<T>(string content)
+        public T Deserialize<T>(string content)
         {
             return JsonConvert.DeserializeObject<T>(content);
         }
 
-        public void PopulateFromFile<T>(string filePath, T @object)
+        public void Populate<T>(T @object, FileInfo file)
         {
-            var serialized = File.ReadAllText(filePath);
+            var serialized = File.ReadAllText(file.FullName);
             JsonConvert.PopulateObject(serialized, @object);
         }
 
-        public void PopulateFromString<T>(string input, T @object)
+        public void Populate<T>(T @object, string input)
         {
             JsonConvert.PopulateObject(input, @object);
         }
 
-        public void ToFile<T>(T obj, string filePath)
+        public void Serialize<T>(T obj, FileInfo file)
         {
-            var serialized = ToString(obj);
-            File.WriteAllText(filePath, serialized);
+            var serialized = Serialize(obj);
+            File.WriteAllText(file.FullName, serialized);
         }
 
-        public string ToString<T>(T obj)
+        public string Serialize<T>(T obj)
         {
-            return JsonConvert.SerializeObject(obj, Formatting.Indented);
+            return JsonConvert.SerializeObject(obj, formatting);
         }
     }
 }
