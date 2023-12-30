@@ -3,6 +3,7 @@ using JToolbox.Core.Extensions;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 
 namespace JToolbox.Core.Utilities
 {
@@ -49,41 +50,69 @@ namespace JToolbox.Core.Utilities
             {
                 var propertyInfo = type.GetProperty(property);
 
-                if (propertyInfo == null) { throw new PropertyNotFoundException(type, property); }
-
-                return propertyInfo.GetValue(@object, null);
+                return propertyInfo == null
+                    ? throw new PropertyNotFoundException(type, property)
+                    : propertyInfo.GetValue(@object, null);
             }
             else
             {
-                var propertyInfo = type.GetProperty(collectionProperty.Name);
+                var propertyInfo = type.GetProperty(collectionProperty.Name) ?? throw new PropertyNotFoundException(type, property);
 
-                if (propertyInfo == null) { throw new PropertyNotFoundException(type, property); }
-
-                if (typeof(IList).IsAssignableFrom(propertyInfo.PropertyType))
+                if (TryGetValueFromList(@object, propertyInfo, collectionProperty, out object result))
                 {
-                    var list = propertyInfo.GetValue(@object, null) as IList;
-
-                    if (list == null || collectionProperty.Index > list.Count - 1)
-                    {
-                        throw new CanNotAccessCollectionItemException(collectionProperty.Name, collectionProperty.Index);
-                    }
-
-                    return list[collectionProperty.Index];
+                    return result;
                 }
-                else if (typeof(IDictionary).IsAssignableFrom(propertyInfo.PropertyType))
+                else if (TryGetValueFromDictionary(@object, propertyInfo, collectionProperty, out result))
                 {
-                    var dictionary = propertyInfo.GetValue(@object, null) as IDictionary;
-
-                    if (dictionary?.Contains(collectionProperty.Index) != true)
-                    {
-                        throw new CanNotAccessCollectionItemException(collectionProperty.Name, collectionProperty.Index);
-                    }
-
-                    return dictionary[collectionProperty.Index];
+                    return result;
                 }
 
                 throw new NotSupportedException();
             }
+        }
+
+        private static bool TryGetValueFromDictionary(
+            object @object,
+            PropertyInfo propertyInfo,
+            CollectionProperty collectionProperty,
+            out object result)
+        {
+            if (typeof(IDictionary).IsAssignableFrom(propertyInfo.PropertyType))
+            {
+                var dictionary = propertyInfo.GetValue(@object, null) as IDictionary;
+
+                if (dictionary?.Contains(collectionProperty.Index) != true)
+                {
+                    throw new CanNotAccessCollectionItemException(collectionProperty.Name, collectionProperty.Index);
+                }
+
+                result = dictionary[collectionProperty.Index];
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        private static bool TryGetValueFromList(
+                    object @object,
+            PropertyInfo propertyInfo,
+            CollectionProperty collectionProperty,
+            out object result)
+        {
+            if (typeof(IList).IsAssignableFrom(propertyInfo.PropertyType))
+            {
+                if (!(propertyInfo.GetValue(@object, null) is IList list) || collectionProperty.Index > list.Count - 1)
+                {
+                    throw new CanNotAccessCollectionItemException(collectionProperty.Name, collectionProperty.Index);
+                }
+
+                result = list[collectionProperty.Index];
+                return true;
+            }
+
+            result = null;
+            return false;
         }
 
         private class CollectionProperty
