@@ -22,17 +22,24 @@ namespace JToolbox.Core.Models.Results
 
         public T Value { get; set; }
 
-        public new static Result<T> AsError(string error)
+        public new static Result<T> AsError(
+            string error,
+            Exception exception = default,
+            int code = default,
+            object tag = default)
         {
             var result = new Result<T>();
-            result.AddError(error);
+            result.AddError(error, exception, code, tag);
             return result;
         }
 
-        public new static Result<T> AsError(Exception exc)
+        public new static Result<T> AsError(
+            Exception exception,
+            int code = default,
+            object tag = default)
         {
             var result = new Result<T>();
-            result.AddError(exc);
+            result.AddError(exception, code, tag);
             return result;
         }
 

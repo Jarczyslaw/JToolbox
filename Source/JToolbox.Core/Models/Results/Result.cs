@@ -35,50 +35,75 @@ namespace JToolbox.Core.Models.Results
 
         public List<Warning> Warnings => GetMessages<Warning>();
 
-        public static Result AsError(string error)
+        public static Result AsError(
+            string error,
+            Exception exception = default,
+            int code = default,
+            object tag = default)
         {
             var result = new Result();
-            result.AddError(error);
+            result.AddError(error, exception, code, tag);
             return result;
         }
 
-        public static Result AsError(Exception exc)
+        public static Result AsError(
+            Exception exception,
+            int code = default,
+            object tag = default)
         {
             var result = new Result();
-            result.AddError(exc);
+            result.AddError(exception, code, tag);
             return result;
         }
 
-        public void AddError(string error)
+        public void AddError(
+            string error,
+            Exception exception = default,
+            int code = default,
+            object tag = default)
         {
-            Messages.Add(new Error
+            AddMessage(new Error
             {
-                Content = error
+                Content = error,
+                Exception = exception,
+                Code = code,
+                Tag = tag
             });
         }
 
-        public void AddError(Exception exc)
+        public void AddError(
+            Exception exception,
+            int code = default,
+            object tag = default)
         {
-            Messages.Add(new Error
+            AddError(exception.Message, exception, code, tag);
+        }
+
+        public void AddInfo(
+            string info,
+            int code = default,
+            object tag = default)
+        {
+            AddMessage(new Information
             {
-                Content = exc.Message,
-                Exception = exc
+                Content = info,
+                Code = code,
+                Tag = tag
             });
         }
 
-        public void AddInfo(string info)
-        {
-            Messages.Add(new Information
-            {
-                Content = info
-            });
-        }
+        public void AddMessage(Message message) => Messages.Add(message);
 
-        public void AddWarning(string warning)
+        public void AddWarning(
+            string warning,
+            int code = default,
+            object tag = default)
         {
-            Messages.Add(new Warning
+            AddMessage(new Warning
             {
-                Content = warning
+                Content = warning,
+                Code = code,
+                Tag = tag
             });
         }
 
