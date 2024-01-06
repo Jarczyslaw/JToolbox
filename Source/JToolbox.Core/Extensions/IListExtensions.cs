@@ -48,6 +48,14 @@ namespace JToolbox.Core.Extensions
             return result;
         }
 
+        public static void ReversedForEach<T>(this IList<T> @this, Action<T> action)
+        {
+            for (int i = @this.Count - 1; i >= 0; i--)
+            {
+                action(@this[i]);
+            }
+        }
+
         public static void Shuffle<T>(this IList<T> list)
         {
             int n = list.Count;
