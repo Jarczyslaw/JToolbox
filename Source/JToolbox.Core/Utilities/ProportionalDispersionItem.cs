@@ -10,12 +10,12 @@ namespace JToolbox.Core.Utilities
 
         public decimal Weight { get; set; }
 
-        public void Calculate(int targetCount, decimal totalWeight, int lowerBound)
+        public int Calculate(int targetCount, decimal totalWeight, int lowerBound)
         {
             var count = (int)Math.Round(Weight / totalWeight * targetCount);
             if (count < lowerBound) { count = lowerBound; }
 
-            Count = count;
+            return Count = count;
         }
     }
 }

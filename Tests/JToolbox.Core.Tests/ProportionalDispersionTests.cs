@@ -8,6 +8,22 @@ namespace JToolbox.Core.Tests
     public class ProportionalDispersionTests
     {
         [TestMethod]
+        public void Calculate_ReturnsCorrectCountsSum()
+        {
+            var dispersion = new ProportionalDispersion<int>();
+            dispersion.AddItem(1, 3);
+            dispersion.AddItem(2, 1);
+            dispersion.AddItem(3, 1);
+
+            var dispersedItems = dispersion.Calculate(7);
+
+            Assert.AreEqual(3, dispersedItems.Count);
+            Assert.AreEqual(7, dispersedItems.Sum(x => x.Count));
+
+            Assert.AreEqual(5, dispersedItems.First(x => x.Item == 1).Count);
+        }
+
+        [TestMethod]
         public void Calculate_ReturnsValidCalculatedItems()
         {
             var dispersion = new ProportionalDispersion<int>();

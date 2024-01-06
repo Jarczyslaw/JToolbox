@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JToolbox.Core.Utilities
 {
     public class ProportionalDispersion<T>
     {
-        private readonly List<ProportionalDispersionItem<T>> items = new List<ProportionalDispersionItem<T>>();
+        public List<ProportionalDispersionItem<T>> Items { get; set; } = new List<ProportionalDispersionItem<T>>();
 
         public int LowerBound { get; set; }
 
         public void AddItem(T item, decimal weight)
         {
-            items.Add(new ProportionalDispersionItem<T>
+            Items.Add(new ProportionalDispersionItem<T>
             {
                 Item = item,
                 Weight = weight
@@ -20,16 +21,25 @@ namespace JToolbox.Core.Utilities
 
         public List<ProportionalDispersionItem<T>> Calculate(int targetCount)
         {
-            var totalWeight = items.Sum(x => x.Weight);
-            if (totalWeight <= 0m || items.Count == 0) { return new List<ProportionalDispersionItem<T>>(); }
+            Items.ForEach(x => x.Count = 0);
 
-            foreach (var item in items)
+            var totalWeight = Items.Sum(x => x.Weight);
+            if (totalWeight <= 0m || Items.Count == 0) { return new List<ProportionalDispersionItem<T>>(); }
+
+            var currentCountSum = 0;
+            var orderedItems = Items.OrderBy(x => x.Weight);
+            var lastItem = orderedItems.Last();
+            foreach (var item in orderedItems)
             {
-                item.Calculate(targetCount, totalWeight, LowerBound);
+                var calculated = item.Calculate(targetCount, totalWeight, LowerBound);
+                if (item == lastItem)
+                {
+                    item.Count = Math.Max(calculated, targetCount - currentCountSum);
+                }
+                currentCountSum += calculated;
             }
 
-            return items.Where(x => x.Count > 0)
-                .ToList();
+            return Items.ToList();
         }
 
         public List<T> GetQueuedItems(List<ProportionalDispersionItem<T>> dispersedItems)
