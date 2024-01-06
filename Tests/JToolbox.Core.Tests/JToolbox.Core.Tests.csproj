@@ -61,6 +61,7 @@
     <Compile Include="IEnumerableExtensionsTests.cs" />
     <Compile Include="NodesTests\NodesTests.cs" />
     <Compile Include="PropertyResolverTests.cs" />
+    <Compile Include="ProportionalDispersionTests.cs" />
     <Compile Include="RandomPickerTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
   </ItemGroup>
