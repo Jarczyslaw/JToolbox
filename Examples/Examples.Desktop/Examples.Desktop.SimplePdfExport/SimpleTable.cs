@@ -39,6 +39,15 @@ namespace Examples.Desktop.SimplePdfExport
             row.Format.Font.Bold = true;
         }
 
+        protected override void PrepareNoItemsRow()
+        {
+            var row = Table.AddRow();
+            row.Cells[0].MergeRight = Columns.Count - 1;
+            var paragraph = row.Cells[0].AddParagraph();
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("No data");
+        }
+
         protected override void PrepareRow(int i, List<TableItem> items, TableItem currentItem, Row row)
         {
             var paragraph = row.Cells[0].AddParagraph();

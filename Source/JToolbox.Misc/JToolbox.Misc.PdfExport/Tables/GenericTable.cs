@@ -39,11 +39,18 @@ namespace JToolbox.Misc.PdfExport.Tables
                 PrepareHeaderColumn(i, column, headerRow);
             }
 
-            for (int i = 0; i < items.Count; i++)
+            if (items.Count == 0)
             {
-                var item = items[i];
-                var row = Table.AddRow();
-                PrepareRow(i, items, item, row);
+                PrepareNoItemsRow();
+            }
+            else
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    var item = items[i];
+                    var row = Table.AddRow();
+                    PrepareRow(i, items, item, row);
+                }
             }
         }
 
@@ -56,6 +63,10 @@ namespace JToolbox.Misc.PdfExport.Tables
         }
 
         protected virtual void PrepareHeaderRow(Row row)
+        {
+        }
+
+        protected virtual void PrepareNoItemsRow()
         {
         }
 

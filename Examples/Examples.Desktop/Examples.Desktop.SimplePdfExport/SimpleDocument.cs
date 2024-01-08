@@ -15,10 +15,10 @@ namespace Examples.Desktop.SimplePdfExport
         public void Fill()
         {
             AddTitle();
-            AddTable();
+            AddTables();
         }
 
-        private void AddTable()
+        private void AddTables()
         {
             var table = new SimpleTable(this);
             table.Print(new List<TableItem>
@@ -34,6 +34,12 @@ namespace Examples.Desktop.SimplePdfExport
                     Value =2
                 }
             });
+
+            var paragraph = LastSection.AddParagraph();
+            paragraph.Format.SpaceAfter = 20;
+
+            table = new SimpleTable(this);
+            table.Print(new List<TableItem>());
         }
 
         private void AddTitle()
