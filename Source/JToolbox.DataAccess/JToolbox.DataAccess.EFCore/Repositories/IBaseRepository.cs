@@ -36,7 +36,11 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         List<TModel> GetByIds(DbContext db, List<int> ids, bool noTracking = false, IEnumerable<Expression<Func<TModel, object>>> includes = null);
 
-        void Merge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer);
+        void Merge(
+            DbContext db,
+            List<TModel> newList,
+            List<TModel> currentList,
+            IEqualityComparer<TModel> equalityComparer);
 
         bool Update(DbContext db, int id, Action<TModel> action);
 

@@ -15,6 +15,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         bool SafeDelete(SQLiteConnection db, TEntity entity);
 
-        void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer);
+        void SafeMerge(
+            SQLiteConnection db,
+            List<TEntity> newList,
+            List<TEntity> currentList,
+            IEqualityComparer<TEntity> equalityComparer = null);
     }
 }

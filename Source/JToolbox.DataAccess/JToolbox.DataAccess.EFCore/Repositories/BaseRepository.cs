@@ -1,5 +1,6 @@
 ﻿using JToolbox.Core.Abstraction;
-using JToolbox.DataAccess.Common;
+using JToolbox.Core.EqualityComparers;
+using JToolbox.Core.Utilities.Merge;
 using JToolbox.DataAccess.EF.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -164,10 +165,12 @@ namespace JToolbox.DataAccess.EF.Repositories
         public virtual void Merge(DbContext db,
             List<TModel> newList,
             List<TModel> currentList,
-            IEqualityComparer<TModel> equalityComparer)
+            IEqualityComparer<TModel> equalityComparer = null)
         {
-            var merge = new Merge<TModel>();
-            merge.MergeLists(newList, currentList, equalityComparer);
+            equalityComparer = equalityComparer ?? new KeyComparer();
+
+            var merge = new MergeCollections<TModel>();
+            merge.Merge(currentList, newList, equalityComparer);
 
             if (merge.ToDelete.Count > 0)
             {
@@ -176,7 +179,7 @@ namespace JToolbox.DataAccess.EF.Repositories
 
             if (merge.ToUpdate.Count > 0)
             {
-                UpdateMany(db, merge.ToUpdate);
+                UpdateMany(db, merge.ToUpdate.ConvertAll(x => x.NewItem));
             }
 
             if (merge.ToCreate.Count > 0)

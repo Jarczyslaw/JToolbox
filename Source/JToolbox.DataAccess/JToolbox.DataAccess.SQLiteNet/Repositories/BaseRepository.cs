@@ -1,4 +1,6 @@
-﻿using JToolbox.DataAccess.Common;
+﻿using JToolbox.Core.EqualityComparers;
+using JToolbox.Core.Utilities.Merge;
+using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.SQLiteNet.Entities;
 using SQLite;
 using System;
@@ -132,10 +134,16 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         public virtual TEntity GetFirstOrDefault(SQLiteConnection db) => db.Table<TEntity>().FirstOrDefault();
 
-        public virtual void Merge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
+        public virtual void Merge(
+            SQLiteConnection db,
+            List<TEntity> newList,
+            List<TEntity> currentList,
+            IEqualityComparer<TEntity> equalityComparer = null)
         {
-            var merge = new Merge<TEntity>();
-            merge.MergeLists(newList, currentList, equalityComparer);
+            equalityComparer = equalityComparer ?? new KeyComparer();
+
+            var merge = new MergeCollections<TEntity>();
+            merge.Merge(currentList, newList, equalityComparer);
 
             foreach (var entity in merge.ToDelete)
             {
@@ -144,7 +152,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
             if (merge.ToUpdate.Count > 0)
             {
-                UpdateMany(db, merge.ToUpdate);
+                UpdateMany(db, merge.ToUpdate.ConvertAll(x => x.NewItem));
             }
 
             if (merge.ToCreate.Count > 0)

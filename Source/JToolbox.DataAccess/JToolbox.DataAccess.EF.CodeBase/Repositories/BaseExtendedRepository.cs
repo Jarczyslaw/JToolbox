@@ -1,5 +1,7 @@
 ﻿using JToolbox.Core.Abstraction;
+using JToolbox.Core.EqualityComparers;
 using JToolbox.Core.TimeProvider;
+using JToolbox.Core.Utilities.Merge;
 using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.EF.Models;
 using System.Collections.Generic;
@@ -35,15 +37,16 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         public virtual void SafeDelete(DbContext db, List<TModel> models)
         {
-            var ids = models.Select(x => x.Id)
-                .ToList();
+            var ids = models.ConvertAll(x => x.Id);
             UpdateMany(db, ids, x => x.Deleted = true);
         }
 
-        public virtual void SafeMerge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer)
+        public virtual void SafeMerge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer = null)
         {
-            var merge = new Merge<TModel>();
-            merge.MergeLists(newList, currentList, equalityComparer);
+            equalityComparer = equalityComparer ?? new KeyComparer();
+
+            var merge = new MergeCollections<TModel>();
+            merge.Merge(currentList, newList, equalityComparer);
 
             foreach (var entity in merge.ToDelete)
             {
@@ -52,7 +55,7 @@ namespace JToolbox.DataAccess.EF.Repositories
 
             if (merge.ToUpdate.Count > 0)
             {
-                UpdateMany(db, merge.ToUpdate);
+                UpdateMany(db, merge.ToUpdate.ConvertAll(x => x.NewItem));
             }
 
             if (merge.ToCreate.Count > 0)

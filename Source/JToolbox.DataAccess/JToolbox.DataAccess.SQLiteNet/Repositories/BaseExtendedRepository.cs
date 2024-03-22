@@ -1,5 +1,6 @@
-﻿using JToolbox.Core.TimeProvider;
-using JToolbox.DataAccess.Common;
+﻿using JToolbox.Core.EqualityComparers;
+using JToolbox.Core.TimeProvider;
+using JToolbox.Core.Utilities.Merge;
 using JToolbox.DataAccess.SQLiteNet.Entities;
 using SQLite;
 using System.Collections.Generic;
@@ -43,10 +44,16 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
             SafeDelete(db, ids);
         }
 
-        public virtual void SafeMerge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer)
+        public virtual void SafeMerge(
+            SQLiteConnection db,
+            List<TEntity> newList,
+            List<TEntity> currentList,
+            IEqualityComparer<TEntity> equalityComparer = null)
         {
-            var merge = new Merge<TEntity>();
-            merge.MergeLists(newList, currentList, equalityComparer);
+            equalityComparer = equalityComparer ?? new KeyComparer();
+
+            var merge = new MergeCollections<TEntity>();
+            merge.Merge(currentList, newList, equalityComparer);
 
             foreach (var entity in merge.ToDelete)
             {
@@ -55,7 +62,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
             if (merge.ToUpdate.Count > 0)
             {
-                UpdateMany(db, merge.ToUpdate);
+                UpdateMany(db, merge.ToUpdate.ConvertAll(x => x.NewItem));
             }
 
             if (merge.ToCreate.Count > 0)

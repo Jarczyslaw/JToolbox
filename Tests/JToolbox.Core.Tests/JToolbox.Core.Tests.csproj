@@ -53,9 +53,11 @@
     <Compile Include="DateRangeHelperTests\MergeTestCase.cs" />
     <Compile Include="DateRangeHelperTests\IntersectionTestCase.cs" />
     <Compile Include="DateRangeHelperTests\TestCasesSource.cs" />
+    <Compile Include="EqualityComparersTests.cs" />
     <Compile Include="ExpandoObjectTests.cs" />
     <Compile Include="FileSystemHelperTests.cs" />
     <Compile Include="IListExtensionsTests.cs" />
+    <Compile Include="MergeCollectionsTests.cs" />
     <Compile Include="NodesTests\NodesTestsDataSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IEnumerableExtensionsTests.cs" />

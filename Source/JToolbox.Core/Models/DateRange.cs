@@ -122,7 +122,7 @@ namespace JToolbox.Core.Models
         {
             if (start > end)
             {
-                throw new Exception("End date isolder than start date");
+                throw new Exception("End date is older than start date");
             }
         }
     }

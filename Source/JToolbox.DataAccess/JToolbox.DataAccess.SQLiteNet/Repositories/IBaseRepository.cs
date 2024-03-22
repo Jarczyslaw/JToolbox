@@ -36,7 +36,10 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
 
         TEntity GetFirstOrDefault(SQLiteConnection db);
 
-        void Merge(SQLiteConnection db, List<TEntity> newList, List<TEntity> currentList, IEqualityComparer<TEntity> equalityComparer);
+        void Merge(SQLiteConnection db,
+            List<TEntity> newList,
+            List<TEntity> currentList,
+            IEqualityComparer<TEntity> equalityComparer = null);
 
         List<TEntity> Query(SQLiteConnection db, string query, params object[] args);
 

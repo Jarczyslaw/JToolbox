@@ -15,6 +15,10 @@ namespace JToolbox.DataAccess.EF.Repositories
 
         bool SafeDelete(DbContext db, TModel model);
 
-        void SafeMerge(DbContext db, List<TModel> newList, List<TModel> currentList, IEqualityComparer<TModel> equalityComparer);
+        void SafeMerge(
+            DbContext db,
+            List<TModel> newList,
+            List<TModel> currentList,
+            IEqualityComparer<TModel> equalityComparer = null);
     }
 }
