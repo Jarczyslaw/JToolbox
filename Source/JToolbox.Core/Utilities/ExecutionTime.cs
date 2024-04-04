@@ -9,37 +9,109 @@ using System.Threading.Tasks;
 
 namespace JToolbox.Core.Utilities
 {
-    public static class ExecutionTime
+    public class ExecutionTime
     {
-        private static readonly List<ExecutionTimeCheck> _checks = new List<ExecutionTimeCheck>();
-        private static Stopwatch _stopwatch;
+        private readonly List<ExecutionTimeCheck> _checks = new List<ExecutionTimeCheck>();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        public static TimeSpan Elapsed
+        public ExecutionTime(bool start = true)
+        {
+            if (start) { Start(); }
+        }
+
+        public TimeSpan Elapsed
         {
             get
             {
-                if (_stopwatch == null) { throw new StopwatchDidNotStartException(); }
+                if (!_stopwatch.IsRunning) { throw new StopwatchDidNotStartException(); }
 
                 return _stopwatch.Elapsed;
             }
         }
 
-        public static void Check(string title, bool startNew = true)
+        public static TimeSpan RunAction(Action action, string title)
         {
+            var stopwatch = Stopwatch.StartNew();
+            TimeSpan elapsed;
+            try
+            {
+                action();
+            }
+            finally
+            {
+                elapsed = FinishStopwatch(stopwatch, title);
+            }
+
+            return elapsed;
+        }
+
+        public static async Task<TimeSpan> RunActionAsync(Func<Task> action, string title)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            TimeSpan elapsed;
+            try
+            {
+                await action();
+            }
+            finally
+            {
+                elapsed = FinishStopwatch(stopwatch, title);
+            }
+
+            return elapsed;
+        }
+
+        public static T RunFunc<T>(Func<T> func, string title)
+            => RunFunc(func, title, out TimeSpan _);
+
+        public static T RunFunc<T>(Func<T> func, string title, out TimeSpan elapsed)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            try
+            {
+                return func();
+            }
+            finally
+            {
+                elapsed = FinishStopwatch(stopwatch, title);
+            }
+        }
+
+        public static async Task<T> RunFuncAsync<T>(Func<Task<T>> func, string title)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            try
+            {
+                return await func();
+            }
+            finally
+            {
+                FinishStopwatch(stopwatch, title);
+            }
+        }
+
+        public void Check(string title, bool restart = true)
+        {
+            if (!_stopwatch.IsRunning) { throw new StopwatchDidNotStartException(); }
+
+            Stop();
+
             _checks.Add(new ExecutionTimeCheck
             {
                 Title = title,
-                Elapsed = FinishStopwatch(_stopwatch, false)
+                Elapsed = _stopwatch.Elapsed
             });
 
-            if (startNew) { Start(); }
+            if (restart) { Start(); }
         }
 
-        public static void ClearChecks() => _checks.Clear();
+        public void ClearChecks() => _checks.Clear();
 
-        public static string GetChecksResult(bool clearChecks = true, bool orderByElapsedTime = false)
+        public string GetChecksResult(bool clearChecks = true, bool orderByElapsedTime = false)
         {
-            if (_checks.Count == 0) { return "NO CHECKS"; }
+            Stop();
+
+            if (_checks.Count == 0) { return string.Empty; }
 
             var checks = orderByElapsedTime
                 ? _checks.OrderByDescending(x => x.Elapsed).ToList()
@@ -49,7 +121,7 @@ namespace JToolbox.Core.Utilities
             if (clearChecks) { _checks.Clear(); }
 
             var sb = new StringBuilder();
-            sb.AppendLine("Stopwatch summary:");
+            sb.AppendLine($"{nameof(ExecutionTime).ToUpper()} - Summary:");
 
             for (int i = 0; i < checks.Count; i++)
             {
@@ -67,70 +139,23 @@ namespace JToolbox.Core.Utilities
             return result;
         }
 
-        public static TimeSpan RunAction(Action action)
+        public void Start() => _stopwatch.Restart();
+
+        public void Stop() => _stopwatch.Stop();
+
+        private static TimeSpan FinishStopwatch(Stopwatch stopwatch, string title)
         {
-            var stopwatch = Stopwatch.StartNew();
-            TimeSpan elapsed;
-            try
-            {
-                action();
-            }
-            finally
-            {
-                elapsed = FinishStopwatch(stopwatch);
-            }
-
-            return elapsed;
-        }
-
-        public static async Task<TimeSpan> RunAction(Func<Task> action)
-        {
-            var stopwatch = Stopwatch.StartNew();
-            TimeSpan elapsed;
-            try
-            {
-                await action();
-            }
-            finally
-            {
-                elapsed = FinishStopwatch(stopwatch);
-            }
-
-            return elapsed;
-        }
-
-        public static T RunAction<T>(Func<T> action, out TimeSpan elapsed)
-        {
-            var stopwatch = Stopwatch.StartNew();
-            try
-            {
-                return action();
-            }
-            finally
-            {
-                elapsed = FinishStopwatch(stopwatch);
-            }
-        }
-
-        public static void Start() => _stopwatch = Stopwatch.StartNew();
-
-        public static TimeSpan Stop() => FinishStopwatch(_stopwatch);
-
-        private static TimeSpan FinishStopwatch(Stopwatch stopwatch, bool display = true)
-        {
-            if (stopwatch == null) { throw new StopwatchDidNotStartException(); }
-
             stopwatch.Stop();
 
-            if (display) { ShowResult(stopwatch.Elapsed); }
+            ShowResult(title, stopwatch.Elapsed);
 
             return stopwatch.Elapsed;
         }
 
-        private static void ShowResult(TimeSpan elapsed)
+        private static void ShowResult(string title, TimeSpan elapsed)
         {
             var timeElapsed = elapsed.GetTimeSpanFormattedString();
-            Debug.WriteLine($"Elapsed: " + timeElapsed);
+            Debug.WriteLine($"{nameof(ExecutionTime).ToUpper()} - {title} elapsed: " + timeElapsed);
         }
 
         private class ExecutionTimeCheck
