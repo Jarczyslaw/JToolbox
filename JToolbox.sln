@@ -188,7 +188,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.ImagesResi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.QuartzScheduling", "Source\JToolbox.Misc\JToolbox.Misc.QuartzScheduling\JToolbox.Misc.QuartzScheduling.csproj", "{FB7A3DE4-E015-49B8-93A1-2176E1E73480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.L2DB", "Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB\JToolbox.DataAccess.L2DB.csproj", "{B1B4F0E3-1799-4A86-8702-319B4371B7CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.L2DB", "Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB\JToolbox.DataAccess.L2DB.csproj", "{B1B4F0E3-1799-4A86-8702-319B4371B7CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.L2DB.Tests", "Tests\JToolbox.DataAccess.L2DB.Tests\JToolbox.DataAccess.L2DB.Tests.csproj", "{D76F75F2-B37A-4A2E-82CD-D8E5C33EFFD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -492,6 +494,10 @@ Global
 		{B1B4F0E3-1799-4A86-8702-319B4371B7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1B4F0E3-1799-4A86-8702-319B4371B7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1B4F0E3-1799-4A86-8702-319B4371B7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D76F75F2-B37A-4A2E-82CD-D8E5C33EFFD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D76F75F2-B37A-4A2E-82CD-D8E5C33EFFD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D76F75F2-B37A-4A2E-82CD-D8E5C33EFFD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D76F75F2-B37A-4A2E-82CD-D8E5C33EFFD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -584,6 +590,7 @@ Global
 		{086D974A-18C7-4F7D-B082-E21DB71F6D11} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{FB7A3DE4-E015-49B8-93A1-2176E1E73480} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{B1B4F0E3-1799-4A86-8702-319B4371B7CD} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
+		{D76F75F2-B37A-4A2E-82CD-D8E5C33EFFD2} = {9F3158FF-03D5-47B0-820A-9C7A88150F3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

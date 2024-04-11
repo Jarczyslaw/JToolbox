@@ -36,7 +36,7 @@ namespace JToolbox.DataAccess.L2DB.Repositories
             {
                 entities.ForEach(e => PrepareEntity(e));
 
-                BulkCopyOptions options = new BulkCopyOptions(BulkCopyType: BulkCopyType.ProviderSpecific);
+                BulkCopyOptions options = new BulkCopyOptions(BulkCopyType: BulkCopyType.MultipleRows);
                 return (int)db.BulkCopy(options, entities).RowsCopied;
             }
             return 0;
