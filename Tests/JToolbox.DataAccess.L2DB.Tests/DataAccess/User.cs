@@ -6,13 +6,13 @@ namespace JToolbox.DataAccess.L2DB.Tests.DataAccess
     [Table("Users")]
     public class User : BaseExtendedEntity
     {
-        [Column, NotNull]
+        [Column]
         public int Age { get; set; }
 
-        [Column, NotNull]
+        [Column]
         public bool IsActive { get; set; }
 
-        [Column, NotNull]
+        [Column]
         public string Name { get; set; }
     }
 }

@@ -30,14 +30,14 @@ namespace JToolbox.DataAccess.L2DB.Repositories
             return entity.Id;
         }
 
-        public virtual int CreateMany(DataConnection db, List<TEntity> entities)
+        public virtual int CreateMany(DataConnection db, List<TEntity> entities, BulkCopyOptions bulkCopyOptions = null)
         {
             if (entities?.Count > 0)
             {
                 entities.ForEach(e => PrepareEntity(e));
 
-                BulkCopyOptions options = new BulkCopyOptions(BulkCopyType: BulkCopyType.MultipleRows);
-                return (int)db.BulkCopy(options, entities).RowsCopied;
+                bulkCopyOptions = bulkCopyOptions ?? new BulkCopyOptions(BulkCopyType: BulkCopyType.MultipleRows);
+                return (int)db.BulkCopy(bulkCopyOptions, entities).RowsCopied;
             }
             return 0;
         }
@@ -52,6 +52,11 @@ namespace JToolbox.DataAccess.L2DB.Repositories
             int deletedRows = db.GetTable<TEntity>()
                 .Delete(x => x.Id == id);
             return deletedRows == 1;
+        }
+
+        public virtual int DeleteBy(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions)
+        {
+            return GetQueryableWithExpressions(db, expressions).Delete();
         }
 
         public virtual int DeleteMany(DataConnection db, List<TEntity> entities)
@@ -79,6 +84,11 @@ namespace JToolbox.DataAccess.L2DB.Repositories
             return GetBy(db, tempExpressions.ToArray()).Count > 0;
         }
 
+        public virtual bool EntityExists(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions)
+        {
+            return GetBy(db, expressions).Count > 0;
+        }
+
         public virtual List<TEntity> GetAll(DataConnection db)
         {
             return db.GetTable<TEntity>().ToList();
@@ -90,18 +100,19 @@ namespace JToolbox.DataAccess.L2DB.Repositories
                 .Where(expression)
                 .ToList();
 
+            int updatedRows = 0;
             if (entities?.Count > 0)
             {
                 foreach (var entity in entities)
                 {
                     PrepareEntity(entity);
                     action(entity);
-                }
 
-                return db.Update(entities);
+                    updatedRows += db.Update(entity);
+                }
             }
 
-            return 0;
+            return updatedRows;
         }
 
         public virtual List<TEntity> GetBy(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions)
@@ -125,7 +136,13 @@ namespace JToolbox.DataAccess.L2DB.Repositories
         }
 
         public virtual TEntity GetFirstOrDefault(DataConnection db)
-            => db.GetTable<TEntity>().FirstOrDefault();
+            => GetFirstOrDefaultBy(db);
+
+        public virtual TEntity GetFirstOrDefaultBy(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions)
+        {
+            IQueryable<TEntity> query = GetQueryableWithExpressions(db, expressions);
+            return query.FirstOrDefault();
+        }
 
         public virtual void Merge(
             DataConnection db,
@@ -176,12 +193,16 @@ namespace JToolbox.DataAccess.L2DB.Repositories
 
         public virtual int UpdateMany(DataConnection db, List<TEntity> entities)
         {
+            int updatedRows = 0;
             if (entities?.Count > 0)
             {
-                entities.ForEach(e => PrepareEntity(e));
-                return db.Update(entities);
+                entities.ForEach(x =>
+                {
+                    PrepareEntity(x);
+                    updatedRows += db.Update(x);
+                });
             }
-            return 0;
+            return updatedRows;
         }
 
         public virtual int UpdateMany(DataConnection db, List<int> ids, Action<TEntity> action)

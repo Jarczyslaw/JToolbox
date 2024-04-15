@@ -14,17 +14,21 @@ namespace JToolbox.DataAccess.L2DB.Repositories
 
         int Create(DataConnection db, TEntity entity);
 
-        int CreateMany(DataConnection db, List<TEntity> entities);
+        int CreateMany(DataConnection db, List<TEntity> entities, BulkCopyOptions bulkCopyOptions = null);
 
         bool Delete(DataConnection db, int id);
 
         bool Delete(DataConnection db, TEntity entity);
+
+        int DeleteBy(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions);
 
         int DeleteMany(DataConnection db, List<int> ids);
 
         int DeleteMany(DataConnection db, List<TEntity> entities);
 
         bool EntityExists(DataConnection db, TEntity entity, params Expression<Func<TEntity, bool>>[] expressions);
+
+        bool EntityExists(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions);
 
         List<TEntity> GetAll(DataConnection db);
 
@@ -37,6 +41,8 @@ namespace JToolbox.DataAccess.L2DB.Repositories
         List<TEntity> GetByIds(DataConnection db, List<int> ids);
 
         TEntity GetFirstOrDefault(DataConnection db);
+
+        TEntity GetFirstOrDefaultBy(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions);
 
         void Merge(DataConnection db,
             List<TEntity> newList,
