@@ -1,5 +1,6 @@
 ﻿using JToolbox.Core.TimeProvider;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
+using LinqToDB.Data;
 
 namespace JToolbox.DataAccess.L2DB.Tests
 {
@@ -47,6 +48,39 @@ namespace JToolbox.DataAccess.L2DB.Tests
             Assert.AreEqual(addedUser.Age, newUser.Age);
             Assert.AreEqual(addedUser.IsActive, newUser.IsActive);
             Assert.IsTrue(addedUser.Id > 0);
+        }
+
+        [TestMethod]
+        public void CreateMany_UsersWithIds_UsersAdded()
+        {
+            List<User> newUsers = new()
+            {
+                new User
+                {
+                    Age = 40,
+                    Name = "User4",
+                    IsActive = true,
+                    Id = 100,
+                },
+                new User
+                {
+                    Age = 50,
+                    Name = "User5",
+                    IsActive = true,
+                    Id = 101,
+                },
+            };
+
+            Execute(x => _repository.CreateMany(x, newUsers, new BulkCopyOptions
+            {
+                KeepIdentity = true,
+            }));
+
+            List<int> ids = [100, 101];
+            List<User> users = Execute(x => _repository.GetByIds(x, ids));
+
+            Assert.AreEqual(newUsers.Count, users.Count);
+            Assert.IsTrue(Enumerable.SequenceEqual(users.Select(x => x.Id), ids));
         }
 
         [TestMethod]
