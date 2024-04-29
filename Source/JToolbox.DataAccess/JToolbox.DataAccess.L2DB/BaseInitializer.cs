@@ -12,7 +12,7 @@ namespace JToolbox.DataAccess.L2DB
 {
     public abstract class BaseInitializer
     {
-        private readonly ITimeProvider _timeProvider;
+        protected readonly ITimeProvider _timeProvider;
 
         protected BaseInitializer(ITimeProvider timeProvider)
         {

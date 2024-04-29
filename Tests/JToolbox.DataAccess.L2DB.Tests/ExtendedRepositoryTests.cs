@@ -1,5 +1,6 @@
 ﻿using JToolbox.Core.TimeProvider;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
+using LinqToDB;
 using LinqToDB.Data;
 
 namespace JToolbox.DataAccess.L2DB.Tests
@@ -130,6 +131,29 @@ namespace JToolbox.DataAccess.L2DB.Tests
         }
 
         [TestMethod]
+        public void GetOrders_OrderWithItemsLoaded()
+        {
+            List<Order> orders = Execute(x => x.GetTable<Order>().LoadWith(y => y.Items).ThenLoad(x => x.Order).ToList());
+
+            Assert.AreEqual(_initialOrders.Count, orders.Count);
+            Assert.AreEqual(_initialOrders.Sum(x => x.Items.Count), orders.Sum(x => x.Items.Count));
+            Assert.IsTrue(orders.SelectMany(x => x.Items).All(x => x.Order != null));
+        }
+
+        [TestMethod]
+        public void Max_GetMaxIdFromEmptyTable_ZeroReturned()
+        {
+            int maxId = Execute(x => x.GetTable<Order>().Max(x => x.Id));
+
+            Execute(x => x.GetTable<Order>().Delete());
+
+            int newMaxId = Execute(x => x.GetTable<Order>().Max(x => (int?)x.Id)) ?? 0;
+
+            Assert.IsTrue(maxId > 0);
+            Assert.AreEqual(0, newMaxId);
+        }
+
+        [TestMethod]
         public void SafeDelete_AllIdsProvided_AllUsersAreSafeDeleted()
         {
             Execute(x => _repository.SafeDelete(x, 1));
@@ -144,7 +168,7 @@ namespace JToolbox.DataAccess.L2DB.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            InitializeTable();
+            InitializeTables();
         }
 
         [TestMethod]

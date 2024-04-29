@@ -7,7 +7,6 @@ namespace JToolbox.DataAccess.L2DB
     {
         public BaseDbContext(DataOptions dataOptions) : base(dataOptions)
         {
-            (this as IDataContext).CloseAfterUse = true;
         }
     }
 }
