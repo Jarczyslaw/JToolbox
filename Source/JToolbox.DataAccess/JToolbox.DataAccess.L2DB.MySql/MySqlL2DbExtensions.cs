@@ -13,7 +13,8 @@ namespace JToolbox.DataAccess.L2DB.MySql
             string primaryColumnName,
             string foreignKeyName)
         {
-            string query = $@"ALTER TABLE {tableName}
+            string query = $@"
+                ALTER TABLE {tableName}
                 ADD CONSTRAINT {foreignKeyName}
                 FOREIGN KEY ({foreignKeyColumnName})
                 REFERENCES {primaryTableName}({primaryColumnName})";
@@ -72,9 +73,16 @@ namespace JToolbox.DataAccess.L2DB.MySql
            string tableName,
            string foreignKeyName)
         {
-            string query = $@"SELECT CONSTRAINT_NAME
+            string databaseName = db.DataProvider.GetSchemaProvider()
+                .GetSchema(db).Database;
+
+            string query = $@"
+                SELECT CONSTRAINT_NAME
                 FROM information_schema.KEY_COLUMN_USAGE
-                WHERE TABLE_NAME = '{tableName}' AND CONSTRAINT_NAME = '{foreignKeyName}'";
+                WHERE
+                    TABLE_SCHEMA = '{databaseName}'
+                    AND TABLE_NAME = '{tableName}'
+                    AND CONSTRAINT_NAME = '{foreignKeyName}'";
 
             return db.Query<string>(query).Any();
         }

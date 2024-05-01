@@ -3,6 +3,7 @@ using JToolbox.DataAccess.L2DB.MySql;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
 using LinqToDB;
 using LinqToDB.Data;
+using LinqToDB.SchemaProvider;
 
 namespace JToolbox.DataAccess.L2DB.Tests
 {
@@ -129,6 +130,14 @@ namespace JToolbox.DataAccess.L2DB.Tests
             List<User> users = Execute(x => _repository.GetByIds(x, [1, 2]));
 
             Assert.AreEqual(2, users.Count);
+        }
+
+        [TestMethod]
+        public void GetDatabaseName()
+        {
+            DatabaseSchema x = Execute(x => x.DataProvider.GetSchemaProvider().GetSchema(x));
+
+            Assert.AreEqual(_databaseName, x.Database);
         }
 
         [TestMethod]

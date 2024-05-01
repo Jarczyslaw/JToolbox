@@ -8,6 +8,8 @@ namespace JToolbox.DataAccess.L2DB.Tests
 {
     public class BaseTest
     {
+        protected const string _databaseName = "l2dbtests";
+
         protected readonly List<Order> _initialOrders = new()
         {
             new Order
@@ -51,7 +53,6 @@ namespace JToolbox.DataAccess.L2DB.Tests
             }
         };
 
-        private const string _databaseName = "l2dbtests";
         private static string _connectionString;
 
         public static void InitializeDatabase()
