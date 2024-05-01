@@ -74,7 +74,10 @@ namespace JToolbox.DataAccess.L2DB.MySql
            string foreignKeyName)
         {
             string databaseName = db.DataProvider.GetSchemaProvider()
-                .GetSchema(db).Database;
+                .GetSchema(db, new LinqToDB.SchemaProvider.GetSchemaOptions
+                {
+                    GetProcedures = false
+                }).Database;
 
             string query = $@"
                 SELECT CONSTRAINT_NAME
