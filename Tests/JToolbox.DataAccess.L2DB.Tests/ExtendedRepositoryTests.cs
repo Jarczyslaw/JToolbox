@@ -1,4 +1,5 @@
 ﻿using JToolbox.Core.TimeProvider;
+using JToolbox.DataAccess.L2DB.MySql;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
 using LinqToDB;
 using LinqToDB.Data;
@@ -141,13 +142,24 @@ namespace JToolbox.DataAccess.L2DB.Tests
         }
 
         [TestMethod]
+        public void IfForeignKeyExists_CheckForeignKeys()
+        {
+            string orderItemsTableName = typeof(OrderItem).GetTableName();
+            string foreignKeyName = MySqlL2DbExtensions.GetForeignKeyName<OrderItem, Order>();
+
+            bool keyExists = Execute(x => x.IfForeignKeyExists(orderItemsTableName, foreignKeyName));
+
+            Assert.IsTrue(keyExists);
+        }
+
+        [TestMethod]
         public void Max_GetMaxIdFromEmptyTable_ZeroReturned()
         {
-            int maxId = Execute(x => x.GetTable<Order>().Max(x => x.Id));
+            int maxId = Execute(x => x.GetTable<OrderItem>().Max(x => x.Id));
 
-            Execute(x => x.GetTable<Order>().Delete());
+            Execute(x => x.GetTable<OrderItem>().Delete());
 
-            int newMaxId = Execute(x => x.GetTable<Order>().Max(x => (int?)x.Id)) ?? 0;
+            int newMaxId = Execute(x => x.GetTable<OrderItem>().Max(x => (int?)x.Id)) ?? 0;
 
             Assert.IsTrue(maxId > 0);
             Assert.AreEqual(0, newMaxId);

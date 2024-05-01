@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\JToolbox.Core\JToolbox.Core.csproj" />
+    <ProjectReference Include="..\..\Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB.MySql\JToolbox.DataAccess.L2DB.MySql.csproj" />
     <ProjectReference Include="..\..\Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB\JToolbox.DataAccess.L2DB.csproj" />
   </ItemGroup>
 

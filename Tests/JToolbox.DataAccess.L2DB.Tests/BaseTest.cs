@@ -1,4 +1,5 @@
 using JToolbox.Core.TimeProvider;
+using JToolbox.DataAccess.L2DB.MySql;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
 using LinqToDB;
 using LinqToDB.Data;
@@ -61,12 +62,16 @@ namespace JToolbox.DataAccess.L2DB.Tests
 
             Execute(x => x.CreateTable<Order>(tableOptions: TableOptions.CheckExistence));
             Execute(x => x.CreateTable<OrderItem>(tableOptions: TableOptions.CheckExistence));
+
+            Execute(x => x.CreateForeignKeyIfNotExists<OrderItem, Order>(
+                nameof(OrderItem.OrderId),
+                nameof(Order.Id)));
         }
 
         public void InitializeTables()
         {
             UsersRepository usersRepository = new(new LocalTimeProvider());
-            Execute(x => x.Execute($"TRUNCATE TABLE {typeof(User).GetTableName()}"));
+            Execute(x => x.Truncate<User>());
             Execute(x => usersRepository.CreateMany(x, _initialUsers, bulkCopyOptions: new BulkCopyOptions
             {
                 KeepIdentity = true,
@@ -76,13 +81,20 @@ namespace JToolbox.DataAccess.L2DB.Tests
             OrdersRepository ordersRepository = new(new LocalTimeProvider());
             OrderItemsRepository orderItemsRepository = new();
 
-            Execute(x => x.Execute($"TRUNCATE TABLE {typeof(Order).GetTableName()}"));
-            Execute(x => _initialOrders.ForEach(y => ordersRepository.Create(x, y)));
+            Execute(x =>
+            {
+                x.SetForeignKeyChecks(false);
 
-            _initialOrders.ForEach(x => x.Items.ForEach(y => y.OrderId = x.Id));
+                x.Truncate<OrderItem>();
+                x.Truncate<Order>();
 
-            Execute(x => x.Execute($"TRUNCATE TABLE {typeof(OrderItem).GetTableName()}"));
-            Execute(x => orderItemsRepository.CreateMany(x, _initialOrders.SelectMany(y => y.Items).ToList()));
+                x.SetForeignKeyChecks(true);
+
+                _initialOrders.ForEach(y => ordersRepository.Create(x, y));
+                _initialOrders.ForEach(x => x.Items.ForEach(y => y.OrderId = x.Id));
+
+                orderItemsRepository.CreateMany(x, _initialOrders.SelectMany(y => y.Items).ToList());
+            });
         }
 
         protected static void Execute(Action<DbContext> action)
