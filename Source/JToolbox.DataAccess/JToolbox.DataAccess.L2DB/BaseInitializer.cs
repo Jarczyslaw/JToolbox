@@ -21,6 +21,8 @@ namespace JToolbox.DataAccess.L2DB
 
         public abstract DataOptions GetDataOptions { get; }
 
+        public bool InitializeData { get; set; } = true;
+
         protected abstract Assembly EntitiesAssembly { get; }
 
         protected abstract List<BaseMigration> Migrations { get; }
@@ -54,6 +56,12 @@ namespace JToolbox.DataAccess.L2DB
                 if (!currentMigrations.Contains(migrationName))
                 {
                     migration.Up(db, newDatabase);
+
+                    if (InitializeData)
+                    {
+                        migration.InitializeData(db);
+                    }
+
                     db.Insert(new MigrationEntity
                     {
                         Name = migrationName,

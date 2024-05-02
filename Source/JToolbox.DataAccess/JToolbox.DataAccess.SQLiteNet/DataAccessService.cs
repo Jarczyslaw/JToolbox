@@ -130,12 +130,15 @@ namespace JToolbox.DataAccess.SQLiteNet
             }
         }
 
-        public Task Init(string dataSource, string password)
+        public Task Init(string dataSource, string password, bool skipInitialization)
         {
             if (DataSource != dataSource)
             {
                 DataSource = dataSource;
                 Password = password;
+
+                if (skipInitialization) { return Task.CompletedTask; }
+
                 return Task.Run(async () =>
                 {
                     await CheckMigrationLock();

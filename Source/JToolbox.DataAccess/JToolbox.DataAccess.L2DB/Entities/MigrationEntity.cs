@@ -6,7 +6,7 @@ namespace JToolbox.DataAccess.L2DB.Entities
     [Table("_Migrations")]
     public class MigrationEntity : BaseEntity
     {
-        [Column, NotNull]
+        [Column(Precision = 3), NotNull]
         public DateTime ExecutionDate { get; set; }
 
         [Column, NotNull]

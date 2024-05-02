@@ -24,7 +24,7 @@ namespace JToolbox.DataAccess.SQLiteNet
 
         T ExecuteTransaction<T>(Func<SQLiteConnection, T> action);
 
-        Task Init(string dataSource, string password);
+        Task Init(string dataSource, string password, bool skipInitialization);
 
         void Optimize();
 
