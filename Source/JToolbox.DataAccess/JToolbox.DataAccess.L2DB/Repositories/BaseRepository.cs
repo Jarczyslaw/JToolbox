@@ -42,6 +42,16 @@ namespace JToolbox.DataAccess.L2DB.Repositories
             return 0;
         }
 
+        public virtual int CreateManyWithIdentities(DataConnection db, List<TEntity> entities)
+        {
+            if (entities?.Count > 0)
+            {
+                entities.ForEach(e => Create(db, e));
+                return entities.Count;
+            }
+            return 0;
+        }
+
         public virtual bool Delete(DataConnection db, TEntity entity)
         {
             return db.Delete(entity) == 1;

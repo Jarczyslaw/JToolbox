@@ -16,6 +16,8 @@ namespace JToolbox.DataAccess.L2DB.Repositories
 
         int CreateMany(DataConnection db, List<TEntity> entities, BulkCopyOptions bulkCopyOptions = null);
 
+        int CreateManyWithIdentities(DataConnection db, List<TEntity> entities);
+
         bool Delete(DataConnection db, int id);
 
         bool Delete(DataConnection db, TEntity entity);

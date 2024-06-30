@@ -1,0 +1,2 @@
+sc continue FooService
+pause

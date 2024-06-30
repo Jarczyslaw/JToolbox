@@ -59,7 +59,7 @@ namespace JToolbox.DataAccess.L2DB
 
                     if (InitializeData)
                     {
-                        migration.InitializeData(db);
+                        migration.InitializeData(db, newDatabase);
                     }
 
                     db.Insert(new MigrationEntity

@@ -20,7 +20,7 @@ namespace JToolbox.DataAccess.L2DB.Migrations
             return null;
         }
 
-        public virtual void InitializeData(DataConnection db)
+        public virtual void InitializeData(DataConnection db, bool newDatabase)
         { }
 
         public abstract void Up(DataConnection db, bool newDatabase);
