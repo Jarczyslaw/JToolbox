@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Quartz" Version="3.7.0" />
+    <PackageReference Include="Quartz" Version="3.11.0" />
   </ItemGroup>
 
 	<Target Name="SetNoBuild">
@@ -18,6 +18,6 @@
 		<Exec Command="xcopy /I /Y &quot;$(PublishDir)&quot; &quot;$(SolutionDir)\Release\$(ProjectName)\&quot;" />
 	</Target>
 	<Target Name="CleanAfterBuild" AfterTargets="AfterClean">
-		<RemoveDir Directories="$(PublishDir)" Condition="'$(PublishDir)' != ''"/>
+		<RemoveDir Directories="$(PublishDir)" Condition="'$(PublishDir)' != ''" />
 	</Target>
 </Project>
