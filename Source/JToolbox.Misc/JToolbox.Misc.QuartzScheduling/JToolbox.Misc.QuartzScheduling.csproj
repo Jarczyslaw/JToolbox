@@ -8,4 +8,16 @@
     <PackageReference Include="Quartz" Version="3.7.0" />
   </ItemGroup>
 
+	<Target Name="SetNoBuild">
+		<PropertyGroup>
+			<NoBuild>true</NoBuild>
+		</PropertyGroup>
+	</Target>
+	<Target Name="PublishAfterBuild" AfterTargets="AfterBuild" DependsOnTargets="SetNoBuild;Publish" Condition="'$(Configuration)' == 'Release'" />
+	<Target Name="CopyAfterPublish" AfterTargets="PublishAfterBuild" Condition="'$(Configuration)' == 'Release'">
+		<Exec Command="xcopy /I /Y &quot;$(PublishDir)&quot; &quot;$(SolutionDir)\Release\$(ProjectName)\&quot;" />
+	</Target>
+	<Target Name="CleanAfterBuild" AfterTargets="AfterClean">
+		<RemoveDir Directories="$(PublishDir)" Condition="'$(PublishDir)' != ''"/>
+	</Target>
 </Project>

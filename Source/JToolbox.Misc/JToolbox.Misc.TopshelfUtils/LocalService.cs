@@ -1,6 +1,7 @@
 ﻿using System;
 using Topshelf;
 using Topshelf.HostConfigurators;
+using Topshelf.Hosts;
 
 namespace JToolbox.Misc.TopshelfUtils
 {
@@ -34,7 +35,7 @@ namespace JToolbox.Misc.TopshelfUtils
                 x.Service<LocalService>(y =>
                 {
                     y.ConstructUsing(_ => this);
-                    y.WhenStarted(z => z.Start());
+                    y.WhenStarted((z, zz) => z.Start(zz is ConsoleRunHost));
                     y.WhenStopped(z => z.Stop());
                     y.WhenPaused(z => z.Pause());
                     y.WhenContinued(z => z.Continue());
@@ -67,7 +68,7 @@ namespace JToolbox.Misc.TopshelfUtils
 
         public virtual bool Shutdown() => true;
 
-        public virtual bool Start() => true;
+        public virtual bool Start(bool launchedInConsole) => true;
 
         public virtual bool Stop() => true;
     }

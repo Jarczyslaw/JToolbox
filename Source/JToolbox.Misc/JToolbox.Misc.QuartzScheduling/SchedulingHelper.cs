@@ -8,35 +8,48 @@ namespace JToolbox.Misc.QuartzScheduling
 {
     public static class SchedulingHelper
     {
-        public static ITrigger CreateCronTrigger(string cronExpression, Action<TriggerBuilder> builderAction = null)
+        public static ITrigger CreateCronTrigger(
+            string cronExpression,
+            string jobName,
+            Action<TriggerBuilder> builderAction = null)
         {
             CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.CronSchedule(cronExpression);
-            return CreateCronTrigger(cronScheduleBuilder, builderAction);
+            return CreateCronTrigger(cronScheduleBuilder, jobName, builderAction);
         }
 
         public static ITrigger CreateCronTrigger(
             int hour,
             int minute,
             List<DayOfWeek> days,
+            string jobName,
             Action<TriggerBuilder> builderAction = null)
         {
             CronScheduleBuilder schedulebuilder = CronScheduleBuilder.AtHourAndMinuteOnGivenDaysOfWeek(hour, minute, days.ToArray());
-            return CreateCronTrigger(schedulebuilder, builderAction);
+            return CreateCronTrigger(schedulebuilder, jobName, builderAction);
         }
 
-        public static ITrigger CreateCronTrigger(CronScheduleBuilder cronScheduleBuilder, Action<TriggerBuilder> builderAction = null)
+        public static ITrigger CreateCronTrigger(
+            CronScheduleBuilder cronScheduleBuilder,
+            string jobName,
+            Action<TriggerBuilder> builderAction = null)
         {
             TriggerBuilder builder = TriggerBuilder.Create()
-                .WithSchedule(cronScheduleBuilder);
+                .WithSchedule(cronScheduleBuilder)
+                .ForJob(jobName);
 
             builderAction?.Invoke(builder);
 
             return builder.Build();
         }
 
-        public static ITrigger CreateIntervalTrigger(TimeSpan interval, bool delayed = false, Action<TriggerBuilder> builderAction = null)
+        public static ITrigger CreateIntervalTrigger(
+            TimeSpan interval,
+            string jobName,
+            bool delayed = false,
+            Action<TriggerBuilder> builderAction = null)
         {
             TriggerBuilder builder = TriggerBuilder.Create()
+                .ForJob(jobName)
                 .WithSimpleSchedule(x => x.WithInterval(interval).RepeatForever());
 
             if (delayed) { builder = builder.StartAt(DateTimeOffset.Now.Add(interval)); }
@@ -60,9 +73,13 @@ namespace JToolbox.Misc.QuartzScheduling
             return jobBuilder.Build();
         }
 
-        public static ITrigger CreateStartAtTrigger(DateTime startAt, Action<TriggerBuilder> builderAction = null)
+        public static ITrigger CreateStartAtTrigger(
+            DateTime startAt,
+            string jobName,
+            Action<TriggerBuilder> builderAction = null)
         {
             TriggerBuilder builder = TriggerBuilder.Create()
+                .ForJob(jobName)
                 .StartAt(new DateTimeOffset(startAt));
 
             builderAction?.Invoke(builder);
@@ -70,9 +87,10 @@ namespace JToolbox.Misc.QuartzScheduling
             return builder.Build();
         }
 
-        public static ITrigger CreateStartNowTrigger(Action<TriggerBuilder> builderAction = null)
+        public static ITrigger CreateStartNowTrigger(string jobName, Action<TriggerBuilder> builderAction = null)
         {
             TriggerBuilder builder = TriggerBuilder.Create()
+                .ForJob(jobName)
                 .StartNow();
 
             builderAction?.Invoke(builder);
