@@ -15,5 +15,10 @@ namespace JToolbox.Misc.QuartzScheduling
 
             return fireTimeUtc.Subtract(scheduledFireTimeUtc).TotalMilliseconds > offsetMilliseconds;
         }
+
+        public static bool IsTheSame(this JobKey jobKey, JobKey other)
+            => jobKey.Group == other.Group && jobKey.Name == other.Name;
+
+        public static JobKey ToJobKey(this string name) => new JobKey(name);
     }
 }
