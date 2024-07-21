@@ -8,7 +8,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Entities
         public DateTime CreateDate { get; set; }
 
         [NotNull]
-        public bool Deleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         public DateTime UpdateDate { get; set; }
     }

@@ -84,7 +84,7 @@ namespace JToolbox.DataAccess.SQLiteNet.Repositories
         {
             var query = $@"
 UPDATE {SqliteExtensions.GetTableName<TEntity>()}
-SET {SqliteExtensions.GetColumnName<BaseExtendedEntity>(nameof(BaseExtendedEntity.Deleted))} = 1
+SET {SqliteExtensions.GetColumnName<BaseExtendedEntity>(nameof(BaseExtendedEntity.IsDeleted))} = 1
 WHERE {whereCondition}";
 
             return query;
