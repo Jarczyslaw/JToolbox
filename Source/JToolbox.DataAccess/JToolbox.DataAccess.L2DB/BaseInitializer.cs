@@ -6,7 +6,6 @@ using LinqToDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace JToolbox.DataAccess.L2DB
 {
@@ -22,8 +21,6 @@ namespace JToolbox.DataAccess.L2DB
         public abstract DataOptions GetDataOptions { get; }
 
         public bool InitializeData { get; set; } = true;
-
-        protected abstract Assembly EntitiesAssembly { get; }
 
         protected abstract List<BaseMigration> Migrations { get; }
 

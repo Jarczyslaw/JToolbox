@@ -7,7 +7,7 @@ namespace JToolbox.DataAccess.L2DB
     {
         bool AutoCommit { get; set; }
 
-        string ConnectionString { get; }
+        string ConnectionString { get; set; }
 
         void Execute(Action<BaseDbContext> action);
 
