@@ -17,6 +17,8 @@ namespace JToolbox.DataAccess.L2DB
 
         T ExecuteTransaction<T>(Func<BaseDbContext, T> action);
 
+        int GetDbVersion();
+
         Task Init();
     }
 }

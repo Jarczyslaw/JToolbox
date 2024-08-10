@@ -194,13 +194,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.L2DB.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.L2DB.MySql", "Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB.MySql\JToolbox.DataAccess.L2DB.MySql.csproj", "{5180E25E-100B-4C82-B855-B8EDEDED4FED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.TopshelfUtils", "Source\JToolbox.Misc\JToolbox.Misc.TopshelfUtils\JToolbox.Misc.TopshelfUtils.csproj", "{5ABB9930-9BDE-4075-A264-12BE8BFDD86B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.TopshelfUtils", "Source\JToolbox.Misc\JToolbox.Misc.TopshelfUtils\JToolbox.Misc.TopshelfUtils.csproj", "{5ABB9930-9BDE-4075-A264-12BE8BFDD86B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.TopshelfUtils", "Examples\Examples.Desktop\Examples.Desktop.TopshelfUtils\Examples.Desktop.TopshelfUtils.csproj", "{DCCD8EAE-98BB-4DD9-B56F-0C12E754C621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Desktop.TopshelfUtils", "Examples\Examples.Desktop\Examples.Desktop.TopshelfUtils\Examples.Desktop.TopshelfUtils.csproj", "{DCCD8EAE-98BB-4DD9-B56F-0C12E754C621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.Misc.WindowsHelpers", "Source\JToolbox.Misc\JToolbox.Misc.WindowsHelpers\JToolbox.Misc.WindowsHelpers.csproj", "{E8AA3A47-9CA5-4C93-BD66-D2B3E20F4C56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.Misc.WindowsHelpers", "Source\JToolbox.Misc\JToolbox.Misc.WindowsHelpers\JToolbox.Misc.WindowsHelpers.csproj", "{E8AA3A47-9CA5-4C93-BD66-D2B3E20F4C56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.SQLite.Tests", "Tests\JToolbox.DataAccess.SQLite.Tests\JToolbox.DataAccess.SQLite.Tests.csproj", "{742AD916-D22A-4803-B199-69C2001B99C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.SQLite.Tests", "Tests\JToolbox.DataAccess.SQLite.Tests\JToolbox.DataAccess.SQLite.Tests.csproj", "{742AD916-D22A-4803-B199-69C2001B99C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.L2DB.SQLite", "Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB.SQLite\JToolbox.DataAccess.L2DB.SQLite.csproj", "{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -528,6 +530,10 @@ Global
 		{742AD916-D22A-4803-B199-69C2001B99C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{742AD916-D22A-4803-B199-69C2001B99C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{742AD916-D22A-4803-B199-69C2001B99C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -626,6 +632,7 @@ Global
 		{DCCD8EAE-98BB-4DD9-B56F-0C12E754C621} = {907A859F-6219-4D41-9B8C-1EF003286419}
 		{E8AA3A47-9CA5-4C93-BD66-D2B3E20F4C56} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{742AD916-D22A-4803-B199-69C2001B99C3} = {9F3158FF-03D5-47B0-820A-9C7A88150F3E}
+		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}

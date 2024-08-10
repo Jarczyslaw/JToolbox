@@ -1,6 +1,6 @@
 ﻿using JToolbox.Core.EqualityComparers;
 using JToolbox.Core.Utilities.Merge;
-using JToolbox.DataAccess.L2DB.Entities;
+using JToolbox.DataAccess.L2DB.Abstraction;
 using LinqToDB;
 using LinqToDB.Data;
 using System;
@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 namespace JToolbox.DataAccess.L2DB.Repositories
 {
     public abstract class BaseRepository<TEntity> : CommonRepository, IBaseRepository<TEntity>
-        where TEntity : BaseEntity, new()
+        where TEntity : class, IBaseEntity, new()
     {
         public virtual bool Any(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions)
         {

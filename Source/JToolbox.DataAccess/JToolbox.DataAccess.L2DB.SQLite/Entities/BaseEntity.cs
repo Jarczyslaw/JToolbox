@@ -1,9 +1,9 @@
-﻿using JToolbox.Core.Abstraction;
+﻿using JToolbox.DataAccess.L2DB.Abstraction;
 using LinqToDB.Mapping;
 
-namespace JToolbox.DataAccess.L2DB.Entities
+namespace JToolbox.DataAccess.L2DB.SQLite.Entities
 {
-    public abstract class BaseEntity : IKey
+    public abstract class BaseEntity : IBaseEntity
     {
         [PrimaryKey, Identity]
         public int Id { get; set; }

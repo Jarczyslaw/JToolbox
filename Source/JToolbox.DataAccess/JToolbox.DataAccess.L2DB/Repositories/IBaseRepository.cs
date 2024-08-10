@@ -1,4 +1,4 @@
-﻿using JToolbox.DataAccess.L2DB.Entities;
+﻿using JToolbox.DataAccess.L2DB.Abstraction;
 using LinqToDB;
 using LinqToDB.Data;
 using System;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace JToolbox.DataAccess.L2DB.Repositories
 {
     public interface IBaseRepository<TEntity>
-        where TEntity : BaseEntity, new()
+        where TEntity : IBaseEntity, new()
     {
         int Count(DataConnection db, params Expression<Func<TEntity, bool>>[] expressions);
 

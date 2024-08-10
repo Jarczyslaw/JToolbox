@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.EqualityComparers;
 using JToolbox.Core.TimeProvider;
 using JToolbox.Core.Utilities.Merge;
-using JToolbox.DataAccess.L2DB.Entities;
+using JToolbox.DataAccess.L2DB.Abstraction;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.Linq;
@@ -11,7 +11,7 @@ using System.Linq;
 namespace JToolbox.DataAccess.L2DB.Repositories
 {
     public abstract class BaseExtendedRepository<TEntity> : BaseRepository<TEntity>, IBaseExtendedRepository<TEntity>
-        where TEntity : BaseExtendedEntity, new()
+        where TEntity : class, IBaseExtendedEntity, new()
     {
         protected readonly ITimeProvider _timeProvider;
 

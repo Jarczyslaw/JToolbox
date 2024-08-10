@@ -1,9 +1,10 @@
-﻿using LinqToDB.Mapping;
+﻿using JToolbox.DataAccess.L2DB.Abstraction;
+using LinqToDB.Mapping;
 using System;
 
-namespace JToolbox.DataAccess.L2DB.Entities
+namespace JToolbox.DataAccess.L2DB.MySql.Entities
 {
-    public abstract class BaseExtendedEntity : BaseEntity
+    public abstract class BaseExtendedEntity : BaseEntity, IBaseExtendedEntity
     {
         [Column(Precision = 3), NotNull]
         public DateTime CreateDate { get; set; }

@@ -1,4 +1,4 @@
-﻿using JToolbox.DataAccess.L2DB.Entities;
+﻿using JToolbox.DataAccess.L2DB.MySql.Entities;
 using LinqToDB.Mapping;
 using System.ComponentModel;
 

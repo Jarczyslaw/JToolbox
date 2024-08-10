@@ -1,7 +1,6 @@
 ﻿using JToolbox.Core.TimeProvider;
-using JToolbox.DataAccess.L2DB.Entities;
+using JToolbox.DataAccess.L2DB.Abstraction;
 using JToolbox.DataAccess.L2DB.Migrations;
-using JToolbox.DataAccess.L2DB.Repositories;
 using LinqToDB;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,8 @@ using System.Linq;
 
 namespace JToolbox.DataAccess.L2DB
 {
-    public abstract class BaseInitializer
+    public abstract class BaseInitializer<TMigration> : IBaseInitializer
+        where TMigration : class, IMigrationEntity, new()
     {
         protected readonly ITimeProvider _timeProvider;
 
@@ -24,6 +24,16 @@ namespace JToolbox.DataAccess.L2DB
 
         protected abstract List<BaseMigration> Migrations { get; }
 
+        public virtual void CreateMigrationsTableIfNotExists(BaseDbContext db)
+        {
+            db.CreateTable<TMigration>(tableOptions: TableOptions.CheckExistence);
+        }
+
+        public int GetDbVersion(BaseDbContext db)
+        {
+            return db.GetTable<TMigration>().Max(x => x.Version);
+        }
+
         public void InitializeMigrations(BaseDbContext db)
         {
             if (Migrations == null || Migrations.Count == 0)
@@ -36,9 +46,7 @@ namespace JToolbox.DataAccess.L2DB
                 throw new Exception("At least one migration has invalid name. Migration should be named as 'Migration_{version}_{migrationName}");
             }
 
-            var repository = new MigrationsRepository();
-            var currentMigrations = repository.GetAll(db)
-                .ConvertAll(s => s.Name);
+            var currentMigrations = GetCurrentMigrationsNames(db);
 
             if (currentMigrations.Count > Migrations.Count)
             {
@@ -59,14 +67,24 @@ namespace JToolbox.DataAccess.L2DB
                         migration.InitializeData(db, newDatabase);
                     }
 
-                    db.Insert(new MigrationEntity
-                    {
-                        Name = migrationName,
-                        ExecutionDate = _timeProvider.Now,
-                        Version = migration.GetVersion().Value
-                    });
+                    InsertNewMigration(db, migrationName, _timeProvider.Now, migration.GetVersion().Value);
                 }
             }
+        }
+
+        protected virtual List<string> GetCurrentMigrationsNames(BaseDbContext db)
+        {
+            return db.GetTable<TMigration>().Select(x => x.Name).ToList();
+        }
+
+        protected virtual void InsertNewMigration(BaseDbContext db, string migrationName, DateTime executionDate, int version)
+        {
+            db.Insert(new TMigration()
+            {
+                ExecutionDate = executionDate,
+                Name = migrationName,
+                Version = version
+            });
         }
     }
 }

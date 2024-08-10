@@ -1,11 +1,11 @@
-﻿using JToolbox.DataAccess.L2DB.Entities;
+﻿using JToolbox.DataAccess.L2DB.Abstraction;
 using LinqToDB.Data;
 using System.Collections.Generic;
 
 namespace JToolbox.DataAccess.L2DB.Repositories
 {
     public interface IBaseExtendedRepository<TEntity> : IBaseRepository<TEntity>
-        where TEntity : BaseExtendedEntity, new()
+        where TEntity : class, IBaseExtendedEntity, new()
     {
         bool SafeDelete(DataConnection db, int id);
 

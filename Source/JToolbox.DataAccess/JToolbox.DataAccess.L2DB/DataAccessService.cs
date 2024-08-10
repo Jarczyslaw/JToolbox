@@ -1,5 +1,4 @@
-﻿using JToolbox.DataAccess.L2DB.Entities;
-using LinqToDB;
+﻿using LinqToDB;
 using System;
 using System.Threading.Tasks;
 
@@ -7,11 +6,11 @@ namespace JToolbox.DataAccess.L2DB
 {
     public class DataAccessService : IDataAccessService
     {
-        private readonly BaseInitializer _initializer;
+        private readonly IBaseInitializer _initializer;
         private readonly BaseLocker _locker;
 
         public DataAccessService(
-            BaseInitializer initializer,
+            IBaseInitializer initializer,
             BaseLocker dataBaseLocker)
         {
             _initializer = initializer;
@@ -84,6 +83,11 @@ namespace JToolbox.DataAccess.L2DB
             return result;
         }
 
+        public int GetDbVersion()
+        {
+            return Execute(x => _initializer.GetDbVersion(x));
+        }
+
         public Task Init()
         {
             return Task.Run(() =>
@@ -98,8 +102,7 @@ namespace JToolbox.DataAccess.L2DB
 
                     ExecuteTransaction(x =>
                     {
-                        x.CreateTable<MigrationEntity>(tableOptions: TableOptions.CreateIfNotExists);
-
+                        _initializer.CreateMigrationsTableIfNotExists(x);
                         _initializer.InitializeMigrations(x);
                     });
                 }
