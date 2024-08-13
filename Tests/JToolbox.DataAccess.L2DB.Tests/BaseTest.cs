@@ -1,4 +1,5 @@
 using JToolbox.Core.TimeProvider;
+using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.L2DB.MySql;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
 using LinqToDB;
@@ -71,7 +72,7 @@ namespace JToolbox.DataAccess.L2DB.Tests
 
         public void InitializeTables()
         {
-            UsersRepository usersRepository = new(new LocalTimeProvider());
+            UsersRepository usersRepository = new(new LocalTimeProvider(), new EmptyUserIdProvider());
             Execute(x => x.Truncate<User>());
             Execute(x => usersRepository.CreateMany(x, _initialUsers, bulkCopyOptions: new BulkCopyOptions
             {
@@ -79,7 +80,7 @@ namespace JToolbox.DataAccess.L2DB.Tests
                 BulkCopyType = BulkCopyType.MultipleRows
             }));
 
-            OrdersRepository ordersRepository = new(new LocalTimeProvider());
+            OrdersRepository ordersRepository = new(new LocalTimeProvider(), new EmptyUserIdProvider());
             OrderItemsRepository orderItemsRepository = new();
 
             Execute(x =>

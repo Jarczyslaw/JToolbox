@@ -1,6 +1,7 @@
 ﻿using JToolbox.Core.EqualityComparers;
 using JToolbox.Core.TimeProvider;
 using JToolbox.Core.Utilities.Merge;
+using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.L2DB.Abstraction;
 using LinqToDB;
 using LinqToDB.Data;
@@ -14,18 +15,25 @@ namespace JToolbox.DataAccess.L2DB.Repositories
         where TEntity : class, IBaseExtendedEntity, new()
     {
         protected readonly ITimeProvider _timeProvider;
+        protected readonly IUserIdProvider _userIdProvider;
 
-        protected BaseExtendedRepository(ITimeProvider timeProvider)
+        protected BaseExtendedRepository(
+            ITimeProvider timeProvider,
+            IUserIdProvider userIdProvider)
         {
             _timeProvider = timeProvider;
+            _userIdProvider = userIdProvider;
         }
 
         public override void PrepareEntity(TEntity entity)
         {
             entity.UpdateDate = _timeProvider.Now;
+            entity.UpdateUser = _userIdProvider.UserId;
+
             if (entity.CreateDate == default)
             {
                 entity.CreateDate = entity.UpdateDate;
+                entity.CreateUser = _userIdProvider.UserId;
             }
         }
 
@@ -87,7 +95,8 @@ namespace JToolbox.DataAccess.L2DB.Repositories
         private IUpdatable<TEntity> SetDeletedProperties(IQueryable<TEntity> queryable)
         {
             return queryable.Set(x => x.IsDeleted, true)
-                .Set(x => x.UpdateDate, _timeProvider.Now);
+                .Set(x => x.UpdateDate, _timeProvider.Now)
+                .Set(x => x.UpdateUser, _userIdProvider.UserId);
         }
     }
 }

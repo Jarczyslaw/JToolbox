@@ -1,4 +1,5 @@
 ﻿using JToolbox.Core.TimeProvider;
+using JToolbox.DataAccess.Common;
 using JToolbox.DataAccess.L2DB.MySql;
 using JToolbox.DataAccess.L2DB.Tests.DataAccess;
 using LinqToDB;
@@ -10,7 +11,7 @@ namespace JToolbox.DataAccess.L2DB.Tests
     [TestClass]
     public class ExtendedRepositoryTests : BaseTest
     {
-        private readonly UsersRepository _repository = new(new LocalTimeProvider());
+        private readonly UsersRepository _repository = new(new LocalTimeProvider(), new EmptyUserIdProvider());
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext _)

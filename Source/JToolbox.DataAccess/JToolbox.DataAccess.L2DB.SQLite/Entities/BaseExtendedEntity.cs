@@ -9,10 +9,16 @@ namespace JToolbox.DataAccess.L2DB.SQLite.Entities
         [Column, NotNull]
         public DateTime CreateDate { get; set; }
 
+        [Column]
+        public int? CreateUser { get; set; }
+
         [Column, NotNull]
         public bool IsDeleted { get; set; }
 
         [Column, NotNull]
         public DateTime UpdateDate { get; set; }
+
+        [Column]
+        public int? UpdateUser { get; set; }
     }
 }

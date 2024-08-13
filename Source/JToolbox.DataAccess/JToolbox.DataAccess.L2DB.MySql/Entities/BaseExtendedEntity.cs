@@ -9,10 +9,16 @@ namespace JToolbox.DataAccess.L2DB.MySql.Entities
         [Column(Precision = 3), NotNull]
         public DateTime CreateDate { get; set; }
 
+        [Column]
+        public int? CreateUser { get; set; }
+
         [Column, NotNull]
         public bool IsDeleted { get; set; }
 
         [Column(Precision = 3), NotNull]
         public DateTime UpdateDate { get; set; }
+
+        [Column]
+        public int? UpdateUser { get; set; }
     }
 }
