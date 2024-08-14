@@ -9,16 +9,16 @@ namespace JToolbox.DataAccess.L2DB
 
         string ConnectionString { get; set; }
 
-        void Execute(Action<BaseDbContext> action);
-
-        T Execute<T>(Func<BaseDbContext, T> action);
-
-        void ExecuteTransaction(Action<BaseDbContext> action);
-
-        T ExecuteTransaction<T>(Func<BaseDbContext, T> action);
-
         int GetDbVersion();
 
         Task Init();
+
+        void RunAction(Action<BaseDbContext> action);
+
+        void RunActionTransaction(Action<BaseDbContext> action);
+
+        T RunFunction<T>(Func<BaseDbContext, T> action);
+
+        T RunFunctionTransaction<T>(Func<BaseDbContext, T> action);
     }
 }

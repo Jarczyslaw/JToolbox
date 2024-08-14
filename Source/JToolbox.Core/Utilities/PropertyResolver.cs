@@ -95,7 +95,7 @@ namespace JToolbox.Core.Utilities
         }
 
         private static bool TryGetValueFromList(
-                    object @object,
+            object @object,
             PropertyInfo propertyInfo,
             CollectionProperty collectionProperty,
             out object result)

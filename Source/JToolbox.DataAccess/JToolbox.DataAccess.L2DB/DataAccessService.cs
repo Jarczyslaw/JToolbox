@@ -21,7 +21,37 @@ namespace JToolbox.DataAccess.L2DB
 
         public string ConnectionString { get; set; }
 
-        public void Execute(Action<BaseDbContext> action)
+        public int GetDbVersion()
+        {
+            return RunFunction(x => _initializer.GetDbVersion(x));
+        }
+
+        public Task Init()
+        {
+            return Task.Run(() =>
+            {
+                try
+                {
+                    bool lockAcquired = _locker.AcquireLock(ConnectionString);
+                    if (!lockAcquired)
+                    {
+                        throw new Exception("Database is locked by initialization. Please try again later");
+                    }
+
+                    RunActionTransaction(x =>
+                    {
+                        _initializer.CreateMigrationsTableIfNotExists(x);
+                        _initializer.InitializeMigrations(x);
+                    });
+                }
+                finally
+                {
+                    _locker.ReleaseLock();
+                }
+            });
+        }
+
+        public void RunAction(Action<BaseDbContext> action)
         {
             using (BaseDbContext db = CreateContext())
             {
@@ -29,15 +59,7 @@ namespace JToolbox.DataAccess.L2DB
             }
         }
 
-        public T Execute<T>(Func<BaseDbContext, T> action)
-        {
-            using (BaseDbContext db = CreateContext())
-            {
-                return action(db);
-            }
-        }
-
-        public void ExecuteTransaction(Action<BaseDbContext> action)
+        public void RunActionTransaction(Action<BaseDbContext> action)
         {
             BaseDbContext db = null;
             try
@@ -59,7 +81,15 @@ namespace JToolbox.DataAccess.L2DB
             }
         }
 
-        public T ExecuteTransaction<T>(Func<BaseDbContext, T> action)
+        public T RunFunction<T>(Func<BaseDbContext, T> action)
+        {
+            using (BaseDbContext db = CreateContext())
+            {
+                return action(db);
+            }
+        }
+
+        public T RunFunctionTransaction<T>(Func<BaseDbContext, T> action)
         {
             T result;
             BaseDbContext db = null;
@@ -81,36 +111,6 @@ namespace JToolbox.DataAccess.L2DB
                 db?.Dispose();
             }
             return result;
-        }
-
-        public int GetDbVersion()
-        {
-            return Execute(x => _initializer.GetDbVersion(x));
-        }
-
-        public Task Init()
-        {
-            return Task.Run(() =>
-            {
-                try
-                {
-                    bool lockAcquired = _locker.AcquireLock(ConnectionString);
-                    if (!lockAcquired)
-                    {
-                        throw new Exception("Database is locked by initialization. Please try again later");
-                    }
-
-                    ExecuteTransaction(x =>
-                    {
-                        _initializer.CreateMigrationsTableIfNotExists(x);
-                        _initializer.InitializeMigrations(x);
-                    });
-                }
-                finally
-                {
-                    _locker.ReleaseLock();
-                }
-            });
         }
 
         private BaseDbContext CreateContext()
