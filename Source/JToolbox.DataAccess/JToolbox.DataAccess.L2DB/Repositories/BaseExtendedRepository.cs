@@ -94,7 +94,12 @@ namespace JToolbox.DataAccess.L2DB.Repositories
 
         private IUpdatable<TEntity> SetDeletedProperties(IQueryable<TEntity> queryable)
         {
-            return queryable.Set(x => x.IsDeleted, true)
+            return SetUpdateProperties(queryable.Set(x => x.IsDeleted, true));
+        }
+
+        private IUpdatable<TEntity> SetUpdateProperties(IUpdatable<TEntity> queryable)
+        {
+            return queryable
                 .Set(x => x.UpdateDate, _timeProvider.Now)
                 .Set(x => x.UpdateUser, _userIdProvider.UserId);
         }
