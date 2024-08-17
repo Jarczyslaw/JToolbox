@@ -1,19 +1,24 @@
 ﻿<Window
     x:Class="ToolboxInstaller.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ToolboxInstaller"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{Binding Title}"
+    Title="JToolbox Installer"
     Width="400"
     Height="800"
-    IsEnabled="{Binding WindowEnabled}"
     mc:Ignorable="d">
+    <Window.Resources>
+        <local:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter" />
+    </Window.Resources>
     <Grid>
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -42,13 +47,17 @@
                             <CheckBox
                                 VerticalAlignment="Center"
                                 Focusable="False"
-                                IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                IsThreeState="{Binding IsInstalled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                             <TextBlock
                                 Margin="2,0"
                                 FontWeight="Bold"
                                 Text="(P)"
                                 Visibility="{Binding ProjectVisibility}" />
-                            <TextBlock Margin="2,0" Text="{Binding Title}" />
+                            <TextBlock
+                                Margin="2,0"
+                                FontWeight="{Binding IsInstalled, Converter={StaticResource BoolToFontWeightConverter}}"
+                                Text="{Binding Title}" />
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
@@ -60,7 +69,32 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding ToInstallCount, StringFormat={}To install: {0}}" />
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding ToUpdateCount, StringFormat={}To update: {0}}" />
+                <TextBlock
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding ToDeleteCount, StringFormat={}To delete: {0}}" />
+            </Grid>
 
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding SelectAllLoadedCommand}"
+                    Content="Select all loaded" />
                 <Button
                     Grid.Column="1"
                     Command="{Binding UpdateCommand}"
@@ -69,6 +103,18 @@
                     Grid.Column="2"
                     Command="{Binding CloseCommand}"
                     Content="Close" />
+            </Grid>
+
+            <Grid Grid.Row="4" Visibility="{Binding ProgressViewModel.ProgressVisibility}">
+                <ProgressBar
+                    IsIndeterminate="{Binding ProgressViewModel.IsIndeterminate}"
+                    Maximum="{Binding ProgressViewModel.ProjectsToUpdate}"
+                    Minimum="0"
+                    Value="{Binding ProgressViewModel.UpdatedProjects}" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding ProgressViewModel.Status}" />
             </Grid>
         </Grid>
     </Grid>

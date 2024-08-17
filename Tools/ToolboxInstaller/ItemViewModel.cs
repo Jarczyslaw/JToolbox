@@ -10,11 +10,18 @@ namespace ToolboxInstaller
     public class ItemViewModel : BaseViewModel
     {
         private ObservableCollection<ItemViewModel> children = new ObservableCollection<ItemViewModel>();
-        private bool isChecked;
+        private bool? isChecked = false;
         private bool isExpanded = true;
+        private bool isInstalled;
         private bool isProject;
+        private MainViewModel mainViewModel;
         private ItemViewModel parent;
         private string title;
+
+        public ItemViewModel(MainViewModel mainViewModel)
+        {
+            this.mainViewModel = mainViewModel;
+        }
 
         public ObservableCollection<ItemViewModel> Children
         {
@@ -22,12 +29,16 @@ namespace ToolboxInstaller
             set => Set(ref children, value);
         }
 
-        public bool HasCheckedChildren => children.Any(s => s.IsChecked);
+        public bool HasCheckedChildren => children.Any(s => s.IsChecked == true);
 
-        public bool IsChecked
+        public bool? IsChecked
         {
             get => isChecked;
-            set => SetChecked(value, true);
+            set
+            {
+                SetChecked(value, true);
+                mainViewModel.UpdateItemsCheckedState();
+            }
         }
 
         public bool IsExpanded
@@ -36,11 +47,25 @@ namespace ToolboxInstaller
             set => Set(ref isExpanded, value);
         }
 
+        public bool IsInstalled
+        {
+            get => isInstalled;
+            set => Set(ref isInstalled, value);
+        }
+
         public bool IsProject
         {
             get => isProject;
             set => Set(ref isProject, value);
         }
+
+        public bool IsToDelete => IsProject && IsInstalled && IsChecked == false;
+
+        public bool IsToInstall => IsProject && !IsInstalled && IsChecked == true;
+
+        public bool IsToModify => IsToDelete || IsToUpdate || IsToInstall;
+
+        public bool IsToUpdate => IsProject && IsInstalled && IsChecked == true;
 
         public ItemViewModel Parent
         {
@@ -51,6 +76,8 @@ namespace ToolboxInstaller
         public Visibility ProjectVisibility => IsProject ? Visibility.Visible : Visibility.Collapsed;
 
         public string SourcePath { get; set; }
+
+        public string TargetPath { get; set; }
 
         public string Title
         {
@@ -86,17 +113,17 @@ namespace ToolboxInstaller
             return result;
         }
 
-        public void SetChecked(bool value, bool update)
+        public void SetChecked(bool? value, bool propagate)
         {
             Set(ref isChecked, value, nameof(IsChecked));
-            if (update)
+            if (propagate)
             {
                 UpdateChildren(value, children);
                 UpdateParents(parent);
             }
         }
 
-        private void UpdateChildren(bool value, IEnumerable<ItemViewModel> children)
+        private void UpdateChildren(bool? value, IEnumerable<ItemViewModel> children)
         {
             foreach (var child in children)
             {

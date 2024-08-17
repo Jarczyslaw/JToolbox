@@ -1,7 +1,9 @@
-﻿using JToolbox.Core.Helpers;
+﻿using JToolbox.Core;
+using JToolbox.Core.Helpers;
 using JToolbox.Desktop.Dialogs;
 using JToolbox.WPF.Core.Base;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -18,23 +20,35 @@ namespace ToolboxInstaller
         private readonly string startPath = "../../../../Source/";
         private ObservableCollection<ItemViewModel> items = new ObservableCollection<ItemViewModel>();
         private string selectedPath;
-        private string title;
-        private bool windowEnabled = true;
 
         public MainViewModel()
         {
-            SetBusy(false);
             InitData(null, startPath);
             RestorePreviousInstalledPath();
         }
 
-        public RelayCommand CloseCommand => new RelayCommand(() => Application.Current.Shutdown());
+        public RelayCommand CloseCommand => new RelayCommand(() =>
+        {
+            if (ProgressViewModel.IsBusy) { return; }
+
+            Application.Current.Shutdown();
+        });
 
         public ObservableCollection<ItemViewModel> Items
         {
             get => items;
             set => Set(ref items, value);
         }
+
+        public ProgressViewModel ProgressViewModel { get; set; } = new ProgressViewModel();
+
+        public RelayCommand SelectAllLoadedCommand => new RelayCommand(() =>
+        {
+            foreach (var item in flatItems.Where(x => x.IsInstalled))
+            {
+                item.IsChecked = true;
+            }
+        });
 
         public string SelectedPath
         {
@@ -43,81 +57,95 @@ namespace ToolboxInstaller
         }
 
         public RelayCommand SelectPathCommand => new RelayCommand(async () =>
-         {
-             var solutionPath = dialogs.OpenFolder("Select solution location");
-             if (!string.IsNullOrEmpty(solutionPath))
-             {
-                 SelectedPath = solutionPath;
-                 await FindProjects();
-             }
-         });
-
-        public string Title
         {
-            get => title;
-            set => Set(ref title, value);
-        }
+            if (ProgressViewModel.IsBusy) { return; }
+
+            var solutionPath = dialogs.OpenFolder("Select solution location");
+            if (!string.IsNullOrEmpty(solutionPath))
+            {
+                SelectedPath = solutionPath;
+                await FindProjects();
+            }
+        });
+
+        public int ToDeleteCount { get; set; }
+
+        public int ToInstallCount { get; set; }
 
         public string ToolboxPath => Path.Combine(SelectedPath, "JToolbox");
 
+        public int ToUpdateCount { get; set; }
+
         public RelayCommand UpdateCommand => new RelayCommand(async () =>
-         {
-             if (string.IsNullOrEmpty(SelectedPath))
-             {
-                 dialogs.ShowError("No target path selected");
-                 return;
-             }
-
-             if (!flatItems.Any(i => i.IsProject && i.IsChecked))
-             {
-                 dialogs.ShowError("No projects selected");
-                 return;
-             }
-
-             await UpdateStructure();
-         });
-
-        public bool WindowEnabled
         {
-            get => windowEnabled;
-            set => Set(ref windowEnabled, value);
+            if (ProgressViewModel.IsBusy) { return; }
+
+            if (string.IsNullOrEmpty(SelectedPath))
+            {
+                dialogs.ShowError("No target path selected");
+                return;
+            }
+
+            if (!flatItems.Any(i => i.IsToModify))
+            {
+                dialogs.ShowError("No projects to update");
+                return;
+            }
+
+            await UpdateStructure();
+        });
+
+        public void UpdateItemsCheckedState()
+        {
+            ToUpdateCount = flatItems.Count(x => x.IsToUpdate);
+            ToInstallCount = flatItems.Count(x => x.IsToInstall);
+            ToDeleteCount = flatItems.Count(x => x.IsToDelete);
+
+            OnPropertyChanged(nameof(ToUpdateCount));
+            OnPropertyChanged(nameof(ToInstallCount));
+            OnPropertyChanged(nameof(ToDeleteCount));
         }
 
         private async Task FindProjects()
         {
             try
             {
-                SetBusy(true, "Reading structure");
+                ProgressViewModel.SetReadingStructure();
                 await Task.Run(() =>
                 {
                     foreach (var item in flatItems)
                     {
+                        item.TargetPath = null;
+                        item.IsInstalled = false;
                         item.SetChecked(false, false);
                     }
 
-                    if (Directory.Exists(ToolboxPath))
+                    if (!Directory.Exists(ToolboxPath)) { return; }
+
+                    Dictionary<string, string> projects = Directory.GetFiles(ToolboxPath, "*.csproj", SearchOption.AllDirectories)
+                        .ToDictionary(x => Path.GetFileNameWithoutExtension(x));
+
+                    foreach (var item in flatItems)
                     {
-                        var projects = Directory.GetFiles(ToolboxPath, "*.csproj", SearchOption.AllDirectories)
-                            .Select(s => Path.GetFileNameWithoutExtension(s));
-                        foreach (var item in flatItems)
+                        item.SetChecked(false, true);
+
+                        if (item.IsProject && projects.TryGetValue(item.Title, out string targetPath))
                         {
-                            item.SetChecked(false, true);
-                            if (item.IsProject && projects.Contains(item.Title))
-                            {
-                                item.SetChecked(true, true);
-                            }
+                            item.TargetPath = Path.GetDirectoryName(targetPath);
+                            item.IsInstalled = true;
+                            item.SetChecked(null, true);
                         }
                     }
                 });
             }
             catch (Exception exc)
             {
-                SetBusy(false);
+                ProgressViewModel.SetUnbusy();
                 dialogs.ShowException(exc);
             }
             finally
             {
-                SetBusy(false);
+                ProgressViewModel.SetUnbusy();
             }
         }
 
@@ -127,13 +155,13 @@ namespace ToolboxInstaller
             foreach (var folder in content)
             {
                 var info = new DirectoryInfo(folder);
-                var item = new ItemViewModel
+                var item = new ItemViewModel(this)
                 {
                     Title = info.Name,
                     SourcePath = info.FullName,
                     IsExpanded = true,
+                    IsProject = Directory.GetFiles(folder, "*.csproj")?.Length > 0
                 };
-                item.IsProject = Directory.GetFiles(folder, "*.csproj")?.Length > 0;
 
                 flatItems.Add(item);
                 if (parent == null)
@@ -152,22 +180,34 @@ namespace ToolboxInstaller
             }
         }
 
-        private Task RebuildStructure()
+        private Task RebuildStructure(List<ItemViewModel> toUpdate)
         {
             return Task.Run(() =>
             {
-                var projects = flatItems.Where(f => f.IsProject && f.IsChecked);
-                foreach (var project in projects)
+                foreach (ItemViewModel project in toUpdate)
                 {
-                    var directoryPath = Path.Combine(ToolboxPath, project.GetPath());
-                    if (!Directory.Exists(directoryPath))
+                    if (Directory.Exists(project.TargetPath)) { Directory.Delete(project.TargetPath, true); }
+
+                    if (project.IsToDelete) { continue; }
+
+                    DirectoryInfo sourcePath = new DirectoryInfo(project.SourcePath);
+
+                    DirectoryInfo targetPath = null;
+                    if (project.IsToInstall)
                     {
-                        Directory.CreateDirectory(directoryPath);
+                        var directoryPath = Path.Combine(ToolboxPath, project.GetPath());
+                        targetPath = new DirectoryInfo(Path.Combine(directoryPath, project.Title));
+                    }
+                    else if (project.IsToUpdate)
+                    {
+                        targetPath = new DirectoryInfo(project.TargetPath);
                     }
 
-                    var source = new DirectoryInfo(project.SourcePath);
-                    var target = new DirectoryInfo(Path.Combine(directoryPath, project.Title));
-                    FileSystemHelper.CopyAll(source, target);
+                    if (!Directory.Exists(targetPath.FullName)) { Directory.CreateDirectory(targetPath.FullName); }
+
+                    FileSystemHelper.CopyAll(sourcePath, targetPath);
+
+                    ProgressViewModel.IncrementUpdatedProjects();
                 }
             });
         }
@@ -182,28 +222,16 @@ namespace ToolboxInstaller
             }
         }
 
-        private void SetBusy(bool busy, string msg = null)
-        {
-            var tempTitle = "Toolbox Installer";
-            if (busy)
-            {
-                tempTitle += " - " + (string.IsNullOrEmpty(msg) ? "BUSY" : msg.ToUpper());
-            }
-            Title = tempTitle;
-            WindowEnabled = !busy;
-        }
-
         private async Task UpdateStructure()
         {
             try
             {
-                SetBusy(true, "Updating");
-                var toolboxPath = Path.Combine(SelectedPath, "JToolbox");
-                if (Directory.Exists(toolboxPath))
-                {
-                    Directory.Delete(toolboxPath, true);
-                }
-                await RebuildStructure();
+                List<ItemViewModel> toUpdate = flatItems.Where(x => x.IsToModify)
+                    .ToList();
+
+                ProgressViewModel.SetUpdate(toUpdate.Count);
+                await RebuildStructure(toUpdate);
+                await Task.Delay(200);
                 dialogs.ShowInfo("Updated!");
 
                 Settings.Default.PreviousInstalledPath = SelectedPath;
@@ -211,12 +239,13 @@ namespace ToolboxInstaller
             }
             catch (Exception exc)
             {
-                SetBusy(false);
+                ProgressViewModel.SetUnbusy();
                 dialogs.ShowException(exc);
             }
             finally
             {
-                SetBusy(false);
+                ProgressViewModel.SetUnbusy();
+                await FindProjects();
             }
         }
     }
