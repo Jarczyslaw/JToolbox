@@ -5,8 +5,22 @@ namespace JToolbox.DataAccess.L2DB.MySql
 {
     public static class MySqlL2DbExtensions
     {
+        public static void AddColumn(this DataConnection db, string tableName, string columnName, string columnType)
+        {
+            string query = $"ALTER TABLE {tableName} ADD COLUMN {columnName} {columnType};";
+            db.Execute(query);
+        }
+
+        public static void AddColumnIfNotExists(this DataConnection db, string tableName, string columnName, string columnType)
+        {
+            if (!ColumnExists(db, tableName, columnName))
+            {
+                AddColumn(db, tableName, columnName, columnType);
+            }
+        }
+
         public static void AddForeignKey(
-            this DataConnection db,
+                            this DataConnection db,
             string tableName,
             string foreignKeyColumnName,
             string primaryTableName,
@@ -20,6 +34,17 @@ namespace JToolbox.DataAccess.L2DB.MySql
                 REFERENCES {primaryTableName}({primaryColumnName})";
 
             db.Execute(query);
+        }
+
+        public static bool ColumnExists(this DataConnection db, string tableName, string columnName)
+        {
+            string query = $@"SELECT COUNT(*)
+                FROM information_schema.COLUMNS
+                WHERE TABLE_SCHEMA = '{db.Connection.Database}'
+                AND TABLE_NAME = '{tableName}'
+                AND COLUMN_NAME = '{columnName}';";
+
+            return db.Execute<int>(query) > 0;
         }
 
         public static void CreateForeignKeyIfNotExists<TForeign, TPrimary>(
