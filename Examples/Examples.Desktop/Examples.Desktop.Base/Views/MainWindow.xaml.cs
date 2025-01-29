@@ -43,5 +43,13 @@ namespace Examples.Desktop.Base.Views
                 });
             }
         }
+
+        private void Window_ContentRendered(object sender, System.EventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel)
+            {
+                viewModel.OnViewLoaded();
+            }
+        }
     }
 }

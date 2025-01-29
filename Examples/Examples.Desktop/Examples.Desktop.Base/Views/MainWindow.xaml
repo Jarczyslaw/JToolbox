@@ -6,7 +6,8 @@
     Title="{Binding Title}"
     Width="1024"
     Height="768"
-    Closing="Window_Closing">
+    Closing="Window_Closing"
+    ContentRendered="Window_ContentRendered">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

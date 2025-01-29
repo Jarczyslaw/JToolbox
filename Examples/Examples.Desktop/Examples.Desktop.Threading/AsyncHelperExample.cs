@@ -29,10 +29,11 @@ namespace Examples.Desktop.Threading
             outputInput.PutLine();
             outputInput.WriteLine("5 tasks for 5 items without result which should finish in circa 2 seconds:");
             var result = await AsyncHelper.ForEachWithResult(items, async (item, cancellationToken) =>
-           {
-               await Task.Delay(2000);
-               return item * 2;
-           });
+            {
+                await Task.Delay(2000);
+                return item * 2;
+            });
+
             foreach (var pair in result)
             {
                 outputInput.WriteLine($"Item: {pair.Key}, result: {pair.Value}");

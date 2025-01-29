@@ -57,6 +57,11 @@
     <Compile Include="DateRangeHelperTests\MergeTestCase.cs" />
     <Compile Include="DateRangeHelperTests\IntersectionTestCase.cs" />
     <Compile Include="DateRangeHelperTests\TestCasesSource.cs" />
+    <Compile Include="DictionaryCacheTests\DictionaryCacheTests.cs" />
+    <Compile Include="DictionaryCacheTests\TestTimeProvider.cs" />
+    <Compile Include="DictionaryCacheTests\User.cs" />
+    <Compile Include="DictionaryCacheTests\UsersCache.cs" />
+    <Compile Include="DictionaryCacheTests\UsersDataSource.cs" />
     <Compile Include="EqualityComparersTests.cs" />
     <Compile Include="ExpandoObjectTests.cs" />
     <Compile Include="FileSystemHelperTests.cs" />

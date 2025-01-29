@@ -204,6 +204,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JToolbox.DataAccess.SQLite.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JToolbox.DataAccess.L2DB.SQLite", "Source\JToolbox.DataAccess\JToolbox.DataAccess.L2DB.SQLite\JToolbox.DataAccess.L2DB.SQLite.csproj", "{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Desktop.Caches", "Examples\Examples.Desktop\Examples.Desktop.Caches\Examples.Desktop.Caches.csproj", "{B3303097-F8DE-46A4-90EF-AD8FD8556502}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -534,6 +536,10 @@ Global
 		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3303097-F8DE-46A4-90EF-AD8FD8556502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3303097-F8DE-46A4-90EF-AD8FD8556502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3303097-F8DE-46A4-90EF-AD8FD8556502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3303097-F8DE-46A4-90EF-AD8FD8556502}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -633,6 +639,7 @@ Global
 		{E8AA3A47-9CA5-4C93-BD66-D2B3E20F4C56} = {D35E36BF-A4AE-4B83-A05B-AE7468FB4D4B}
 		{742AD916-D22A-4803-B199-69C2001B99C3} = {9F3158FF-03D5-47B0-820A-9C7A88150F3E}
 		{40A540C3-DEF6-4B53-B4BB-8BC7E50C51C7} = {3C16F248-C60F-474E-BB5B-E6F7A730376A}
+		{B3303097-F8DE-46A4-90EF-AD8FD8556502} = {907A859F-6219-4D41-9B8C-1EF003286419}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77593C8-3581-45F1-852E-25A85CC68565}
