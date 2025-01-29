@@ -60,7 +60,8 @@ namespace JToolbox.Core.Utilities
             }
         }
 
-        protected abstract void Flush(List<T> itemsToFlush);
+        protected virtual void Flush(List<T> itemsToFlush)
+        { }
 
         protected virtual bool IsFlushNeeded(List<T> items)
         {
