@@ -7,11 +7,18 @@ namespace Examples.Desktop.Network
 {
     public class NetworkUtilities : IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "Network utilities";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task Run(IOutputInput outputInput)

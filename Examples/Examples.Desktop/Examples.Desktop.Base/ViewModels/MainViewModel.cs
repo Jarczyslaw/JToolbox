@@ -19,6 +19,7 @@ namespace Examples.Desktop.Base.ViewModels
         private bool busy;
         private DelegateCommand continueCommand;
         private TaskCompletionSource<object> continueTaskCompletionSource;
+        private DelegateCommand customCommand;
         private Stopwatch internalStopwatch;
         private string messages;
         private MessagesProxy messagesProxy;
@@ -50,6 +51,21 @@ namespace Examples.Desktop.Base.ViewModels
 
         public DelegateCommand ContinueCommand => continueCommand
             ?? (continueCommand = new DelegateCommand(() => continueTaskCompletionSource.SetResult(null), () => continueTaskCompletionSource != null));
+
+        public DelegateCommand CustomCommand => customCommand ?? (customCommand = new DelegateCommand(() =>
+        {
+            try
+            {
+                SelectedExample.Example.CustomAction();
+            }
+            catch (Exception exc)
+            {
+                WriteLine($"[MAIN] custom action failed with exception:");
+                WriteLine(exc.ToString());
+            }
+        }, () => !string.IsNullOrEmpty(SelectedExample?.Example.CustomActionTitle)));
+
+        public string CustomCommandText => SelectedExample?.Example.CustomActionTitle;
 
         public ObservableCollection<ExampleViewModel> Examples { get; set; } = new ObservableCollection<ExampleViewModel>();
 
@@ -96,6 +112,8 @@ namespace Examples.Desktop.Base.ViewModels
             {
                 SetProperty(ref selectedExample, value);
                 RunCommand.RaiseCanExecuteChanged();
+                CustomCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged(nameof(CustomCommandText));
             }
         }
 

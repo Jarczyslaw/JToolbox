@@ -5,11 +5,18 @@ namespace Examples.Desktop.WCF.BasicHttpExample
 {
     public class BasicHttpClientExample : ExampleBase, IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "BasicHttp client";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task Run(IOutputInput outputInput)

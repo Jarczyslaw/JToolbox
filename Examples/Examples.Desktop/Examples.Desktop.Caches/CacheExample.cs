@@ -10,9 +10,16 @@ namespace Examples.Desktop.Caches
 {
     internal class CacheExample : IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "Cache test";
 
         public Task CleanUp() => Task.CompletedTask;
+
+        public void CustomAction()
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task Run(IOutputInput outputInput)
         {

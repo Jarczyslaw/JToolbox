@@ -5,11 +5,18 @@ namespace Examples.Desktop.WCF.NetTcpExample
 {
     public class NetTcpServerExample : ExampleBase, IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "NetTcp server";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)

@@ -14,11 +14,18 @@ namespace Examples.Desktop.Network
     {
         private IOutputInput outputInput;
 
+        public string CustomActionTitle => null;
+
         public string Title => "Ping scanner";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)

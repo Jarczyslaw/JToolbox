@@ -16,11 +16,18 @@ namespace Examples.Desktop.Network
     {
         private IOutputInput outputInput;
 
+        public string CustomActionTitle => null;
+
         public string Title => "Port scanner - local machine";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)

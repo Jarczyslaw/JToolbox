@@ -7,11 +7,18 @@ namespace Examples.Desktop.SysInformation
 {
     public class OSInformation : IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "OS Information";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task Run(IOutputInput outputInput)

@@ -1,9 +1,11 @@
 ﻿using JToolbox.Core.Utilities.Merge.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace JToolbox.Core.Utilities.Merge
 {
+    [Obsolete("Use CollectionsMergeHelper instead")]
     public class MergeCollections<T>
     {
         public List<T> ToCreate { get; private set; } = new List<T>();

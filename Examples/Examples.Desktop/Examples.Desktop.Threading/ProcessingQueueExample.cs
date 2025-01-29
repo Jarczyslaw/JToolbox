@@ -8,11 +8,18 @@ namespace Examples.Desktop.Threading
 {
     public class ProcessingQueueExample : IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "Processing queue";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)

@@ -8,12 +8,20 @@ namespace Examples.Desktop.Network
     public class TcpListenerExample : IDesktopExample
     {
         private TcpListener listener;
+
+        public string CustomActionTitle => null;
+
         public string Title => "TCP Listener";
 
         public Task CleanUp()
         {
             listener?.Stop();
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)

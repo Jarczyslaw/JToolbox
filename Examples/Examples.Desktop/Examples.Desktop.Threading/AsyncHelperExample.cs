@@ -7,11 +7,18 @@ namespace Examples.Desktop.Threading
 {
     public class AsyncHelperExample : IDesktopExample
     {
+        public string CustomActionTitle => null;
+
         public string Title => "AsyncHelper";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)

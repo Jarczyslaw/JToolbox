@@ -12,11 +12,19 @@ namespace Examples.Desktop.Network
     public class ServiceScannerExample : IDesktopExample
     {
         private IOutputInput outputInput;
+
+        public string CustomActionTitle => null;
+
         public string Title => "Service scanner - find machines with port";
 
         public Task CleanUp()
         {
             return Task.CompletedTask;
+        }
+
+        public void CustomAction()
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task Run(IOutputInput outputInput)
