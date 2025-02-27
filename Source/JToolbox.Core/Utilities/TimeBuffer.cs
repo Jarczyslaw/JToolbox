@@ -17,6 +17,7 @@ namespace JToolbox.Core.Utilities
         {
             _timer = new Timer();
             _timer.Elapsed += TimerElapsed;
+            _timer.AutoReset = false;
         }
 
         public event TimeBufferFlush<T> OnFlush;
@@ -49,14 +50,16 @@ namespace JToolbox.Core.Utilities
 
         public void Clear(bool flush)
         {
+            List<T> itemsToFlush = null;
+
             lock (_lock)
             {
-                List<T> itemsToFlush = GetItemsToFlushAndReset();
+                itemsToFlush = GetItemsToFlushAndReset();
+            }
 
-                if (flush)
-                {
-                    TryFlush(itemsToFlush);
-                }
+            if (flush)
+            {
+                TryFlush(itemsToFlush);
             }
         }
 

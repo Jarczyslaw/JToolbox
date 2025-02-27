@@ -4,23 +4,10 @@ namespace JToolbox.Core.Extensions
 {
     public static class TaskExtensions
     {
-        public static void RunSync(this Task task, TaskScheduler scheduler = null)
-        {
-            if (scheduler != null)
-            {
-                task.RunSynchronously(scheduler);
-            }
-            else
-            {
-                task.RunSynchronously();
-            }
-            task.Wait();
-        }
+        public static void RunSync<T>(this Task<T> task)
+            => task.GetAwaiter().GetResult();
 
-        public static T RunSync<T>(this Task<T> task, TaskScheduler scheduler = null)
-        {
-            RunSync(task, scheduler);
-            return task.Result;
-        }
+        public static void RunSync(this Task task)
+            => task.GetAwaiter().GetResult();
     }
 }
