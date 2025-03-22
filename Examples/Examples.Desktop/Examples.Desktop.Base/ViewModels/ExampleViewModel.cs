@@ -2,7 +2,7 @@
 {
     public class ExampleViewModel
     {
-        public string Display => Example.Title;
+        public string Display => $"{Example.Group} - {Example.Title}";
 
         public IDesktopExample Example { get; set; }
     }

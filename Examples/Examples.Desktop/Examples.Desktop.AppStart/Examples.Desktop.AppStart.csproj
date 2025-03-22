@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B3303097-F8DE-46A4-90EF-AD8FD8556502}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Examples.Desktop.AppStart</RootNamespace>
+    <AssemblyName>Examples.Desktop.AppStart</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SysInformation\CPUInformation.cs" />
+    <Compile Include="SysInformation\MemoryInformation.cs" />
+    <Compile Include="SysInformation\OSInformation.cs" />
+    <Compile Include="Threading\AsyncHelperExample.cs" />
+    <Compile Include="Threading\ProcessingQueueExample.cs" />
+    <Compile Include="WCF\BasicHttpExample\BasicHttpClientExample.cs" />
+    <Compile Include="WCF\BasicHttpExample\BasicHttpServerExample.cs" />
+    <Compile Include="WCF\BasicHttpsExample\BasicHttpsClientExample.cs" />
+    <Compile Include="WCF\BasicHttpsExample\BasicHttpsServerExample.cs" />
+    <Compile Include="WCF\Configurations.cs" />
+    <Compile Include="WCF\ExampleBase.cs" />
+    <Compile Include="WCF\ITestService.cs" />
+    <Compile Include="WCF\NamedPipeExample\NamedPipeClientExample.cs" />
+    <Compile Include="WCF\NamedPipeExample\NamedPipeServerExample.cs" />
+    <Compile Include="WCF\NetTcpExample\NetTcpClientExample.cs" />
+    <Compile Include="WCF\NetTcpExample\NetTcpServerExample.cs" />
+    <Compile Include="WCF\TestService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\CacheExample.cs" />
+    <Compile Include="Cache\Core\User.cs" />
+    <Compile Include="Cache\Core\UsersCache.cs" />
+    <Compile Include="Cache\Core\UsersDataSource.cs" />
+    <Compile Include="Network\NetworkUtilities.cs" />
+    <Compile Include="Network\PingScannerExample.cs" />
+    <Compile Include="Network\PortScannerExample.cs" />
+    <Compile Include="Network\ServiceScannerExample.cs" />
+    <Compile Include="Network\TcpListenerExample.cs" />
+    <Compile Include="Others\ExecutionTimeExample.cs" />
+    <Compile Include="Others\TimeBufferExample.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Unity" Version="8.1.97" />
+    <PackageReference Include="Prism.Wpf">
+      <Version>8.1.97</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Core\JToolbox.Core.csproj">
+      <Project>{29495d19-7102-48ab-b3f2-653f93a9779d}</Project>
+      <Name>JToolbox.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.NetworkTools\JToolbox.Misc.NetworkTools.csproj">
+      <Project>{9EECD043-13A9-4D3E-A2E1-527FC36F9249}</Project>
+      <Name>JToolbox.Misc.NetworkTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.SysInformation\JToolbox.Misc.SysInformation.csproj">
+      <Project>{D709E177-61B4-4761-9A5D-0DB55EAFE48D}</Project>
+      <Name>JToolbox.Misc.SysInformation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.Threading\JToolbox.Misc.Threading.csproj">
+      <Project>{54044604-9715-4A15-8E59-0793C6DAD432}</Project>
+      <Name>JToolbox.Misc.Threading</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.WCF\JToolbox.Misc.WCF.ClientSide\JToolbox.Misc.WCF.ClientSide.csproj">
+      <Project>{1A5BC527-0BEA-4122-902C-521CA65CE1BC}</Project>
+      <Name>JToolbox.Misc.WCF.ClientSide</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.WCF\JToolbox.Misc.WCF.Common\JToolbox.Misc.WCF.Common.csproj">
+      <Project>{706FC417-45EF-4691-A495-11BA722FBB11}</Project>
+      <Name>JToolbox.Misc.WCF.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Source\JToolbox.Misc\JToolbox.Misc.WCF\JToolbox.Misc.WCF.ServerSide\JToolbox.Misc.WCF.ServerSide.csproj">
+      <Project>{D463C7E2-0221-4360-9014-013485F8D093}</Project>
+      <Name>JToolbox.Misc.WCF.ServerSide</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Examples.Desktop.Base\Examples.Desktop.Base.csproj">
+      <Project>{68C1F2EE-1A7A-49AE-8F86-9D12B45781B7}</Project>
+      <Name>Examples.Desktop.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

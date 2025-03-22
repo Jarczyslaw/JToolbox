@@ -33,7 +33,8 @@ namespace Examples.Desktop.Base.ViewModels
             var examples = Assembly.GetEntryAssembly()
                 .GetTypesImplements<IDesktopExample>()
                 .Select(s => (IDesktopExample)Activator.CreateInstance(s))
-                .OrderBy(e => e.Title)
+                .OrderBy(e => e.Group)
+                .ThenBy(x => x.Title)
                 .ToList();
             InitializeExamples(examples);
             messagesProxy = new MessagesProxy(this);

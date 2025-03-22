@@ -6,6 +6,8 @@ namespace Examples.Desktop.Base
     {
         public virtual string CustomActionTitle => null;
 
+        public string Group => "Misc";
+
         public string Title => GetType().Name;
 
         public virtual Task CleanUp() => Task.CompletedTask;

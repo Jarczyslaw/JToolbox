@@ -6,6 +6,8 @@ namespace Examples.Desktop.Base
     {
         string CustomActionTitle { get; }
 
+        string Group { get; }
+
         string Title { get; }
 
         Task CleanUp();
