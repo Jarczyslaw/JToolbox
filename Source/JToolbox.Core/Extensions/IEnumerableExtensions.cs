@@ -123,5 +123,18 @@ namespace JToolbox.Core.Extensions
         {
             return @this.Aggregate(TimeSpan.Zero, (TimeSpan current, TimeSpan item) => current + item);
         }
+
+        public static string ToStringWithCommas<T>(this IEnumerable<T> @this)
+            => ToStringWithSeparator(@this, ", ");
+
+        public static string ToStringWithNewLines<T>(this IEnumerable<T> @this)
+            => ToStringWithSeparator(@this, Environment.NewLine);
+
+        public static string ToStringWithSeparator<T>(this IEnumerable<T> @this, string separator)
+        {
+            if (@this?.None() != false) { return string.Empty; }
+
+            return string.Join(separator, @this);
+        }
     }
 }
