@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.Models.Nodes;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.NodesTests
+namespace JToolbox.Core.Tests.NodesSet
 {
     /* Structure:
          *  1

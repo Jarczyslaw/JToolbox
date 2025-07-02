@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.Abstraction;
 using System;
 
-namespace JToolbox.Core.Tests.DictionaryCacheTests
+namespace JToolbox.Core.Tests.DictionaryCacheSet
 {
     internal class User : IKey
     {

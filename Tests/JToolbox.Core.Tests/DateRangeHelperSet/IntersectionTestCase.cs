@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.Models;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.DateRangeHelperTests
+namespace JToolbox.Core.Tests.DateRangeHelperSet
 {
     public class IntersectionTestCase
     {

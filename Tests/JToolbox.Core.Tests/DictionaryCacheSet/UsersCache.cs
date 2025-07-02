@@ -3,7 +3,7 @@ using JToolbox.Core.TimeProvider;
 using System;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.DictionaryCacheTests
+namespace JToolbox.Core.Tests.DictionaryCacheSet
 {
     internal class UsersCache : DictionaryCache<User>
     {

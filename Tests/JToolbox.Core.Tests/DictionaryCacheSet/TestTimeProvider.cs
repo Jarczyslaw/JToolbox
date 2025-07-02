@@ -1,7 +1,7 @@
 ﻿using JToolbox.Core.TimeProvider;
 using System;
 
-namespace JToolbox.Core.Tests.DictionaryCacheTests
+namespace JToolbox.Core.Tests.DictionaryCacheSet
 {
     internal class TestTimeProvider : ITimeProvider
     {

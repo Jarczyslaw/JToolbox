@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.DateRangeHelperTests
+namespace JToolbox.Core.Tests.DateRangeHelperSet
 {
     internal static class TestCasesSource
     {
@@ -164,7 +164,55 @@ namespace JToolbox.Core.Tests.DateRangeHelperTests
             }
         };
 
+        public static List<SplitByDateTestCase> SplitByDateTestCases => new List<SplitByDateTestCase>
+        {
+            new SplitByDateTestCase
+            {
+                Date = GetDate(10),
+                Ranges = new List<DateRange> { GetRange(1, 4) },
+                LeftSide = new List<DateRange> { GetRange(1, 4) },
+                RightSide = new List<DateRange>()
+            },
+            new SplitByDateTestCase
+            {
+                Date = GetDate(10),
+                Ranges = new List<DateRange> { GetRange(4, 10) },
+                LeftSide = new List<DateRange> { GetRange(4, 10) },
+                RightSide = new List<DateRange>()
+            },
+            new SplitByDateTestCase
+            {
+                Date = GetDate(10),
+                Ranges = new List<DateRange> { GetRange(8, 11) },
+                LeftSide = new List<DateRange> { GetRange(8, 10) },
+                RightSide = new List<DateRange>(){ GetRange(10, 11) }
+            },
+            new SplitByDateTestCase
+            {
+                Date = GetDate(10),
+                Ranges = new List<DateRange> { GetRange(10, 15) },
+                LeftSide = new List<DateRange>(),
+                RightSide = new List<DateRange>(){ GetRange(10, 15) }
+            },
+            new SplitByDateTestCase
+            {
+                Date = GetDate(10),
+                Ranges = new List<DateRange> { GetRange(12, 15) },
+                LeftSide = new List<DateRange>(),
+                RightSide = new List<DateRange>(){ GetRange(12, 15) }
+            },
+            new SplitByDateTestCase
+            {
+                Date = GetDate(10),
+                Ranges = new List<DateRange> { GetRange(10, 10) },
+                LeftSide = new List<DateRange>(),
+                RightSide = new List<DateRange>()
+            },
+        };
+
+        public static DateTime GetDate(int value) => new DateTime(value, 1, 1);
+
         public static DateRange GetRange(int from, int to)
-            => new DateRange(new DateTime(from, 1, 1), new DateTime(to, 1, 1));
+            => new DateRange(GetDate(from), GetDate(to));
     }
 }

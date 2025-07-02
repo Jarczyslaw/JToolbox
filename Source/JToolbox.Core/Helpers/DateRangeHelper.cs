@@ -26,6 +26,14 @@ namespace JToolbox.Core.Helpers
             return (false, ordered);
         }
 
+        public static List<DateRange> Difference(
+            List<DateRange> ranges1,
+            List<DateRange> ranges2)
+        {
+            // TODO
+            return null;
+        }
+
         public static TimeSpan GetDuration(IEnumerable<DateRange> ranges) => ranges.Select(x => x.Duration).Sum();
 
         public static List<DateRange> Intersection(
@@ -63,6 +71,17 @@ namespace JToolbox.Core.Helpers
             return result;
         }
 
+        public static List<DateRange> Merge(
+           List<DateRange> ranges1,
+           List<DateRange> ranges2,
+           bool includeBoundaries)
+        {
+            List<DateRange> allRanges = ranges1.Concat(ranges2)
+                .ToList();
+
+            return Merge(allRanges, includeBoundaries);
+        }
+
         public static List<DateRange> Merge(List<DateRange> ranges, bool includeBoundaries)
         {
             if (ranges == null || ranges.Count < 2) { return ranges; }
@@ -89,6 +108,62 @@ namespace JToolbox.Core.Helpers
             }
 
             return result;
+        }
+
+        public static (List<DateRange> LeftSide, List<DateRange> RightSide) SplitByDate(List<DateRange> ranges, DateTime date)
+        {
+            List<DateRange> leftSide = new List<DateRange>();
+            List<DateRange> rightSide = new List<DateRange>();
+
+            foreach (DateRange range in ranges)
+            {
+                if (range.Start < date && range.End <= date)
+                {
+                    leftSide.Add(range);
+                }
+                else if (range.Start >= date && range.End > date)
+                {
+                    rightSide.Add(range);
+                }
+                else if (date > range.Start && date < range.End)
+                {
+                    leftSide.Add(new DateRange(range.Start, date));
+                    rightSide.Add(new DateRange(date, range.End));
+                }
+            }
+
+            return (leftSide, rightSide);
+        }
+
+        public static List<DateRange> Trim(List<DateRange> ranges, DateTime startDate, DateTime endDate)
+        {
+            // TODO
+            return null;
+        }
+
+        public static List<DateRange> TrimEnd(List<DateRange> ranges, DateTime date)
+        {
+            List<DateRange> result = new List<DateRange>();
+
+            foreach (DateRange range in ranges)
+            {
+                if (range.Start < date && range.End <= date)
+                {
+                    result.Add(range);
+                }
+                else if (range.Start < date && date < range.End)
+                {
+                    result.Add(new DateRange(range.Start, date));
+                }
+            }
+
+            return result;
+        }
+
+        public static List<DateRange> TrimStart(List<DateRange> ranges, DateTime date)
+        {
+            // TODO
+            return null;
         }
 
         private static List<DateRange> OrderByStartAndCheckOverlapping(List<DateRange> ranges)

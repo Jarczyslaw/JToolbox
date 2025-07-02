@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.DateRangeHelperTests
+namespace JToolbox.Core.Tests.DateRangeHelperSet
 {
     [TestClass]
     public class DateRangeHelperTests
@@ -46,6 +46,17 @@ namespace JToolbox.Core.Tests.DateRangeHelperTests
             {
                 var result = DateRangeHelper.Merge(x.Input, false);
                 Assert.IsTrue(x.Output.ScrambledEquals(result, comparer));
+            });
+        }
+
+        [TestMethod]
+        public void SplitByDate_TestCases_ShouldReturnValidResult()
+        {
+            TestCasesSource.SplitByDateTestCases.ForEach(x =>
+            {
+                (List<DateRange> leftSide, List<DateRange> rightSide) = DateRangeHelper.SplitByDate(x.Ranges, x.Date);
+                Assert.IsTrue(leftSide.ScrambledEquals(x.LeftSide, comparer));
+                Assert.IsTrue(rightSide.ScrambledEquals(x.RightSide, comparer));
             });
         }
     }

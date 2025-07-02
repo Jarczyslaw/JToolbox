@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JToolbox.Core.Tests.DictionaryCacheTests
+namespace JToolbox.Core.Tests.DictionaryCacheSet
 {
     [TestClass]
     public class DictionaryCacheTests

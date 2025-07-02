@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JToolbox.Core.Tests.NodesTests
+namespace JToolbox.Core.Tests.NodesSet
 {
     [TestClass]
     public class NodesTests
