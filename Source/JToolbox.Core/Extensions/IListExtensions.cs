@@ -48,6 +48,8 @@ namespace JToolbox.Core.Extensions
             return result;
         }
 
+        public static int MaxIndex<T>(this IList<T> @this) => @this.Count - 1;
+
         public static void ReversedForEach<T>(this IList<T> @this, Action<T> action)
         {
             for (int i = @this.Count - 1; i >= 0; i--)

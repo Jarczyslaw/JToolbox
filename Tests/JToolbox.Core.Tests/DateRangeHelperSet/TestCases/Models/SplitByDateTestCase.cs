@@ -1,8 +1,8 @@
-﻿using JToolbox.Core.Models;
+﻿using JToolbox.Core.Models.DateRanges;
 using System;
 using System.Collections.Generic;
 
-namespace JToolbox.Core.Tests.DateRangeHelperSet
+namespace JToolbox.Core.Tests.DateRangeHelperSet.TestCases.Models
 {
     public class SplitByDateTestCase
     {

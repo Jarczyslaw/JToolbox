@@ -312,7 +312,7 @@ namespace JToolbox.Core.Tests
         }
 
         private void MergeTestCases<TNew, TOld, TKey>(
-                    List<TestCase<TNew, TOld>> testCases,
+            List<TestCase<TNew, TOld>> testCases,
             Func<TNew, TKey> newItemsKeySelector,
             Func<TOld, TKey> oldItemsKeySelector,
             IEqualityComparer<TNew> newEqualityComparer = null,
