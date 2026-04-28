@@ -20,6 +20,7 @@ namespace Examples.Desktop.IPC.Client
 
             await IpcConsoleClient.Run<IContract>(
                 path,
+                arguments: null,
                 async contract =>
                 {
                     List<Item> items = new List<Item>
@@ -38,13 +39,22 @@ namespace Examples.Desktop.IPC.Client
                         },
                     };
 
-                    List<Item> result = await contract.ProcessItems(items);
-
-                    Console.WriteLine("Result:");
-
-                    foreach (Item item in result)
+                    try
                     {
-                        Console.WriteLine($"Input: {item.Input}, output: {item.Output}");
+                        List<Item> result = await contract.ProcessItems(items);
+
+                        Console.WriteLine("Result:");
+
+                        foreach (Item item in result)
+                        {
+                            Console.WriteLine($"Input: {item.Input}, output: {item.Output}");
+                        }
+
+                        await contract.ExceptionTest();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
                     }
                 });
 

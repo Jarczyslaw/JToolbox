@@ -7,10 +7,13 @@ namespace JToolbox.Misc.IPC.Client
 {
     public static class IpcConsoleClient
     {
-        public static async Task Run<TContract>(string processPath, Func<TContract, Task> contractAction)
+        public static async Task Run<TContract>(
+            string processPath,
+            string arguments,
+            Func<TContract, Task> contractAction)
             where TContract : class
         {
-            ProcessStartInfo startInfo = CreateStartInfo(processPath);
+            ProcessStartInfo startInfo = CreateStartInfo(processPath, arguments);
 
             using (Process process = Process.Start(startInfo))
             {
@@ -34,7 +37,9 @@ namespace JToolbox.Misc.IPC.Client
             }
         }
 
-        private static ProcessStartInfo CreateStartInfo(string processPath)
+        private static ProcessStartInfo CreateStartInfo(
+            string processPath,
+            string arguments)
         {
             return new ProcessStartInfo
             {
@@ -42,7 +47,8 @@ namespace JToolbox.Misc.IPC.Client
                 UseShellExecute = false,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                Arguments = arguments
             };
         }
     }

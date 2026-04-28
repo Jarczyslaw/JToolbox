@@ -94,6 +94,7 @@
     <Compile Include="PropertyResolverTests.cs" />
     <Compile Include="ProportionalDispersionTests.cs" />
     <Compile Include="RandomPickerTests.cs" />
+    <Compile Include="RetryHelperTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
