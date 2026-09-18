@@ -13,14 +13,13 @@ namespace JToolbox.Core.Tests
         {
             int counter = 0;
 
-            RetryResult<bool> retryResult = await RetryHelper.TryUntilSuccessAsync(
+            RetryResult<bool> retryResult = await RetryHelper.TryAsync(
                 () => TestAction(ref counter, 10, 0),
                 new RetryArgs<bool>
                 {
-                    RetryPredicate = x => !x
+                    BreakHandler = BreakHandler
                 });
 
-            Assert.IsFalse(retryResult.IsSuccess);
             Assert.IsFalse(retryResult.LastResult);
             Assert.AreEqual(5, retryResult.Attempt);
             Assert.IsNotNull(retryResult.LastException);
@@ -31,16 +30,16 @@ namespace JToolbox.Core.Tests
         {
             int counter = 0;
 
-            RetryResult<bool> retryResult = await RetryHelper.TryUntilSuccessAsync(
+            RetryResult<bool> retryResult = await RetryHelper.TryAsync(
                 () => TestAction(ref counter, 10),
                 new RetryArgs<bool>
                 {
-                    RetryPredicate = x => !x
+                    BreakHandler = BreakHandler
                 });
 
-            Assert.IsFalse(retryResult.IsSuccess);
             Assert.IsFalse(retryResult.LastResult);
             Assert.AreEqual(5, retryResult.Attempt);
+            Assert.IsNull(retryResult.LastException);
         }
 
         [TestMethod]
@@ -48,14 +47,13 @@ namespace JToolbox.Core.Tests
         {
             int counter = 0;
 
-            RetryResult<bool> retryResult = await RetryHelper.TryUntilSuccessAsync(
+            RetryResult<bool> retryResult = await RetryHelper.TryAsync(
                 () => TestAction(ref counter, 3, 5),
                 new RetryArgs<bool>
                 {
-                    RetryPredicate = x => !x
+                    BreakHandler = BreakHandler
                 });
 
-            Assert.IsTrue(retryResult.IsSuccess);
             Assert.IsTrue(retryResult.LastResult);
             Assert.AreEqual(3, retryResult.Attempt);
             Assert.IsNull(retryResult.LastException);
@@ -66,15 +64,23 @@ namespace JToolbox.Core.Tests
         {
             int counter = 0;
 
-            RetryResult<bool> retryResult = await RetryHelper.TryUntilSuccessAsync(
+            RetryResult<bool> retryResult = await RetryHelper.TryAsync(
                 () => TestAction(ref counter, 1),
                 new RetryArgs<bool>
                 {
-                    RetryPredicate = x => !x
+                    BreakHandler = BreakHandler
                 });
 
-            Assert.IsTrue(retryResult.IsSuccess);
+            Assert.IsTrue(retryResult.LastResult);
             Assert.AreEqual(1, retryResult.Attempt);
+            Assert.IsNull(retryResult.LastException);
+        }
+
+        private bool BreakHandler(RetryResult<bool> result)
+        {
+            if (result.LastException != null) { return false; }
+
+            return result.LastResult;
         }
 
         private Task<bool> TestAction(

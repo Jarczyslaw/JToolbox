@@ -6,15 +6,15 @@ namespace JToolbox.Core.Helpers.Retry
 {
     public static class RetryHelper
     {
-        public static RetryResult<TResult> TryUntilSuccess<TResult>(
+        public static RetryResult<TResult> Try<TResult>(
             Func<TResult> action,
             RetryArgs<TResult> args)
         {
-            RetryResult<TResult> retryResult = new RetryResult<TResult>();
+            RetryResult<TResult> retryResult = null;
 
             for (int attempt = 1; attempt <= args.Attempts; attempt++)
             {
-                retryResult.InitializeAttempt(attempt);
+                retryResult = new RetryResult<TResult>(attempt);
 
                 if (args.CancellationToken.IsCancellationRequested)
                 {
@@ -25,19 +25,13 @@ namespace JToolbox.Core.Helpers.Retry
                 try
                 {
                     retryResult.LastResult = action();
-
-                    if (!args.RetryPredicate(retryResult.LastResult))
-                    {
-                        retryResult.IsSuccess = true;
-                        return retryResult;
-                    }
                 }
                 catch (Exception ex)
                 {
                     retryResult.LastException = ex;
                 }
 
-                args.FailAction?.Invoke(retryResult);
+                if (args.BreakHandler(retryResult)) { return retryResult; }
 
                 if (args.Wait(attempt)) { Thread.Sleep(args.Delay); }
             }
@@ -45,15 +39,15 @@ namespace JToolbox.Core.Helpers.Retry
             return retryResult;
         }
 
-        public static async Task<RetryResult<TResult>> TryUntilSuccessAsync<TResult>(
+        public static async Task<RetryResult<TResult>> TryAsync<TResult>(
             Func<Task<TResult>> action,
             RetryArgs<TResult> args)
         {
-            RetryResult<TResult> retryResult = new RetryResult<TResult>();
+            RetryResult<TResult> retryResult = null;
 
             for (int attempt = 1; attempt <= args.Attempts; attempt++)
             {
-                retryResult.InitializeAttempt(attempt);
+                retryResult = new RetryResult<TResult>(attempt);
 
                 if (args.CancellationToken.IsCancellationRequested)
                 {
@@ -64,21 +58,22 @@ namespace JToolbox.Core.Helpers.Retry
                 try
                 {
                     retryResult.LastResult = await action();
-
-                    if (!args.RetryPredicate(retryResult.LastResult))
-                    {
-                        retryResult.IsSuccess = true;
-                        return retryResult;
-                    }
                 }
                 catch (Exception ex)
                 {
                     retryResult.LastException = ex;
                 }
 
-                args.FailAction?.Invoke(retryResult);
+                if (args.BreakHandler(retryResult)) { return retryResult; }
 
-                if (args.Wait(attempt)) { await Task.Delay(args.Delay, args.CancellationToken); }
+                if (args.Wait(attempt))
+                {
+                    try
+                    {
+                        await Task.Delay(args.Delay, args.CancellationToken);
+                    }
+                    catch (TaskCanceledException) { }
+                }
             }
 
             return retryResult;
